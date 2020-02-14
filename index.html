@@ -93,6 +93,28 @@ sbox = [221, 229, 120, 8, 119, 143, 33, 79, 22, 93, 239, 118, 130, 12, 63, 207, 
 	<article class="post">
 		<header>
 			<h1>
+				<a href="https://kuzushiki.github.io/post/hackim2020/">HackIM2020 </a>
+			</h1>
+			<span class="post-meta">
+				Sat, Feb 15, 2020 - Read in 7 Min
+			</span>
+		</header>
+		<div class="summary">
+			HackTM CTF Quals 2020に参加しました！ (team: score_gazer)
+write up書きます
+RSA is easy #1 cというファイルにて、 eおよびnの値と、大量の暗号文が与えられる
+rsa.pyはRSA暗号のソースコード。
+import random from my_math import next_prime from flag import flag def egcd(a, b): x, y, u, v = 0, 1, 1, 0 while a != 0: q, r = b//a, b % a m, n = x-u*q, y-v*q b, a, x, y, u, v = a, r, u, v, m, n gcd = b return gcd, x, y def gen_keys(p, q): e = 65537 n = p * q phi = (p - 1) * (q - 1) gcd, d, b = egcd(e, phi) # Keys:((pub), (priv)) return ((e, n), (d, n)) def enc(key, p): e, n = key cipher = [pow(ord(char), e, n) for char in p] return cipher def dec(pk, c): key, n = pk plain = [chr(pow(char, key, n)) for char in c] return &#39;&#39;.
+			<a href="https://kuzushiki.github.io/post/hackim2020/">Read more...</a>
+		</div>
+	</article>
+</div>
+
+	
+		<div class="postBody">
+	<article class="post">
+		<header>
+			<h1>
 				<a href="https://kuzushiki.github.io/post/cryptixctf2019/">CryptixCTF2019 </a>
 			</h1>
 			<span class="post-meta">

@@ -7,10 +7,32 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>© Copyright 2016 John Doe</copyright>
-    <lastBuildDate>Fri, 14 Feb 2020 23:57:33 +0900</lastBuildDate>
+    <lastBuildDate>Sat, 15 Feb 2020 00:26:10 +0900</lastBuildDate>
     
 	<atom:link href="https://kuzushiki.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>CryptixCTF2019</title>
+      <link>https://kuzushiki.github.io/post/cryptixctf2019/</link>
+      <pubDate>Sat, 15 Feb 2020 00:26:10 +0900</pubDate>
+      
+      <guid>https://kuzushiki.github.io/post/cryptixctf2019/</guid>
+      <description>CryptixCTF 2019に参加しました！ (team:score_gazer)
+結果は2095点で19位でした。 あと一問で全完だったのに…悔しい。
+それでは解いた問題について解説していきます！
+※解説を「ですます調」でやるとしっくりこないので、「だである調」に変えています。
+Make yourself comfortable (レベル１) Welcome gift ポイント  base64  解く ZmxhZ3t3ZWxjb21lX3RvX2NyeXB0aXhDVEZfYmFzZTY0aXRpc30Kをbase64でデコード
+フラグ flag{welcome_to_cryptixCTF_base64itis}
+You made it here! ポイント  デベロッパーツール(Chromeの場合)でソースを確認できる。  解く 問題ページのソースを見る。
+フラグの一部を確認
+&amp;lt;!--Came for the flag? Bingo! first part: flag{Pr3tty_ --&amp;gt; Sourcesタブに行き、style.cssとscript.jsも見てみる。
+同様にフラグの一部が書いてあるので組み合わせる。
+フラグ flag{Pr3tty_b4s1c_5tuff}
+Secret Code ポイント  stringsコマンドでファイルの文字列を確認できる。  解く stringsコマンドで問題ファイルの文字列を確認 grepコマンドをつけることで結果を絞り込める。
+:# strings secret_code | grep flag{ flag{sTring5_To_tH3_R35cU3} フラグ flag{sTring5_To_tH3_R35cU3}
+Moving On (レベル２) Mixed Up ポイント   単一換字暗号</description>
+    </item>
     
     <item>
       <title>HackCon&#39;19 write up</title>

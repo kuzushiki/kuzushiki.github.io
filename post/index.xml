@@ -7,7 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>© Copyright 2016 John Doe</copyright>
-    <lastBuildDate>Sun, 28 Sep 2014 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 14 Feb 2020 23:11:29 +0900</lastBuildDate>
     
 	<atom:link href="https://kuzushiki.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
@@ -31,6 +31,15 @@ We&amp;rsquo;ll start with creating a new site with a very basic template.</desc
       <description>Move static content to static Jekyll has a rule that any directory not starting with _ will be copied as-is to the _site output. Hugo keeps all static content under static. You should therefore move it all there. With Jekyll, something that looked like
 ▾ &amp;lt;root&amp;gt;/ ▾ images/ logo.png  should become
 ▾ &amp;lt;root&amp;gt;/ ▾ static/ ▾ images/ logo.png  Additionally, you&amp;rsquo;ll want any files that should reside at the root (such as CNAME) to be moved to static.</description>
+    </item>
+    
+    <item>
+      <title>First Post</title>
+      <link>https://kuzushiki.github.io/post/first-post/</link>
+      <pubDate>Fri, 14 Feb 2020 23:11:29 +0900</pubDate>
+      
+      <guid>https://kuzushiki.github.io/post/first-post/</guid>
+      <description>テストですよ</description>
     </item>
     
     <item>

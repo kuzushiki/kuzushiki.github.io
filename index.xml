@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Light Hugo</title>
+    <title>kuzushikiのぺーじ</title>
     <link>https://kuzushiki.github.io/</link>
-    <description>Recent content on Light Hugo</description>
+    <description>Recent content on kuzushikiのぺーじ</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <copyright>© Copyright 2016 John Doe</copyright>
+    <copyright>© Copyright 2020 kuzushiki</copyright>
     <lastBuildDate>Sat, 15 Feb 2020 00:26:10 +0900</lastBuildDate>
     
 	<atom:link href="https://kuzushiki.github.io/index.xml" rel="self" type="application/rss+xml" />
@@ -69,15 +69,12 @@ from pwn import * import socket con = remote(&amp;#39;68.183.158.95&amp;#39;, 89
     <item>
       <title>Résumé</title>
       <link>https://kuzushiki.github.io/pages/resume/</link>
-      <pubDate>Wed, 09 Nov 2016 16:20:47 -0500</pubDate>
+      <pubDate>Sat, 09 Nov 2019 16:20:47 -0500</pubDate>
       
       <guid>https://kuzushiki.github.io/pages/resume/</guid>
-      <description>Markdown -&amp;gt; PDF, HTML, and more http://github.com/mwhite/resume
-Interests  Creating beautiful resumés from simple Markdown documents  Work Experience   Word Processor (Redmond, WA)
-Junior Resumé Maker, 2006 - 2007
- Intermingled presentation and content Styling was a pain, so either didn&amp;rsquo;t do it or found a half-decent template and didn&amp;rsquo;t mess with it    \LaTeX\ + pdflatex
-Senior Resumé Maker, 2008 - 2010
- Edited verbose \LaTeX\ documents in a text editor Mixed content and presentation to achieve pixel-perfection Installed and configured the unusual TeX setups required by the best-looking \LaTeX\ resumés    LinkedIn, StackOverflow Careers, vizualize.</description>
+      <description>Interests  CTFなどセキュリティ技術全般 診断系の業務に興味があります 現在OSCP勉強中  経歴   某大学院電気工学専攻　修了予定
+ 電気ではなく情報系の研究室を選択 暗号系の研究に従事    某セキュリティ会社に就職予定
+ これから書きます    Skills  Python,, Markdown, \LaTeX 情報処理安全確保支援士試験合格 電験三種試験合格  </description>
     </item>
     
   </channel>

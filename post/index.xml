@@ -13,7 +13,7 @@
     
     
     <item>
-      <title>NullconHackIM2020</title>
+      <title>nullcon HackIM2020 write up</title>
       <link>https://kuzushiki.github.io/post/nullconhackim2020/</link>
       <pubDate>Sat, 15 Feb 2020 00:51:52 +0900</pubDate>
       
@@ -31,7 +31,7 @@ sbox = [221, 229, 120, 8, 119, 143, 33, 79, 22, 93, 239, 118, 130, 12, 63, 207, 
     </item>
     
     <item>
-      <title>HackIM2020</title>
+      <title>HackIM2020 write up</title>
       <link>https://kuzushiki.github.io/post/hackim2020/</link>
       <pubDate>Sat, 15 Feb 2020 00:45:18 +0900</pubDate>
       
@@ -44,7 +44,7 @@ import random from my_math import next_prime from flag import flag def egcd(a, b
     </item>
     
     <item>
-      <title>CryptixCTF2019</title>
+      <title>CryptixCTF2019 write up</title>
       <link>https://kuzushiki.github.io/post/cryptixctf2019/</link>
       <pubDate>Sat, 15 Feb 2020 00:26:10 +0900</pubDate>
       

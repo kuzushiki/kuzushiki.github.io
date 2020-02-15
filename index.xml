@@ -26,11 +26,11 @@
     </item>
     
     <item>
-      <title>HackIM2020 write up</title>
-      <link>https://kuzushiki.github.io/post/hackim2020/</link>
+      <title>HackTM CTF Quals 2020 write up</title>
+      <link>https://kuzushiki.github.io/post/hacktm2020/</link>
       <pubDate>Sat, 15 Feb 2020 00:45:18 +0900</pubDate>
       
-      <guid>https://kuzushiki.github.io/post/hackim2020/</guid>
+      <guid>https://kuzushiki.github.io/post/hacktm2020/</guid>
       <description>HackTM CTF Quals 2020に参加しました！ (team: score_gazer)
 write up書きます
 RSA is easy #1 cというファイルにて、 eおよびnの値と、大量の暗号文が与えられる</description>

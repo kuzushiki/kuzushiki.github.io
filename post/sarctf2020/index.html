@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+		<title>SarCTF 2020 write up &middot; kuzushikiのぺーじ</title>
+		<link rel="canonical" href="https://kuzushiki.github.io/post/sarctf2020/">
+		<link rel="stylesheet" type="text/css" href="https://kuzushiki.github.io/css/main.css" />
+		
+	</head>
+	<body>
+		<a id="title" href="https://kuzushiki.github.io/" title="kuzushikiのぺーじ">
+			
+				<img id="logo" alt="Logo" src="https://kuzushiki.github.io/images/logo.png" />
+			
+			
+				<h1>kuzushikiのぺーじ</h1>
+			
+		</a>
+		
+			<h4>セキュリティに関することを書きたいですね</h4>
+		
+		<div id="social">
+			
+			
+			
+			<a href="https://github.com/kuzushiki" title="Github">
+				<img alt="GitHub" height="64px" width="64px" src="https://kuzushiki.github.io/images/github.svg" />
+			</a>
+			
+			
+			
+			<a href="https://twitter.com/kuzu7shiki" title="Twitter">
+				<img alt="Twitter" height="64px" width="64px" src="https://kuzushiki.github.io/images/twitter.svg" />
+			</a>
+			
+			
+                        
+		</div>
+		<div class="links">
+			<a href="https://kuzushiki.github.io/">Home</a>
+			
+				<a href="https://kuzushiki.github.io/post/">Archive</a>
+			
+			
+				
+			
+				
+					<a href="https://kuzushiki.github.io/pages/resume/">Résumé</a>
+				
+			
+		</div>
+
+	<div class="postBody">
+		<div class="post">
+			<h1>SarCTF 2020 write up</h1>
+			<span class="post-meta">Mon, Feb 17, 2020 - Read in 7 Min</span>
+			<div class="content">
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#doc-holmes">Doc. Holmes</a></li>
+    <li><a href="#blogger">Blogger</a></li>
+    <li><a href="#deep-dive">Deep dive</a></li>
+    <li><a href="#layouts">Layouts</a></li>
+    <li><a href="#sherlock-team">Sherlock team</a></li>
+    <li><a href="#true-detective">True Detective</a></li>
+    <li><a href="#crossw0rd">Crossw0rd</a></li>
+    <li><a href="#magic-of-numbers">Magic of numbers</a></li>
+    <li><a href="#find-moriarty">Find Moriarty</a></li>
+    <li><a href="#感想">感想</a></li>
+  </ul>
+</nav>
+			<h1 id="sarctf-2020に参加しました">SarCTF 2020に参加しました！</h1>
+<p>(team: score_gazer)</p>
+<p>6137点を入れ、順位は98位 / 418チーム(0点は除く)でした</p>
+<p><img src="https://user-images.githubusercontent.com/50363796/74608653-65fe6780-5126-11ea-8d74-9421543a1ae0.png" alt="FireShot Capture 017 - SarCTF - sarctf tk"></p>
+<p>write upを書いていきます</p>
+<h2 id="doc-holmes">Doc. Holmes</h2>
+<p>ファイルが添付されてる</p>
+<p>fileコマンド</p>
+<pre><code>root@kali:/media/sf_share/CTF/SarCTF 2020/DOC.HOLMES# file some.file
+some.file: Microsoft Word 2007+
+</code></pre><pre><code>root@kali:/media/sf_share/CTF/SarCTF 2020/DOC.HOLMES# mv some.file some.docx
+</code></pre><p>開くとシャーロックホームズっぽい写真と文章</p>
+<p><img src="https://user-images.githubusercontent.com/50363796/74608696-bd9cd300-5126-11ea-9bfe-18b832e0fc63.PNG" alt="holmes"></p>
+<p>なにもなさそうなので<code>binwalk</code>してみる</p>
+<pre><code>root@kali:/media/sf_share/CTF/SarCTF 2020/DOC.HOLMES# binwalk -e some.docx 
+</code></pre><pre><code>DECIMAL       HEXADECIMAL     DESCRIPTION
+--------------------------------------------------------------------------------
+0             0x0             Zip archive data, at least v2.0 to extract, compressed size: 359, uncompressed size: 1363, name: [Content_Types].xml
+928           0x3A0           Zip archive data, at least v2.0 to extract, compressed size: 239, uncompressed size: 590, name: _rels/.rels
+1728          0x6C0           Zip archive data, at least v2.0 to extract, compressed size: 2691, uncompressed size: 14624, name: word/document.xml
+4466          0x1172          Zip archive data, at least v2.0 to extract, compressed size: 273, uncompressed size: 1081, name: word/_rels/document.xml.rels
+5061          0x13C5          Zip archive data, at least v1.0 to extract, compressed size: 17283, uncompressed size: 17283, name: word/media/image1.jpg
+22395         0x577B          Zip archive data, at least v1.0 to extract, compressed size: 244243, uncompressed size: 244243, name: word/media/image3.jpg
+266689        0x411C1         Zip archive data, at least v2.0 to extract, compressed size: 1786, uncompressed size: 8444, name: word/theme/theme1.xml
+268526        0x418EE         Zip archive data, at least v2.0 to extract, compressed size: 1152, uncompressed size: 3262, name: word/settings.xml
+269725        0x41D9D         Zip archive data, at least v2.0 to extract, compressed size: 3244, uncompressed size: 30615, name: word/styles.xml
+273014        0x42A76         Zip archive data, at least v2.0 to extract, compressed size: 457, uncompressed size: 2269, name: word/webSettings.xml
+273521        0x42C71         Zip archive data, at least v2.0 to extract, compressed size: 540, uncompressed size: 1966, name: word/fontTable.xml
+274109        0x42EBD         Zip archive data, at least v2.0 to extract, compressed size: 367, uncompressed size: 736, name: docProps/core.xml
+274787        0x43163         Zip archive data, at least v2.0 to extract, compressed size: 502, uncompressed size: 1002, name: docProps/app.xml
+276438        0x437D6         End of Zip archive, footer length: 22
+</code></pre><p>すると<code>/_some.docx.extracted/word/media</code>に3枚の画像が抽出される</p>
+<p>3枚目にフラグが書いてある</p>
+<p><code>FLAG{prominentplace}</code></p>
+<h2 id="blogger">Blogger</h2>
+<p>pcapngファイルが添付されてる</p>
+<p>wiresharkで開くとUSBが使われてる</p>
+<p><code>Leftover Capture Data</code>の値が毎回変わっており怪しいので調べてみる</p>
+<p>どうやらUSBキーボードの入力らしい</p>
+<p>まず<code>Leftover Capture Data</code>の値をtsharkで取り出す</p>
+<pre><code>root@kali:/media/sf_share/CTF/SarCTF 2020/Blogger# tshark -r usb_here.pcapng -V | grep &quot;Leftover Capture Data&quot; | cut -d &quot; &quot; -f 4 &gt; trim
+</code></pre><p><a href="https://github.com/grnbeltwarrior/USB_Keyboard_Hex/blob/master/USB_Hex.py">対応表</a>を参考にデータをキーに変換するpythonスクリプトを書く</p>
+<pre><code>FILE = &quot;trim&quot;
+
+switcher = {
+	&quot;04&quot;:&quot;a&quot;, # or A
+	&quot;05&quot;:&quot;b&quot;, # or B
+	&quot;06&quot;:&quot;c&quot;, # or C
+	&quot;07&quot;:&quot;d&quot;, # or D
+	&quot;08&quot;:&quot;e&quot;, # or E
+	&quot;09&quot;:&quot;f&quot;, # or F
+	&quot;0A&quot;:&quot;g&quot;, # or G
+	&quot;0B&quot;:&quot;h&quot;, # or H
+	&quot;0C&quot;:&quot;i&quot;, # or I
+	&quot;0D&quot;:&quot;j&quot;, # or J
+	&quot;0E&quot;:&quot;k&quot;, # or K
+	&quot;0F&quot;:&quot;l&quot;, # or L
+	&quot;10&quot;:&quot;m&quot;, # or M
+	&quot;11&quot;:&quot;n&quot;, # or N
+	&quot;12&quot;:&quot;o&quot;, # or O
+	&quot;13&quot;:&quot;p&quot;, # or P
+	&quot;14&quot;:&quot;q&quot;, # or Q
+	&quot;15&quot;:&quot;r&quot;, # or R
+	&quot;16&quot;:&quot;s&quot;, # or S
+	&quot;17&quot;:&quot;t&quot;, # or T
+	&quot;18&quot;:&quot;u&quot;, # or U
+	&quot;19&quot;:&quot;v&quot;, # or V
+	&quot;1A&quot;:&quot;w&quot;, # or W
+	&quot;1B&quot;:&quot;x&quot;, # or X
+	&quot;1C&quot;:&quot;y&quot;, # or Y
+	&quot;1D&quot;:&quot;x&quot;, # or Z
+	&quot;1E&quot;:&quot;1&quot;, # or !
+	&quot;1F&quot;:&quot;2&quot;, # or @
+	&quot;20&quot;:&quot;3&quot;, # or #
+	&quot;21&quot;:&quot;4&quot;, # or $
+	&quot;22&quot;:&quot;5&quot;, # or %
+	&quot;23&quot;:&quot;6&quot;, # or ^
+	&quot;24&quot;:&quot;7&quot;, # or &amp;
+	&quot;25&quot;:&quot;8&quot;, # or *
+	&quot;26&quot;:&quot;9&quot;, # or (
+	&quot;27&quot;:&quot;0&quot;, # or )
+	&quot;2D&quot;:&quot;-&quot;, # or _
+	&quot;2E&quot;:&quot;+&quot;, # or =
+	&quot;2F&quot;:&quot;[&quot;, # or {
+	&quot;30&quot;:&quot;]&quot;, # or }
+	&quot;31&quot;:&quot;\&quot;&quot;, # or |
+	&quot;33&quot;:&quot;;&quot;, # or :
+	&quot;34&quot;:&quot;'&quot;, # or &quot;
+	&quot;35&quot;:&quot;`&quot;, # or ~
+	&quot;36&quot;:&quot;,&quot;, # or &lt;
+	&quot;37&quot;:&quot;.&quot;, # or &gt;
+	&quot;38&quot;:&quot;/&quot; # or ?
+}
+
+with open(FILE) as f:
+    data = f.readlines()
+for line in data:
+    byte = line[4:6].upper()
+    if byte in switcher:
+        print(switcher[byte], end=&quot;&quot;)
+</code></pre><p>実行結果は以下の通り</p>
+<pre><code>root@kali:/media/sf_share/CTF/SarCTF 2020/Blogger# python3 solve.py 
+sherlock,john,andhenrythenvisitthehollowinthehopeoffindingthehound.ontheway,johnnoticeswhatseemstobeflag[like-a-b100dh0und]e
+</code></pre><p>フラグは<code>flag[like-a-b100dh0und]</code>の部分</p>
+<p>一部のキーはシフトキーと同時に押されているので脳内変換</p>
+<p>フラグゲット
+<code>FLAG{like_a_b100dh0und}</code></p>
+<h2 id="deep-dive">Deep dive</h2>
+<p><code>flag.txt</code>というファイルが添付されている</p>
+<p>↓</p>
+<p>fileコマンドで調べると実はtarファイル</p>
+<p>↓</p>
+<p>展開するとまた<code>flag.txt</code>が出てくる</p>
+<p>↓</p>
+<p>実はzipファイル</p>
+<p>↓</p>
+<p>展開するとまた<code>flag.txt</code>が出てくる</p>
+<p>という流れの繰り返し</p>
+<p>確認できた拡張子は<code>zip</code>, <code>gzip</code>, <code>bz2</code>, <code>tar</code>の4種類</p>
+<p>以下のようなアルゴリズムのスクリプトを作る</p>
+<ol>
+<li>
+<p>それぞれの拡張子で解凍できるか確認し、できなかったら別の拡張子で試す</p>
+</li>
+<li>
+<p>全ての拡張子で解凍に失敗したらその中身を表示させる</p>
+</li>
+</ol>
+<p>pythonによる実装は以下の通り</p>
+<pre><code>import zipfile
+import tarfile
+import gzip
+import bz2
+import os
+import shutil
+
+def unzip(data):
+    with zipfile.ZipFile(data) as f:
+        f.extractall()
+
+def untar(data):
+    with tarfile.open(data) as f:
+        f.extractall()
+def ungzip(data):
+    with gzip.open(data) as f:
+        dump = f.read()
+    with open(&quot;flag.txt&quot;, &quot;wb&quot;) as f:
+        f.write(dump)
+
+def unbz2(data):
+    with open(data, &quot;rb&quot;) as f:
+        byte = f.read()
+    dump =  bz2.decompress(byte)
+    with open(&quot;flag.txt&quot;, &quot;wb&quot;) as f:
+        f.write(dump)
+
+shutil.copy('original', 'flag.txt')
+while True:
+    os.rename(&quot;flag.txt&quot;, &quot;tmp&quot;)
+    try:
+        unzip(&quot;tmp&quot;)
+    except:
+        try:
+            untar(&quot;tmp&quot;)
+        except:
+            try:
+                ungzip(&quot;tmp&quot;)
+            except:
+                try:
+                    unbz2(&quot;tmp&quot;)
+                except:
+
+                    with open(&quot;tmp&quot;, encoding=&quot;utf_8&quot;) as f:
+                        data = f.read()
+                    print(data)
+                    exit()
+</code></pre><p>実行するとフラグがでてくる</p>
+<pre><code>root@kali:/media/sf_share/CTF/SarCTF 2020/Deep dive# python3 solve.py 
+FLAG{matri0sha256}
+</code></pre><h2 id="layouts">Layouts</h2>
+<p><code>RWtm7A5f</code>というちょっと変わった名前のファイルが添付されてる</p>
+<p>fileコマンドで調べるとzip形式だと分かる</p>
+<p>しかし、パスワードがかかっていて展開できない</p>
+<p>ファイル名が怪しいので入れてみたら通った</p>
+<p>おそらくこれを繰り返せば良さそう</p>
+<p>pythonスクリプトは以下の通り</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-solve.py" data-lang="solve.py"><span style="color:#f92672">import</span> zipfile
+<span style="color:#f92672">import</span> os
+<span style="color:#f92672">import</span> glob
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">unzip</span>(data, pwd):
+    <span style="color:#66d9ef">with</span> zipfile<span style="color:#f92672">.</span>ZipFile(data) <span style="color:#66d9ef">as</span> f:
+        f<span style="color:#f92672">.</span>extractall(pwd<span style="color:#f92672">=</span>pwd)
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_name</span>():
+    <span style="color:#66d9ef">for</span> name <span style="color:#f92672">in</span> glob<span style="color:#f92672">.</span>glob(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">./*</span><span style="color:#e6db74">&#39;</span>):
+        <span style="color:#66d9ef">if</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">.py</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">not</span> <span style="color:#f92672">in</span> name:
+            file_name <span style="color:#f92672">=</span> name[<span style="color:#ae81ff">2</span>:]
+    <span style="color:#66d9ef">return</span> file_name
+
+<span style="color:#66d9ef">while</span> True:
+    data <span style="color:#f92672">=</span> get_name()
+    <span style="color:#66d9ef">try</span>:
+        unzip(data, data<span style="color:#f92672">.</span>encode(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">utf-8</span><span style="color:#e6db74">&#34;</span>))
+    <span style="color:#66d9ef">except</span>:
+        <span style="color:#66d9ef">with</span> open(data) <span style="color:#66d9ef">as</span> f:
+            r <span style="color:#f92672">=</span> f<span style="color:#f92672">.</span>read()
+        <span style="color:#66d9ef">print</span>(r)
+        exit()
+    os<span style="color:#f92672">.</span>remove(data)
+</code></pre></div><p>すると<code>flag</code>というファイルが抽出できる</p>
+<p>fileコマンドで調べるとXZ形式だと分かるので展開</p>
+<p><code>flags</code>というディレクトリが出てくる</p>
+<p>中に沢山のフォルダが入っていたので、
+とりあえず<code>./flags</code>以下のファイルを抽出する</p>
+<pre><code>root@kali:/media/sf_share/CTF/SarCTF 2020/Layouts# find ./flags -type f -name &quot;*&quot;
+./flags/101/9
+./flags/102/11
+./flags/103/8
+./flags/110/16
+./flags/112/18
+./flags/117/12
+./flags/120/13
+./flags/122/6
+./flags/123/5
+./flags/125/21
+./flags/49/19
+./flags/49/20
+./flags/51/10
+./flags/52/14
+./flags/52/7
+./flags/53/17
+./flags/78/3
+./flags/83/1
+./flags/84/4
+./flags/89/2
+./flags/95/15
+</code></pre><p><code>cat</code>で中身を見ても何もなかった</p>
+<p>ここで、ファイル名が1~21の連番になっていること、
+さらにそのファイルが入っているフォルダ名がasciiコードの英数字の範囲にあることに気づく</p>
+<p>先ほどの結果を<code>dump</code>ファイルに保存してから、ファイル名で並べ替える</p>
+<pre><code>root@kali:/media/sf_share/CTF/SarCTF 2020/Layouts# sort -n -k 4 -t &quot;/&quot; dump| cut -d &quot;/&quot; -f 3
+83
+89
+78
+84
+123
+122
+52
+103
+101
+51
+102
+117
+120
+52
+95
+110
+53
+112
+49
+49
+125
+</code></pre><p>結果を<code>dump2</code>として保存</p>
+<p>asciiコードから文字に変換するpythonスクリプトを書く</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-from_ascii.py" data-lang="from_ascii.py">FILE <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">dump2</span><span style="color:#e6db74">&#34;</span>
+
+<span style="color:#66d9ef">with</span> open(FILE) <span style="color:#66d9ef">as</span> f:
+    data <span style="color:#f92672">=</span> f<span style="color:#f92672">.</span>readlines()
+i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+<span style="color:#66d9ef">for</span> line <span style="color:#f92672">in</span> data:
+    i <span style="color:#f92672">+</span><span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+    <span style="color:#66d9ef">print</span>(chr(int(line,<span style="color:#ae81ff">10</span>)), end<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">&#34;</span>)
+</code></pre></div><p>実行結果は以下の通り</p>
+<pre><code>root@kali:/media/sf_share/CTF/SarCTF 2020/Layouts# python3 from_ascii.py 
+SYNT{z4ge3fux4_n5p11}
+</code></pre><p>ROTっぽいので<a href="https://gchq.github.io/CyberChef/">cyberchef</a>にかけてみる</p>
+<p><a href="https://gchq.github.io/CyberChef/#recipe=ROT13(true,true,13)&amp;input=U1lOVHt6NGdlM2Z1eDRfbjVwMTF9">実行結果</a></p>
+<p>フラグゲット
+<code>FLAG{m4tr3shk4_a5c11}</code></p>
+<h2 id="sherlock-team">Sherlock team</h2>
+<p>問題にある画像をSNSで探してそのリンクをTelegramのbotに送信すればフラグを得られる</p>
+<p>このCTFのトップページに、「VKのアカウント登録しといた方が良いよ」と書かれていたことを思い出し、VKを調査することにした</p>
+<p>ハッシュタグ<code>#SarCTF</code>で検索したところ、３つの投稿が引っかかった</p>
+<p>一番古い投稿に添付されている画像リンクをボットに送信
+（なぜかブラウザではメッセージを送信できなかったので、わざわざアプリをダウンロードした）</p>
+<p><img src="https://user-images.githubusercontent.com/50363796/74608671-8cbc9e00-5126-11ea-87c5-63c8ffe5e5a6.PNG" alt="telegtram"></p>
+<p>フラグゲット
+<code>FLAG{ShErL0cK_Teaaam}</code></p>
+<p>正直VKとかTelegramのアカウントを登録する方が面倒だった</p>
+<h2 id="true-detective">True Detective</h2>
+<p>Google formのリンクが張られてる</p>
+<p>いくつかの質問に正確に答える必要があるみたいだ</p>
+<p>ソースを&quot;FLAG&quot;で検索したら、以下の部分が引っかかった</p>
+<pre><code>var FB_PUBLIC_LOAD_DATA_ = [null,[&quot;Let's see how well you know London.&quot;,[[673760842,&quot;What is the name of the store?&quot;,null,0,[[255559616,null,0,null,[[4,300,[&quot;(tesco|Testo)&quot;]
+,&quot;1 - FLAG{08&quot;]
+]
+]
+]
+,null,null,null,null,[[&quot;1cTysniECWio21dKH90wnnzNxlB4gKBJI7Bri1Q_K4moAtg&quot;,null,[740,385,0]
+]
+]
+]
+,[2014750817,&quot;What is the name of this place?&quot;,null,0,[[1092335700,null,0,null,[[4,300,[&quot;(bridport|Bridport)&quot;]
+,&quot;2 - c49c3d9a&quot;]
+]
+]
+]
+,null,null,null,null,[[&quot;1sd8oiCWcjd1_HiCrOA2f1hrgkknzJvT_Y-tVgx5qjBanKw&quot;,null,[740,417,0]
+]
+]
+]
+,[771036932,&quot;Very beautiful Park where Sherlock likes to walk. Where is it?&quot;,null,0,[[1600364512,null,0,null,[[4,300,[&quot;(finsbury|Finsbury)&quot;]
+,&quot;3 - e8898343&quot;]
+]
+]
+]
+,null,null,null,null,[[&quot;1-w_MvKBaer5I78ICXo70E94lH4vKSPmCRekszxbOblJRvA&quot;,null,[740,377,0]
+]
+]
+]
+,[302390155,&quot;Every Englishman has been to this square at least once&quot;,null,0,[[661956933,null,0,null,[[4,300,[&quot;(euston|Euston)&quot;]
+,&quot;4 - 7729747b&quot;]
+]
+]
+]
+,null,null,null,null,[[&quot;1sGu1uvZD9tXdbS0ypGTsI05LDj8Bd1U03VV_vjDLI3bY6A&quot;,null,[740,385,0]
+]
+]
+]
+,[1070034509,&quot;Which Embassy building is shown in the photo&quot;,null,0,[[2072641709,null,0,null,[[4,300,[&quot;(hungary|Hungary)&quot;]
+,&quot;5 - cf1be8}&quot;]
+]
+]
+]
+,null,null,null,null,[[&quot;174eoWKRoyVKEN21KJigFwwry_DncqoZfVECN_p6i85oWRw&quot;,null,[740,376,0]
+]
+]
+]
+]
+,null,null,null,[0,0]
+,null,null,&quot;Task&quot;,48,[null,null,null,null,0]
+,null,null,null,null,[2]
+]
+.
+.
+.
+以下略
+</code></pre><p><code>1 -</code>, <code>2-</code>と書いてあるところを全部繋げる</p>
+<p><code>FLAG{08c49c3d9ae88983437729747bcf1be8}</code></p>
+<p>点数の割にちょっと簡単すぎやしないか</p>
+<h2 id="crossw0rd">Crossw0rd</h2>
+<p>パスワードの入力を求められる</p>
+<p>IDAなどで逆アセンブルすると、1文字ずつ比較していることが分かるので、
+何文字目の文字を何と比較してるかを調べる</p>
+<p>手作業で抽出した</p>
+<p>自動でやる方法誰か知ってたら教えて下さい</p>
+<pre><code class="language-data" data-lang="data">add     rax, 7　cmp     al, 35h ; '5'
+add     rax, 11h　cmp     al, 67h ; 'g'
+add     rax, 2　cmp     al, 41h ; 'A'
+add     rax, 0Fh　cmp     al, 69h ; 'i'
+add     rax, 9　cmp     al, 72h ; 'r'
+add     rax, 1　cmp     al, 4Ch ; 'L'
+add     rax, 0Ah　cmp     al, 33h ; '3'
+add     rax, 12h　cmp     al, 7Dh ; '}'
+add     rax, 6　cmp     al, 61h ; 'a'
+add     rax, 0　cmp     al, 46h ; 'F'
+add     rax, 0Eh　cmp     al, 35h ; '5'
+add     rax, 10h　cmp     al, 6Eh ; 'n'
+add     rax, 3　cmp     al, 47h ; 'G'
+add     rax, 0Bh　cmp     al, 76h ; 'v'
+add     rax, 5　cmp     al, 33h ; '3'
+add     rax, 4　cmp     al, 7Bh ; '{'
+add     rax, 0Ch　cmp     al, 33h ; '3'
+add     rax, 8　cmp     al, 79h ; 'y'
+add     rax, 0Dh　cmp     al, 72h ; 'r'
+</code></pre><p>整形してフラグを出力するスクリプトを書いた</p>
+<pre><code>FILE = 'data'
+
+with open(FILE) as f:
+    r = f.readlines()
+
+flag = ['?'] * len(r)
+for line in r:
+    ind = line[13:].split(&quot;　&quot;)[0]
+    if ind[-1] == 'h':
+        ind = ind[:-1]
+    c = line.split(&quot;\'&quot;)[1]
+    flag[int(ind,16)] = c
+print(&quot;&quot;.join(flag))
+</code></pre><p>フラグゲット</p>
+<p><code>FLAG{3a5yr3v3r5ing}</code></p>
+<h2 id="magic-of-numbers">Magic of numbers</h2>
+<p>SECCON CTF beginnersでいう「手計算えくすとりーむ」みたいな問題</p>
+<p>サーバから式を受け取り、その計算結果を送り返すスクリプトを書いた</p>
+<pre><code>from pwn import *
+
+io = remote('212.47.229.1', 33004)
+
+for i in range(10):
+    io.recvuntil(b'[&gt;] ')
+    eq = io.recvline().strip()
+    print(eq)
+    payload = str(eval(eq.decode())).encode()
+    io.recv()
+    io.sendline(payload)
+    print(payload)
+
+io.interactive()
+</code></pre><p>実行結果は以下の通り</p>
+<pre><code>root@kali:/media/sf_share/CTF/SarCTF 2020/Magic of numbers# python3 solve.py 
+[+] Opening connection to 212.47.229.1 on port 33004: Done
+b'0 + 1'
+b'1'
+b'1 + 3'
+b'4'
+b'2 + 5'
+b'7'
+b'3 + 7'
+b'10'
+b'4 + 9'
+b'13'
+b'5 + 11'
+b'16'
+b'6 + 13'
+b'19'
+b'7 + 15'
+b'22'
+b'8 + 17'
+b'25'
+b'0.1 + 0.2'
+b'0.30000000000000004'
+[*] Switching to interactive mode
+FLAG{MaGiC_0f_NuMbErS}
+</code></pre><h2 id="find-moriarty">Find Moriarty</h2>
+<p>時間内にギリギリ解けなかった</p>
+<p>後1分あればなあ&hellip;</p>
+<p>圧縮ファイルが添付されてるので展開すると、
+3枚の航空写真(png)と、<code>PASS: IATA</code>と書かれたファイル(jpg)が出てくる</p>
+<p>steganoの問題にpasswordが出てくるので<code>steghide</code>の問題だと予想</p>
+<p>次に、<code>IATA</code>という言葉をググってみると、国際航空運送協会によって定義された世界中の多くの空港と大都市圏を指定する3文字のジオコードだと分かる</p>
+<p>つまり3枚の航空写真がどこの空港の写真かを特定し、そのIATAを繋げたものをpasswordとして<code>steghide</code>にかければいい</p>
+<p>google画像検索にかけたらあっさり判明した</p>
+<p>1枚目：ロンドン・ガトウィック空港　<code>LGW</code></p>
+<p>2枚目：ロンドン・ヒースロー空港　<code>LHR</code></p>
+<p>3枚目：ロンドン・スタンステッド空港　<code>STN</code></p>
+<p>問題は繋げる順番だが、6パターンしかないので総当たり</p>
+<p><code>STNLHRLGW</code>がヒットした</p>
+<pre><code>root@kali:/media/sf_share/CTF/SarCTF 2020/Find Moriarty/airport# steghide extract -sf fly.jpg
+Enter passphrase: 
+wrote extracted data to &quot;key.txt&quot;.
+</code></pre><p>抽出した<code>key.txt</code>にフラグが書かれている</p>
+<p><code>FLAG{l375_fly_w17h_bu65}</code></p>
+<h2 id="感想">感想</h2>
+<p>シャーロック・ホームズをモチーフにした問題が多く、
+セキュリティの技術よりもひらめきを求められている気がしました。</p>
+<p>これはこれで面白かったです。</p>
+
+			</div>
+		</div>
+	</div>
+		<div class="links">
+			<a href="https://kuzushiki.github.io/">Home</a>
+			
+				<a href="https://kuzushiki.github.io/post/">Archive</a>
+			
+			
+				
+			
+				
+					<a href="https://kuzushiki.github.io/pages/resume/">Résumé</a>
+				
+			
+			<a href="#top">Top</a>
+		</div>
+		
+		
+		<p id="copyright">
+			© Copyright 2020 kuzushiki
+		</p>
+		
+	</body>
+</html>
+

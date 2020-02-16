@@ -78,30 +78,30 @@
 <h2 id="doc-holmes">Doc. Holmes</h2>
 <p>ファイルが添付されてる</p>
 <p>fileコマンド</p>
-<pre><code>root@kali:/media/sf_share/CTF/SarCTF 2020/DOC.HOLMES# file some.file
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">root@kali:/media/sf_share/CTF/SarCTF 2020/DOC.HOLMES# file some.file
 some.file: Microsoft Word 2007+
-</code></pre><pre><code>root@kali:/media/sf_share/CTF/SarCTF 2020/DOC.HOLMES# mv some.file some.docx
-</code></pre><p>開くとシャーロックホームズっぽい写真と文章</p>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">root@kali:/media/sf_share/CTF/SarCTF 2020/DOC.HOLMES# mv some.file some.docx
+</code></pre></div><p>開くとシャーロックホームズっぽい写真と文章</p>
 <p><img src="https://user-images.githubusercontent.com/50363796/74608696-bd9cd300-5126-11ea-9bfe-18b832e0fc63.PNG" alt="holmes"></p>
 <p>なにもなさそうなので<code>binwalk</code>してみる</p>
-<pre><code>root@kali:/media/sf_share/CTF/SarCTF 2020/DOC.HOLMES# binwalk -e some.docx 
-</code></pre><pre><code>DECIMAL       HEXADECIMAL     DESCRIPTION
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">root@kali:/media/sf_share/CTF/SarCTF 2020/DOC.HOLMES# binwalk -e some.docx 
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">DECIMAL       HEXADECIMAL     DESCRIPTION
 --------------------------------------------------------------------------------
-0             0x0             Zip archive data, at least v2.0 to extract, compressed size: 359, uncompressed size: 1363, name: [Content_Types].xml
-928           0x3A0           Zip archive data, at least v2.0 to extract, compressed size: 239, uncompressed size: 590, name: _rels/.rels
-1728          0x6C0           Zip archive data, at least v2.0 to extract, compressed size: 2691, uncompressed size: 14624, name: word/document.xml
-4466          0x1172          Zip archive data, at least v2.0 to extract, compressed size: 273, uncompressed size: 1081, name: word/_rels/document.xml.rels
-5061          0x13C5          Zip archive data, at least v1.0 to extract, compressed size: 17283, uncompressed size: 17283, name: word/media/image1.jpg
-22395         0x577B          Zip archive data, at least v1.0 to extract, compressed size: 244243, uncompressed size: 244243, name: word/media/image3.jpg
-266689        0x411C1         Zip archive data, at least v2.0 to extract, compressed size: 1786, uncompressed size: 8444, name: word/theme/theme1.xml
-268526        0x418EE         Zip archive data, at least v2.0 to extract, compressed size: 1152, uncompressed size: 3262, name: word/settings.xml
-269725        0x41D9D         Zip archive data, at least v2.0 to extract, compressed size: 3244, uncompressed size: 30615, name: word/styles.xml
-273014        0x42A76         Zip archive data, at least v2.0 to extract, compressed size: 457, uncompressed size: 2269, name: word/webSettings.xml
-273521        0x42C71         Zip archive data, at least v2.0 to extract, compressed size: 540, uncompressed size: 1966, name: word/fontTable.xml
-274109        0x42EBD         Zip archive data, at least v2.0 to extract, compressed size: 367, uncompressed size: 736, name: docProps/core.xml
-274787        0x43163         Zip archive data, at least v2.0 to extract, compressed size: 502, uncompressed size: 1002, name: docProps/app.xml
-276438        0x437D6         End of Zip archive, footer length: 22
-</code></pre><p>すると<code>/_some.docx.extracted/word/media</code>に3枚の画像が抽出される</p>
+<span style="color:#ae81ff">0</span>             0x0             Zip archive data, at least v2.0 to extract, compressed size: 359, uncompressed size: 1363, name: <span style="color:#f92672">[</span>Content_Types<span style="color:#f92672">]</span>.xml
+<span style="color:#ae81ff">928</span>           0x3A0           Zip archive data, at least v2.0 to extract, compressed size: 239, uncompressed size: 590, name: _rels/.rels
+<span style="color:#ae81ff">1728</span>          0x6C0           Zip archive data, at least v2.0 to extract, compressed size: 2691, uncompressed size: 14624, name: word/document.xml
+<span style="color:#ae81ff">4466</span>          0x1172          Zip archive data, at least v2.0 to extract, compressed size: 273, uncompressed size: 1081, name: word/_rels/document.xml.rels
+<span style="color:#ae81ff">5061</span>          0x13C5          Zip archive data, at least v1.0 to extract, compressed size: 17283, uncompressed size: 17283, name: word/media/image1.jpg
+<span style="color:#ae81ff">22395</span>         0x577B          Zip archive data, at least v1.0 to extract, compressed size: 244243, uncompressed size: 244243, name: word/media/image3.jpg
+<span style="color:#ae81ff">266689</span>        0x411C1         Zip archive data, at least v2.0 to extract, compressed size: 1786, uncompressed size: 8444, name: word/theme/theme1.xml
+<span style="color:#ae81ff">268526</span>        0x418EE         Zip archive data, at least v2.0 to extract, compressed size: 1152, uncompressed size: 3262, name: word/settings.xml
+<span style="color:#ae81ff">269725</span>        0x41D9D         Zip archive data, at least v2.0 to extract, compressed size: 3244, uncompressed size: 30615, name: word/styles.xml
+<span style="color:#ae81ff">273014</span>        0x42A76         Zip archive data, at least v2.0 to extract, compressed size: 457, uncompressed size: 2269, name: word/webSettings.xml
+<span style="color:#ae81ff">273521</span>        0x42C71         Zip archive data, at least v2.0 to extract, compressed size: 540, uncompressed size: 1966, name: word/fontTable.xml
+<span style="color:#ae81ff">274109</span>        0x42EBD         Zip archive data, at least v2.0 to extract, compressed size: 367, uncompressed size: 736, name: docProps/core.xml
+<span style="color:#ae81ff">274787</span>        0x43163         Zip archive data, at least v2.0 to extract, compressed size: 502, uncompressed size: 1002, name: docProps/app.xml
+<span style="color:#ae81ff">276438</span>        0x437D6         End of Zip archive, footer length: <span style="color:#ae81ff">22</span>
+</code></pre></div><p>すると<code>/_some.docx.extracted/word/media</code>に3枚の画像が抽出される</p>
 <p>3枚目にフラグが書いてある</p>
 <p><code>FLAG{prominentplace}</code></p>
 <h2 id="blogger">Blogger</h2>
@@ -110,70 +110,70 @@ some.file: Microsoft Word 2007+
 <p><code>Leftover Capture Data</code>の値が毎回変わっており怪しいので調べてみる</p>
 <p>どうやらUSBキーボードの入力らしい</p>
 <p>まず<code>Leftover Capture Data</code>の値をtsharkで取り出す</p>
-<pre><code>root@kali:/media/sf_share/CTF/SarCTF 2020/Blogger# tshark -r usb_here.pcapng -V | grep &quot;Leftover Capture Data&quot; | cut -d &quot; &quot; -f 4 &gt; trim
-</code></pre><p><a href="https://github.com/grnbeltwarrior/USB_Keyboard_Hex/blob/master/USB_Hex.py">対応表</a>を参考にデータをキーに変換するpythonスクリプトを書く</p>
-<pre><code>FILE = &quot;trim&quot;
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">root@kali:/media/sf_share/CTF/SarCTF 2020/Blogger# tshark -r usb_here.pcapng -V | grep <span style="color:#e6db74">&#34;Leftover Capture Data&#34;</span> | cut -d <span style="color:#e6db74">&#34; &#34;</span> -f <span style="color:#ae81ff">4</span> &gt; trim
+</code></pre></div><p><a href="https://github.com/grnbeltwarrior/USB_Keyboard_Hex/blob/master/USB_Hex.py">対応表</a>を参考にデータをキーに変換するpythonスクリプトを書く</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">FILE <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">trim</span><span style="color:#e6db74">&#34;</span>
 
-switcher = {
-	&quot;04&quot;:&quot;a&quot;, # or A
-	&quot;05&quot;:&quot;b&quot;, # or B
-	&quot;06&quot;:&quot;c&quot;, # or C
-	&quot;07&quot;:&quot;d&quot;, # or D
-	&quot;08&quot;:&quot;e&quot;, # or E
-	&quot;09&quot;:&quot;f&quot;, # or F
-	&quot;0A&quot;:&quot;g&quot;, # or G
-	&quot;0B&quot;:&quot;h&quot;, # or H
-	&quot;0C&quot;:&quot;i&quot;, # or I
-	&quot;0D&quot;:&quot;j&quot;, # or J
-	&quot;0E&quot;:&quot;k&quot;, # or K
-	&quot;0F&quot;:&quot;l&quot;, # or L
-	&quot;10&quot;:&quot;m&quot;, # or M
-	&quot;11&quot;:&quot;n&quot;, # or N
-	&quot;12&quot;:&quot;o&quot;, # or O
-	&quot;13&quot;:&quot;p&quot;, # or P
-	&quot;14&quot;:&quot;q&quot;, # or Q
-	&quot;15&quot;:&quot;r&quot;, # or R
-	&quot;16&quot;:&quot;s&quot;, # or S
-	&quot;17&quot;:&quot;t&quot;, # or T
-	&quot;18&quot;:&quot;u&quot;, # or U
-	&quot;19&quot;:&quot;v&quot;, # or V
-	&quot;1A&quot;:&quot;w&quot;, # or W
-	&quot;1B&quot;:&quot;x&quot;, # or X
-	&quot;1C&quot;:&quot;y&quot;, # or Y
-	&quot;1D&quot;:&quot;x&quot;, # or Z
-	&quot;1E&quot;:&quot;1&quot;, # or !
-	&quot;1F&quot;:&quot;2&quot;, # or @
-	&quot;20&quot;:&quot;3&quot;, # or #
-	&quot;21&quot;:&quot;4&quot;, # or $
-	&quot;22&quot;:&quot;5&quot;, # or %
-	&quot;23&quot;:&quot;6&quot;, # or ^
-	&quot;24&quot;:&quot;7&quot;, # or &amp;
-	&quot;25&quot;:&quot;8&quot;, # or *
-	&quot;26&quot;:&quot;9&quot;, # or (
-	&quot;27&quot;:&quot;0&quot;, # or )
-	&quot;2D&quot;:&quot;-&quot;, # or _
-	&quot;2E&quot;:&quot;+&quot;, # or =
-	&quot;2F&quot;:&quot;[&quot;, # or {
-	&quot;30&quot;:&quot;]&quot;, # or }
-	&quot;31&quot;:&quot;\&quot;&quot;, # or |
-	&quot;33&quot;:&quot;;&quot;, # or :
-	&quot;34&quot;:&quot;'&quot;, # or &quot;
-	&quot;35&quot;:&quot;`&quot;, # or ~
-	&quot;36&quot;:&quot;,&quot;, # or &lt;
-	&quot;37&quot;:&quot;.&quot;, # or &gt;
-	&quot;38&quot;:&quot;/&quot; # or ?
+switcher <span style="color:#f92672">=</span> {
+	<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">04</span><span style="color:#e6db74">&#34;</span>:<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">a</span><span style="color:#e6db74">&#34;</span>, <span style="color:#75715e"># or A</span>
+	<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">05</span><span style="color:#e6db74">&#34;</span>:<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;</span>, <span style="color:#75715e"># or B</span>
+	<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">06</span><span style="color:#e6db74">&#34;</span>:<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">c</span><span style="color:#e6db74">&#34;</span>, <span style="color:#75715e"># or C</span>
+	<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">07</span><span style="color:#e6db74">&#34;</span>:<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">d</span><span style="color:#e6db74">&#34;</span>, <span style="color:#75715e"># or D</span>
+	<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">08</span><span style="color:#e6db74">&#34;</span>:<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">e</span><span style="color:#e6db74">&#34;</span>, <span style="color:#75715e"># or E</span>
+	<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">09</span><span style="color:#e6db74">&#34;</span>:<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span>, <span style="color:#75715e"># or F</span>
+	<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">0A</span><span style="color:#e6db74">&#34;</span>:<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">g</span><span style="color:#e6db74">&#34;</span>, <span style="color:#75715e"># or G</span>
+	<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">0B</span><span style="color:#e6db74">&#34;</span>:<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">h</span><span style="color:#e6db74">&#34;</span>, <span style="color:#75715e"># or H</span>
+	<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">0C</span><span style="color:#e6db74">&#34;</span>:<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">i</span><span style="color:#e6db74">&#34;</span>, <span style="color:#75715e"># or I</span>
+	<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">0D</span><span style="color:#e6db74">&#34;</span>:<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">j</span><span style="color:#e6db74">&#34;</span>, <span style="color:#75715e"># or J</span>
+	<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">0E</span><span style="color:#e6db74">&#34;</span>:<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">k</span><span style="color:#e6db74">&#34;</span>, <span style="color:#75715e"># or K</span>
+	<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">0F</span><span style="color:#e6db74">&#34;</span>:<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">l</span><span style="color:#e6db74">&#34;</span>, <span style="color:#75715e"># or L</span>
+	<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">10</span><span style="color:#e6db74">&#34;</span>:<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">m</span><span style="color:#e6db74">&#34;</span>, <span style="color:#75715e"># or M</span>
+	<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">11</span><span style="color:#e6db74">&#34;</span>:<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">n</span><span style="color:#e6db74">&#34;</span>, <span style="color:#75715e"># or N</span>
+	<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">12</span><span style="color:#e6db74">&#34;</span>:<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">o</span><span style="color:#e6db74">&#34;</span>, <span style="color:#75715e"># or O</span>
+	<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">13</span><span style="color:#e6db74">&#34;</span>:<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">p</span><span style="color:#e6db74">&#34;</span>, <span style="color:#75715e"># or P</span>
+	<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">14</span><span style="color:#e6db74">&#34;</span>:<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">q</span><span style="color:#e6db74">&#34;</span>, <span style="color:#75715e"># or Q</span>
+	<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">15</span><span style="color:#e6db74">&#34;</span>:<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">r</span><span style="color:#e6db74">&#34;</span>, <span style="color:#75715e"># or R</span>
+	<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">16</span><span style="color:#e6db74">&#34;</span>:<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">s</span><span style="color:#e6db74">&#34;</span>, <span style="color:#75715e"># or S</span>
+	<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">17</span><span style="color:#e6db74">&#34;</span>:<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">t</span><span style="color:#e6db74">&#34;</span>, <span style="color:#75715e"># or T</span>
+	<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">18</span><span style="color:#e6db74">&#34;</span>:<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">u</span><span style="color:#e6db74">&#34;</span>, <span style="color:#75715e"># or U</span>
+	<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">19</span><span style="color:#e6db74">&#34;</span>:<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">v</span><span style="color:#e6db74">&#34;</span>, <span style="color:#75715e"># or V</span>
+	<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">1A</span><span style="color:#e6db74">&#34;</span>:<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">w</span><span style="color:#e6db74">&#34;</span>, <span style="color:#75715e"># or W</span>
+	<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">1B</span><span style="color:#e6db74">&#34;</span>:<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">x</span><span style="color:#e6db74">&#34;</span>, <span style="color:#75715e"># or X</span>
+	<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">1C</span><span style="color:#e6db74">&#34;</span>:<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">y</span><span style="color:#e6db74">&#34;</span>, <span style="color:#75715e"># or Y</span>
+	<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">1D</span><span style="color:#e6db74">&#34;</span>:<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">x</span><span style="color:#e6db74">&#34;</span>, <span style="color:#75715e"># or Z</span>
+	<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">1E</span><span style="color:#e6db74">&#34;</span>:<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">1</span><span style="color:#e6db74">&#34;</span>, <span style="color:#75715e"># or !</span>
+	<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">1F</span><span style="color:#e6db74">&#34;</span>:<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">2</span><span style="color:#e6db74">&#34;</span>, <span style="color:#75715e"># or @</span>
+	<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">20</span><span style="color:#e6db74">&#34;</span>:<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">3</span><span style="color:#e6db74">&#34;</span>, <span style="color:#75715e"># or #</span>
+	<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">21</span><span style="color:#e6db74">&#34;</span>:<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">4</span><span style="color:#e6db74">&#34;</span>, <span style="color:#75715e"># or $</span>
+	<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">22</span><span style="color:#e6db74">&#34;</span>:<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">5</span><span style="color:#e6db74">&#34;</span>, <span style="color:#75715e"># or %</span>
+	<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">23</span><span style="color:#e6db74">&#34;</span>:<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">6</span><span style="color:#e6db74">&#34;</span>, <span style="color:#75715e"># or ^</span>
+	<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">24</span><span style="color:#e6db74">&#34;</span>:<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">7</span><span style="color:#e6db74">&#34;</span>, <span style="color:#75715e"># or &amp;</span>
+	<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">25</span><span style="color:#e6db74">&#34;</span>:<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">8</span><span style="color:#e6db74">&#34;</span>, <span style="color:#75715e"># or *</span>
+	<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">26</span><span style="color:#e6db74">&#34;</span>:<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">9</span><span style="color:#e6db74">&#34;</span>, <span style="color:#75715e"># or (</span>
+	<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">27</span><span style="color:#e6db74">&#34;</span>:<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">0</span><span style="color:#e6db74">&#34;</span>, <span style="color:#75715e"># or )</span>
+	<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">2D</span><span style="color:#e6db74">&#34;</span>:<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">-</span><span style="color:#e6db74">&#34;</span>, <span style="color:#75715e"># or _</span>
+	<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">2E</span><span style="color:#e6db74">&#34;</span>:<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">+</span><span style="color:#e6db74">&#34;</span>, <span style="color:#75715e"># or =</span>
+	<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">2F</span><span style="color:#e6db74">&#34;</span>:<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">[</span><span style="color:#e6db74">&#34;</span>, <span style="color:#75715e"># or {</span>
+	<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">30</span><span style="color:#e6db74">&#34;</span>:<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">]</span><span style="color:#e6db74">&#34;</span>, <span style="color:#75715e"># or }</span>
+	<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">31</span><span style="color:#e6db74">&#34;</span>:<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\&#34;</span><span style="color:#e6db74">&#34;</span>, <span style="color:#75715e"># or |</span>
+	<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">33</span><span style="color:#e6db74">&#34;</span>:<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">;</span><span style="color:#e6db74">&#34;</span>, <span style="color:#75715e"># or :</span>
+	<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">34</span><span style="color:#e6db74">&#34;</span>:<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">&#34;</span>, <span style="color:#75715e"># or &#34;</span>
+	<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">35</span><span style="color:#e6db74">&#34;</span>:<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">`</span><span style="color:#e6db74">&#34;</span>, <span style="color:#75715e"># or ~</span>
+	<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">36</span><span style="color:#e6db74">&#34;</span>:<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">,</span><span style="color:#e6db74">&#34;</span>, <span style="color:#75715e"># or &lt;</span>
+	<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">37</span><span style="color:#e6db74">&#34;</span>:<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">.</span><span style="color:#e6db74">&#34;</span>, <span style="color:#75715e"># or &gt;</span>
+	<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">38</span><span style="color:#e6db74">&#34;</span>:<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">/</span><span style="color:#e6db74">&#34;</span> <span style="color:#75715e"># or ?</span>
 }
 
-with open(FILE) as f:
-    data = f.readlines()
-for line in data:
-    byte = line[4:6].upper()
-    if byte in switcher:
-        print(switcher[byte], end=&quot;&quot;)
-</code></pre><p>実行結果は以下の通り</p>
-<pre><code>root@kali:/media/sf_share/CTF/SarCTF 2020/Blogger# python3 solve.py 
-sherlock,john,andhenrythenvisitthehollowinthehopeoffindingthehound.ontheway,johnnoticeswhatseemstobeflag[like-a-b100dh0und]e
-</code></pre><p>フラグは<code>flag[like-a-b100dh0und]</code>の部分</p>
+<span style="color:#66d9ef">with</span> open(FILE) <span style="color:#66d9ef">as</span> f:
+    data <span style="color:#f92672">=</span> f<span style="color:#f92672">.</span>readlines()
+<span style="color:#66d9ef">for</span> line <span style="color:#f92672">in</span> data:
+    byte <span style="color:#f92672">=</span> line[<span style="color:#ae81ff">4</span>:<span style="color:#ae81ff">6</span>]<span style="color:#f92672">.</span>upper()
+    <span style="color:#66d9ef">if</span> byte <span style="color:#f92672">in</span> switcher:
+        <span style="color:#66d9ef">print</span>(switcher[byte], end<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">&#34;</span>)
+</code></pre></div><p>実行結果は以下の通り</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">root@kali:/media/sf_share/CTF/SarCTF 2020/Blogger# python3 solve.py 
+sherlock,john,andhenrythenvisitthehollowinthehopeoffindingthehound.ontheway,johnnoticeswhatseemstobeflag<span style="color:#f92672">[</span>like-a-b100dh0und<span style="color:#f92672">]</span>e
+</code></pre></div><p>フラグは<code>flag[like-a-b100dh0und]</code>の部分</p>
 <p>一部のキーはシフトキーと同時に押されているので脳内変換</p>
 <p>フラグゲット
 <code>FLAG{like_a_b100dh0und}</code></p>
@@ -199,57 +199,57 @@ sherlock,john,andhenrythenvisitthehollowinthehopeoffindingthehound.ontheway,john
 </li>
 </ol>
 <p>pythonによる実装は以下の通り</p>
-<pre><code>import zipfile
-import tarfile
-import gzip
-import bz2
-import os
-import shutil
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> zipfile
+<span style="color:#f92672">import</span> tarfile
+<span style="color:#f92672">import</span> gzip
+<span style="color:#f92672">import</span> bz2
+<span style="color:#f92672">import</span> os
+<span style="color:#f92672">import</span> shutil
 
-def unzip(data):
-    with zipfile.ZipFile(data) as f:
-        f.extractall()
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">unzip</span>(data):
+    <span style="color:#66d9ef">with</span> zipfile<span style="color:#f92672">.</span>ZipFile(data) <span style="color:#66d9ef">as</span> f:
+        f<span style="color:#f92672">.</span>extractall()
 
-def untar(data):
-    with tarfile.open(data) as f:
-        f.extractall()
-def ungzip(data):
-    with gzip.open(data) as f:
-        dump = f.read()
-    with open(&quot;flag.txt&quot;, &quot;wb&quot;) as f:
-        f.write(dump)
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">untar</span>(data):
+    <span style="color:#66d9ef">with</span> tarfile<span style="color:#f92672">.</span>open(data) <span style="color:#66d9ef">as</span> f:
+        f<span style="color:#f92672">.</span>extractall()
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">ungzip</span>(data):
+    <span style="color:#66d9ef">with</span> gzip<span style="color:#f92672">.</span>open(data) <span style="color:#66d9ef">as</span> f:
+        dump <span style="color:#f92672">=</span> f<span style="color:#f92672">.</span>read()
+    <span style="color:#66d9ef">with</span> open(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">flag.txt</span><span style="color:#e6db74">&#34;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">wb</span><span style="color:#e6db74">&#34;</span>) <span style="color:#66d9ef">as</span> f:
+        f<span style="color:#f92672">.</span>write(dump)
 
-def unbz2(data):
-    with open(data, &quot;rb&quot;) as f:
-        byte = f.read()
-    dump =  bz2.decompress(byte)
-    with open(&quot;flag.txt&quot;, &quot;wb&quot;) as f:
-        f.write(dump)
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">unbz2</span>(data):
+    <span style="color:#66d9ef">with</span> open(data, <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">rb</span><span style="color:#e6db74">&#34;</span>) <span style="color:#66d9ef">as</span> f:
+        byte <span style="color:#f92672">=</span> f<span style="color:#f92672">.</span>read()
+    dump <span style="color:#f92672">=</span>  bz2<span style="color:#f92672">.</span>decompress(byte)
+    <span style="color:#66d9ef">with</span> open(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">flag.txt</span><span style="color:#e6db74">&#34;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">wb</span><span style="color:#e6db74">&#34;</span>) <span style="color:#66d9ef">as</span> f:
+        f<span style="color:#f92672">.</span>write(dump)
 
-shutil.copy('original', 'flag.txt')
-while True:
-    os.rename(&quot;flag.txt&quot;, &quot;tmp&quot;)
-    try:
-        unzip(&quot;tmp&quot;)
-    except:
-        try:
-            untar(&quot;tmp&quot;)
-        except:
-            try:
-                ungzip(&quot;tmp&quot;)
-            except:
-                try:
-                    unbz2(&quot;tmp&quot;)
-                except:
+shutil<span style="color:#f92672">.</span>copy(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">original</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">flag.txt</span><span style="color:#e6db74">&#39;</span>)
+<span style="color:#66d9ef">while</span> True:
+    os<span style="color:#f92672">.</span>rename(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">flag.txt</span><span style="color:#e6db74">&#34;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">tmp</span><span style="color:#e6db74">&#34;</span>)
+    <span style="color:#66d9ef">try</span>:
+        unzip(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">tmp</span><span style="color:#e6db74">&#34;</span>)
+    <span style="color:#66d9ef">except</span>:
+        <span style="color:#66d9ef">try</span>:
+            untar(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">tmp</span><span style="color:#e6db74">&#34;</span>)
+        <span style="color:#66d9ef">except</span>:
+            <span style="color:#66d9ef">try</span>:
+                ungzip(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">tmp</span><span style="color:#e6db74">&#34;</span>)
+            <span style="color:#66d9ef">except</span>:
+                <span style="color:#66d9ef">try</span>:
+                    unbz2(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">tmp</span><span style="color:#e6db74">&#34;</span>)
+                <span style="color:#66d9ef">except</span>:
 
-                    with open(&quot;tmp&quot;, encoding=&quot;utf_8&quot;) as f:
-                        data = f.read()
-                    print(data)
+                    <span style="color:#66d9ef">with</span> open(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">tmp</span><span style="color:#e6db74">&#34;</span>, encoding<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">utf_8</span><span style="color:#e6db74">&#34;</span>) <span style="color:#66d9ef">as</span> f:
+                        data <span style="color:#f92672">=</span> f<span style="color:#f92672">.</span>read()
+                    <span style="color:#66d9ef">print</span>(data)
                     exit()
-</code></pre><p>実行するとフラグがでてくる</p>
-<pre><code>root@kali:/media/sf_share/CTF/SarCTF 2020/Deep dive# python3 solve.py 
-FLAG{matri0sha256}
-</code></pre><h2 id="layouts">Layouts</h2>
+</code></pre></div><p>実行するとフラグがでてくる</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">root@kali:/media/sf_share/CTF/SarCTF 2020/Deep dive# python3 solve.py 
+FLAG<span style="color:#f92672">{</span>matri0sha256<span style="color:#f92672">}</span>
+</code></pre></div><h2 id="layouts">Layouts</h2>
 <p><code>RWtm7A5f</code>というちょっと変わった名前のファイルが添付されてる</p>
 <p>fileコマンドで調べるとzip形式だと分かる</p>
 <p>しかし、パスワードがかかっていて展開できない</p>
@@ -285,7 +285,7 @@ FLAG{matri0sha256}
 <p><code>flags</code>というディレクトリが出てくる</p>
 <p>中に沢山のフォルダが入っていたので、
 とりあえず<code>./flags</code>以下のファイルを抽出する</p>
-<pre><code>root@kali:/media/sf_share/CTF/SarCTF 2020/Layouts# find ./flags -type f -name &quot;*&quot;
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">root@kali:/media/sf_share/CTF/SarCTF 2020/Layouts# find ./flags -type f -name <span style="color:#e6db74">&#34;*&#34;</span>
 ./flags/101/9
 ./flags/102/11
 ./flags/103/8
@@ -307,33 +307,33 @@ FLAG{matri0sha256}
 ./flags/84/4
 ./flags/89/2
 ./flags/95/15
-</code></pre><p><code>cat</code>で中身を見ても何もなかった</p>
+</code></pre></div><p><code>cat</code>で中身を見ても何もなかった</p>
 <p>ここで、ファイル名が1~21の連番になっていること、
 さらにそのファイルが入っているフォルダ名がasciiコードの英数字の範囲にあることに気づく</p>
 <p>先ほどの結果を<code>dump</code>ファイルに保存してから、ファイル名で並べ替える</p>
-<pre><code>root@kali:/media/sf_share/CTF/SarCTF 2020/Layouts# sort -n -k 4 -t &quot;/&quot; dump| cut -d &quot;/&quot; -f 3
-83
-89
-78
-84
-123
-122
-52
-103
-101
-51
-102
-117
-120
-52
-95
-110
-53
-112
-49
-49
-125
-</code></pre><p>結果を<code>dump2</code>として保存</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">root@kali:/media/sf_share/CTF/SarCTF 2020/Layouts# sort -n -k <span style="color:#ae81ff">4</span> -t <span style="color:#e6db74">&#34;/&#34;</span> dump| cut -d <span style="color:#e6db74">&#34;/&#34;</span> -f <span style="color:#ae81ff">3</span>
+<span style="color:#ae81ff">83</span>
+<span style="color:#ae81ff">89</span>
+<span style="color:#ae81ff">78</span>
+<span style="color:#ae81ff">84</span>
+<span style="color:#ae81ff">123</span>
+<span style="color:#ae81ff">122</span>
+<span style="color:#ae81ff">52</span>
+<span style="color:#ae81ff">103</span>
+<span style="color:#ae81ff">101</span>
+<span style="color:#ae81ff">51</span>
+<span style="color:#ae81ff">102</span>
+<span style="color:#ae81ff">117</span>
+<span style="color:#ae81ff">120</span>
+<span style="color:#ae81ff">52</span>
+<span style="color:#ae81ff">95</span>
+<span style="color:#ae81ff">110</span>
+<span style="color:#ae81ff">53</span>
+<span style="color:#ae81ff">112</span>
+<span style="color:#ae81ff">49</span>
+<span style="color:#ae81ff">49</span>
+<span style="color:#ae81ff">125</span>
+</code></pre></div><p>結果を<code>dump2</code>として保存</p>
 <p>asciiコードから文字に変換するpythonスクリプトを書く</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-from_ascii.py" data-lang="from_ascii.py">FILE <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">dump2</span><span style="color:#e6db74">&#34;</span>
 
@@ -344,9 +344,9 @@ i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
     i <span style="color:#f92672">+</span><span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
     <span style="color:#66d9ef">print</span>(chr(int(line,<span style="color:#ae81ff">10</span>)), end<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">&#34;</span>)
 </code></pre></div><p>実行結果は以下の通り</p>
-<pre><code>root@kali:/media/sf_share/CTF/SarCTF 2020/Layouts# python3 from_ascii.py 
-SYNT{z4ge3fux4_n5p11}
-</code></pre><p>ROTっぽいので<a href="https://gchq.github.io/CyberChef/">cyberchef</a>にかけてみる</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">root@kali:/media/sf_share/CTF/SarCTF 2020/Layouts# python3 from_ascii.py 
+SYNT<span style="color:#f92672">{</span>z4ge3fux4_n5p11<span style="color:#f92672">}</span>
+</code></pre></div><p>ROTっぽいので<a href="https://gchq.github.io/CyberChef/">cyberchef</a>にかけてみる</p>
 <p><a href="https://gchq.github.io/CyberChef/#recipe=ROT13(true,true,13)&amp;input=U1lOVHt6NGdlM2Z1eDRfbjVwMTF9">実行結果</a></p>
 <p>フラグゲット
 <code>FLAG{m4tr3shk4_a5c11}</code></p>
@@ -364,61 +364,61 @@ SYNT{z4ge3fux4_n5p11}
 <p>Google formのリンクが張られてる</p>
 <p>いくつかの質問に正確に答える必要があるみたいだ</p>
 <p>ソースを&quot;FLAG&quot;で検索したら、以下の部分が引っかかった</p>
-<pre><code>var FB_PUBLIC_LOAD_DATA_ = [null,[&quot;Let's see how well you know London.&quot;,[[673760842,&quot;What is the name of the store?&quot;,null,0,[[255559616,null,0,null,[[4,300,[&quot;(tesco|Testo)&quot;]
-,&quot;1 - FLAG{08&quot;]
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">var FB_PUBLIC_LOAD_DATA_ = [null,[&#34;Let&#39;s see how well you know London.&#34;,[[673760842,&#34;What is the name of the store?&#34;,null,0,[[255559616,null,0,null,[[4,300,[&#34;(tesco|Testo)&#34;]
+,&#34;1 - FLAG{08&#34;]
 ]
 ]
 ]
-,null,null,null,null,[[&quot;1cTysniECWio21dKH90wnnzNxlB4gKBJI7Bri1Q_K4moAtg&quot;,null,[740,385,0]
+,null,null,null,null,[[&#34;1cTysniECWio21dKH90wnnzNxlB4gKBJI7Bri1Q_K4moAtg&#34;,null,[740,385,0]
 ]
 ]
 ]
-,[2014750817,&quot;What is the name of this place?&quot;,null,0,[[1092335700,null,0,null,[[4,300,[&quot;(bridport|Bridport)&quot;]
-,&quot;2 - c49c3d9a&quot;]
+,[2014750817,&#34;What is the name of this place?&#34;,null,0,[[1092335700,null,0,null,[[4,300,[&#34;(bridport|Bridport)&#34;]
+,&#34;2 - c49c3d9a&#34;]
 ]
 ]
 ]
-,null,null,null,null,[[&quot;1sd8oiCWcjd1_HiCrOA2f1hrgkknzJvT_Y-tVgx5qjBanKw&quot;,null,[740,417,0]
+,null,null,null,null,[[&#34;1sd8oiCWcjd1_HiCrOA2f1hrgkknzJvT_Y-tVgx5qjBanKw&#34;,null,[740,417,0]
 ]
 ]
 ]
-,[771036932,&quot;Very beautiful Park where Sherlock likes to walk. Where is it?&quot;,null,0,[[1600364512,null,0,null,[[4,300,[&quot;(finsbury|Finsbury)&quot;]
-,&quot;3 - e8898343&quot;]
+,[771036932,&#34;Very beautiful Park where Sherlock likes to walk. Where is it?&#34;,null,0,[[1600364512,null,0,null,[[4,300,[&#34;(finsbury|Finsbury)&#34;]
+,&#34;3 - e8898343&#34;]
 ]
 ]
 ]
-,null,null,null,null,[[&quot;1-w_MvKBaer5I78ICXo70E94lH4vKSPmCRekszxbOblJRvA&quot;,null,[740,377,0]
+,null,null,null,null,[[&#34;1-w_MvKBaer5I78ICXo70E94lH4vKSPmCRekszxbOblJRvA&#34;,null,[740,377,0]
 ]
 ]
 ]
-,[302390155,&quot;Every Englishman has been to this square at least once&quot;,null,0,[[661956933,null,0,null,[[4,300,[&quot;(euston|Euston)&quot;]
-,&quot;4 - 7729747b&quot;]
+,[302390155,&#34;Every Englishman has been to this square at least once&#34;,null,0,[[661956933,null,0,null,[[4,300,[&#34;(euston|Euston)&#34;]
+,&#34;4 - 7729747b&#34;]
 ]
 ]
 ]
-,null,null,null,null,[[&quot;1sGu1uvZD9tXdbS0ypGTsI05LDj8Bd1U03VV_vjDLI3bY6A&quot;,null,[740,385,0]
+,null,null,null,null,[[&#34;1sGu1uvZD9tXdbS0ypGTsI05LDj8Bd1U03VV_vjDLI3bY6A&#34;,null,[740,385,0]
 ]
 ]
 ]
-,[1070034509,&quot;Which Embassy building is shown in the photo&quot;,null,0,[[2072641709,null,0,null,[[4,300,[&quot;(hungary|Hungary)&quot;]
-,&quot;5 - cf1be8}&quot;]
+,[1070034509,&#34;Which Embassy building is shown in the photo&#34;,null,0,[[2072641709,null,0,null,[[4,300,[&#34;(hungary|Hungary)&#34;]
+,&#34;5 - cf1be8}&#34;]
 ]
 ]
 ]
-,null,null,null,null,[[&quot;174eoWKRoyVKEN21KJigFwwry_DncqoZfVECN_p6i85oWRw&quot;,null,[740,376,0]
+,null,null,null,null,[[&#34;174eoWKRoyVKEN21KJigFwwry_DncqoZfVECN_p6i85oWRw&#34;,null,[740,376,0]
 ]
 ]
 ]
 ]
 ,null,null,null,[0,0]
-,null,null,&quot;Task&quot;,48,[null,null,null,null,0]
+,null,null,&#34;Task&#34;,48,[null,null,null,null,0]
 ,null,null,null,null,[2]
 ]
 .
 .
 .
 以下略
-</code></pre><p><code>1 -</code>, <code>2-</code>と書いてあるところを全部繋げる</p>
+</code></pre></div><p><code>1 -</code>, <code>2-</code>と書いてあるところを全部繋げる</p>
 <p><code>FLAG{08c49c3d9ae88983437729747bcf1be8}</code></p>
 <p>点数の割にちょっと簡単すぎやしないか</p>
 <h2 id="crossw0rd">Crossw0rd</h2>
@@ -447,64 +447,64 @@ add     rax, 0Ch　cmp     al, 33h ; '3'
 add     rax, 8　cmp     al, 79h ; 'y'
 add     rax, 0Dh　cmp     al, 72h ; 'r'
 </code></pre><p>整形してフラグを出力するスクリプトを書いた</p>
-<pre><code>FILE = 'data'
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">FILE <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">data</span><span style="color:#e6db74">&#39;</span>
 
-with open(FILE) as f:
-    r = f.readlines()
+<span style="color:#66d9ef">with</span> open(FILE) <span style="color:#66d9ef">as</span> f:
+    r <span style="color:#f92672">=</span> f<span style="color:#f92672">.</span>readlines()
 
-flag = ['?'] * len(r)
-for line in r:
-    ind = line[13:].split(&quot;　&quot;)[0]
-    if ind[-1] == 'h':
-        ind = ind[:-1]
-    c = line.split(&quot;\'&quot;)[1]
-    flag[int(ind,16)] = c
-print(&quot;&quot;.join(flag))
-</code></pre><p>フラグゲット</p>
+flag <span style="color:#f92672">=</span> [<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">?</span><span style="color:#e6db74">&#39;</span>] <span style="color:#f92672">*</span> len(r)
+<span style="color:#66d9ef">for</span> line <span style="color:#f92672">in</span> r:
+    ind <span style="color:#f92672">=</span> line[<span style="color:#ae81ff">13</span>:]<span style="color:#f92672">.</span>split(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">　</span><span style="color:#e6db74">&#34;</span>)[<span style="color:#ae81ff">0</span>]
+    <span style="color:#66d9ef">if</span> ind[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>] <span style="color:#f92672">==</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">h</span><span style="color:#e6db74">&#39;</span>:
+        ind <span style="color:#f92672">=</span> ind[:<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]
+    c <span style="color:#f92672">=</span> line<span style="color:#f92672">.</span>split(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\&#39;</span><span style="color:#e6db74">&#34;</span>)[<span style="color:#ae81ff">1</span>]
+    flag[int(ind,<span style="color:#ae81ff">16</span>)] <span style="color:#f92672">=</span> c
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>join(flag))
+</code></pre></div><p>フラグゲット</p>
 <p><code>FLAG{3a5yr3v3r5ing}</code></p>
 <h2 id="magic-of-numbers">Magic of numbers</h2>
 <p>SECCON CTF beginnersでいう「手計算えくすとりーむ」みたいな問題</p>
 <p>サーバから式を受け取り、その計算結果を送り返すスクリプトを書いた</p>
-<pre><code>from pwn import *
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> pwn <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
 
-io = remote('212.47.229.1', 33004)
+io <span style="color:#f92672">=</span> remote(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">212.47.229.1</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">33004</span>)
 
-for i in range(10):
-    io.recvuntil(b'[&gt;] ')
-    eq = io.recvline().strip()
-    print(eq)
-    payload = str(eval(eq.decode())).encode()
-    io.recv()
-    io.sendline(payload)
-    print(payload)
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">10</span>):
+    io<span style="color:#f92672">.</span>recvuntil(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">[&gt;] </span><span style="color:#e6db74">&#39;</span>)
+    eq <span style="color:#f92672">=</span> io<span style="color:#f92672">.</span>recvline()<span style="color:#f92672">.</span>strip()
+    <span style="color:#66d9ef">print</span>(eq)
+    payload <span style="color:#f92672">=</span> str(eval(eq<span style="color:#f92672">.</span>decode()))<span style="color:#f92672">.</span>encode()
+    io<span style="color:#f92672">.</span>recv()
+    io<span style="color:#f92672">.</span>sendline(payload)
+    <span style="color:#66d9ef">print</span>(payload)
 
-io.interactive()
-</code></pre><p>実行結果は以下の通り</p>
-<pre><code>root@kali:/media/sf_share/CTF/SarCTF 2020/Magic of numbers# python3 solve.py 
-[+] Opening connection to 212.47.229.1 on port 33004: Done
-b'0 + 1'
-b'1'
-b'1 + 3'
-b'4'
-b'2 + 5'
-b'7'
-b'3 + 7'
-b'10'
-b'4 + 9'
-b'13'
-b'5 + 11'
-b'16'
-b'6 + 13'
-b'19'
-b'7 + 15'
-b'22'
-b'8 + 17'
-b'25'
-b'0.1 + 0.2'
-b'0.30000000000000004'
-[*] Switching to interactive mode
-FLAG{MaGiC_0f_NuMbErS}
-</code></pre><h2 id="find-moriarty">Find Moriarty</h2>
+io<span style="color:#f92672">.</span>interactive()
+</code></pre></div><p>実行結果は以下の通り</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">root@kali:/media/sf_share/CTF/SarCTF 2020/Magic of numbers# python3 solve.py 
+<span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> Opening connection to 212.47.229.1 on port 33004: Done
+b<span style="color:#e6db74">&#39;0 + 1&#39;</span>
+b<span style="color:#e6db74">&#39;1&#39;</span>
+b<span style="color:#e6db74">&#39;1 + 3&#39;</span>
+b<span style="color:#e6db74">&#39;4&#39;</span>
+b<span style="color:#e6db74">&#39;2 + 5&#39;</span>
+b<span style="color:#e6db74">&#39;7&#39;</span>
+b<span style="color:#e6db74">&#39;3 + 7&#39;</span>
+b<span style="color:#e6db74">&#39;10&#39;</span>
+b<span style="color:#e6db74">&#39;4 + 9&#39;</span>
+b<span style="color:#e6db74">&#39;13&#39;</span>
+b<span style="color:#e6db74">&#39;5 + 11&#39;</span>
+b<span style="color:#e6db74">&#39;16&#39;</span>
+b<span style="color:#e6db74">&#39;6 + 13&#39;</span>
+b<span style="color:#e6db74">&#39;19&#39;</span>
+b<span style="color:#e6db74">&#39;7 + 15&#39;</span>
+b<span style="color:#e6db74">&#39;22&#39;</span>
+b<span style="color:#e6db74">&#39;8 + 17&#39;</span>
+b<span style="color:#e6db74">&#39;25&#39;</span>
+b<span style="color:#e6db74">&#39;0.1 + 0.2&#39;</span>
+b<span style="color:#e6db74">&#39;0.30000000000000004&#39;</span>
+<span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Switching to interactive mode
+FLAG<span style="color:#f92672">{</span>MaGiC_0f_NuMbErS<span style="color:#f92672">}</span>
+</code></pre></div><h2 id="find-moriarty">Find Moriarty</h2>
 <p>時間内にギリギリ解けなかった</p>
 <p>後1分あればなあ&hellip;</p>
 <p>圧縮ファイルが添付されてるので展開すると、
@@ -518,10 +518,10 @@ FLAG{MaGiC_0f_NuMbErS}
 <p>3枚目：ロンドン・スタンステッド空港　<code>STN</code></p>
 <p>問題は繋げる順番だが、6パターンしかないので総当たり</p>
 <p><code>STNLHRLGW</code>がヒットした</p>
-<pre><code>root@kali:/media/sf_share/CTF/SarCTF 2020/Find Moriarty/airport# steghide extract -sf fly.jpg
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">root@kali:/media/sf_share/CTF/SarCTF 2020/Find Moriarty/airport# steghide extract -sf fly.jpg
 Enter passphrase: 
-wrote extracted data to &quot;key.txt&quot;.
-</code></pre><p>抽出した<code>key.txt</code>にフラグが書かれている</p>
+wrote extracted data to <span style="color:#e6db74">&#34;key.txt&#34;</span>.
+</code></pre></div><p>抽出した<code>key.txt</code>にフラグが書かれている</p>
 <p><code>FLAG{l375_fly_w17h_bu65}</code></p>
 <h2 id="感想">感想</h2>
 <p>シャーロック・ホームズをモチーフにした問題が多く、

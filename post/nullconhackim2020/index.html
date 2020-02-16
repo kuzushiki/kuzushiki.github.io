@@ -76,40 +76,40 @@
 <p>3^20分の1を当てるのはスマートでは無い</p>
 <p>相手はコミットメントを生成し、勝負の前に表示してくれるので、コミットメントから出す手を推測できれば勝ちである</p>
 <p>コミットメントは以下のように作られる（AESっぽい感じ）</p>
-<pre><code>sbox = [221, 229, 120, 8, 119, 143, 33, 79, 22, 93, 239, 118, 130, 12, 63, 207, 90, 240, 199, 20, 181, 4, 139, 98, 78, 32, 94, 108, 100, 223, 1, 173, 220, 238, 217, 152, 62, 121, 117, 132, 2, 55, 125, 6, 34, 201, 254, 0, 228, 48, 250, 193, 147, 248, 89, 127, 174, 210, 57, 38, 216, 225, 43, 15, 142, 66, 70, 177, 237, 169, 67, 192, 30, 236, 131, 158, 136, 159, 9, 148, 103, 179, 141, 11, 46, 234, 36, 18, 191, 52, 231, 23, 88, 145, 101, 17, 74, 44, 122, 75, 235, 175, 54, 40, 27, 109, 73, 202, 129, 215, 83, 186, 7, 163, 29, 115, 243, 13, 105, 184, 68, 124, 189, 39, 140, 138, 165, 219, 161, 150, 59, 233, 208, 226, 176, 144, 113, 146, 19, 224, 111, 126, 222, 178, 47, 252, 99, 87, 134, 249, 69, 198, 164, 203, 194, 170, 26, 137, 204, 157, 180, 168, 162, 56, 81, 253, 213, 45, 21, 58, 24, 171, 37, 82, 53, 50, 84, 196, 232, 242, 244, 64, 80, 10, 114, 212, 187, 205, 28, 51, 182, 16, 107, 245, 211, 85, 92, 195, 5, 197, 200, 31, 183, 61, 123, 86, 167, 154, 41, 151, 35, 247, 246, 153, 95, 206, 149, 76, 112, 71, 230, 106, 188, 172, 241, 72, 156, 49, 14, 214, 155, 110, 102, 116, 128, 160, 135, 104, 77, 91, 190, 60, 42, 185, 96, 97, 251, 218, 133, 209, 65, 227, 3, 166, 255, 25]
-p = [5, 9, 1, 8, 3, 11, 0, 12, 7, 4, 14, 13, 10, 15, 6, 2]
-round = 16
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">sbox <span style="color:#f92672">=</span> [<span style="color:#ae81ff">221</span>, <span style="color:#ae81ff">229</span>, <span style="color:#ae81ff">120</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">119</span>, <span style="color:#ae81ff">143</span>, <span style="color:#ae81ff">33</span>, <span style="color:#ae81ff">79</span>, <span style="color:#ae81ff">22</span>, <span style="color:#ae81ff">93</span>, <span style="color:#ae81ff">239</span>, <span style="color:#ae81ff">118</span>, <span style="color:#ae81ff">130</span>, <span style="color:#ae81ff">12</span>, <span style="color:#ae81ff">63</span>, <span style="color:#ae81ff">207</span>, <span style="color:#ae81ff">90</span>, <span style="color:#ae81ff">240</span>, <span style="color:#ae81ff">199</span>, <span style="color:#ae81ff">20</span>, <span style="color:#ae81ff">181</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">139</span>, <span style="color:#ae81ff">98</span>, <span style="color:#ae81ff">78</span>, <span style="color:#ae81ff">32</span>, <span style="color:#ae81ff">94</span>, <span style="color:#ae81ff">108</span>, <span style="color:#ae81ff">100</span>, <span style="color:#ae81ff">223</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">173</span>, <span style="color:#ae81ff">220</span>, <span style="color:#ae81ff">238</span>, <span style="color:#ae81ff">217</span>, <span style="color:#ae81ff">152</span>, <span style="color:#ae81ff">62</span>, <span style="color:#ae81ff">121</span>, <span style="color:#ae81ff">117</span>, <span style="color:#ae81ff">132</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">55</span>, <span style="color:#ae81ff">125</span>, <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">34</span>, <span style="color:#ae81ff">201</span>, <span style="color:#ae81ff">254</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">228</span>, <span style="color:#ae81ff">48</span>, <span style="color:#ae81ff">250</span>, <span style="color:#ae81ff">193</span>, <span style="color:#ae81ff">147</span>, <span style="color:#ae81ff">248</span>, <span style="color:#ae81ff">89</span>, <span style="color:#ae81ff">127</span>, <span style="color:#ae81ff">174</span>, <span style="color:#ae81ff">210</span>, <span style="color:#ae81ff">57</span>, <span style="color:#ae81ff">38</span>, <span style="color:#ae81ff">216</span>, <span style="color:#ae81ff">225</span>, <span style="color:#ae81ff">43</span>, <span style="color:#ae81ff">15</span>, <span style="color:#ae81ff">142</span>, <span style="color:#ae81ff">66</span>, <span style="color:#ae81ff">70</span>, <span style="color:#ae81ff">177</span>, <span style="color:#ae81ff">237</span>, <span style="color:#ae81ff">169</span>, <span style="color:#ae81ff">67</span>, <span style="color:#ae81ff">192</span>, <span style="color:#ae81ff">30</span>, <span style="color:#ae81ff">236</span>, <span style="color:#ae81ff">131</span>, <span style="color:#ae81ff">158</span>, <span style="color:#ae81ff">136</span>, <span style="color:#ae81ff">159</span>, <span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">148</span>, <span style="color:#ae81ff">103</span>, <span style="color:#ae81ff">179</span>, <span style="color:#ae81ff">141</span>, <span style="color:#ae81ff">11</span>, <span style="color:#ae81ff">46</span>, <span style="color:#ae81ff">234</span>, <span style="color:#ae81ff">36</span>, <span style="color:#ae81ff">18</span>, <span style="color:#ae81ff">191</span>, <span style="color:#ae81ff">52</span>, <span style="color:#ae81ff">231</span>, <span style="color:#ae81ff">23</span>, <span style="color:#ae81ff">88</span>, <span style="color:#ae81ff">145</span>, <span style="color:#ae81ff">101</span>, <span style="color:#ae81ff">17</span>, <span style="color:#ae81ff">74</span>, <span style="color:#ae81ff">44</span>, <span style="color:#ae81ff">122</span>, <span style="color:#ae81ff">75</span>, <span style="color:#ae81ff">235</span>, <span style="color:#ae81ff">175</span>, <span style="color:#ae81ff">54</span>, <span style="color:#ae81ff">40</span>, <span style="color:#ae81ff">27</span>, <span style="color:#ae81ff">109</span>, <span style="color:#ae81ff">73</span>, <span style="color:#ae81ff">202</span>, <span style="color:#ae81ff">129</span>, <span style="color:#ae81ff">215</span>, <span style="color:#ae81ff">83</span>, <span style="color:#ae81ff">186</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">163</span>, <span style="color:#ae81ff">29</span>, <span style="color:#ae81ff">115</span>, <span style="color:#ae81ff">243</span>, <span style="color:#ae81ff">13</span>, <span style="color:#ae81ff">105</span>, <span style="color:#ae81ff">184</span>, <span style="color:#ae81ff">68</span>, <span style="color:#ae81ff">124</span>, <span style="color:#ae81ff">189</span>, <span style="color:#ae81ff">39</span>, <span style="color:#ae81ff">140</span>, <span style="color:#ae81ff">138</span>, <span style="color:#ae81ff">165</span>, <span style="color:#ae81ff">219</span>, <span style="color:#ae81ff">161</span>, <span style="color:#ae81ff">150</span>, <span style="color:#ae81ff">59</span>, <span style="color:#ae81ff">233</span>, <span style="color:#ae81ff">208</span>, <span style="color:#ae81ff">226</span>, <span style="color:#ae81ff">176</span>, <span style="color:#ae81ff">144</span>, <span style="color:#ae81ff">113</span>, <span style="color:#ae81ff">146</span>, <span style="color:#ae81ff">19</span>, <span style="color:#ae81ff">224</span>, <span style="color:#ae81ff">111</span>, <span style="color:#ae81ff">126</span>, <span style="color:#ae81ff">222</span>, <span style="color:#ae81ff">178</span>, <span style="color:#ae81ff">47</span>, <span style="color:#ae81ff">252</span>, <span style="color:#ae81ff">99</span>, <span style="color:#ae81ff">87</span>, <span style="color:#ae81ff">134</span>, <span style="color:#ae81ff">249</span>, <span style="color:#ae81ff">69</span>, <span style="color:#ae81ff">198</span>, <span style="color:#ae81ff">164</span>, <span style="color:#ae81ff">203</span>, <span style="color:#ae81ff">194</span>, <span style="color:#ae81ff">170</span>, <span style="color:#ae81ff">26</span>, <span style="color:#ae81ff">137</span>, <span style="color:#ae81ff">204</span>, <span style="color:#ae81ff">157</span>, <span style="color:#ae81ff">180</span>, <span style="color:#ae81ff">168</span>, <span style="color:#ae81ff">162</span>, <span style="color:#ae81ff">56</span>, <span style="color:#ae81ff">81</span>, <span style="color:#ae81ff">253</span>, <span style="color:#ae81ff">213</span>, <span style="color:#ae81ff">45</span>, <span style="color:#ae81ff">21</span>, <span style="color:#ae81ff">58</span>, <span style="color:#ae81ff">24</span>, <span style="color:#ae81ff">171</span>, <span style="color:#ae81ff">37</span>, <span style="color:#ae81ff">82</span>, <span style="color:#ae81ff">53</span>, <span style="color:#ae81ff">50</span>, <span style="color:#ae81ff">84</span>, <span style="color:#ae81ff">196</span>, <span style="color:#ae81ff">232</span>, <span style="color:#ae81ff">242</span>, <span style="color:#ae81ff">244</span>, <span style="color:#ae81ff">64</span>, <span style="color:#ae81ff">80</span>, <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">114</span>, <span style="color:#ae81ff">212</span>, <span style="color:#ae81ff">187</span>, <span style="color:#ae81ff">205</span>, <span style="color:#ae81ff">28</span>, <span style="color:#ae81ff">51</span>, <span style="color:#ae81ff">182</span>, <span style="color:#ae81ff">16</span>, <span style="color:#ae81ff">107</span>, <span style="color:#ae81ff">245</span>, <span style="color:#ae81ff">211</span>, <span style="color:#ae81ff">85</span>, <span style="color:#ae81ff">92</span>, <span style="color:#ae81ff">195</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">197</span>, <span style="color:#ae81ff">200</span>, <span style="color:#ae81ff">31</span>, <span style="color:#ae81ff">183</span>, <span style="color:#ae81ff">61</span>, <span style="color:#ae81ff">123</span>, <span style="color:#ae81ff">86</span>, <span style="color:#ae81ff">167</span>, <span style="color:#ae81ff">154</span>, <span style="color:#ae81ff">41</span>, <span style="color:#ae81ff">151</span>, <span style="color:#ae81ff">35</span>, <span style="color:#ae81ff">247</span>, <span style="color:#ae81ff">246</span>, <span style="color:#ae81ff">153</span>, <span style="color:#ae81ff">95</span>, <span style="color:#ae81ff">206</span>, <span style="color:#ae81ff">149</span>, <span style="color:#ae81ff">76</span>, <span style="color:#ae81ff">112</span>, <span style="color:#ae81ff">71</span>, <span style="color:#ae81ff">230</span>, <span style="color:#ae81ff">106</span>, <span style="color:#ae81ff">188</span>, <span style="color:#ae81ff">172</span>, <span style="color:#ae81ff">241</span>, <span style="color:#ae81ff">72</span>, <span style="color:#ae81ff">156</span>, <span style="color:#ae81ff">49</span>, <span style="color:#ae81ff">14</span>, <span style="color:#ae81ff">214</span>, <span style="color:#ae81ff">155</span>, <span style="color:#ae81ff">110</span>, <span style="color:#ae81ff">102</span>, <span style="color:#ae81ff">116</span>, <span style="color:#ae81ff">128</span>, <span style="color:#ae81ff">160</span>, <span style="color:#ae81ff">135</span>, <span style="color:#ae81ff">104</span>, <span style="color:#ae81ff">77</span>, <span style="color:#ae81ff">91</span>, <span style="color:#ae81ff">190</span>, <span style="color:#ae81ff">60</span>, <span style="color:#ae81ff">42</span>, <span style="color:#ae81ff">185</span>, <span style="color:#ae81ff">96</span>, <span style="color:#ae81ff">97</span>, <span style="color:#ae81ff">251</span>, <span style="color:#ae81ff">218</span>, <span style="color:#ae81ff">133</span>, <span style="color:#ae81ff">209</span>, <span style="color:#ae81ff">65</span>, <span style="color:#ae81ff">227</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">166</span>, <span style="color:#ae81ff">255</span>, <span style="color:#ae81ff">25</span>]
+p <span style="color:#f92672">=</span> [<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">11</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">12</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">14</span>, <span style="color:#ae81ff">13</span>, <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">15</span>, <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">2</span>]
+round <span style="color:#f92672">=</span> <span style="color:#ae81ff">16</span>
 
-def gen_commitments():
-    secret = bytearray(Random.get_random_bytes(16))
-    rc = hash(secret + b&quot;r&quot;)
-    pc = hash(secret + b&quot;p&quot;)
-    sc = hash(secret + b&quot;s&quot;)
-    secret = hex(bytes_to_int(secret))[2:]
-    rps = [(&quot;r&quot;, rc), (&quot;p&quot;, pc), (&quot;s&quot;, sc)]
-    print(rps)
-    random.shuffle(rps)
-    return secret, rps
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">gen_commitments</span>():
+    secret <span style="color:#f92672">=</span> bytearray(Random<span style="color:#f92672">.</span>get_random_bytes(<span style="color:#ae81ff">16</span>))
+    rc <span style="color:#f92672">=</span> hash(secret <span style="color:#f92672">+</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">r</span><span style="color:#e6db74">&#34;</span>)
+    pc <span style="color:#f92672">=</span> hash(secret <span style="color:#f92672">+</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">p</span><span style="color:#e6db74">&#34;</span>)
+    sc <span style="color:#f92672">=</span> hash(secret <span style="color:#f92672">+</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">s</span><span style="color:#e6db74">&#34;</span>)
+    secret <span style="color:#f92672">=</span> hex(bytes_to_int(secret))[<span style="color:#ae81ff">2</span>:]
+    rps <span style="color:#f92672">=</span> [(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">r</span><span style="color:#e6db74">&#34;</span>, rc), (<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">p</span><span style="color:#e6db74">&#34;</span>, pc), (<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">s</span><span style="color:#e6db74">&#34;</span>, sc)]
+    <span style="color:#66d9ef">print</span>(rps)
+    random<span style="color:#f92672">.</span>shuffle(rps)
+    <span style="color:#66d9ef">return</span> secret, rps
 
-def hash(data):
-    state = bytearray([208, 151, 71, 15, 101, 206, 50, 225, 223, 14, 14, 106, 22, 40, 20, 2])
-    data = pad(data, 16)
-    print(data)
-    data = group(data)
-    print(data)
-    for roundkey in data:
-        print(&quot;roundkey&quot;, roundkey)
-        for _ in range(round):
-            state = repeated_xor(state, roundkey)
-            for i in range(len(state)):
-                state[i] = sbox[state[i]]
-            temp = bytearray(16)
-            for i in range(len(state)):
-                temp[p[i]] = state[i]
-            state = temp
-        print(&quot;state&quot;, state)
-    return hex(bytes_to_int(state))[2:]
-</code></pre><p>概要をざっくり説明すると、<code>gen_commitments</code>では<code>secret</code>をまず生成し、それにそれぞれの手を足したものを<code>hash</code>に投げている</p>
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">hash</span>(data):
+    state <span style="color:#f92672">=</span> bytearray([<span style="color:#ae81ff">208</span>, <span style="color:#ae81ff">151</span>, <span style="color:#ae81ff">71</span>, <span style="color:#ae81ff">15</span>, <span style="color:#ae81ff">101</span>, <span style="color:#ae81ff">206</span>, <span style="color:#ae81ff">50</span>, <span style="color:#ae81ff">225</span>, <span style="color:#ae81ff">223</span>, <span style="color:#ae81ff">14</span>, <span style="color:#ae81ff">14</span>, <span style="color:#ae81ff">106</span>, <span style="color:#ae81ff">22</span>, <span style="color:#ae81ff">40</span>, <span style="color:#ae81ff">20</span>, <span style="color:#ae81ff">2</span>])
+    data <span style="color:#f92672">=</span> pad(data, <span style="color:#ae81ff">16</span>)
+    <span style="color:#66d9ef">print</span>(data)
+    data <span style="color:#f92672">=</span> group(data)
+    <span style="color:#66d9ef">print</span>(data)
+    <span style="color:#66d9ef">for</span> roundkey <span style="color:#f92672">in</span> data:
+        <span style="color:#66d9ef">print</span>(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">roundkey</span><span style="color:#e6db74">&#34;</span>, roundkey)
+        <span style="color:#66d9ef">for</span> _ <span style="color:#f92672">in</span> range(round):
+            state <span style="color:#f92672">=</span> repeated_xor(state, roundkey)
+            <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(state)):
+                state[i] <span style="color:#f92672">=</span> sbox[state[i]]
+            temp <span style="color:#f92672">=</span> bytearray(<span style="color:#ae81ff">16</span>)
+            <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(state)):
+                temp[p[i]] <span style="color:#f92672">=</span> state[i]
+            state <span style="color:#f92672">=</span> temp
+        <span style="color:#66d9ef">print</span>(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">state</span><span style="color:#e6db74">&#34;</span>, state)
+    <span style="color:#66d9ef">return</span> hex(bytes_to_int(state))[<span style="color:#ae81ff">2</span>:]
+</code></pre></div><p>概要をざっくり説明すると、<code>gen_commitments</code>では<code>secret</code>をまず生成し、それにそれぞれの手を足したものを<code>hash</code>に投げている</p>
 <p><code>hash</code>では入力をパディングし、分割し、パーツごとにXOR, 置換などのAESっぽい処理をする</p>
 <p>例えばパーの場合は<code>b'/\xdcF\xcd1x\xa9\x02%\x12\xba\x81\x17\xff$^</code>と
 <code>b'p\x0f\x0f\x0f\x0f\x0f\x0f\x0f\x0f\x0f\x0f\x0f\x0f\x0f\x0f\x0f'</code>に分けられる</p>
@@ -117,123 +117,123 @@ def hash(data):
 <p><code>hash</code>には乱数を使った処理が無いので、逆算が可能である</p>
 <p>得られるコミットメントにたいして<code>hash</code>と逆の処理を施してあげれば、元の入力を求められるはずである</p>
 <p>以下のような関数を作る</p>
-<pre><code>def dec_hash(old_state_list):
-    roundkey_list = [bytearray(b'r\x0f\x0f\x0f\x0f\x0f\x0f\x0f\x0f\x0f\x0f\x0f\x0f\x0f\x0f\x0f'),
-        bytearray(b'p\x0f\x0f\x0f\x0f\x0f\x0f\x0f\x0f\x0f\x0f\x0f\x0f\x0f\x0f\x0f'),
-        bytearray(b's\x0f\x0f\x0f\x0f\x0f\x0f\x0f\x0f\x0f\x0f\x0f\x0f\x0f\x0f\x0f')
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">dec_hash</span>(old_state_list):
+    roundkey_list <span style="color:#f92672">=</span> [bytearray(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">r</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#e6db74">&#39;</span>),
+        bytearray(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">p</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#e6db74">&#39;</span>),
+        bytearray(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">s</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#e6db74">&#39;</span>)
         ]
 
-    total_state_list = []
-    for old_state in old_state_list:
-        new_state_list = []
-        for roundkey in roundkey_list:
-            state = int_to_bytes(old_state)
-            temp = [0] * len(state)
-            for i in range(len(state)):
-                temp[i]  = state[p[i]]
-            for i in range(len(state)):
-                temp[i] = sbox.index(temp[i])
-            new_state = repeated_xor(temp, roundkey)
-            new_state_list.append(new_state[0])
-        total_state_list.append(new_state_list)
-    return total_state_list
-</code></pre><p>復号結果は以下のようになる</p>
-<pre><code>[
-    [bytearray(b'#\xb6\xcb\xa6\x850!\xedr\x15\x1c&gt;\x89\xe7Ch'), 
-    bytearray(b'!\xb6\xcb\xa6\x850!\xedr\x15\x1c&gt;\x89\xe7Ch'), 
-    bytearray(b'&quot;\xb6\xcb\xa6\x850!\xedr\x15\x1c&gt;\x89\xe7Ch')],
+    total_state_list <span style="color:#f92672">=</span> []
+    <span style="color:#66d9ef">for</span> old_state <span style="color:#f92672">in</span> old_state_list:
+        new_state_list <span style="color:#f92672">=</span> []
+        <span style="color:#66d9ef">for</span> roundkey <span style="color:#f92672">in</span> roundkey_list:
+            state <span style="color:#f92672">=</span> int_to_bytes(old_state)
+            temp <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0</span>] <span style="color:#f92672">*</span> len(state)
+            <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(state)):
+                temp[i]  <span style="color:#f92672">=</span> state[p[i]]
+            <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(state)):
+                temp[i] <span style="color:#f92672">=</span> sbox<span style="color:#f92672">.</span>index(temp[i])
+            new_state <span style="color:#f92672">=</span> repeated_xor(temp, roundkey)
+            new_state_list<span style="color:#f92672">.</span>append(new_state[<span style="color:#ae81ff">0</span>])
+        total_state_list<span style="color:#f92672">.</span>append(new_state_list)
+    <span style="color:#66d9ef">return</span> total_state_list
+</code></pre></div><p>復号結果は以下のようになる</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">[
+    [bytearray(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">#</span><span style="color:#ae81ff">\xb6</span><span style="color:#ae81ff">\xcb</span><span style="color:#ae81ff">\xa6</span><span style="color:#ae81ff">\x85</span><span style="color:#e6db74">0!</span><span style="color:#ae81ff">\xed</span><span style="color:#e6db74">r</span><span style="color:#ae81ff">\x15</span><span style="color:#ae81ff">\x1c</span><span style="color:#e6db74">&gt;</span><span style="color:#ae81ff">\x89</span><span style="color:#ae81ff">\xe7</span><span style="color:#e6db74">Ch</span><span style="color:#e6db74">&#39;</span>), 
+    bytearray(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">!</span><span style="color:#ae81ff">\xb6</span><span style="color:#ae81ff">\xcb</span><span style="color:#ae81ff">\xa6</span><span style="color:#ae81ff">\x85</span><span style="color:#e6db74">0!</span><span style="color:#ae81ff">\xed</span><span style="color:#e6db74">r</span><span style="color:#ae81ff">\x15</span><span style="color:#ae81ff">\x1c</span><span style="color:#e6db74">&gt;</span><span style="color:#ae81ff">\x89</span><span style="color:#ae81ff">\xe7</span><span style="color:#e6db74">Ch</span><span style="color:#e6db74">&#39;</span>), 
+    bytearray(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\xb6</span><span style="color:#ae81ff">\xcb</span><span style="color:#ae81ff">\xa6</span><span style="color:#ae81ff">\x85</span><span style="color:#e6db74">0!</span><span style="color:#ae81ff">\xed</span><span style="color:#e6db74">r</span><span style="color:#ae81ff">\x15</span><span style="color:#ae81ff">\x1c</span><span style="color:#e6db74">&gt;</span><span style="color:#ae81ff">\x89</span><span style="color:#ae81ff">\xe7</span><span style="color:#e6db74">Ch</span><span style="color:#e6db74">&#39;</span>)],
 
-    [bytearray(b' W\x05\xa4\xdc\xfa\xdf\xe6\x90dJM\xb2\x10Et'), 
-    bytearray(b'&quot;W\x05\xa4\xdc\xfa\xdf\xe6\x90dJM\xb2\x10Et'), 
-    bytearray(b'!W\x05\xa4\xdc\xfa\xdf\xe6\x90dJM\xb2\x10Et')], 
+    [bytearray(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74"> W</span><span style="color:#ae81ff">\x05</span><span style="color:#ae81ff">\xa4</span><span style="color:#ae81ff">\xdc</span><span style="color:#ae81ff">\xfa</span><span style="color:#ae81ff">\xdf</span><span style="color:#ae81ff">\xe6</span><span style="color:#ae81ff">\x90</span><span style="color:#e6db74">dJM</span><span style="color:#ae81ff">\xb2</span><span style="color:#ae81ff">\x10</span><span style="color:#e6db74">Et</span><span style="color:#e6db74">&#39;</span>), 
+    bytearray(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">W</span><span style="color:#ae81ff">\x05</span><span style="color:#ae81ff">\xa4</span><span style="color:#ae81ff">\xdc</span><span style="color:#ae81ff">\xfa</span><span style="color:#ae81ff">\xdf</span><span style="color:#ae81ff">\xe6</span><span style="color:#ae81ff">\x90</span><span style="color:#e6db74">dJM</span><span style="color:#ae81ff">\xb2</span><span style="color:#ae81ff">\x10</span><span style="color:#e6db74">Et</span><span style="color:#e6db74">&#39;</span>), 
+    bytearray(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">!W</span><span style="color:#ae81ff">\x05</span><span style="color:#ae81ff">\xa4</span><span style="color:#ae81ff">\xdc</span><span style="color:#ae81ff">\xfa</span><span style="color:#ae81ff">\xdf</span><span style="color:#ae81ff">\xe6</span><span style="color:#ae81ff">\x90</span><span style="color:#e6db74">dJM</span><span style="color:#ae81ff">\xb2</span><span style="color:#ae81ff">\x10</span><span style="color:#e6db74">Et</span><span style="color:#e6db74">&#39;</span>)], 
 
-    [bytearray(b'&quot;8\xa1\x9f\n\xe4\xbfu\xf26\xd7\xdd\xf6\x816\xf0'), 
-    bytearray(b' 8\xa1\x9f\n\xe4\xbfu\xf26\xd7\xdd\xf6\x816\xf0'), 
-    bytearray(b'#8\xa1\x9f\n\xe4\xbfu\xf26\xd7\xdd\xf6\x816\xf0')]]
-</code></pre><p>３つのコミットメントを<code>r,p,c</code>のそれぞれで復号してみたもの</p>
+    [bytearray(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">8</span><span style="color:#ae81ff">\xa1</span><span style="color:#ae81ff">\x9f</span><span style="color:#ae81ff">\n</span><span style="color:#ae81ff">\xe4</span><span style="color:#ae81ff">\xbf</span><span style="color:#e6db74">u</span><span style="color:#ae81ff">\xf2</span><span style="color:#e6db74">6</span><span style="color:#ae81ff">\xd7</span><span style="color:#ae81ff">\xdd</span><span style="color:#ae81ff">\xf6</span><span style="color:#ae81ff">\x81</span><span style="color:#e6db74">6</span><span style="color:#ae81ff">\xf0</span><span style="color:#e6db74">&#39;</span>), 
+    bytearray(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74"> 8</span><span style="color:#ae81ff">\xa1</span><span style="color:#ae81ff">\x9f</span><span style="color:#ae81ff">\n</span><span style="color:#ae81ff">\xe4</span><span style="color:#ae81ff">\xbf</span><span style="color:#e6db74">u</span><span style="color:#ae81ff">\xf2</span><span style="color:#e6db74">6</span><span style="color:#ae81ff">\xd7</span><span style="color:#ae81ff">\xdd</span><span style="color:#ae81ff">\xf6</span><span style="color:#ae81ff">\x81</span><span style="color:#e6db74">6</span><span style="color:#ae81ff">\xf0</span><span style="color:#e6db74">&#39;</span>), 
+    bytearray(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">#8</span><span style="color:#ae81ff">\xa1</span><span style="color:#ae81ff">\x9f</span><span style="color:#ae81ff">\n</span><span style="color:#ae81ff">\xe4</span><span style="color:#ae81ff">\xbf</span><span style="color:#e6db74">u</span><span style="color:#ae81ff">\xf2</span><span style="color:#e6db74">6</span><span style="color:#ae81ff">\xd7</span><span style="color:#ae81ff">\xdd</span><span style="color:#ae81ff">\xf6</span><span style="color:#ae81ff">\x81</span><span style="color:#e6db74">6</span><span style="color:#ae81ff">\xf0</span><span style="color:#e6db74">&#39;</span>)]]
+</code></pre></div><p>３つのコミットメントを<code>r,p,c</code>のそれぞれで復号してみたもの</p>
 <p>すると復号結果の1バイト目が一致することが分かる（上の例では<code>b'&quot;'</code>）</p>
 <p>これが一致しているものが正解である</p>
 <p>上の例では上からチョキ、グー、パーとなる</p>
 <p>（なぜ1バイト目しか一致しないのかは分かりませんでした）</p>
 <p>後はコミットメントを読み取り、復号し、出す手を決めて送るプログラムをつくる</p>
-<pre><code>from pwn import *
-import time
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> pwn <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+<span style="color:#f92672">import</span> time
 
-from Crypto import Random
-from Crypto.Random import random
-from Crypto.Util.number import *
+<span style="color:#f92672">from</span> Crypto <span style="color:#f92672">import</span> Random
+<span style="color:#f92672">from</span> Crypto.Random <span style="color:#f92672">import</span> random
+<span style="color:#f92672">from</span> Crypto.Util.number <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
 
-sbox = [221, 229, 120, 8, 119, 143, 33, 79, 22, 93, 239, 118, 130, 12, 63, 207, 90, 240, 199, 20, 181, 4, 139, 98, 78, 32, 94, 108, 100, 223, 1, 173, 220, 238, 217, 152, 62, 121, 117, 132, 2, 55, 125, 6, 34, 201, 254, 0, 228, 48, 250, 193, 147, 248, 89, 127, 174, 210, 57, 38, 216, 225, 43, 15, 142, 66, 70, 177, 237, 169, 67, 192, 30, 236, 131, 158, 136, 159, 9, 148, 103, 179, 141, 11, 46, 234, 36, 18, 191, 52, 231, 23, 88, 145, 101, 17, 74, 44, 122, 75, 235, 175, 54, 40, 27, 109, 73, 202, 129, 215, 83, 186, 7, 163, 29, 115, 243, 13, 105, 184, 68, 124, 189, 39, 140, 138, 165, 219, 161, 150, 59, 233, 208, 226, 176, 144, 113, 146, 19, 224, 111, 126, 222, 178, 47, 252, 99, 87, 134, 249, 69, 198, 164, 203, 194, 170, 26, 137, 204, 157, 180, 168, 162, 56, 81, 253, 213, 45, 21, 58, 24, 171, 37, 82, 53, 50, 84, 196, 232, 242, 244, 64, 80, 10, 114, 212, 187, 205, 28, 51, 182, 16, 107, 245, 211, 85, 92, 195, 5, 197, 200, 31, 183, 61, 123, 86, 167, 154, 41, 151, 35, 247, 246, 153, 95, 206, 149, 76, 112, 71, 230, 106, 188, 172, 241, 72, 156, 49, 14, 214, 155, 110, 102, 116, 128, 160, 135, 104, 77, 91, 190, 60, 42, 185, 96, 97, 251, 218, 133, 209, 65, 227, 3, 166, 255, 25]
-p = [5, 9, 1, 8, 3, 11, 0, 12, 7, 4, 14, 13, 10, 15, 6, 2]
-round = 16
-
-
-def pad(data, size = 16):
-    pad_byte = (size - len(data) % size) % size
-    data = data + bytearray([pad_byte]) * pad_byte
-    return data
+sbox <span style="color:#f92672">=</span> [<span style="color:#ae81ff">221</span>, <span style="color:#ae81ff">229</span>, <span style="color:#ae81ff">120</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">119</span>, <span style="color:#ae81ff">143</span>, <span style="color:#ae81ff">33</span>, <span style="color:#ae81ff">79</span>, <span style="color:#ae81ff">22</span>, <span style="color:#ae81ff">93</span>, <span style="color:#ae81ff">239</span>, <span style="color:#ae81ff">118</span>, <span style="color:#ae81ff">130</span>, <span style="color:#ae81ff">12</span>, <span style="color:#ae81ff">63</span>, <span style="color:#ae81ff">207</span>, <span style="color:#ae81ff">90</span>, <span style="color:#ae81ff">240</span>, <span style="color:#ae81ff">199</span>, <span style="color:#ae81ff">20</span>, <span style="color:#ae81ff">181</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">139</span>, <span style="color:#ae81ff">98</span>, <span style="color:#ae81ff">78</span>, <span style="color:#ae81ff">32</span>, <span style="color:#ae81ff">94</span>, <span style="color:#ae81ff">108</span>, <span style="color:#ae81ff">100</span>, <span style="color:#ae81ff">223</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">173</span>, <span style="color:#ae81ff">220</span>, <span style="color:#ae81ff">238</span>, <span style="color:#ae81ff">217</span>, <span style="color:#ae81ff">152</span>, <span style="color:#ae81ff">62</span>, <span style="color:#ae81ff">121</span>, <span style="color:#ae81ff">117</span>, <span style="color:#ae81ff">132</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">55</span>, <span style="color:#ae81ff">125</span>, <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">34</span>, <span style="color:#ae81ff">201</span>, <span style="color:#ae81ff">254</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">228</span>, <span style="color:#ae81ff">48</span>, <span style="color:#ae81ff">250</span>, <span style="color:#ae81ff">193</span>, <span style="color:#ae81ff">147</span>, <span style="color:#ae81ff">248</span>, <span style="color:#ae81ff">89</span>, <span style="color:#ae81ff">127</span>, <span style="color:#ae81ff">174</span>, <span style="color:#ae81ff">210</span>, <span style="color:#ae81ff">57</span>, <span style="color:#ae81ff">38</span>, <span style="color:#ae81ff">216</span>, <span style="color:#ae81ff">225</span>, <span style="color:#ae81ff">43</span>, <span style="color:#ae81ff">15</span>, <span style="color:#ae81ff">142</span>, <span style="color:#ae81ff">66</span>, <span style="color:#ae81ff">70</span>, <span style="color:#ae81ff">177</span>, <span style="color:#ae81ff">237</span>, <span style="color:#ae81ff">169</span>, <span style="color:#ae81ff">67</span>, <span style="color:#ae81ff">192</span>, <span style="color:#ae81ff">30</span>, <span style="color:#ae81ff">236</span>, <span style="color:#ae81ff">131</span>, <span style="color:#ae81ff">158</span>, <span style="color:#ae81ff">136</span>, <span style="color:#ae81ff">159</span>, <span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">148</span>, <span style="color:#ae81ff">103</span>, <span style="color:#ae81ff">179</span>, <span style="color:#ae81ff">141</span>, <span style="color:#ae81ff">11</span>, <span style="color:#ae81ff">46</span>, <span style="color:#ae81ff">234</span>, <span style="color:#ae81ff">36</span>, <span style="color:#ae81ff">18</span>, <span style="color:#ae81ff">191</span>, <span style="color:#ae81ff">52</span>, <span style="color:#ae81ff">231</span>, <span style="color:#ae81ff">23</span>, <span style="color:#ae81ff">88</span>, <span style="color:#ae81ff">145</span>, <span style="color:#ae81ff">101</span>, <span style="color:#ae81ff">17</span>, <span style="color:#ae81ff">74</span>, <span style="color:#ae81ff">44</span>, <span style="color:#ae81ff">122</span>, <span style="color:#ae81ff">75</span>, <span style="color:#ae81ff">235</span>, <span style="color:#ae81ff">175</span>, <span style="color:#ae81ff">54</span>, <span style="color:#ae81ff">40</span>, <span style="color:#ae81ff">27</span>, <span style="color:#ae81ff">109</span>, <span style="color:#ae81ff">73</span>, <span style="color:#ae81ff">202</span>, <span style="color:#ae81ff">129</span>, <span style="color:#ae81ff">215</span>, <span style="color:#ae81ff">83</span>, <span style="color:#ae81ff">186</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">163</span>, <span style="color:#ae81ff">29</span>, <span style="color:#ae81ff">115</span>, <span style="color:#ae81ff">243</span>, <span style="color:#ae81ff">13</span>, <span style="color:#ae81ff">105</span>, <span style="color:#ae81ff">184</span>, <span style="color:#ae81ff">68</span>, <span style="color:#ae81ff">124</span>, <span style="color:#ae81ff">189</span>, <span style="color:#ae81ff">39</span>, <span style="color:#ae81ff">140</span>, <span style="color:#ae81ff">138</span>, <span style="color:#ae81ff">165</span>, <span style="color:#ae81ff">219</span>, <span style="color:#ae81ff">161</span>, <span style="color:#ae81ff">150</span>, <span style="color:#ae81ff">59</span>, <span style="color:#ae81ff">233</span>, <span style="color:#ae81ff">208</span>, <span style="color:#ae81ff">226</span>, <span style="color:#ae81ff">176</span>, <span style="color:#ae81ff">144</span>, <span style="color:#ae81ff">113</span>, <span style="color:#ae81ff">146</span>, <span style="color:#ae81ff">19</span>, <span style="color:#ae81ff">224</span>, <span style="color:#ae81ff">111</span>, <span style="color:#ae81ff">126</span>, <span style="color:#ae81ff">222</span>, <span style="color:#ae81ff">178</span>, <span style="color:#ae81ff">47</span>, <span style="color:#ae81ff">252</span>, <span style="color:#ae81ff">99</span>, <span style="color:#ae81ff">87</span>, <span style="color:#ae81ff">134</span>, <span style="color:#ae81ff">249</span>, <span style="color:#ae81ff">69</span>, <span style="color:#ae81ff">198</span>, <span style="color:#ae81ff">164</span>, <span style="color:#ae81ff">203</span>, <span style="color:#ae81ff">194</span>, <span style="color:#ae81ff">170</span>, <span style="color:#ae81ff">26</span>, <span style="color:#ae81ff">137</span>, <span style="color:#ae81ff">204</span>, <span style="color:#ae81ff">157</span>, <span style="color:#ae81ff">180</span>, <span style="color:#ae81ff">168</span>, <span style="color:#ae81ff">162</span>, <span style="color:#ae81ff">56</span>, <span style="color:#ae81ff">81</span>, <span style="color:#ae81ff">253</span>, <span style="color:#ae81ff">213</span>, <span style="color:#ae81ff">45</span>, <span style="color:#ae81ff">21</span>, <span style="color:#ae81ff">58</span>, <span style="color:#ae81ff">24</span>, <span style="color:#ae81ff">171</span>, <span style="color:#ae81ff">37</span>, <span style="color:#ae81ff">82</span>, <span style="color:#ae81ff">53</span>, <span style="color:#ae81ff">50</span>, <span style="color:#ae81ff">84</span>, <span style="color:#ae81ff">196</span>, <span style="color:#ae81ff">232</span>, <span style="color:#ae81ff">242</span>, <span style="color:#ae81ff">244</span>, <span style="color:#ae81ff">64</span>, <span style="color:#ae81ff">80</span>, <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">114</span>, <span style="color:#ae81ff">212</span>, <span style="color:#ae81ff">187</span>, <span style="color:#ae81ff">205</span>, <span style="color:#ae81ff">28</span>, <span style="color:#ae81ff">51</span>, <span style="color:#ae81ff">182</span>, <span style="color:#ae81ff">16</span>, <span style="color:#ae81ff">107</span>, <span style="color:#ae81ff">245</span>, <span style="color:#ae81ff">211</span>, <span style="color:#ae81ff">85</span>, <span style="color:#ae81ff">92</span>, <span style="color:#ae81ff">195</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">197</span>, <span style="color:#ae81ff">200</span>, <span style="color:#ae81ff">31</span>, <span style="color:#ae81ff">183</span>, <span style="color:#ae81ff">61</span>, <span style="color:#ae81ff">123</span>, <span style="color:#ae81ff">86</span>, <span style="color:#ae81ff">167</span>, <span style="color:#ae81ff">154</span>, <span style="color:#ae81ff">41</span>, <span style="color:#ae81ff">151</span>, <span style="color:#ae81ff">35</span>, <span style="color:#ae81ff">247</span>, <span style="color:#ae81ff">246</span>, <span style="color:#ae81ff">153</span>, <span style="color:#ae81ff">95</span>, <span style="color:#ae81ff">206</span>, <span style="color:#ae81ff">149</span>, <span style="color:#ae81ff">76</span>, <span style="color:#ae81ff">112</span>, <span style="color:#ae81ff">71</span>, <span style="color:#ae81ff">230</span>, <span style="color:#ae81ff">106</span>, <span style="color:#ae81ff">188</span>, <span style="color:#ae81ff">172</span>, <span style="color:#ae81ff">241</span>, <span style="color:#ae81ff">72</span>, <span style="color:#ae81ff">156</span>, <span style="color:#ae81ff">49</span>, <span style="color:#ae81ff">14</span>, <span style="color:#ae81ff">214</span>, <span style="color:#ae81ff">155</span>, <span style="color:#ae81ff">110</span>, <span style="color:#ae81ff">102</span>, <span style="color:#ae81ff">116</span>, <span style="color:#ae81ff">128</span>, <span style="color:#ae81ff">160</span>, <span style="color:#ae81ff">135</span>, <span style="color:#ae81ff">104</span>, <span style="color:#ae81ff">77</span>, <span style="color:#ae81ff">91</span>, <span style="color:#ae81ff">190</span>, <span style="color:#ae81ff">60</span>, <span style="color:#ae81ff">42</span>, <span style="color:#ae81ff">185</span>, <span style="color:#ae81ff">96</span>, <span style="color:#ae81ff">97</span>, <span style="color:#ae81ff">251</span>, <span style="color:#ae81ff">218</span>, <span style="color:#ae81ff">133</span>, <span style="color:#ae81ff">209</span>, <span style="color:#ae81ff">65</span>, <span style="color:#ae81ff">227</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">166</span>, <span style="color:#ae81ff">255</span>, <span style="color:#ae81ff">25</span>]
+p <span style="color:#f92672">=</span> [<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">11</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">12</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">14</span>, <span style="color:#ae81ff">13</span>, <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">15</span>, <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">2</span>]
+round <span style="color:#f92672">=</span> <span style="color:#ae81ff">16</span>
 
 
-def repeated_xor(p, k):
-    return bytearray([p[i] ^ k[i % len(k)] for i in range(len(p))])
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">pad</span>(data, size <span style="color:#f92672">=</span> <span style="color:#ae81ff">16</span>):
+    pad_byte <span style="color:#f92672">=</span> (size <span style="color:#f92672">-</span> len(data) <span style="color:#f92672">%</span> size) <span style="color:#f92672">%</span> size
+    data <span style="color:#f92672">=</span> data <span style="color:#f92672">+</span> bytearray([pad_byte]) <span style="color:#f92672">*</span> pad_byte
+    <span style="color:#66d9ef">return</span> data
 
 
-def bytes_to_int(xbytes):
-    return bytes_to_long(xbytes)
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">repeated_xor</span>(p, k):
+    <span style="color:#66d9ef">return</span> bytearray([p[i] <span style="color:#f92672">^</span> k[i <span style="color:#f92672">%</span> len(k)] <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(p))])
 
 
-def int_to_bytes(x):
-    return long_to_bytes(x, 16)
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">bytes_to_int</span>(xbytes):
+    <span style="color:#66d9ef">return</span> bytes_to_long(xbytes)
 
 
-def group(input, size = 16):
-    return [input[i * size: (i + 1) * size] for i in range(len(input) // size)]
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">int_to_bytes</span>(x):
+    <span style="color:#66d9ef">return</span> long_to_bytes(x, <span style="color:#ae81ff">16</span>)
 
-def dec_hash(old_state_list):
-    roundkey_list = [bytearray(b'r\x0f\x0f\x0f\x0f\x0f\x0f\x0f\x0f\x0f\x0f\x0f\x0f\x0f\x0f\x0f'),
-        bytearray(b'p\x0f\x0f\x0f\x0f\x0f\x0f\x0f\x0f\x0f\x0f\x0f\x0f\x0f\x0f\x0f'),
-        bytearray(b's\x0f\x0f\x0f\x0f\x0f\x0f\x0f\x0f\x0f\x0f\x0f\x0f\x0f\x0f\x0f')
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">group</span>(input, size <span style="color:#f92672">=</span> <span style="color:#ae81ff">16</span>):
+    <span style="color:#66d9ef">return</span> [input[i <span style="color:#f92672">*</span> size: (i <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">*</span> size] <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(input) <span style="color:#f92672">/</span><span style="color:#f92672">/</span> size)]
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">dec_hash</span>(old_state_list):
+    roundkey_list <span style="color:#f92672">=</span> [bytearray(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">r</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#e6db74">&#39;</span>),
+        bytearray(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">p</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#e6db74">&#39;</span>),
+        bytearray(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">s</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#ae81ff">\x0f</span><span style="color:#e6db74">&#39;</span>)
         ]
 
-    total_state_list = []
-    for old_state in old_state_list:
-        new_state_list = []
-        for roundkey in roundkey_list:
-            state = int_to_bytes(old_state)
-            temp = [0] * len(state)
-            for i in range(len(state)):
-                temp[i]  = state[p[i]]
-            for i in range(len(state)):
-                temp[i] = sbox.index(temp[i])
-            new_state = repeated_xor(temp, roundkey)
-            new_state_list.append(new_state[0])
-        total_state_list.append(new_state_list)
-    return total_state_list
+    total_state_list <span style="color:#f92672">=</span> []
+    <span style="color:#66d9ef">for</span> old_state <span style="color:#f92672">in</span> old_state_list:
+        new_state_list <span style="color:#f92672">=</span> []
+        <span style="color:#66d9ef">for</span> roundkey <span style="color:#f92672">in</span> roundkey_list:
+            state <span style="color:#f92672">=</span> int_to_bytes(old_state)
+            temp <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0</span>] <span style="color:#f92672">*</span> len(state)
+            <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(state)):
+                temp[i]  <span style="color:#f92672">=</span> state[p[i]]
+            <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(state)):
+                temp[i] <span style="color:#f92672">=</span> sbox<span style="color:#f92672">.</span>index(temp[i])
+            new_state <span style="color:#f92672">=</span> repeated_xor(temp, roundkey)
+            new_state_list<span style="color:#f92672">.</span>append(new_state[<span style="color:#ae81ff">0</span>])
+        total_state_list<span style="color:#f92672">.</span>append(new_state_list)
+    <span style="color:#66d9ef">return</span> total_state_list
 
-def my_hand(total_state_list):
-    s1, s2, s3 = map(lambda state: set(state), total_state_list)
-    dup = s1 &amp; s2 &amp; s3
-    dup = list(dup)[0]
-    if total_state_list[0].index(dup) == 0:
-        return b'p'
-    elif total_state_list[0].index(dup) == 1:
-        return b's'
-    elif total_state_list[0].index(dup) == 2:
-        return b'r'
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">my_hand</span>(total_state_list):
+    s1, s2, s3 <span style="color:#f92672">=</span> map(<span style="color:#66d9ef">lambda</span> state: set(state), total_state_list)
+    dup <span style="color:#f92672">=</span> s1 <span style="color:#f92672">&amp;</span> s2 <span style="color:#f92672">&amp;</span> s3
+    dup <span style="color:#f92672">=</span> list(dup)[<span style="color:#ae81ff">0</span>]
+    <span style="color:#66d9ef">if</span> total_state_list[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>index(dup) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+        <span style="color:#66d9ef">return</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">p</span><span style="color:#e6db74">&#39;</span>
+    <span style="color:#66d9ef">elif</span> total_state_list[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>index(dup) <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>:
+        <span style="color:#66d9ef">return</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">s</span><span style="color:#e6db74">&#39;</span>
+    <span style="color:#66d9ef">elif</span> total_state_list[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>index(dup) <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span>:
+        <span style="color:#66d9ef">return</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">r</span><span style="color:#e6db74">&#39;</span>
 
-io = remote('crypto1.ctf.nullcon.net', 5000)
-recv_data = io.recv(1024)
-for i in range(20):
-    state_list = [recv_data.split(b' ')[-4], recv_data.split(b' ')[-3], recv_data.split(b' ')[-2][:-5]]
-    # print(state_list)
-    dec_list = dec_hash(list(map(lambda s: int(s, 16), state_list)))
-    print(my_hand(dec_list))
-    io.sendline(my_hand(dec_list))
-    recv_data = io.recv(1024)
-    print(recv_data)
+io <span style="color:#f92672">=</span> remote(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">crypto1.ctf.nullcon.net</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">5000</span>)
+recv_data <span style="color:#f92672">=</span> io<span style="color:#f92672">.</span>recv(<span style="color:#ae81ff">1024</span>)
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">20</span>):
+    state_list <span style="color:#f92672">=</span> [recv_data<span style="color:#f92672">.</span>split(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74"> </span><span style="color:#e6db74">&#39;</span>)[<span style="color:#f92672">-</span><span style="color:#ae81ff">4</span>], recv_data<span style="color:#f92672">.</span>split(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74"> </span><span style="color:#e6db74">&#39;</span>)[<span style="color:#f92672">-</span><span style="color:#ae81ff">3</span>], recv_data<span style="color:#f92672">.</span>split(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74"> </span><span style="color:#e6db74">&#39;</span>)[<span style="color:#f92672">-</span><span style="color:#ae81ff">2</span>][:<span style="color:#f92672">-</span><span style="color:#ae81ff">5</span>]]
+    <span style="color:#75715e"># print(state_list)</span>
+    dec_list <span style="color:#f92672">=</span> dec_hash(list(map(<span style="color:#66d9ef">lambda</span> s: int(s, <span style="color:#ae81ff">16</span>), state_list)))
+    <span style="color:#66d9ef">print</span>(my_hand(dec_list))
+    io<span style="color:#f92672">.</span>sendline(my_hand(dec_list))
+    recv_data <span style="color:#f92672">=</span> io<span style="color:#f92672">.</span>recv(<span style="color:#ae81ff">1024</span>)
+    <span style="color:#66d9ef">print</span>(recv_data)
 
-io.interactive()
-</code></pre><p>フラグゲット
+io<span style="color:#f92672">.</span>interactive()
+</code></pre></div><p>フラグゲット
 <code>hackim20{b4d_pr1mitiv3_beats_all!1!_7f65}</code></p>
 <h2 id="zelda1">Zelda1</h2>
 <p>正式な問題名は忘れた。</p>
@@ -247,27 +247,27 @@ io.interactive()
 今回は後者のチートを試みる。</p>
 <p>敵のHPに関係しそうなメソッドを見てみる</p>
 <p><code>Enemy</code>クラスに<code>TakeDamage</code>という関数がある</p>
-<pre><code>private void TakeDamage(float damage)
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c#" data-lang="c#"><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> TakeDamage(<span style="color:#66d9ef">float</span> damage)
 {
-	this.health -= damage;
-	if (this.health &lt;= 0f)
+	<span style="color:#66d9ef">this</span>.health -= damage;
+	<span style="color:#66d9ef">if</span> (<span style="color:#66d9ef">this</span>.health &lt;= <span style="color:#ae81ff">0f</span>)
 	{
-		base.StartCoroutine(this.ShowSome());
-		base.gameObject.SetActive(false);
+		<span style="color:#66d9ef">base</span>.StartCoroutine(<span style="color:#66d9ef">this</span>.ShowSome());
+		<span style="color:#66d9ef">base</span>.gameObject.SetActive(<span style="color:#66d9ef">false</span>);
 	}
 }
-</code></pre><p>どうやら<code>this.health &lt;= 0f</code>を<code>true</code>にすれば倒せそうだ</p>
+</code></pre></div><p>どうやら<code>this.health &lt;= 0f</code>を<code>true</code>にすれば倒せそうだ</p>
 <p>というわけで判定文を以下のようにいじる</p>
-<pre><code>private void TakeDamage(float damage)
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c#" data-lang="c#"><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> TakeDamage(<span style="color:#66d9ef">float</span> damage)
 {
-	this.health -= damage;
-	if (this.health &lt;= 999999f)
+	<span style="color:#66d9ef">this</span>.health -= damage;
+	<span style="color:#66d9ef">if</span> (<span style="color:#66d9ef">this</span>.health &lt;= <span style="color:#ae81ff">9</span><span style="color:#ae81ff">9</span><span style="color:#ae81ff">9</span><span style="color:#ae81ff">9</span><span style="color:#ae81ff">9</span><span style="color:#ae81ff">9f</span>)
 	{
-		base.StartCoroutine(this.ShowSome());
-		base.gameObject.SetActive(false);
+		<span style="color:#66d9ef">base</span>.StartCoroutine(<span style="color:#66d9ef">this</span>.ShowSome());
+		<span style="color:#66d9ef">base</span>.gameObject.SetActive(<span style="color:#66d9ef">false</span>);
 	}
 }
-</code></pre><p>ゲームを実行してみる</p>
+</code></pre></div><p>ゲームを実行してみる</p>
 <p>敵に接触した瞬間に敵が消え、画面上部にフラグが現れる</p>
 <p><code>Flag: REVOLUTIONSTARTSWITHME</code></p>
 <h2 id="zelda2">Zelda2</h2>
@@ -279,31 +279,31 @@ io.interactive()
 <p>どうやら<code>Dynamic</code>ではなく<code>Kinematic</code>という設定にすれば良いらしい</p>
 <p><code>kinematic</code>で検索すると<code>isKinematic</code>というメソッドが見つかる</p>
 <p>(検索オプションの<code>Match Any Search Item</code>にチェックを入れること！)</p>
-<pre><code>public bool isKinematic
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c#" data-lang="c#"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">bool</span> isKinematic
 		{
-			get
+			<span style="color:#66d9ef">get</span>
 			{
-				return this.bodyType == RigidbodyType2D.Kinematic;
+				<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">this</span>.bodyType == RigidbodyType2D.Kinematic;
 			}
-			set
+			<span style="color:#66d9ef">set</span>
 			{
-				this.bodyType = ((!value) ? RigidbodyType2D.Dynamic : RigidbodyType2D.Kinematic);
+				<span style="color:#66d9ef">this</span>.bodyType = ((!<span style="color:#66d9ef">value</span>) ? RigidbodyType2D.Dynamic : RigidbodyType2D.Kinematic);
 			}
 		}
-</code></pre><p><code>Kinematic</code>にするかどうかを決めているらしい</p>
+</code></pre></div><p><code>Kinematic</code>にするかどうかを決めているらしい</p>
 <p>常時<code>Kinematic</code>にするために、<code>set</code>を変更する</p>
-<pre><code>public bool isKinematic
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c#" data-lang="c#"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">bool</span> isKinematic
 		{
-			get
+			<span style="color:#66d9ef">get</span>
 			{
-				return this.bodyType == RigidbodyType2D.Kinematic;
+				<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">this</span>.bodyType == RigidbodyType2D.Kinematic;
 			}
-			set
+			<span style="color:#66d9ef">set</span>
 			{
-				this.bodyType = RigidbodyType2D.Kinematic;
+				<span style="color:#66d9ef">this</span>.bodyType = RigidbodyType2D.Kinematic;
 			}
 		}
-</code></pre><p>ゲームを実行してみる</p>
+</code></pre></div><p>ゲームを実行してみる</p>
 <p>池に入ると、フラグが書かれたエリアにワープする</p>
 <p><code>FLAG IS BENDTHERULES42PIRATE</code></p>
 <h2 id="zelda3">Zelda3</h2>
@@ -312,19 +312,19 @@ io.interactive()
 <p>また<code>dnSpy</code>というソフトを使って解析する</p>
 <p>先ほどのチートで障害物をすり抜けることはできたので、今度は移動スピードを上げることを考える</p>
 <p>移動スピードは以下のメソッドで計算される</p>
-<pre><code>private void MoveCharacter()
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c#" data-lang="c#"><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> MoveCharacter()
 {
-	this.change.Normalize();
-	this.myRigidbody.MovePosition(base.transform.position + this.change * this.speed * Time.deltaTime);
+	<span style="color:#66d9ef">this</span>.change.Normalize();
+	<span style="color:#66d9ef">this</span>.myRigidbody.MovePosition(<span style="color:#66d9ef">base</span>.transform.position + <span style="color:#66d9ef">this</span>.change * <span style="color:#66d9ef">this</span>.speed * Time.deltaTime);
 }
-</code></pre><p><code>this.change * this.speed * Time.deltaTime</code>が移動量を表している（速さx時間）</p>
+</code></pre></div><p><code>this.change * this.speed * Time.deltaTime</code>が移動量を表している（速さx時間）</p>
 <p>ここで、以下のように変更してみる</p>
-<pre><code>private void MoveCharacter()
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c#" data-lang="c#"><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> MoveCharacter()
 {
-	this.change.Normalize();
-	this.myRigidbody.MovePosition(base.transform.position + this.change);
+	<span style="color:#66d9ef">this</span>.change.Normalize();
+	<span style="color:#66d9ef">this</span>.myRigidbody.MovePosition(<span style="color:#66d9ef">base</span>.transform.position + <span style="color:#66d9ef">this</span>.change);
 }
-</code></pre><p>ゲームを実行してみる</p>
+</code></pre></div><p>ゲームを実行してみる</p>
 <p>某漫画にでてくる瞬歩みたいな挙動になる（おそらく<code>this.speed * Time.deltaTime</code>が１以下の小さな値になるため）</p>
 <p>池があるエリアの右上からジャングルに入る</p>
 <p>さらに右上に進むとフラグがある</p>

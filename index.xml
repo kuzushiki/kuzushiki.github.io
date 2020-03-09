@@ -19,9 +19,7 @@
       
       <guid>https://kuzushiki.github.io/post/kaggle/</guid>
       <description>kaggleで起業の倒産予測にチャレンジしました 自身の研究で機械学習に触れていたこともあり、興味があったのでkaggleに初挑戦してみました！
-チュートリアルとして有名なTitanic, House Pricesに加え、面白そうな問題だったCompanies bankruptcy forecast(企業の倒産予測)を解いてみました。
-Titanic タイタニック号の生存者予測をする問題です。
-この問題に関しては日本語のチュートリアルが沢山あるので説明は割愛させていただきます。</description>
+チュートリアルとして有名なTitanic, House Pricesに加え、面白そうな問題だったCompanies bankruptcy forecast(企業の倒産予測)を解いてみました。</description>
     </item>
     
     <item>
@@ -31,9 +29,7 @@ Titanic タイタニック号の生存者予測をする問題です。
       
       <guid>https://kuzushiki.github.io/post/utctf2020/</guid>
       <description>UTCTF 2020に参加しました！ (team: team_Yamasan)
-某CTFをやってみよう会にて参加しました。
-自分は401点中301点を入れ、順位は329位 / 1001チーム(0点は除く)でした。
-write upを書いていきます</description>
+某CTFをやってみよう会にて参加しました。</description>
     </item>
     
     <item>
@@ -43,9 +39,7 @@ write upを書いていきます</description>
       
       <guid>https://kuzushiki.github.io/post/sarctf2020/</guid>
       <description>SarCTF 2020に参加しました！ (team: score_gazer)
-6137点を入れ、順位は98位 / 418チーム(0点は除く)でした
-write upを書いていきます
-Doc. Holmes ファイルが添付されてる</description>
+6137点を入れ、順位は98位 / 418チーム(0点は除く)でした</description>
     </item>
     
     <item>
@@ -54,11 +48,7 @@ Doc. Holmes ファイルが添付されてる</description>
       <pubDate>Sat, 15 Feb 2020 00:51:52 +0900</pubDate>
       
       <guid>https://kuzushiki.github.io/post/nullconhackim2020/</guid>
-      <description>nullcon HackIM 2020 に参加しました！ (team: team_Yamasan)
-某CTFをやってみよう会にて参加しました。
-普段は一人参加だったので、チームでやるのが新鮮で面白かったです。
-合計476点を獲得し、最終結果は119位でした。
-以下解けた問題のwrite up</description>
+      <description>nullcon HackIM 2020 に参加しました！ (team: team_Yamasan)</description>
     </item>
     
     <item>
@@ -67,9 +57,7 @@ Doc. Holmes ファイルが添付されてる</description>
       <pubDate>Sat, 15 Feb 2020 00:45:18 +0900</pubDate>
       
       <guid>https://kuzushiki.github.io/post/hacktm2020/</guid>
-      <description>HackTM CTF Quals 2020に参加しました！ (team: score_gazer)
-write up書きます
-RSA is easy #1 cというファイルにて、 eおよびnの値と、大量の暗号文が与えられる</description>
+      <description>HackTM CTF Quals 2020に参加しました！ (team: score_gazer)</description>
     </item>
     
     <item>
@@ -79,10 +67,7 @@ RSA is easy #1 cというファイルにて、 eおよびnの値と、大量の�
       
       <guid>https://kuzushiki.github.io/post/cryptixctf2019/</guid>
       <description>CryptixCTF 2019に参加しました！ (team:score_gazer)
-結果は2095点で19位でした。 あと一問で全完だったのに…悔しい。
-それでは解いた問題について解説していきます！
-※解説を「ですます調」でやるとしっくりこないので、「だである調」に変えています。
-Make yourself comfortable (レベル１) Welcome gift ポイント  base64  解く ZmxhZ3t3ZWxjb21lX3RvX2NyeXB0aXhDVEZfYmFzZTY0aXRpc30Kをbase64でデコード</description>
+結果は2095点で19位でした。 あと一問で全完だったのに…悔しい。</description>
     </item>
     
     <item>

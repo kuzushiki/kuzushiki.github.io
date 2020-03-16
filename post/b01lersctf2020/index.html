@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+		<title>b01lers CTF write up &middot; kuzushikiのぺーじ</title>
+		<link rel="canonical" href="https://kuzushiki.github.io/post/b01lersctf2020/">
+		<link rel="stylesheet" type="text/css" href="https://kuzushiki.github.io/css/main.css" />
+		
+	</head>
+	<body>
+		<a id="title" href="https://kuzushiki.github.io/" title="kuzushikiのぺーじ">
+			
+				<img id="logo" alt="Logo" src="https://kuzushiki.github.io/images/logo.png" />
+			
+			
+				<h1>kuzushikiのぺーじ</h1>
+			
+		</a>
+		
+			<h4>セキュリティに関することを書きたいですね</h4>
+		
+		<div id="social">
+			
+			
+			
+			<a href="https://github.com/kuzushiki" title="Github">
+				<img alt="GitHub" height="64px" width="64px" src="https://kuzushiki.github.io/images/github.svg" />
+			</a>
+			
+			
+			
+			<a href="https://twitter.com/kuzu7shiki" title="Twitter">
+				<img alt="Twitter" height="64px" width="64px" src="https://kuzushiki.github.io/images/twitter.svg" />
+			</a>
+			
+			
+                        
+		</div>
+		<div class="links">
+			<a href="https://kuzushiki.github.io/">Home</a>
+			
+				<a href="https://kuzushiki.github.io/post/">Archive</a>
+			
+			
+				
+			
+				
+					<a href="https://kuzushiki.github.io/pages/resume/">Résumé</a>
+				
+			
+		</div>
+
+	<div class="postBody">
+		<div class="post">
+			<h1>b01lers CTF write up</h1>
+			<span class="post-meta">Mon, Mar 16, 2020 - Read in 8 Min</span>
+			<div class="content">
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#harvesting-season-crypto-100-pts-66-solves">Harvesting Season (CRYPTO, 100 pts, 66 Solves)</a></li>
+    <li><a href="#chugga-chugga-rev-100-pts-69-solves">Chugga Chugga (REV, 100 pts, 69 solves)</a></li>
+    <li><a href="#welcome-to-earth-web-100-pts-419-solves">Welcome to Earth (WEB, 100 pts, 419 Solves)</a></li>
+    <li><a href="#welcome-a-welcome-challenge-1-pts-567-solves">Welcome! (A WELCOME CHALLENGE, 1 pts, 567 Solves)</a></li>
+    <li><a href="#discord-flag-a-welcome-challenge-1-pts-422-solves">Discord Flag (A WELCOME CHALLENGE, 1 pts, 422 Solves)</a></li>
+    <li><a href="#survey-a-welcome-challenge-1-pts-166-solves">Survey (A WELCOME CHALLENGE, 1 pts, 166 Solves)</a></li>
+    <li><a href="#感想">感想</a></li>
+  </ul>
+</nav>
+			<h1 id="b01lers-ctfに参加しました">b01lers CTFに参加しました！</h1>
+<p>(team: team_Yamasan)</p>
+<p>某CTFをやってみよう会にて参加しました。</p>
+<p>自分は303点中301点を入れ、順位は129位 / 660チーム(0点は除く)でした。</p>
+<p><img src="https://user-images.githubusercontent.com/50363796/76739676-e9f05180-67af-11ea-8969-c5d403a4f68a.png" alt="FireShot Capture 024 - b01lers CTF - ctfd2 ctf b01lers com"></p>
+<p>今回のCTFはなんと公式が全問題のwrite upを書いてくれます。</p>
+<p><a href="https://github.com/b01lers/">ここに投稿されます</a></p>
+<p>しかし、投稿予定日が金曜日と遅いので、復習もかねて解けた問題のwrite upを書くことにします。</p>
+<h2 id="harvesting-season-crypto-100-pts-66-solves">Harvesting Season (CRYPTO, 100 pts, 66 Solves)</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">Can you xor your way out of this? (Length of key: 4)
+</code></pre></div><p>問題ファイル: <code>fr3sh_h4rv3st.jpg</code></p>
+<p>画像のExifになにやら怪しい数列が確認できます。</p>
+<p><a href="https://user-images.githubusercontent.com/50363796/76739752-055b5c80-67b0-11ea-8016-518b77714d80.PNG">キャプチャ</a></p>
+<p>おそらくこれが暗号文でしょう。</p>
+<p>次に問題文から以下のことが分かります。</p>
+<ol>
+<li>この暗号は<code>XOR</code>で暗号化されたものである</li>
+<li>鍵長は<code>4</code>である</li>
+</ol>
+<p>また、平文にはフラグフォーマットである<code>pctf</code>が含まれるはずです。</p>
+<p>よって、暗号文における長さ4の文字列と<code>pctf</code>のXORをとったものを鍵として、暗号文全体を復号（もう一度XOR）すればフラグが得られます。</p>
+<p>プログラムは以下の通りです。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> Crypto.Util <span style="color:#f92672">import</span> number 
+enc <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x1921754512366910363569105a73727c592c5e5701715e571b76304d3625317c1b72744d0d1d354d0d1d73131c2c655e</span>
+enc <span style="color:#f92672">=</span> number<span style="color:#f92672">.</span>long_to_bytes(enc)
+
+flag_format <span style="color:#f92672">=</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">pctf</span><span style="color:#e6db74">&#39;</span>
+
+<span style="color:#75715e"># まず鍵のリストを作る</span>
+key_list <span style="color:#f92672">=</span> []
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(enc)<span style="color:#f92672">-</span> len(flag_format) <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>):
+    key <span style="color:#f92672">=</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">&#39;</span>
+    <span style="color:#66d9ef">for</span> j <span style="color:#f92672">in</span> range(len(flag_format)):
+        key <span style="color:#f92672">+</span><span style="color:#f92672">=</span> chr(enc[i<span style="color:#f92672">+</span>j] <span style="color:#f92672">^</span> flag_format[j])<span style="color:#f92672">.</span>encode()
+    key_list<span style="color:#f92672">.</span>append(key)
+
+<span style="color:#75715e"># 鍵リストの鍵を一個ずつ試す</span>
+<span style="color:#66d9ef">for</span> i,key <span style="color:#f92672">in</span> enumerate(key_list):
+    dec <span style="color:#f92672">=</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">&#39;</span>
+    <span style="color:#66d9ef">for</span> j <span style="color:#f92672">in</span> range(len(enc)):
+        dec <span style="color:#f92672">+</span><span style="color:#f92672">=</span> chr(enc[(i<span style="color:#f92672">+</span>j) <span style="color:#f92672">%</span> len(enc)] <span style="color:#f92672">^</span> key[j <span style="color:#f92672">%</span> len(key)])<span style="color:#f92672">.</span>encode()
+    <span style="color:#66d9ef">print</span>(dec)
+</code></pre></div><p>復号結果が出力されます</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">PS C:\Users\kuzushiki&gt; &amp; C:/Users/kuzushiki/AppData/Local/Programs/Python/Python37/python.exe c:/share/solve.py
+b<span style="color:#e6db74">&#39;pctf{th3_wh331s_0n_th3_tr41n_g0_r0und_4nd_r0und}&#39;</span>
+b<span style="color:#e6db74">&#39;pctfg\x7f!Bd\x7f!.&#34;dM-}Hfu Hfo\&#39;</span>&amp;|Bt\<span style="color:#e6db74">&#39;Mo#b|yL#|yLe&#34;h}som&#39;</span>
+b<span style="color:#e6db74">&#39;pctfl6Pel6&lt;#wZ?|[qg![q}&amp;5kPu4Z}&#34;qkkM0kkMv5z|`x\x7fq&#39;</span>
+b<span style="color:#e6db74">&#39;pctf%Gwf%+1}I(nQbp3Qbj4?xGg&gt;Ij0{x|_:x|_|&amp;mnjkhcz&#39;</span>
+b<span style="color:#e6db74">&#34;</span><span style="color:#e6db74">pctfT</span><span style="color:#ae81ff">`t</span><span style="color:#e6db74">f8&amp;o\n;yC!c</span><span style="color:#e6db74">$</span><span style="color:#e6db74">C!y#-;Tp,\ny&#39;i;oH(;oHne~yx({th3</span><span style="color:#e6db74">&#34;</span>
+<span style="color:#960050;background-color:#1e0010">:</span>
+<span style="color:#960050;background-color:#1e0010">:</span>
+</code></pre></div><p>フラグが出てきました！
+<code>pctf{th3_wh331s_0n_th3_tr41n_g0_r0und_4nd_r0und}</code></p>
+<h2 id="chugga-chugga-rev-100-pts-69-solves">Chugga Chugga (REV, 100 pts, 69 solves)</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">&#34;I think I can. I think I can. I think I can. I know I can!&#34;
+
+They can. Can you?
+</code></pre></div><p>問題ファイル: <code>chugga</code></p>
+<p><code>file</code>コマンドの結果は以下の通りです。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">root@kali:/media/sf_share/CTF/bo1lers CTF/rev# file chugga
+chugga: ELF 64-bit LSB executable, x86-64, version <span style="color:#ae81ff">1</span> <span style="color:#f92672">(</span>SYSV<span style="color:#f92672">)</span>, statically linked, Go BuildID<span style="color:#f92672">=</span>t_iW0Uowrq5QAERg05Sl/OsLe0r4GSD-eggXryF3i/uvJJhPJWDTRopyOSvtbf/IvJzDFAUciDYpwCfCrlV, not stripped
+</code></pre></div><p><code>ELF</code>なので実行ファイルだということが分かります。</p>
+<p>実行してみましょう！</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">root@kali:/media/sf_share/CTF/bo1lers CTF/rev# ./chugga
+We<span style="color:#e6db74">&#39;re in train car:  0
+</span><span style="color:#e6db74">The door is locked, but luckily, you&#39;</span>re the conductor! Input your code:
+</code></pre></div><p>どうやらコードの入力を求められるようです。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">root@kali:/media/sf_share/CTF/bo1lers CTF/rev# ./chugga
+We<span style="color:#e6db74">&#39;re in train car:  0
+</span><span style="color:#e6db74">The door is locked, but luckily, you&#39;</span>re the conductor! Input your code: 
+test
+Boom! You are dead. You come back to life in the next car.
+We<span style="color:#e6db74">&#39;re in train car:  1
+</span><span style="color:#e6db74">The door is locked, but luckily, you&#39;</span>re the conductor! Input your code: 
+</code></pre></div><p>間違えてしまいましたが、何回でも入力できるようです。</p>
+<p>正解のコードを調べるために<code>Ghidra</code>で静的解析を行います。</p>
+<p>[function]-&gt;[main]-&gt;[mian.main]にてコードのチェックが行われていました。</p>
+<p><code>Ghidra</code>で逆コンパイルを行い、コードのチェック部分を抽出しました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">if</span> (pcVar3 <span style="color:#f92672">&lt;</span> (<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>)<span style="color:#ae81ff">0x3</span>) <span style="color:#66d9ef">break</span>;
+<span style="color:#66d9ef">if</span> (pcVar4[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">=</span><span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">t</span><span style="color:#e6db74">&#39;</span>) {
+  <span style="color:#66d9ef">if</span> (pcVar3 <span style="color:#f92672">&lt;</span> <span style="color:#f92672">&amp;</span>DAT_0000000a) <span style="color:#66d9ef">break</span>;
+  param_2 <span style="color:#f92672">=</span> (undefined1 <span style="color:#f92672">*</span>)(ulong)(byte)pcVar4[<span style="color:#ae81ff">9</span>];
+  <span style="color:#66d9ef">if</span> (pcVar4[<span style="color:#ae81ff">9</span>] <span style="color:#f92672">!</span><span style="color:#f92672">=</span> <span style="color:#ae81ff">99</span>) <span style="color:#66d9ef">goto</span> code_r0x00493067;
+  <span style="color:#66d9ef">if</span> (pcVar3 <span style="color:#f92672">&lt;</span> <span style="color:#f92672">&amp;</span>DAT_00000011) <span style="color:#66d9ef">break</span>;
+  param_1 <span style="color:#f92672">=</span> (<span style="color:#66d9ef">long</span> <span style="color:#f92672">*</span><span style="color:#f92672">*</span>)(ulong)(byte)pcVar4[<span style="color:#ae81ff">0x10</span>];
+  <span style="color:#66d9ef">if</span> (pcVar4[<span style="color:#ae81ff">0x10</span>] <span style="color:#f92672">!</span><span style="color:#f92672">=</span> <span style="color:#ae81ff">0x6e</span>) <span style="color:#66d9ef">goto</span> code_r0x00493067;
+  <span style="color:#66d9ef">if</span> (pcVar3 <span style="color:#f92672">&lt;</span> <span style="color:#f92672">&amp;</span>DAT_00000016) <span style="color:#66d9ef">break</span>;
+  param_5 <span style="color:#f92672">=</span> (<span style="color:#66d9ef">long</span> <span style="color:#f92672">*</span><span style="color:#f92672">*</span>)(ulong)(byte)pcVar4[<span style="color:#ae81ff">0x15</span>];
+  <span style="color:#66d9ef">if</span> (pcVar4[<span style="color:#ae81ff">0x15</span>] <span style="color:#f92672">!</span><span style="color:#f92672">=</span> <span style="color:#ae81ff">0x7a</span>) <span style="color:#66d9ef">goto</span> code_r0x00493067;
+  <span style="color:#66d9ef">if</span> (pcVar3 <span style="color:#f92672">&lt;</span> <span style="color:#f92672">&amp;</span>DAT_00000017) <span style="color:#66d9ef">break</span>;
+  <span style="color:#66d9ef">if</span> ((((pcVar4[<span style="color:#ae81ff">0x16</span>] <span style="color:#f92672">!</span><span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span>) <span style="color:#f92672">|</span><span style="color:#f92672">|</span> (param_6 <span style="color:#f92672">=</span> (<span style="color:#66d9ef">long</span> <span style="color:#f92672">*</span><span style="color:#f92672">*</span>)(ulong)(byte)pcVar4[<span style="color:#ae81ff">5</span>], pcVar4[<span style="color:#ae81ff">5</span>] <span style="color:#f92672">!</span><span style="color:#f92672">=</span> <span style="color:#ae81ff">0x73</span>))
+      <span style="color:#f92672">|</span><span style="color:#f92672">|</span> (pcVar4[<span style="color:#ae81ff">3</span>] <span style="color:#f92672">!</span><span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;</span>)) <span style="color:#f92672">|</span><span style="color:#f92672">|</span>
+     (((pcVar4[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">!</span><span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">c</span><span style="color:#e6db74">&#39;</span> <span style="color:#f92672">|</span><span style="color:#f92672">|</span> (param_2 <span style="color:#f92672">=</span> (undefined1 <span style="color:#f92672">*</span>)(ulong)(byte)pcVar4[<span style="color:#ae81ff">7</span>], pcVar4[<span style="color:#ae81ff">7</span>] <span style="color:#f92672">!</span><span style="color:#f92672">=</span> <span style="color:#ae81ff">100</span>))
+      <span style="color:#f92672">|</span><span style="color:#f92672">|</span> ((pcVar4[<span style="color:#ae81ff">0xc</span>] <span style="color:#f92672">!</span><span style="color:#f92672">=</span> pcVar4[<span style="color:#ae81ff">0xd</span>] <span style="color:#f92672">|</span><span style="color:#f92672">|</span> (pcVar4[<span style="color:#ae81ff">0x13</span>] <span style="color:#f92672">!</span><span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">z</span><span style="color:#e6db74">&#39;</span>)))))) <span style="color:#66d9ef">goto</span> code_r0x00493067;
+  bVar1 <span style="color:#f92672">=</span> pcVar4[<span style="color:#ae81ff">0xe</span>];
+  param_5 <span style="color:#f92672">=</span> (<span style="color:#66d9ef">long</span> <span style="color:#f92672">*</span><span style="color:#f92672">*</span>)(ulong)bVar1;
+  bVar2 <span style="color:#f92672">=</span> pcVar4[<span style="color:#ae81ff">6</span>];
+  <span style="color:#66d9ef">if</span> ((((byte)(bVar2 <span style="color:#f92672">+</span> bVar1) <span style="color:#f92672">!</span><span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">h</span><span style="color:#e6db74">&#39;</span>) <span style="color:#f92672">|</span><span style="color:#f92672">|</span> (pcVar4[<span style="color:#ae81ff">4</span>] <span style="color:#f92672">!</span><span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">{</span><span style="color:#e6db74">&#39;</span>)) <span style="color:#f92672">|</span><span style="color:#f92672">|</span>
+     ((pcVar4[<span style="color:#ae81ff">0xf</span>] <span style="color:#f92672">!</span><span style="color:#f92672">=</span> pcVar4[<span style="color:#ae81ff">8</span>] <span style="color:#f92672">|</span><span style="color:#f92672">|</span> (pcVar4[<span style="color:#ae81ff">8</span>] <span style="color:#f92672">!</span><span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">_</span><span style="color:#e6db74">&#39;</span>)))) <span style="color:#66d9ef">goto</span> code_r0x00493067;
+  bVar8 <span style="color:#f92672">=</span> pcVar4[<span style="color:#ae81ff">0x11</span>];
+  <span style="color:#66d9ef">if</span> ((byte)(<span style="color:#f92672">-</span><span style="color:#ae81ff">0x5b</span> <span style="color:#f92672">-</span> bVar8) <span style="color:#f92672">!</span><span style="color:#f92672">=</span> pcVar4[<span style="color:#ae81ff">0xb</span>]) <span style="color:#66d9ef">goto</span> code_r0x00493067;
+  iVar6 <span style="color:#f92672">=</span> (uint)(byte)pcVar4[<span style="color:#ae81ff">0x12</span>] <span style="color:#f92672">-</span> (uint)bVar8;
+  cVar5 <span style="color:#f92672">=</span> (<span style="color:#66d9ef">char</span>)iVar6;
+  <span style="color:#66d9ef">if</span> ((byte)(((pcVar4[<span style="color:#ae81ff">0xb</span>] <span style="color:#f92672">+</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">0x73</span>) <span style="color:#f92672">-</span> pcVar4[<span style="color:#ae81ff">0x12</span>]) <span style="color:#f92672">+</span> bVar8) <span style="color:#f92672">!</span><span style="color:#f92672">=</span> cVar5) <span style="color:#66d9ef">goto</span> code_r0x00493067;
+  uVar9 <span style="color:#f92672">=</span> (uint)bVar2 <span style="color:#f92672">-</span> (uint)bVar8;
+  bVar8 <span style="color:#f92672">=</span> (byte)uVar9;
+  <span style="color:#66d9ef">if</span> (((<span style="color:#f92672">*</span>pcVar4 <span style="color:#f92672">!</span><span style="color:#f92672">=</span> (byte)((bVar8 <span style="color:#f92672">&gt;</span><span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">*</span> cVar5 <span style="color:#f92672">+</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">n</span><span style="color:#e6db74">&#39;</span>)) <span style="color:#f92672">|</span><span style="color:#f92672">|</span>
+      ((<span style="color:#66d9ef">char</span>)(pcVar4[<span style="color:#ae81ff">0xd</span>] <span style="color:#f92672">+</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">\x01</span><span style="color:#e6db74">&#39;</span>) <span style="color:#f92672">!</span><span style="color:#f92672">=</span> pcVar4[<span style="color:#ae81ff">10</span>])) <span style="color:#f92672">|</span><span style="color:#f92672">|</span>
+     (param_2 <span style="color:#f92672">=</span> (undefined1 <span style="color:#f92672">*</span>)(ulong)uVar9, (byte)(bVar8 <span style="color:#f92672">*</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">\x03</span><span style="color:#e6db74">&#39;</span> <span style="color:#f92672">+</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">\\</span><span style="color:#e6db74">&#39;</span>) <span style="color:#f92672">!</span><span style="color:#f92672">=</span> pcVar4[<span style="color:#ae81ff">10</span>]))
+  <span style="color:#66d9ef">goto</span> code_r0x00493067;
+  uVar9 <span style="color:#f92672">=</span> iVar6 <span style="color:#f92672">*</span> <span style="color:#ae81ff">2</span>;
+  <span style="color:#66d9ef">if</span> ((((<span style="color:#66d9ef">char</span>)((uint)(byte)pcVar4[<span style="color:#ae81ff">0x14</span>] <span style="color:#f92672">-</span> <span style="color:#ae81ff">99</span>) <span style="color:#f92672">!</span><span style="color:#f92672">=</span> (<span style="color:#66d9ef">char</span>)uVar9) <span style="color:#f92672">|</span><span style="color:#f92672">|</span>
+      (param_6 <span style="color:#f92672">=</span> (<span style="color:#66d9ef">long</span> <span style="color:#f92672">*</span><span style="color:#f92672">*</span>)<span style="color:#f92672">&amp;</span>DAT_0000001d, bVar8 <span style="color:#f92672">!</span><span style="color:#f92672">=</span> (byte)(cVar5 <span style="color:#f92672">*</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">\x04</span><span style="color:#e6db74">&#39;</span>))) <span style="color:#f92672">|</span><span style="color:#f92672">|</span> (bVar2 <span style="color:#f92672">!</span><span style="color:#f92672">=</span> bVar1))
+  <span style="color:#66d9ef">goto</span> code_r0x00493067;
+  main.win(param_1,(<span style="color:#66d9ef">int</span> <span style="color:#f92672">*</span>)param_2,(ulong)((uint)(byte)pcVar4[<span style="color:#ae81ff">0x14</span>] <span style="color:#f92672">-</span> <span style="color:#ae81ff">99</span>),(ulong)uVar9,param_5,
+           (<span style="color:#66d9ef">long</span> <span style="color:#f92672">*</span><span style="color:#f92672">*</span>)<span style="color:#f92672">&amp;</span>DAT_0000001d);
+</code></pre></div><p><code>pcVar4</code>が入力されたコードで、<code>main.win</code>がゴールのようです。</p>
+<p>例えば、<code>if (pcVar4[9] != 99)</code>が真になると、<code>main.win</code>に行かなくなってしまうため、</p>
+<p><code>pcVar4[9] == 99</code>となれば良いことが分かります。</p>
+<p>判定文の場所を抽出してみます。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">pcVar4[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">=</span><span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">t</span><span style="color:#e6db74">&#39;</span>
+pcVar4[<span style="color:#ae81ff">9</span>] <span style="color:#f92672">!</span><span style="color:#f92672">=</span> <span style="color:#ae81ff">99</span>
+pcVar4[<span style="color:#ae81ff">0x10</span>] <span style="color:#f92672">!</span><span style="color:#f92672">=</span> <span style="color:#ae81ff">0x6e</span>
+pcVar4[<span style="color:#ae81ff">0x15</span>] <span style="color:#f92672">!</span><span style="color:#f92672">=</span> <span style="color:#ae81ff">0x7a</span>
+pcVar4[<span style="color:#ae81ff">0x16</span>] <span style="color:#f92672">!</span><span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span>
+pcVar4[<span style="color:#ae81ff">5</span>] <span style="color:#f92672">!</span><span style="color:#f92672">=</span> <span style="color:#ae81ff">0x73</span>
+pcVar4[<span style="color:#ae81ff">3</span>] <span style="color:#f92672">!</span><span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;</span>
+pcVar4[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">!</span><span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">c</span><span style="color:#e6db74">&#39;</span>
+pcVar4[<span style="color:#ae81ff">7</span>] <span style="color:#f92672">!</span><span style="color:#f92672">=</span> <span style="color:#ae81ff">100</span>
+pcVar4[<span style="color:#ae81ff">0xc</span>] <span style="color:#f92672">!</span><span style="color:#f92672">=</span> pcVar4[<span style="color:#ae81ff">0xd</span>]
+pcVar4[<span style="color:#ae81ff">0x13</span>] <span style="color:#f92672">!</span><span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">z</span><span style="color:#e6db74">&#39;</span>
+(pcVar4[<span style="color:#ae81ff">6</span>] <span style="color:#f92672">+</span> pcVar4[<span style="color:#ae81ff">0xe</span>]) <span style="color:#f92672">!</span><span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">h</span><span style="color:#e6db74">&#39;</span>
+pcVar4[<span style="color:#ae81ff">4</span>] <span style="color:#f92672">!</span><span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">{</span><span style="color:#e6db74">&#39;</span>
+pcVar4[<span style="color:#ae81ff">0xf</span>] <span style="color:#f92672">!</span><span style="color:#f92672">=</span> pcVar4[<span style="color:#ae81ff">8</span>]
+pcVar4[<span style="color:#ae81ff">8</span>] <span style="color:#f92672">!</span><span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">_</span><span style="color:#e6db74">&#39;</span>
+<span style="color:#f92672">-</span><span style="color:#ae81ff">0x5b</span> <span style="color:#f92672">-</span> pcVar4[<span style="color:#ae81ff">0x11</span>] <span style="color:#f92672">!</span><span style="color:#f92672">=</span> pcVar4[<span style="color:#ae81ff">0xb</span>]
+pcVar4[<span style="color:#ae81ff">0xb</span>] <span style="color:#f92672">-</span> <span style="color:#ae81ff">0x73</span> <span style="color:#f92672">-</span> pcVar4[<span style="color:#ae81ff">0x12</span>] <span style="color:#f92672">+</span> pcVar4[<span style="color:#ae81ff">0x11</span>] <span style="color:#f92672">!</span><span style="color:#f92672">=</span> pcVar4[<span style="color:#ae81ff">0x12</span>] <span style="color:#f92672">-</span> pcVar4[<span style="color:#ae81ff">0x11</span>]
+pcVar4[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">!</span><span style="color:#f92672">=</span> ((pcVar4[<span style="color:#ae81ff">6</span>] <span style="color:#f92672">-</span> pcVar4[<span style="color:#ae81ff">0x11</span>] <span style="color:#f92672">&gt;</span><span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">*</span> pcVar4[<span style="color:#ae81ff">0x12</span>] <span style="color:#f92672">-</span> pcVar4[<span style="color:#ae81ff">0x11</span>] <span style="color:#f92672">+</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">n</span><span style="color:#e6db74">&#39;</span>)
+pcVar4[<span style="color:#ae81ff">0xd</span>] <span style="color:#f92672">+</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">\x01</span><span style="color:#e6db74">&#39;</span> <span style="color:#f92672">!</span><span style="color:#f92672">=</span> pcVar4[<span style="color:#ae81ff">10</span>]
+(pcVar4[<span style="color:#ae81ff">6</span>] <span style="color:#f92672">-</span> pcVar4[<span style="color:#ae81ff">0x11</span>] <span style="color:#f92672">*</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">\x03</span><span style="color:#e6db74">&#39;</span> <span style="color:#f92672">+</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">\\</span><span style="color:#e6db74">&#39;</span>) <span style="color:#f92672">!</span><span style="color:#f92672">=</span> pcVar4[<span style="color:#ae81ff">10</span>]
+pcVar4[<span style="color:#ae81ff">0x14</span>] <span style="color:#f92672">-</span> <span style="color:#ae81ff">99</span> <span style="color:#f92672">!</span><span style="color:#f92672">=</span> (pcVar4[<span style="color:#ae81ff">0x12</span>] <span style="color:#f92672">-</span> pcVar4[<span style="color:#ae81ff">0x11</span>]) <span style="color:#f92672">*</span> <span style="color:#ae81ff">2</span>
+pcVar4[<span style="color:#ae81ff">6</span>] <span style="color:#f92672">-</span> pcVar4[<span style="color:#ae81ff">0x11</span>] <span style="color:#f92672">!</span><span style="color:#f92672">=</span> (pcVar4[<span style="color:#ae81ff">0x12</span>] <span style="color:#f92672">-</span> pcVar4[<span style="color:#ae81ff">0x11</span>]) <span style="color:#f92672">*</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">\x04</span><span style="color:#e6db74">&#39;</span>
+pcVar4[<span style="color:#ae81ff">6</span>] <span style="color:#f92672">!</span><span style="color:#f92672">=</span> pcVar4[<span style="color:#ae81ff">0xe</span>]
+</code></pre></div><p>これらの条件をすべて満たす<code>pcVar4</code>を求めれば良いのですが、</p>
+<p>条件がかなり多く面倒だったので、<code>z3</code>というソルバを用いて解くことにします。</p>
+<p>条件を指定してあげるとそれを満たす解を自動で求めてくれます。</p>
+<p>プログラムは以下の通りです。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> z3 <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+
+<span style="color:#75715e"># pcVar4[0x16] != &#39;}&#39;なのでフラグは0x17文字</span>
+flag <span style="color:#f92672">=</span> [BitVec(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">flag{:d}</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>format(i), <span style="color:#ae81ff">8</span>)
+        <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">0x17</span>)]
+s <span style="color:#f92672">=</span> Solver()
+
+<span style="color:#75715e"># 条件を列挙</span>
+s<span style="color:#f92672">.</span>add(flag[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">==</span> ((flag[<span style="color:#ae81ff">6</span>] <span style="color:#f92672">-</span> flag[<span style="color:#ae81ff">0x11</span>] <span style="color:#f92672">&gt;&gt;</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">*</span> flag[<span style="color:#ae81ff">0x12</span>] <span style="color:#f92672">-</span> flag[<span style="color:#ae81ff">0x11</span>] <span style="color:#f92672">+</span> ord(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">n</span><span style="color:#e6db74">&#39;</span>)))
+s<span style="color:#f92672">.</span>add(flag[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">==</span> ord(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">c</span><span style="color:#e6db74">&#34;</span>))
+s<span style="color:#f92672">.</span>add(flag[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">==</span> ord(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">t</span><span style="color:#e6db74">&#34;</span>))
+s<span style="color:#f92672">.</span>add(flag[<span style="color:#ae81ff">3</span>] <span style="color:#f92672">==</span> ord(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span>))
+s<span style="color:#f92672">.</span>add(flag[<span style="color:#ae81ff">4</span>] <span style="color:#f92672">==</span> ord(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{</span><span style="color:#e6db74">&#34;</span>))
+s<span style="color:#f92672">.</span>add(flag[<span style="color:#ae81ff">5</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0x73</span>)
+s<span style="color:#f92672">.</span>add(flag[<span style="color:#ae81ff">6</span>] <span style="color:#f92672">+</span> flag[<span style="color:#ae81ff">0xe</span>] <span style="color:#f92672">==</span> ord(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">h</span><span style="color:#e6db74">&#39;</span>))
+s<span style="color:#f92672">.</span>add(flag[<span style="color:#ae81ff">6</span>] <span style="color:#f92672">==</span> flag[<span style="color:#ae81ff">0xe</span>])
+s<span style="color:#f92672">.</span>add(flag[<span style="color:#ae81ff">6</span>] <span style="color:#f92672">-</span> flag[<span style="color:#ae81ff">0x11</span>] <span style="color:#f92672">==</span> (flag[<span style="color:#ae81ff">0x12</span>] <span style="color:#f92672">-</span> flag[<span style="color:#ae81ff">0x11</span>]) <span style="color:#f92672">*</span> ord(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\x04</span><span style="color:#e6db74">&#39;</span>))
+s<span style="color:#f92672">.</span>add((flag[<span style="color:#ae81ff">6</span>] <span style="color:#f92672">-</span> flag[<span style="color:#ae81ff">0x11</span>] <span style="color:#f92672">*</span> ord(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\x03</span><span style="color:#e6db74">&#39;</span>) <span style="color:#f92672">+</span> ord(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">&#39;</span>)) <span style="color:#f92672">==</span> flag[<span style="color:#ae81ff">10</span>])
+s<span style="color:#f92672">.</span>add(flag[<span style="color:#ae81ff">7</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">100</span>)
+s<span style="color:#f92672">.</span>add(flag[<span style="color:#ae81ff">8</span>] <span style="color:#f92672">==</span> ord(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">_</span><span style="color:#e6db74">&#34;</span>))
+s<span style="color:#f92672">.</span>add(flag[<span style="color:#ae81ff">9</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">99</span>)
+s<span style="color:#f92672">.</span>add(flag[<span style="color:#ae81ff">0xb</span>] <span style="color:#f92672">-</span> <span style="color:#ae81ff">0x73</span> <span style="color:#f92672">-</span> flag[<span style="color:#ae81ff">0x12</span>] <span style="color:#f92672">+</span> flag[<span style="color:#ae81ff">0x11</span>] <span style="color:#f92672">==</span> flag[<span style="color:#ae81ff">0x12</span>] <span style="color:#f92672">-</span> flag[<span style="color:#ae81ff">0x11</span>])
+s<span style="color:#f92672">.</span>add(flag[<span style="color:#ae81ff">0xc</span>] <span style="color:#f92672">==</span> flag[<span style="color:#ae81ff">0xd</span>])
+s<span style="color:#f92672">.</span>add(flag[<span style="color:#ae81ff">0xd</span>] <span style="color:#f92672">+</span> ord(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\x01</span><span style="color:#e6db74">&#39;</span>) <span style="color:#f92672">==</span> flag[<span style="color:#ae81ff">10</span>])
+s<span style="color:#f92672">.</span>add(flag[<span style="color:#ae81ff">0xf</span>] <span style="color:#f92672">==</span> flag[<span style="color:#ae81ff">8</span>])
+s<span style="color:#f92672">.</span>add(flag[<span style="color:#ae81ff">0x10</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0x6e</span>)
+s<span style="color:#f92672">.</span>add(<span style="color:#f92672">-</span><span style="color:#ae81ff">0x5b</span> <span style="color:#f92672">-</span> flag[<span style="color:#ae81ff">0x11</span>] <span style="color:#f92672">==</span> flag[<span style="color:#ae81ff">0xb</span>])
+s<span style="color:#f92672">.</span>add(flag[<span style="color:#ae81ff">0x13</span>] <span style="color:#f92672">==</span> ord(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">z</span><span style="color:#e6db74">&#39;</span>))
+s<span style="color:#f92672">.</span>add(flag[<span style="color:#ae81ff">0x14</span>] <span style="color:#f92672">-</span> <span style="color:#ae81ff">99</span> <span style="color:#f92672">==</span> (flag[<span style="color:#ae81ff">0x12</span>] <span style="color:#f92672">-</span> flag[<span style="color:#ae81ff">0x11</span>]) <span style="color:#f92672">*</span> <span style="color:#ae81ff">2</span>)
+s<span style="color:#f92672">.</span>add(flag[<span style="color:#ae81ff">0x15</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0x7a</span>)
+s<span style="color:#f92672">.</span>add(flag[<span style="color:#ae81ff">0x16</span>] <span style="color:#f92672">==</span> ord(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span>))
+
+<span style="color:#66d9ef">while</span> True:
+    answer <span style="color:#f92672">=</span> [<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">?</span><span style="color:#e6db74">&#39;</span> <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">0x17</span>)]
+    r <span style="color:#f92672">=</span> s<span style="color:#f92672">.</span>check()
+    <span style="color:#66d9ef">if</span> r <span style="color:#f92672">==</span> sat:  <span style="color:#75715e"># 与えた問題が充足可能かどうか</span>
+        m <span style="color:#f92672">=</span> s<span style="color:#f92672">.</span>model()
+        <span style="color:#66d9ef">for</span> d <span style="color:#f92672">in</span> m<span style="color:#f92672">.</span>decls():
+            answer[int(d<span style="color:#f92672">.</span>name()<span style="color:#f92672">.</span>replace(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">flag</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">&#39;</span>))] <span style="color:#f92672">=</span> chr(m[d]<span style="color:#f92672">.</span>as_long())  <span style="color:#75715e"># Z3からの型変換</span>
+        answer <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>join(answer)
+        <span style="color:#66d9ef">print</span>(answer)
+        exit()
+    <span style="color:#66d9ef">else</span>:
+        <span style="color:#66d9ef">print</span>(r)
+</code></pre></div><p>実行結果は以下の通りです。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">PS C:\Users\kuzushiki&gt; &amp; C:/Users/kuzushiki/AppData/Local/Programs/Python/Python37/python.exe c:/Users/kuzushiki/Desktop/zsolve.py
+ ctf{s4d_c uÿÿ4_n01zez}
+</code></pre></div><p>なぜか解けませんでした&hellip;</p>
+<p>以下の条件により、フラグの未知の文字を<code>?</code>や<code>*</code>を用いて表すと、</p>
+<p>フラグは<code>pctf{s4d_c?u**4_n01zez}</code>となります。</p>
+<ol>
+<li>フラグの一文字目は<code>p</code></li>
+<li>フラグに<code> </code>や<code>ÿ</code>含まれない</li>
+<li><code>flag[0xc] == flag[0xd]</code></li>
+</ol>
+<p>未知の文字はたった２種類なので、総当たりで解きましょう</p>
+<p>前述のように、<code>chugga</code>は何度でも入力を試せます。</p>
+<p>プログラムは以下の通りです。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> string
+<span style="color:#f92672">from</span> pwn <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+io <span style="color:#f92672">=</span> process(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">chugga</span><span style="color:#e6db74">&#39;</span>)
+io<span style="color:#f92672">.</span>recv()
+flag <span style="color:#f92672">=</span> list(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">pctf{s4d_c?u**4_n01zez}</span><span style="color:#e6db74">&#39;</span>)
+mystring <span style="color:#f92672">=</span> string<span style="color:#f92672">.</span>ascii_letters <span style="color:#f92672">+</span> string<span style="color:#f92672">.</span>digits <span style="color:#f92672">+</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">_</span><span style="color:#e6db74">&#39;</span>
+<span style="color:#66d9ef">for</span> s1 <span style="color:#f92672">in</span> mystring:
+    flag[<span style="color:#ae81ff">10</span>] <span style="color:#f92672">=</span> s1
+    <span style="color:#66d9ef">for</span> s2 <span style="color:#f92672">in</span> mystring:
+        flag[<span style="color:#ae81ff">12</span>] <span style="color:#f92672">=</span> s2
+        flag[<span style="color:#ae81ff">13</span>] <span style="color:#f92672">=</span> s2
+        gflag <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>join(flag)
+        io<span style="color:#f92672">.</span>sendline(gflag)
+        recv <span style="color:#f92672">=</span> io<span style="color:#f92672">.</span>recv()
+        <span style="color:#66d9ef">print</span>(recv)
+        <span style="color:#66d9ef">if</span> (<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Boom!</span><span style="color:#e6db74">&#39;</span> <span style="color:#f92672">not</span> <span style="color:#f92672">in</span> recv) <span style="color:#f92672">and</span> (<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">in train car</span><span style="color:#e6db74">&#39;</span> <span style="color:#f92672">not</span> <span style="color:#f92672">in</span> recv) <span style="color:#f92672">and</span> (<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">locked</span><span style="color:#e6db74">&#39;</span> <span style="color:#f92672">not</span> <span style="color:#f92672">in</span> recv):
+            <span style="color:#66d9ef">print</span>(gflag)
+            exit()
+</code></pre></div><p>実行するとフラグが分かりました！！</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>!<span style="color:#f92672">]</span> Could not find executable <span style="color:#e6db74">&#39;chugga&#39;</span> in $PATH, using <span style="color:#e6db74">&#39;./chugga&#39;</span> instead
+<span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> Starting local process <span style="color:#e6db74">&#39;./chugga&#39;</span>: pid <span style="color:#ae81ff">1843</span>
+b<span style="color:#e6db74">&#34;Boom! You are dead. You come back to life in the next car.\nWe&#39;re in train car:  1\nThe door is locked, but luckily, you&#39;re the conductor! Input your code: \n&#34;</span>
+b<span style="color:#e6db74">&#34;Boom! You are dead. You come back to life in the next car.\nWe&#39;re in train car:  2\nThe door is locked, but luckily, you&#39;re the conductor! Input your code: \n&#34;</span>
+
+:
+<span style="color:#f92672">(</span>省略<span style="color:#f92672">)</span>
+:
+
+b<span style="color:#e6db74">&#34;Boom! You are dead. You come back to life in the next car.\nWe&#39;re in train car:  447\nThe door is locked, but luckily, you&#39;re the conductor! Input your code: \n&#34;</span>
+b<span style="color:#e6db74">&#34;You&#39;ve done it! You&#39;ve saved the train!\n&#34;</span>
+pctf<span style="color:#f92672">{</span>s4d_chugg4_n01zez<span style="color:#f92672">}</span>
+</code></pre></div><p><code>pctf{s4d_chugg4_n01zez}</code></p>
+<h2 id="welcome-to-earth-web-100-pts-419-solves">Welcome to Earth (WEB, 100 pts, 419 Solves)</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">This was supposed to be my weekend off, but noooo, you got me out here, draggin&#39; your heavy ass through the burning desert, with your dreadlocks sticking out the back of my parachute. You gotta come down here with an attitude, actin&#39; all big and bad. And what the hell is that smell? I coulda been at a barbecue, but I ain&#39;t mad.
+</code></pre></div><p><a href="web.ctf.b01lers.com:1000">問題ページ</a></p>
+<p>まるでゲームブックのような問題でした。</p>
+<p>問題ページにアクセスすると、「<strong>AMBUSH!</strong>」と表示されます。</p>
+<p><img src="https://user-images.githubusercontent.com/50363796/76739893-45224400-67b0-11ea-870d-c73c5e52f197.png" alt="VirtualBox_Kali-Linux-2019 2-vbox-amd64_16_03_2020_17_13_36"></p>
+<p>そのまま放置していると<code>/die/</code>に飛ばされ、死んでしまいます。</p>
+<p><img src="https://user-images.githubusercontent.com/50363796/76739974-6be07a80-67b0-11ea-9a07-aa8d8f2fb252.png" alt="VirtualBox_Kali-Linux-2019 2-vbox-amd64_16_03_2020_17_14_37"></p>
+<p>トップページのソースコードを確認してみます</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#75715e">&lt;!DOCTYPE html&gt;</span>
+&lt;<span style="color:#f92672">html</span>&gt;
+  &lt;<span style="color:#f92672">head</span>&gt;
+    &lt;<span style="color:#f92672">title</span>&gt;Welcome to Earth&lt;/<span style="color:#f92672">title</span>&gt;
+  &lt;/<span style="color:#f92672">head</span>&gt;
+  &lt;<span style="color:#f92672">body</span>&gt;
+    &lt;<span style="color:#f92672">h1</span>&gt;AMBUSH!&lt;/<span style="color:#f92672">h1</span>&gt;
+    &lt;<span style="color:#f92672">p</span>&gt;You&#39;ve gotta escape!&lt;/<span style="color:#f92672">p</span>&gt;
+    &lt;<span style="color:#f92672">img</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/static/img/f18.png&#34;</span> <span style="color:#a6e22e">alt</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;alien mothership&#34;</span> <span style="color:#a6e22e">style</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;width:60vw;&#34;</span> /&gt;
+    &lt;<span style="color:#f92672">script</span>&gt;
+      document.<span style="color:#a6e22e">onkeydown</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">event</span>) {
+        <span style="color:#a6e22e">event</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">event</span> <span style="color:#f92672">||</span> window.<span style="color:#a6e22e">event</span>;
+        <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">event</span>.<span style="color:#a6e22e">keyCode</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">27</span>) {
+          <span style="color:#a6e22e">event</span>.<span style="color:#a6e22e">preventDefault</span>();
+          window.<span style="color:#a6e22e">location</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;/chase/&#34;</span>;
+        } <span style="color:#66d9ef">else</span> <span style="color:#a6e22e">die</span>();
+      };
+
+      <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">sleep</span>(<span style="color:#a6e22e">ms</span>) {
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> Promise(<span style="color:#a6e22e">resolve</span> =&gt; <span style="color:#a6e22e">setTimeout</span>(<span style="color:#a6e22e">resolve</span>, <span style="color:#a6e22e">ms</span>));
+      }
+
+      <span style="color:#a6e22e">async</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">dietimer</span>() {
+        <span style="color:#a6e22e">await</span> <span style="color:#a6e22e">sleep</span>(<span style="color:#ae81ff">10000</span>);
+        <span style="color:#a6e22e">die</span>();
+      }
+
+      <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">die</span>() {
+        window.<span style="color:#a6e22e">location</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;/die/&#34;</span>;
+      }
+
+      <span style="color:#a6e22e">dietimer</span>();
+    &lt;/<span style="color:#f92672">script</span>&gt;
+  &lt;/<span style="color:#f92672">body</span>&gt;
+&lt;/<span style="color:#f92672">html</span>&gt;
+</code></pre></div><p><code>window.location = &quot;/chase/&quot;;</code>の部分から、<code>/chase/</code>にアクセスすれば良いことが分かります。</p>
+<p><code>/chase/</code>にアクセスすると、一瞬何かが表示されますが、すぐに<code>/die/</code>に飛ばされてしまいます。</p>
+<p><code>/chase/</code>のソースコードを確認してみましょう</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#75715e">&lt;!DOCTYPE html&gt;</span>
+&lt;<span style="color:#f92672">html</span>&gt;
+  &lt;<span style="color:#f92672">head</span>&gt;
+    &lt;<span style="color:#f92672">title</span>&gt;Welcome to Earth&lt;/<span style="color:#f92672">title</span>&gt;
+  &lt;/<span style="color:#f92672">head</span>&gt;
+  &lt;<span style="color:#f92672">body</span>&gt;
+    &lt;<span style="color:#f92672">h1</span>&gt;CHASE!&lt;/<span style="color:#f92672">h1</span>&gt;
+    &lt;<span style="color:#f92672">p</span>&gt;
+      You managed to chase one of the enemy fighters, but there&#39;s a wall coming
+      up fast!
+    &lt;/<span style="color:#f92672">p</span>&gt;
+    &lt;<span style="color:#f92672">button</span> <span style="color:#a6e22e">onclick</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;left()&#34;</span>&gt;Left&lt;/<span style="color:#f92672">button</span>&gt;
+    &lt;<span style="color:#f92672">button</span> <span style="color:#a6e22e">onclick</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;right()&#34;</span>&gt;Right&lt;/<span style="color:#f92672">button</span>&gt;
+
+    &lt;<span style="color:#f92672">img</span>
+      <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/static/img/Canyon_Chase_16.png&#34;</span>
+      <span style="color:#a6e22e">alt</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;canyon chase&#34;</span>
+      <span style="color:#a6e22e">style</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;width:60vw;&#34;</span>
+    /&gt;
+    &lt;<span style="color:#f92672">script</span>&gt;
+      <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">sleep</span>(<span style="color:#a6e22e">ms</span>) {
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> Promise(<span style="color:#a6e22e">resolve</span> =&gt; <span style="color:#a6e22e">setTimeout</span>(<span style="color:#a6e22e">resolve</span>, <span style="color:#a6e22e">ms</span>));
+      }
+
+      <span style="color:#a6e22e">async</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">dietimer</span>() {
+        <span style="color:#a6e22e">await</span> <span style="color:#a6e22e">sleep</span>(<span style="color:#ae81ff">1000</span>);
+        <span style="color:#a6e22e">die</span>();
+      }
+
+      <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">die</span>() {
+        window.<span style="color:#a6e22e">location</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;/die/&#34;</span>;
+      }
+
+      <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">left</span>() {
+        window.<span style="color:#a6e22e">location</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;/die/&#34;</span>;
+      }
+
+      <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">leftt</span>() {
+        window.<span style="color:#a6e22e">location</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;/leftt/&#34;</span>;
+      }
+
+      <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">right</span>() {
+        window.<span style="color:#a6e22e">location</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;/die/&#34;</span>;
+      }
+
+      <span style="color:#a6e22e">dietimer</span>();
+    &lt;/<span style="color:#f92672">script</span>&gt;
+  &lt;/<span style="color:#f92672">body</span>&gt;
+&lt;/<span style="color:#f92672">html</span>&gt;
+</code></pre></div><p><code>window.location = &quot;/leftt/&quot;;</code>と書かれているので、<code>/leftt/</code>にアクセスしてみましょう</p>
+<p><img src="https://user-images.githubusercontent.com/50363796/76740017-84e92b80-67b0-11ea-9f0f-d546df923fcd.png" alt="VirtualBox_Kali-Linux-2019 2-vbox-amd64_16_03_2020_17_20_50"></p>
+<p><code>take the shoot</code>と書かれたボタンがありあますが、ここをクリックすると<code>/die/</code>に飛ばされてしまいます。</p>
+<p><code>/leftt/</code>のソースコードを確認しましょう</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#75715e">&lt;!DOCTYPE html&gt;</span>
+&lt;<span style="color:#f92672">html</span>&gt;
+  &lt;<span style="color:#f92672">head</span>&gt;
+    &lt;<span style="color:#f92672">title</span>&gt;Welcome to Earth&lt;/<span style="color:#f92672">title</span>&gt;
+  &lt;/<span style="color:#f92672">head</span>&gt;
+  &lt;<span style="color:#f92672">body</span>&gt;
+    &lt;<span style="color:#f92672">h1</span>&gt;SHOOT IT&lt;/<span style="color:#f92672">h1</span>&gt;
+    &lt;<span style="color:#f92672">p</span>&gt;You&#39;ve got the bogey in your sights, take the shot!&lt;/<span style="color:#f92672">p</span>&gt;
+    &lt;<span style="color:#f92672">img</span>
+      <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/static/img/locked.png&#34;</span>
+      <span style="color:#a6e22e">alt</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;locked on&#34;</span>
+      <span style="color:#a6e22e">style</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;width:60vw;&#34;</span>
+    /&gt;
+    &lt;/<span style="color:#f92672">br</span>&gt;
+    &lt;<span style="color:#f92672">button</span> <span style="color:#a6e22e">onClick</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;window.location=&#39;/die/&#39;&#34;</span>&gt;Take the shot&lt;/<span style="color:#f92672">button</span>&gt;
+    <span style="color:#75715e">&lt;!--</span><span style="color:#75715e"> &lt;button onClick=&#34;window.location=&#39;/shoot/&#39;&#34;&gt;Take the shot&lt;/button&gt; </span><span style="color:#75715e">--&gt;</span>
+  &lt;/<span style="color:#f92672">body</span>&gt;
+&lt;/<span style="color:#f92672">html</span>&gt;
+</code></pre></div><p>コメントアウトされている部分に<code>&quot;window.location='/shoot/'&quot;</code>との記述があります。</p>
+<p><code>/shoot/</code>にアクセスしてみましょう。</p>
+<p><img src="https://user-images.githubusercontent.com/50363796/76740060-96cace80-67b0-11ea-9230-32e3206fb003.png" alt="VirtualBox_Kali-Linux-2019 2-vbox-amd64_16_03_2020_17_23_43"></p>
+<p>右下にある<code>continue</code>と書かれたボタンを押すと、次のステージである<code>/door/</code>に進みます。</p>
+<p><img src="https://user-images.githubusercontent.com/50363796/76740093-a5b18100-67b0-11ea-92d4-ab1e5a7afa16.png" alt="VirtualBox_Kali-Linux-2019 2-vbox-amd64_16_03_2020_17_24_10"></p>
+<p>大量のラジオボタンからたった１つの正解を見つけなくてはならないようです。</p>
+<p>とりあえずソースコードを見てみましょう</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#75715e">&lt;!DOCTYPE html&gt;</span>
+&lt;<span style="color:#f92672">html</span>&gt;
+  &lt;<span style="color:#f92672">head</span>&gt;
+    &lt;<span style="color:#f92672">title</span>&gt;Welcome to Earth&lt;/<span style="color:#f92672">title</span>&gt;
+    &lt;<span style="color:#f92672">script</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/static/js/door.js&#34;</span>&gt;&lt;/<span style="color:#f92672">script</span>&gt;
+  &lt;/<span style="color:#f92672">head</span>&gt;
+  &lt;<span style="color:#f92672">body</span>&gt;
+    &lt;<span style="color:#f92672">h1</span>&gt;YOU APPROACH THE ALIEN CRAFT!&lt;/<span style="color:#f92672">h1</span>&gt;
+    &lt;<span style="color:#f92672">p</span>&gt;How do you get inside?&lt;/<span style="color:#f92672">p</span>&gt;
+    &lt;<span style="color:#f92672">img</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/static/img/ship.png&#34;</span> <span style="color:#a6e22e">alt</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;crashed ship&#34;</span> <span style="color:#a6e22e">style</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;width:60vw;&#34;</span> /&gt;
+    &lt;<span style="color:#f92672">form</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;door_form&#34;</span>&gt;
+      &lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;radio&#34;</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;side&#34;</span> <span style="color:#a6e22e">value</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;0&#34;</span> /&gt;0
+      &lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;radio&#34;</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;side&#34;</span> <span style="color:#a6e22e">value</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;1&#34;</span> /&gt;1
+      &lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;radio&#34;</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;side&#34;</span> <span style="color:#a6e22e">value</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;2&#34;</span> /&gt;2
+        :
+        (長いので省略)
+        :
+      &lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;radio&#34;</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;side&#34;</span> <span style="color:#a6e22e">value</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;357&#34;</span> /&gt;357
+      &lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;radio&#34;</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;side&#34;</span> <span style="color:#a6e22e">value</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;358&#34;</span> /&gt;358
+      &lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;radio&#34;</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;side&#34;</span> <span style="color:#a6e22e">value</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;359&#34;</span> /&gt;359
+    &lt;/<span style="color:#f92672">form</span>&gt;
+    &lt;<span style="color:#f92672">button</span> <span style="color:#a6e22e">onClick</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;check_door()&#34;</span>&gt;Check&lt;/<span style="color:#f92672">button</span>&gt;
+  &lt;/<span style="color:#f92672">body</span>&gt;
+&lt;/<span style="color:#f92672">html</span>&gt;
+</code></pre></div><p><code>src=&quot;/static/js/door.js&quot;</code>内の<code>check_door()</code>という関数で正解か判定しているのが分かります。</p>
+<p><code>&quot;/static/js/door.js&quot;</code>を見てみましょう。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">check_door</span>() {
+  <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">all_radio</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">getElementById</span>(<span style="color:#e6db74">&#34;door_form&#34;</span>).<span style="color:#a6e22e">elements</span>;
+  <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">guess</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span>;
+
+  <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> <span style="color:#f92672">&lt;</span> <span style="color:#a6e22e">all_radio</span>.<span style="color:#a6e22e">length</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span>)
+    <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">all_radio</span>[<span style="color:#a6e22e">i</span>].<span style="color:#a6e22e">checked</span>) <span style="color:#a6e22e">guess</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">all_radio</span>[<span style="color:#a6e22e">i</span>].<span style="color:#a6e22e">value</span>;
+
+  <span style="color:#a6e22e">rand</span> <span style="color:#f92672">=</span> Math.<span style="color:#a6e22e">floor</span>(Math.<span style="color:#a6e22e">random</span>() <span style="color:#f92672">*</span> <span style="color:#ae81ff">360</span>);
+  <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">rand</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">guess</span>) window.<span style="color:#a6e22e">location</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;/open/&#34;</span>;
+  <span style="color:#66d9ef">else</span> window.<span style="color:#a6e22e">location</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;/die/&#34;</span>;
+}
+</code></pre></div><p>正解はランダムに変わるようです。</p>
+<p>1/360を引くのは至難の技です。</p>
+<p>（実はCTF中に引けました）</p>
+<p>正解なら<code>/open/</code>に飛ぶみたいなので、<code>/open/</code>にアクセスしましょう。</p>
+<p><img src="https://user-images.githubusercontent.com/50363796/76740122-b19d4300-67b0-11ea-8df4-f06bf7a24637.png" alt="VirtualBox_Kali-Linux-2019 2-vbox-amd64_16_03_2020_17_32_25"></p>
+<p>ページを見渡しても何も見つからないので、ソースコードを見てみましょう。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#75715e">&lt;!DOCTYPE html&gt;</span>
+&lt;<span style="color:#f92672">html</span>&gt;
+  &lt;<span style="color:#f92672">head</span>&gt;
+    &lt;<span style="color:#f92672">title</span>&gt;Welcome to Earth&lt;/<span style="color:#f92672">title</span>&gt;
+    &lt;<span style="color:#f92672">script</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/static/js/open_sesame.js&#34;</span>&gt;&lt;/<span style="color:#f92672">script</span>&gt;
+  &lt;/<span style="color:#f92672">head</span>&gt;
+  &lt;<span style="color:#f92672">body</span>&gt;
+    &lt;<span style="color:#f92672">h1</span>&gt;YOU FOUND THE DOOR!&lt;/<span style="color:#f92672">h1</span>&gt;
+    &lt;<span style="color:#f92672">p</span>&gt;How do you open it?&lt;/<span style="color:#f92672">p</span>&gt;
+    &lt;<span style="color:#f92672">img</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/static/img/door.jpg&#34;</span> <span style="color:#a6e22e">alt</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;door&#34;</span> <span style="color:#a6e22e">style</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;width:60vw;&#34;</span> /&gt;
+    &lt;<span style="color:#f92672">script</span>&gt;
+      <span style="color:#a6e22e">open</span>(<span style="color:#ae81ff">0</span>);
+    &lt;/<span style="color:#f92672">script</span>&gt;
+  &lt;/<span style="color:#f92672">body</span>&gt;
+&lt;/<span style="color:#f92672">html</span>&gt;
+</code></pre></div><p><code>src=&quot;/static/js/open_sesame.js&quot;</code>というファイルが存在するようです。</p>
+<p><code>/static/js/open_sesame.js</code>にアクセスしてみましょう。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">sleep</span>(<span style="color:#a6e22e">ms</span>) {
+  <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> Promise(<span style="color:#a6e22e">resolve</span> =&gt; <span style="color:#a6e22e">setTimeout</span>(<span style="color:#a6e22e">resolve</span>, <span style="color:#a6e22e">ms</span>));
+}
+
+<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">open</span>(<span style="color:#a6e22e">i</span>) {
+  <span style="color:#a6e22e">sleep</span>(<span style="color:#ae81ff">1</span>).<span style="color:#a6e22e">then</span>(() =&gt; {
+    <span style="color:#a6e22e">open</span>(<span style="color:#a6e22e">i</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>);
+  });
+  <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">i</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">4000000000</span>) window.<span style="color:#a6e22e">location</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;/fight/&#34;</span>;
+}
+</code></pre></div><p>4000000秒（約46日！）待てば<code>/fight/</code>に遷移するようですが、そんなに待てないのでこちらから<code>/fight/</code>にアクセスしましょう。</p>
+<p><img src="https://user-images.githubusercontent.com/50363796/76740178-d09bd500-67b0-11ea-819a-a5428594aaf2.png" alt="VirtualBox_Kali-Linux-2019 2-vbox-amd64_16_03_2020_17_38_31"></p>
+<p>いよいよ最終決戦です。</p>
+<p>エイリアンを倒すために下部のフォームに文字を入力し、<code>Fight!</code>ボタンを押しても、何も起こりません。</p>
+<p>ソースコードを見てみましょう。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#75715e">&lt;!DOCTYPE html&gt;</span>
+&lt;<span style="color:#f92672">html</span>&gt;
+  &lt;<span style="color:#f92672">head</span>&gt;
+    &lt;<span style="color:#f92672">title</span>&gt;Welcome to Earth&lt;/<span style="color:#f92672">title</span>&gt;
+    &lt;<span style="color:#f92672">script</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/static/js/fight.js&#34;</span>&gt;&lt;/<span style="color:#f92672">script</span>&gt;
+  &lt;/<span style="color:#f92672">head</span>&gt;
+  &lt;<span style="color:#f92672">body</span>&gt;
+    &lt;<span style="color:#f92672">h1</span>&gt;AN ALIEN!&lt;/<span style="color:#f92672">h1</span>&gt;
+    &lt;<span style="color:#f92672">p</span>&gt;What do you do?&lt;/<span style="color:#f92672">p</span>&gt;
+    &lt;<span style="color:#f92672">img</span>
+      <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/static/img/alien.png&#34;</span>
+      <span style="color:#a6e22e">alt</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;door&#34;</span>
+      <span style="color:#a6e22e">style</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;width:60vw;&#34;</span>
+    /&gt;
+    &lt;/<span style="color:#f92672">br</span>&gt;
+    &lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text&#34;</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;action&#34;</span>&gt;
+    &lt;<span style="color:#f92672">button</span> <span style="color:#a6e22e">onClick</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;check_action()&#34;</span>&gt;Fight!&lt;/<span style="color:#f92672">button</span>&gt;
+  &lt;/<span style="color:#f92672">body</span>&gt;
+&lt;/<span style="color:#f92672">html</span>&gt;
+</code></pre></div><p><code>/static/js/fight.js</code>内の<code>check_action()</code>にて判定が行われるようです。</p>
+<p><code>/static/js/fight.js</code>にアクセスしてみましょう。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#75715e">// Run to scramble original flag
+</span><span style="color:#75715e"></span><span style="color:#75715e">//console.log(scramble(flag, action));
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">scramble</span>(<span style="color:#a6e22e">flag</span>, <span style="color:#a6e22e">key</span>) {
+  <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> <span style="color:#f92672">&lt;</span> <span style="color:#a6e22e">key</span>.<span style="color:#a6e22e">length</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span>) {
+    <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">n</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">key</span>.<span style="color:#a6e22e">charCodeAt</span>(<span style="color:#a6e22e">i</span>) <span style="color:#f92672">%</span> <span style="color:#a6e22e">flag</span>.<span style="color:#a6e22e">length</span>;
+    <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">temp</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">flag</span>[<span style="color:#a6e22e">i</span>];
+    <span style="color:#a6e22e">flag</span>[<span style="color:#a6e22e">i</span>] <span style="color:#f92672">=</span> <span style="color:#a6e22e">flag</span>[<span style="color:#a6e22e">n</span>];
+    <span style="color:#a6e22e">flag</span>[<span style="color:#a6e22e">n</span>] <span style="color:#f92672">=</span> <span style="color:#a6e22e">temp</span>;
+  }
+  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">flag</span>;
+}
+
+<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">check_action</span>() {
+  <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">action</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">getElementById</span>(<span style="color:#e6db74">&#34;action&#34;</span>).<span style="color:#a6e22e">value</span>;
+  <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">flag</span> <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#34;{hey&#34;</span>, <span style="color:#e6db74">&#34;_boy&#34;</span>, <span style="color:#e6db74">&#34;aaaa&#34;</span>, <span style="color:#e6db74">&#34;s_im&#34;</span>, <span style="color:#e6db74">&#34;ck!}&#34;</span>, <span style="color:#e6db74">&#34;_baa&#34;</span>, <span style="color:#e6db74">&#34;aaaa&#34;</span>, <span style="color:#e6db74">&#34;pctf&#34;</span>];
+
+  <span style="color:#75715e">// TODO: unscramble function
+</span><span style="color:#75715e"></span>}
+</code></pre></div><p>フラグは<code>[&quot;{hey&quot;, &quot;_boy&quot;, &quot;aaaa&quot;, &quot;s_im&quot;, &quot;ck!}&quot;, &quot;_baa&quot;, &quot;aaaa&quot;, &quot;pctf&quot;]</code>を正しく並び替えたものだと推測できます。</p>
+<p><code>pctf{hey*****ck!}</code>の部分は確定なので、自然な文章になるように残りの文字列を当てはめていきます。</p>
+<p>フラグが分かりました！！</p>
+<p><code>pctf{hey_boys_im_baaaaaaaaaack!}</code></p>
+<h2 id="welcome-a-welcome-challenge-1-pts-567-solves">Welcome! (A WELCOME CHALLENGE, 1 pts, 567 Solves)</h2>
+<pre><code>Welcome to b01lers CTF! A couple of things:
+
+Unless otherwise specified, the flag format is pctf{...}.
+
+This is a 48-Hour CTF. Details can be found at https://ctf.b01lers.com.
+
+pctf{all_ur_hack_are_belong_to_us}
+</code></pre><p>問題文に書かれているフラグをそのまま入れましょう</p>
+<p><code>pctf{all_ur_hack_are_belong_to_us}</code></p>
+<h2 id="discord-flag-a-welcome-challenge-1-pts-422-solves">Discord Flag (A WELCOME CHALLENGE, 1 pts, 422 Solves)</h2>
+<pre><code>Join our discord! discord.gg/tBMqujE
+</code></pre><p>大会の<code>discord</code>に参加しましょう。</p>
+<p><code>pctf</code>で検索すると、フラグが見つかりました。</p>
+<p><code>pctf{all_ur_hack_are_belong_to_us}</code></p>
+<h2 id="survey-a-welcome-challenge-1-pts-166-solves">Survey (A WELCOME CHALLENGE, 1 pts, 166 Solves)</h2>
+<p>大会のアンケートに回答するとフラグがもらえます。</p>
+<p>（回答しなくてもソースコードにフラグが書かれています）</p>
+<p><code>pctf{s33_y0u_n3xT_Y34r_ch0o_chO0}</code></p>
+<h2 id="感想">感想</h2>
+<p>「初心者向け」とのことでしたが、あまり解けませんでした。</p>
+<p>公式write upが投稿されたらそれを見て復習します。</p>
+
+			</div>
+		</div>
+	</div>
+		<div class="links">
+			<a href="https://kuzushiki.github.io/">Home</a>
+			
+				<a href="https://kuzushiki.github.io/post/">Archive</a>
+			
+			
+				
+			
+				
+					<a href="https://kuzushiki.github.io/pages/resume/">Résumé</a>
+				
+			
+			<a href="#top">Top</a>
+		</div>
+		
+		
+		<p id="copyright">
+			© Copyright 2020 kuzushiki
+		</p>
+		
+	</body>
+</html>
+

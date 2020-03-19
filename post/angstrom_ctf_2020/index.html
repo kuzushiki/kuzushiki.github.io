@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-		<title>ångstromCTF 2020 &middot; kuzushikiのぺーじ</title>
+		<title>ångstromCTF 2020 write up &middot; kuzushikiのぺーじ</title>
 		<link rel="canonical" href="https://kuzushiki.github.io/post/angstrom_ctf_2020/">
 		<link rel="stylesheet" type="text/css" href="https://kuzushiki.github.io/css/main.css" />
 		
@@ -53,7 +53,7 @@
 
 	<div class="postBody">
 		<div class="post">
-			<h1>ångstromCTF 2020</h1>
+			<h1>ångstromCTF 2020 write up</h1>
 			<span class="post-meta">Thu, Mar 19, 2020 - Read in 22 Min</span>
 			<div class="content">
 			<nav id="TableOfContents">
@@ -620,7 +620,7 @@ app <span style="color:#f92672">=</span> Flask(__name__)
 </code></pre></div><p>試しに<code>' or 1=1--'</code>をUAに設定して<code>/login</code>にアクセスしてみましょう</p>
 <p>上手くいけば<code>%s</code>の部分が置き換わるので、</p>
 <p><code>SELECT * FROM Agents WHERE UA='' or 1=1--''</code></p>
-<p>となって、という命令になるのでDBから全てのUAを抽出できます。</p>
+<p>という命令になるのでDBから全てのUAを抽出できます。</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">root@kali:/media/sf_share/CTF/angstrom# curl https://agents.2020.chall.actf.co/login? -A <span style="color:#e6db74">&#34;&#39; or 1=1--&#39;&#34;</span>
 &lt;!DOCTYPE html&gt;
 

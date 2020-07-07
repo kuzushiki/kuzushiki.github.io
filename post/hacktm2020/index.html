@@ -77,7 +77,7 @@
 <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">egcd</span>(a, b):
     x, y, u, v <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>
     <span style="color:#66d9ef">while</span> a <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span>:
-        q, r <span style="color:#f92672">=</span> b<span style="color:#f92672">/</span><span style="color:#f92672">/</span>a, b <span style="color:#f92672">%</span> a
+        q, r <span style="color:#f92672">=</span> b<span style="color:#f92672">//</span>a, b <span style="color:#f92672">%</span> a
         m, n <span style="color:#f92672">=</span> x<span style="color:#f92672">-</span>u<span style="color:#f92672">*</span>q, y<span style="color:#f92672">-</span>v<span style="color:#f92672">*</span>q
         b, a, x, y, u, v <span style="color:#f92672">=</span> a, r, u, v, m, n
         gcd <span style="color:#f92672">=</span> b
@@ -100,7 +100,7 @@
 <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">dec</span>(pk, c):
     key, n <span style="color:#f92672">=</span> pk
     plain <span style="color:#f92672">=</span> [chr(pow(char, key, n)) <span style="color:#66d9ef">for</span> char <span style="color:#f92672">in</span> c]
-    <span style="color:#66d9ef">return</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>join(plain)
+    <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#39;&#39;</span><span style="color:#f92672">.</span>join(plain)
 
 
 p <span style="color:#f92672">=</span> next_prime(random<span style="color:#f92672">.</span>SystemRandom()<span style="color:#f92672">.</span>getrandbits(<span style="color:#ae81ff">512</span>))
@@ -108,12 +108,12 @@ q <span style="color:#f92672">=</span> next_prime(random<span style="color:#f926
 
 flag_key<span style="color:#f92672">=</span>gen_keys(p, q)
 
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Public key:</span><span style="color:#e6db74">&#34;</span>)
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Public key:&#34;</span>)
 <span style="color:#66d9ef">print</span>(flag_key[<span style="color:#ae81ff">0</span>])
 
 flag_c<span style="color:#f92672">=</span>(enc(flag_key[<span style="color:#ae81ff">0</span>], flag))
 
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Encrypted flag:</span><span style="color:#e6db74">&#34;</span>)
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Encrypted flag:&#34;</span>)
 <span style="color:#66d9ef">print</span>(flag_c)
 </code></pre></div><p><code>enc</code>という関数を見てみる</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rsa.py" data-lang="rsa.py"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">enc</span>(key, p):
@@ -139,7 +139,7 @@ key <span style="color:#f92672">=</span> ((<span style="color:#ae81ff">65537</sp
     <span style="color:#66d9ef">for</span> c <span style="color:#f92672">in</span> string<span style="color:#f92672">.</span>printable:
         tmp <span style="color:#f92672">=</span> enc(key, c)
         <span style="color:#66d9ef">if</span> tmp <span style="color:#f92672">==</span> f:
-            <span style="color:#66d9ef">print</span>(c, end<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">&#34;</span>)
+            <span style="color:#66d9ef">print</span>(c, end<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;&#34;</span>)
             <span style="color:#66d9ef">break</span>
 </code></pre></div><p>フラグゲット
 <code>HackTM{why_ar3_MY_pR1va7es_pu8l1C_??}</code></p>
@@ -157,11 +157,11 @@ enc_flag <span style="color:#f92672">=</span> [<span style="color:#ae81ff">34220
 <span style="color:#f92672">import</span> string
 
 ary <span style="color:#f92672">=</span> []
-ans <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">&#34;</span>
+ans <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>
 <span style="color:#66d9ef">for</span> flag <span style="color:#f92672">in</span> enc_flag:
     <span style="color:#66d9ef">if</span> flag <span style="color:#f92672">not</span> <span style="color:#f92672">in</span> ary:
         ary<span style="color:#f92672">.</span>append(flag)
-    ans <span style="color:#f92672">+</span><span style="color:#f92672">=</span> string<span style="color:#f92672">.</span>ascii_letters[ary<span style="color:#f92672">.</span>index(flag)]
+    ans <span style="color:#f92672">+=</span> string<span style="color:#f92672">.</span>ascii_letters[ary<span style="color:#f92672">.</span>index(flag)]
 <span style="color:#66d9ef">print</span>(ans)
 </code></pre></div><p>結果は以下の通り</p>
 <pre><code>abcdefeaghefdeijkkclcefdembcecgnkoepqhrefesctfhcseabgmefeuckfctcseaghegeunfkkfgdmecdinovmfjdehibcwcxegehfwvkcevhcysjngdsjwedywucnehmncgweaghegsscsemjembcevkgfdmczmehmncgwemjeincgmceifvbcnmczmxembfheajyksehccwfdlkoembagnmegdoeAncBycdioegdgkohfhejAembceifvbcnmczmregdseajykseuceydingiCgukcectcdemjembcewjhmenchjynicAykeljtcndwcdmefdmckkflcdiceglcdifchxefeAckmehjehwylegujymewoegibfctcwcdmxeocgnhekgmcnrefesfhijtcncsembfhehgwcehibcwcefdehctcngkefdmnjsyimjnoeinovmjlngvboemczmhegdsemymjnfgkevgvcnhxebjaedficxejmbcneinovmjlngvbcnhebgsembjylbmejAembcehgwcehibcwcxeydAjnmydgmckorembcehibcwceaghevnchcdmcseghegehfwvkcebjwcajnCeghhfldwcdmejdebjaemjeyhceckcwcdmgnoeinovmgdgkomfiemcibdfBychemjemnftfgkkoeingiCefmxehjewyibeAjnewoeunfkkfgdmehibcwcxeAnjwembfhebywukfdleczvcnfcdicefekcgndcsebjaecghoefmefhemjeAgkkefdmjegeAgkhcehcdhcejAehciynfmoeabcdesctfhfdlegdecdinovmfjdegkljnfmbwxewjhmevcjvkcesjdDmencgkfEcebjaeAfcdsfhbkoesfAAfiykmefmefhemjesctfhcegdecdinovmfjdegkljnfmbwembgmeigdeafmbhmgdsegevnjkjdlcsegdsescmcnwfdcsegmmgiCeuoegenchjynicAykejvvjdcdmxebcncefhembceAkglxeabcdefmeijwchemjeinovmjejneignvcmedctcnenjkkeojynejad

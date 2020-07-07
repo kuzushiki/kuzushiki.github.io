@@ -7,10 +7,21 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>© Copyright 2020 kuzushiki</copyright>
-    <lastBuildDate>Mon, 01 Jun 2020 01:19:03 +0900</lastBuildDate>
+    <lastBuildDate>Sat, 04 Jul 2020 15:49:23 +0900</lastBuildDate>
     
 	<atom:link href="https://kuzushiki.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>My OSCP Journey</title>
+      <link>https://kuzushiki.github.io/post/oscp/</link>
+      <pubDate>Sat, 04 Jul 2020 15:49:23 +0900</pubDate>
+      
+      <guid>https://kuzushiki.github.io/post/oscp/</guid>
+      <description>OSCPに合格しました！！ まずは証拠 レポートを提出してから４日後に合格通知が届きました。
+めっちゃ嬉しいです！！
+OSCPとは ペネトレーションテスト（以下ペネトレ）の資格です。</description>
+    </item>
     
     <item>
       <title>Pwn2Win CTF 2020 write up</title>

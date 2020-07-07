@@ -1,276 +1,270 @@
 <!DOCTYPE html>
 <html>
-
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-	<title>My OSCP Journey &middot; kuzushikiのぺーじ</title>
-	<link rel="canonical" href="https://kuzushiki.github.io/post/oscp/">
-	<link rel="stylesheet" type="text/css" href="https://kuzushiki.github.io/css/main.css" />
-
-</head>
-
-<body>
-	<a id="title" href="https://kuzushiki.github.io/" title="kuzushikiのぺーじ">
-
-		<img id="logo" alt="Logo" src="https://kuzushiki.github.io/images/logo.png" />
-
-
-		<h1>kuzushikiのぺーじ</h1>
-
-	</a>
-
-	<h4>セキュリティに関することを書きたいですね</h4>
-
-	<div id="social">
-
-
-
-		<a href="https://github.com/kuzushiki" title="Github">
-			<img alt="GitHub" height="64px" width="64px" src="https://kuzushiki.github.io/images/github.svg" />
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+		<title>My OSCP Journey &middot; kuzushikiのぺーじ</title>
+		<link rel="canonical" href="https://kuzushiki.github.io/post/oscp/">
+		<link rel="stylesheet" type="text/css" href="https://kuzushiki.github.io/css/main.css" />
+		
+	</head>
+	<body>
+		<a id="title" href="https://kuzushiki.github.io/" title="kuzushikiのぺーじ">
+			
+				<img id="logo" alt="Logo" src="https://kuzushiki.github.io/images/logo.png" />
+			
+			
+				<h1>kuzushikiのぺーじ</h1>
+			
 		</a>
-
-
-
-		<a href="https://twitter.com/kuzu7shiki" title="Twitter">
-			<img alt="Twitter" height="64px" width="64px" src="https://kuzushiki.github.io/images/twitter.svg" />
-		</a>
-
-
-
-	</div>
-	<div class="links">
-		<a href="https://kuzushiki.github.io/">Home</a>
-
-		<a href="https://kuzushiki.github.io/post/">Archive</a>
-
-
-
-
-
-		<a href="https://kuzushiki.github.io/pages/resume/">Résumé</a>
-
-
-	</div>
+		
+			<h4>セキュリティに関することを書きたいですね</h4>
+		
+		<div id="social">
+			
+			
+			
+			<a href="https://github.com/kuzushiki" title="Github">
+				<img alt="GitHub" height="64px" width="64px" src="https://kuzushiki.github.io/images/github.svg" />
+			</a>
+			
+			
+			
+			<a href="https://twitter.com/kuzu7shiki" title="Twitter">
+				<img alt="Twitter" height="64px" width="64px" src="https://kuzushiki.github.io/images/twitter.svg" />
+			</a>
+			
+			
+                        
+		</div>
+		<div class="links">
+			<a href="https://kuzushiki.github.io/">Home</a>
+			
+				<a href="https://kuzushiki.github.io/post/">Archive</a>
+			
+			
+				
+			
+				
+					<a href="https://kuzushiki.github.io/pages/resume/">Résumé</a>
+				
+			
+		</div>
 
 	<div class="postBody">
 		<div class="post">
 			<h1>My OSCP Journey</h1>
 			<span class="post-meta">Sat, Jul 4, 2020 - Read in 1 Min</span>
 			<div class="content">
-				<nav id="TableOfContents">
-					<ul>
-						<li><a href="#まずは証拠">まずは証拠</a></li>
-						<li><a href="#oscpとは">OSCPとは</a></li>
-						<li><a href="#私の経歴">私の経歴</a></li>
-						<li><a href="#受験したきっかけ">受験したきっかけ</a></li>
-						<li><a href="#合格までの道のり">合格までの道のり</a>
-							<ul>
-								<li><a href="#2月4月ラボで勉強">2月~4月：ラボで勉強</a></li>
-								<li><a href="#5月一回目の受験不合格">5月：一回目の受験、不合格</a></li>
-								<li><a href="#6月htbvulnhubで勉強">6月：HTB、VulnHubで勉強</a></li>
-								<li><a href="#7月２回目の受験合格">7月：２回目の受験、合格</a></li>
-							</ul>
-						</li>
-						<li><a href="#試験当日">試験当日</a></li>
-						<li><a href="#アドバイス">アドバイス</a>
-							<ul>
-								<li><a href="#先にhtbやvulnhubなどから取り組む">先にHTBやVulnHubなどから取り組む</a></li>
-								<li><a href="#バッファオーバーフローに出てくるoffsetの値に注意">バッファオーバーフローに出てくるoffsetの値に注意！</a></li>
-							</ul>
-						</li>
-						<li><a href="#感想">感想</a></li>
-					</ul>
-				</nav>
-				<h1 id="oscpに合格しました">OSCPに合格しました！！</h1>
-				<h2 id="まずは証拠">まずは証拠</h2>
-				<p><img src="https://user-images.githubusercontent.com/50363796/86536929-673dfe80-bf26-11ea-84a3-92b0ddb0ea00.PNG"
-						alt="証拠"></p>
-				<p>レポートを提出してから４日後に合格通知が届きました。</p>
-				<p>めっちゃ嬉しいです！！</p>
-				<h2 id="oscpとは">OSCPとは</h2>
-				<p>ペネトレーションテスト（以下ペネトレ）の資格です。</p>
-				<p>試験は48時間あります。</p>
-				<p>最初の24時間で、５台のマシンを攻略していきます。</p>
-				<p>その後の24時間で、マシンの攻略手順をレポートにまとめ、提出します。</p>
-				<p>マシンの配点は10点、20点、20点、25点、25点で、計70点以上取れれば合格です。</p>
-				<p>また、「ラボ」と呼ばれる、ペネトレの練習環境が与えられます。</p>
-				<p>ラボの期間は30日・60日・90日から選べます。</p>
-				<p>90日の場合は13万円くらいかかりますが、90日コースをオススメします。</p>
-				<h2 id="私の経歴">私の経歴</h2>
-				<p>大学院で暗号の研究をしていました。</p>
-				<p>一応セキュリティには携わっていましたが、ペネトレ関連の知識は皆無でした……</p>
-				<p>一年ほど前に、セキュリティの勉強としてCTFに手を出したら、いつの間にかハマっていました。</p>
-				<p>そこから、セキュリティの診断業務に興味を持ちました。</p>
-				<p>現在はとあるセキュリティ企業でWebの脆弱性診断を学んでいます。</p>
-				<h2 id="受験したきっかけ">受験したきっかけ</h2>
-				<p>CTFが好きで毎週のようにやっていましたが、あまりスキルが身についている感じがしませんでした。</p>
-				<p>ならば資格を取ろう、と思い、CTFに近い形式の試験が無いか探したところ、<strong>OSCP</strong>が良さげでした。</p>
-				<p>（他にオススメがあればぜひ教えてください！）</p>
-				<h2 id="合格までの道のり">合格までの道のり</h2>
-				<h3 id="2月4月ラボで勉強">2月~4月：ラボで勉強</h3>
-				<p>テキストをさらっと読んで(exerciseは飛ばしました)、ラボのマシンを攻略していきました。</p>
-				<p>まったくの素人だったので、かなり苦戦しました。</p>
-				<p>一応ヒントらしきものが受験者専用の掲示板で見れるのですが、あまり役に立ちませんでした。</p>
-				<p>ずっと悩んでいても仕方が無いので、「３日で解けなかったら次に進む」、というルールを作って取り組みました。</p>
-				<p>結局、全部で約60台（今はバージョンアップされてもっと増えている）あるマシンのうち、20台しか解けませんでした。</p>
-				<p>もったいなかったですね。</p>
-				<h3 id="5月一回目の受験不合格">5月：一回目の受験、不合格</h3>
-				<p>一回目は落ちました。</p>
-				<p>以下の理由により、心が折れてしまいました。</p>
-				<ol>
-					<li>4時間かけてもバッファオーバーフロー（以下BOF）のマシン（25点なのでこれを落とすとほぼ受からない）が解けませんでした。</li>
-					<li>その後手を出した10点のマシンも全然分かりませんでした。</li>
-					<li>試験監督との画面共有が頻繁に切れてしまい、気が散ってしまいました。</li>
-				</ol>
-				<p>かなり悔しい思いをしたのを今でも覚えています。</p>
-				<p>1,2の原因は明らかな練習量不足、3は家の回線の問題でしょう。</p>
-				<p>3の対策として、LANケーブルを買って、無線LANを有線にしました。</p>
-				<h3 id="6月htbvulnhubで勉強">6月：HTB、VulnHubで勉強</h3>
-				<p>一回目の反省として、練習量が全然足りないことを痛感しました。</p>
-				<p>OSCPのラボの期間を延長しても良かったのですが、<a href="https://www.hackthebox.eu/">Hack The Box</a>（以下HTB）と<a
-						href="https://www.VulnHub.com/">VulnHub</a>をやることにしました。</p>
-				<p>というのも、HTBやVulnHubは分かりやすい回答が公開されているからです。</p>
-				<p>OSCPのマシンに似たマシンの<a
-						href="https://docs.google.com/spreadsheets/d/1dwSMIAPIam0PuRBkCiDI88pU3yzrqqHkDtBngUHNCw8/">リスト</a>が公開されているので、参考にしました。
-				</p>
-				<p>とりあえず回数をこなしたいと思ったので、30分考えて、分からなかったらすぐに答えを見るようにしました。</p>
-				<p>1台のマシンを攻略し、その過程をレポート形式でまとめる、ということを日課にしていました。</p>
-				<p>かなりハードでしたが、試験に落ちた悔しさが私を奮い立たせました。</p>
-				<h3 id="7月２回目の受験合格">7月：２回目の受験、合格</h3>
-				<p>２回目は無事に合格することができました。</p>
-				<p>今までに解いたマシンのレポートを参考に、それらの要点をまとめたチートシートを作成することで、試験に備えました。</p>
-				<p>また、有線にしたのが功を奏したのか、一度も試験監督との接続が切れることはありませんでした。</p>
-				<h2 id="試験当日">試験当日</h2>
-				<hr>
-				<ul>
-					<li>13:00</li>
-				</ul>
-				<p>試験要項を読みつつスタンバイ</p>
-				<ul>
-					<li>13:40</li>
-				</ul>
-				<p>接続の準備</p>
-				<ul>
-					<li>14:00</li>
-				</ul>
-				<p>試験開始</p>
-				<p>まずBOFマシンに取り掛かりました。</p>
-				<p>その間に<a href="https://github.com/Tib3rius/AutoRecon">AutoRecon</a>で他のマシンの情報収集をしました。</p>
-				<ul>
-					<li>16:00</li>
-				</ul>
-				<p>なぜかBOFができない…</p>
-				<p>前回の出来事が頭をよぎりました。</p>
-				<p>一旦中断して、10点マシンに取り掛かることにしました。</p>
-				<ul>
-					<li>16:30</li>
-				</ul>
-				<p>割と簡単にroot shellを取れました！</p>
-				<p>とりあえず一安心しました。</p>
-				<p>１つ目の20点マシンに取り掛かりました。</p>
-				<ul>
-					<li>18:30</li>
-				</ul>
-				<p>local shellを取得しました。</p>
-				<ul>
-					<li>19:30</li>
-				</ul>
-				<p>root shellを取得できました！</p>
-				<p>キリが良いので、ごはん休憩を取ることにしました。</p>
-				<p>餃子を食べました。</p>
-				<ul>
-					<li>20:00</li>
-				</ul>
-				<p>２つ目の20点マシンに取り掛かりました。</p>
-				<ul>
-					<li>23:00</li>
-				</ul>
-				<p>３時間たっても何の手掛かりも得られなかったので、25点マシンに取り掛かりました。</p>
-				<ul>
-					<li>24:00</li>
-				</ul>
-				<p>途中でひらめいたので２つ目の20点マシンに戻りました。</p>
-				<p>その後すぐにlocal shellを取ることができました！</p>
-				<ul>
-					<li>02:00</li>
-				</ul>
-				<p>root shellも取得しました！</p>
-				<p>一旦BOFマシンに戻りました。</p>
-				<ul>
-					<li>03:00</li>
-				</ul>
-				<p>無事BOFを解くことができました！！</p>
-				<p>offsetの値を勘違いしていたのが原因でした…</p>
-				<p>この時点で総得点が10+20+20+25=75となり、合格点に達したので、先にレポートをまとめることにしました。</p>
-				<ul>
-					<li>08:00</li>
-				</ul>
-				<p>これまで解いたマシンをリセットし、もう一度解けるか検証しつつ、レポートにまとめ終わりました。</p>
-				<p>流石にヘトヘトだったので寝ることにしました。</p>
-				<ul>
-					<li>10:00</li>
-				</ul>
-				<p>緊張であまり寝付けませんでした…</p>
-				<p>ぼんやりとしながら、25点マシンに取り掛かりました。</p>
-				<ul>
-					<li>11:00</li>
-				</ul>
-				<p>どうにか25点マシンのlocal shellを取ることができました！</p>
-				<p>すぐに検証しつつレポートにまとめ直しました。</p>
-				<ul>
-					<li>12:00</li>
-				</ul>
-				<p>もう合格点に達しているのですが、最後までやりきろうと思い、25点マシンの権限昇格に取り組みました。</p>
-				<ul>
-					<li>13:45</li>
-				</ul>
-				<p>ここでタイムアップ！</p>
-				<p>一気に緊張が抜け、疲れが押し寄せてきたので布団に倒れこみました。</p>
-				<ul>
-					<li>9:00</li>
-				</ul>
-				<p>レポートの体裁を整え提出しました。</p>
-				<hr>
-				<h2 id="アドバイス">アドバイス</h2>
-				<h3 id="先にhtbやvulnhubなどから取り組む">先にHTBやVulnHubなどから取り組む</h3>
-				<p>OSCPのマシンは答えが公開されません（ヒントはたくさんありますが）。</p>
-				<p>なので、ペネトレ未経験だとどうしても時間がかかります。</p>
-				<p>一方で、HTBやVulnHubは分かりやすい回答が公開されています。</p>
-				<p>(<a href="https://www.youtube.com/channel/UCa6eh7gCkpPo5XXUDfygQQA">ippsec</a>さんがオススメ)</p>
-				<p>というわけで、HTBやVulnHubなどから取り組むことを強く推奨します。</p>
-				<h3 id="バッファオーバーフローに出てくるoffsetの値に注意">バッファオーバーフローに出てくるoffsetの値に注意！</h3>
-				<p>とある数列によく似ていたので空目しました。</p>
-				<h2 id="感想">感想</h2>
-				<p>48時間の試験は疲れますね…</p>
-				<p>ただそれ以上に楽しかったです。</p>
-				<p>試験中はwebカメラごしに監視されているのですが、shellを取れたときはガッツポーズをかましてました。</p>
-				<p>資格を取るまでにかなり時間がかかりましたが、その分たくさんのことを学べました！</p>
-				<p>みなさんも挑戦してみてはどうでしょうか？ -&gt; <a href="https://www.offensive-security.com/pwk-oscp/">OSCPのリンク</a></p>
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#まずは証拠">まずは証拠</a></li>
+    <li><a href="#oscpとは">OSCPとは</a></li>
+    <li><a href="#私の経歴">私の経歴</a></li>
+    <li><a href="#受験したきっかけ">受験したきっかけ</a></li>
+    <li><a href="#合格までの道のり">合格までの道のり</a>
+      <ul>
+        <li><a href="#2月4月ラボで勉強">2月~4月：ラボで勉強</a></li>
+        <li><a href="#5月一回目の受験不合格">5月：一回目の受験、不合格</a></li>
+        <li><a href="#6月htbvulnhubで勉強">6月：HTB、VulnHubで勉強</a></li>
+        <li><a href="#7月２回目の受験合格">7月：２回目の受験、合格</a></li>
+      </ul>
+    </li>
+    <li><a href="#試験当日">試験当日</a></li>
+    <li><a href="#アドバイス">アドバイス</a>
+      <ul>
+        <li><a href="#先にhtbやvulnhubなどから取り組む">先にHTBやVulnHubなどから取り組む</a></li>
+        <li><a href="#バッファオーバーフローに出てくるoffsetの値に注意">バッファオーバーフローに出てくるoffsetの値に注意！</a></li>
+      </ul>
+    </li>
+    <li><a href="#感想">感想</a></li>
+  </ul>
+</nav>
+			<h1 id="oscpに合格しました">OSCPに合格しました！！</h1>
+<h2 id="まずは証拠">まずは証拠</h2>
+<p><img src="https://user-images.githubusercontent.com/50363796/86536929-673dfe80-bf26-11ea-84a3-92b0ddb0ea00.PNG" alt="証拠"></p>
+<p>レポートを提出してから４日後に合格通知が届きました。</p>
+<p>めっちゃ嬉しいです！！</p>
+<h2 id="oscpとは">OSCPとは</h2>
+<p>ペネトレーションテスト（以下ペネトレ）の資格です。</p>
+<p>試験は48時間あります。</p>
+<p>最初の24時間で、５台のマシンを攻略していきます。</p>
+<p>その後の24時間で、マシンの攻略手順をレポートにまとめ、提出します。</p>
+<p>マシンの配点は10点、20点、20点、25点、25点で、計70点以上取れれば合格です。</p>
+<p>また、「ラボ」と呼ばれる、ペネトレの練習環境が与えられます。</p>
+<p>ラボの期間は30日・60日・90日から選べます。</p>
+<p>90日の場合は13万円くらいかかりますが、90日コースをオススメします。</p>
+<h2 id="私の経歴">私の経歴</h2>
+<p>大学院で暗号の研究をしていました。</p>
+<p>一応セキュリティには携わっていましたが、ペネトレ関連の知識は皆無でした……</p>
+<p>一年ほど前に、セキュリティの勉強としてCTFに手を出したら、いつの間にかハマっていました。</p>
+<p>そこから、セキュリティの診断業務に興味を持ちました。</p>
+<p>現在はとあるセキュリティ企業でWebの脆弱性診断を学んでいます。</p>
+<h2 id="受験したきっかけ">受験したきっかけ</h2>
+<p>CTFが好きで毎週のようにやっていましたが、あまりスキルが身についている感じがしませんでした。</p>
+<p>ならば資格を取ろう、と思い、CTFに近い形式の試験が無いか探したところ、<strong>OSCP</strong>が良さげでした。</p>
+<p>（他にオススメがあればぜひ教えてください！）</p>
+<h2 id="合格までの道のり">合格までの道のり</h2>
+<h3 id="2月4月ラボで勉強">2月~4月：ラボで勉強</h3>
+<p>テキストをさらっと読んで(exerciseは飛ばしました)、ラボのマシンを攻略していきました。</p>
+<p>まったくの素人だったので、かなり苦戦しました。</p>
+<p>一応ヒントらしきものが受験者専用の掲示板で見れるのですが、あまり役に立ちませんでした。</p>
+<p>ずっと悩んでいても仕方が無いので、「３日で解けなかったら次に進む」、というルールを作って取り組みました。</p>
+<p>結局、全部で約60台（今はバージョンアップされてもっと増えている）あるマシンのうち、20台しか解けませんでした。</p>
+<p>もったいなかったですね。</p>
+<h3 id="5月一回目の受験不合格">5月：一回目の受験、不合格</h3>
+<p>一回目は落ちました。</p>
+<p>以下の理由により、心が折れてしまいました。</p>
+<ol>
+<li>4時間かけてもバッファオーバーフロー（以下BOF）のマシン（25点なのでこれを落とすとほぼ受からない）が解けませんでした。</li>
+<li>その後手を出した10点のマシンも全然分かりませんでした。</li>
+<li>試験監督との画面共有が頻繁に切れてしまい、気が散ってしまいました。</li>
+</ol>
+<p>かなり悔しい思いをしたのを今でも覚えています。</p>
+<p>1,2の原因は明らかな練習量不足、3は家の回線の問題でしょう。</p>
+<p>3の対策として、LANケーブルを買って、無線LANを有線にしました。</p>
+<h3 id="6月htbvulnhubで勉強">6月：HTB、VulnHubで勉強</h3>
+<p>一回目の反省として、練習量が全然足りないことを痛感しました。</p>
+<p>OSCPのラボの期間を延長しても良かったのですが、<a href="https://www.hackthebox.eu/">Hack The Box</a>（以下HTB）と<a href="https://www.VulnHub.com/">VulnHub</a>をやることにしました。</p>
+<p>というのも、HTBやVulnHubは分かりやすい回答が公開されているからです。</p>
+<p>OSCPのマシンに似たマシンの<a href="https://docs.google.com/spreadsheets/d/1dwSMIAPIam0PuRBkCiDI88pU3yzrqqHkDtBngUHNCw8/">リスト</a>が公開されているので、参考にしました。</p>
+<p>とりあえず回数をこなしたいと思ったので、30分考えて、分からなかったらすぐに答えを見るようにしました。</p>
+<p>1台のマシンを攻略し、その過程をレポート形式でまとめる、ということを日課にしていました。</p>
+<p>かなりハードでしたが、試験に落ちた悔しさが私を奮い立たせました。</p>
+<h3 id="7月２回目の受験合格">7月：２回目の受験、合格</h3>
+<p>２回目は無事に合格することができました。</p>
+<p>今までに解いたマシンのレポートを参考に、それらの要点をまとめたチートシートを作成することで、試験に備えました。</p>
+<p>また、有線にしたのが功を奏したのか、一度も試験監督との接続が切れることはありませんでした。</p>
+<h2 id="試験当日">試験当日</h2>
+<hr>
+<ul>
+<li>13:00</li>
+</ul>
+<p>試験要項を読みつつスタンバイ</p>
+<ul>
+<li>13:40</li>
+</ul>
+<p>接続の準備</p>
+<ul>
+<li>14:00</li>
+</ul>
+<p>試験開始</p>
+<p>まずBOFマシンに取り掛かりました。</p>
+<p>その間に<a href="https://github.com/Tib3rius/AutoRecon">AutoRecon</a>で他のマシンの情報収集をしました。</p>
+<ul>
+<li>16:00</li>
+</ul>
+<p>なぜかBOFができない…</p>
+<p>前回の出来事が頭をよぎりました。</p>
+<p>一旦中断して、10点マシンに取り掛かることにしました。</p>
+<ul>
+<li>16:30</li>
+</ul>
+<p>割と簡単にroot shellを取れました！</p>
+<p>とりあえず一安心しました。</p>
+<p>１つ目の20点マシンに取り掛かりました。</p>
+<ul>
+<li>18:30</li>
+</ul>
+<p>local shellを取得しました。</p>
+<ul>
+<li>19:30</li>
+</ul>
+<p>root shellを取得できました！</p>
+<p>キリが良いので、ごはん休憩を取ることにしました。</p>
+<p>餃子を食べました。</p>
+<ul>
+<li>20:00</li>
+</ul>
+<p>２つ目の20点マシンに取り掛かりました。</p>
+<ul>
+<li>23:00</li>
+</ul>
+<p>３時間たっても何の手掛かりも得られなかったので、25点マシンに取り掛かりました。</p>
+<ul>
+<li>24:00</li>
+</ul>
+<p>途中でひらめいたので２つ目の20点マシンに戻りました。</p>
+<p>その後すぐにlocal shellを取ることができました！</p>
+<ul>
+<li>02:00</li>
+</ul>
+<p>root shellも取得しました！</p>
+<p>一旦BOFマシンに戻りました。</p>
+<ul>
+<li>03:00</li>
+</ul>
+<p>無事BOFを解くことができました！！</p>
+<p>offsetの値を勘違いしていたのが原因でした…</p>
+<p>この時点で総得点が10+20+20+25=75となり、合格点に達したので、先にレポートをまとめることにしました。</p>
+<ul>
+<li>08:00</li>
+</ul>
+<p>これまで解いたマシンをリセットし、もう一度解けるか検証しつつ、レポートにまとめ終わりました。</p>
+<p>流石にヘトヘトだったので寝ることにしました。</p>
+<ul>
+<li>10:00</li>
+</ul>
+<p>緊張であまり寝付けませんでした…</p>
+<p>ぼんやりとしながら、25点マシンに取り掛かりました。</p>
+<ul>
+<li>11:00</li>
+</ul>
+<p>どうにか25点マシンのlocal shellを取ることができました！</p>
+<p>すぐに検証しつつレポートにまとめ直しました。</p>
+<ul>
+<li>12:00</li>
+</ul>
+<p>もう合格点に達しているのですが、最後までやりきろうと思い、25点マシンの権限昇格に取り組みました。</p>
+<ul>
+<li>13:45</li>
+</ul>
+<p>ここでタイムアップ！</p>
+<p>一気に緊張が抜け、疲れが押し寄せてきたので布団に倒れこみました。</p>
+<ul>
+<li>9:00</li>
+</ul>
+<p>レポートの体裁を整え提出しました。</p>
+<hr>
+<h2 id="アドバイス">アドバイス</h2>
+<h3 id="先にhtbやvulnhubなどから取り組む">先にHTBやVulnHubなどから取り組む</h3>
+<p>OSCPのマシンは答えが公開されません（ヒントはたくさんありますが）。</p>
+<p>なので、ペネトレ未経験だとどうしても時間がかかります。</p>
+<p>一方で、HTBやVulnHubは分かりやすい回答が公開されています。</p>
+<p>(<a href="https://www.youtube.com/channel/UCa6eh7gCkpPo5XXUDfygQQA">ippsec</a>さんがオススメ)</p>
+<p>というわけで、HTBやVulnHubなどから取り組むことを強く推奨します。</p>
+<h3 id="バッファオーバーフローに出てくるoffsetの値に注意">バッファオーバーフローに出てくるoffsetの値に注意！</h3>
+<p>とある数列によく似ていたので空目しました。</p>
+<h2 id="感想">感想</h2>
+<p>48時間の試験は疲れますね…</p>
+<p>ただそれ以上に楽しかったです。</p>
+<p>試験中はwebカメラごしに監視されているのですが、shellを取れたときはガッツポーズをかましてました。</p>
+<p>資格を取るまでにかなり時間がかかりましたが、その分たくさんのことを学べました！</p>
+<p>みなさんも挑戦してみてはどうでしょうか？ -&gt; <a href="https://www.offensive-security.com/pwk-oscp/">OSCPのリンク</a></p>
 
 			</div>
 		</div>
 	</div>
-	<div class="links">
-		<a href="https://kuzushiki.github.io/">Home</a>
-
-		<a href="https://kuzushiki.github.io/post/">Archive</a>
-
-
-
-
-
-		<a href="https://kuzushiki.github.io/pages/resume/">Résumé</a>
-
-
-		<a href="#top">Top</a>
-	</div>
-
-
-	<p id="copyright">
-		© Copyright 2020 kuzushiki
-	</p>
-
-</body>
-
+		<div class="links">
+			<a href="https://kuzushiki.github.io/">Home</a>
+			
+				<a href="https://kuzushiki.github.io/post/">Archive</a>
+			
+			
+				
+			
+				
+					<a href="https://kuzushiki.github.io/pages/resume/">Résumé</a>
+				
+			
+			<a href="#top">Top</a>
+		</div>
+		
+		
+		<p id="copyright">
+			© Copyright 2020 kuzushiki
+		</p>
+		
+	</body>
 </html>
+

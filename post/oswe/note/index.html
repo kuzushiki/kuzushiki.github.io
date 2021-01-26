@@ -99,7 +99,8 @@
 <p><img src="../evi.png" alt="証拠"></p>
 <p>レポートを提出した <strong>翌日</strong> に合格通知が届きました。  OSCPの時は4日かかったので，今回もそれくらいかかるだろうと思っていたのですが，とても早くて驚きました。その一ヶ月後くらいに合格証も届きました。</p>
 <h2 id="osweとは">OSWEとは</h2>
-<p><code>Offensive Security Web Expert (OSWE)</code>とは，WEBアプリケーションに特化したペネトレーションテスト（以下ペネトレ）の資格です。Offensive Security社のペネトレ系の資格といえば<code>Offensive Security Certified Professional (OSCP)</code>があります（私の合格体験記は<a href="https://kuzushiki.github.io/post/oscp/">こちら</a>）が，OSWEはOSCPよりも（公式の想定する）難易度の高い試験となっています。</p>
+<p><strong>Offensive Security Web Expert (OSWE)</strong> とは，WEBアプリケーションに特化したペネトレーションテスト（以下ペネトレ）の資格です。Offensive Security社のペネトレ系の資格といえば <strong>Offensive Security Certified Professional (OSCP)</strong> がありますが，OSWEはOSCPよりも（公式の想定する）難易度の高い試験となっています。</p>
+<p>（OSCPの合格体験記は<a href="https://kuzushiki.github.io/post/oscp/">こちら</a>）</p>
 <p>OSCPとOSWEの難易度（<a href="https://www.offensive-security.com/courses-and-certifications/">公式サイト</a>から引用）</p>
 <p><img src="../oscp.PNG" alt="OSCPの難易度">
 <img src="../oswe.PNG" alt="OSWEの難易度"></p>
@@ -116,7 +117,7 @@
 <ol>
 <li>与えられたソースコードを読む</li>
 </ol>
-<p>言語についての理解を深めるよりも，Webサイトのソースコードの構造を勉強しておく方が重要です。送信したリクエストがどのように処理されているかをラボ環境などで確認しておくと良いと思います。</p>
+<p>言語についての理解を深めるよりも， <strong>Webサイトのソースコードの構造</strong> を勉強しておく方が重要です。送信したリクエストがどのように処理されているかをラボ環境などで確認しておくと良いと思います。</p>
 <ol start="2">
 <li>実際にWebサイトを覗いたり，デバッグしたりして脆弱性を探す</li>
 </ol>
@@ -125,16 +126,16 @@
 <ol start="3">
 <li>脆弱性を悪用する</li>
 </ol>
-<p>脆弱性を見つけたら，どう悪用するかを考えます。例えば<code>クロスサイトスクリプティング</code>の脆弱性が存在した場合，管理者のCookieを窃取することで管理者としてログインできるか，といったようなことを試します。</p>
+<p>脆弱性を見つけたら，どう悪用するかを考えます。例えば <strong>クロスサイトスクリプティング</strong> の脆弱性が存在した場合，管理者のCookieを窃取することで管理者としてログインできるか，といったようなことを試します。</p>
 <ol start="4">
 <li><code>Proof of Concept code (PoC)</code>を作成する</li>
 </ol>
-<p>脆弱性が悪用できることを証明するスクリプトを書く必要があります。言語は自由です。私はPythonで作成しました。</p>
+<p>脆弱性が悪用できることを証明するスクリプトを書く必要があります。言語は自由です。私は <strong>Python</strong> で作成しました。</p>
 <h2 id="試験当日の様子">試験当日の様子</h2>
 <hr>
 <p>12:30</p>
 <p>準備開始</p>
-<p>OSCPを受験したことがあるので特に問題ないと思っていましたが，「試験に使う監視ツールは最新版のChromeとFirefoxでは動かないから古いバージョンを使ってね」という旨のメールが当日に届いており，あわててインストールしました。</p>
+<p>OSCPを受験したことがあるので特に問題ないと思っていましたが，「試験に使う監視ツールは最新版のChromeとFirefoxでは動かないから <strong>古いバージョンをインストールしておいてね</strong> 」という旨のメールが当日に届いており，あわててインストールしました。</p>
 <p>12:45</p>
 <p>接続の準備</p>
 <p>13:00</p>
@@ -185,10 +186,10 @@
 <li>PoCを記載する</li>
 </ul>
 <h3 id="参考になったサイト">参考になったサイト</h3>
-<p><a href="https://klezvirus.github.io/Misc/HTB-VH-OSWE/">こちらブログ</a>がPoC作成の練習に非常に役立ちました。無料の仮想イメージ公開プラットフォームである<code>VulnHub</code>のマシンを題材に，ソースコードのどこに脆弱性があるか，どうやってPoCを作成するか，といったようなことが説明されています。</p>
+<p><a href="https://klezvirus.github.io/Misc/HTB-VH-OSWE/">こちらブログ</a>がPoC作成の練習に非常に役立ちました。無料の仮想イメージ公開プラットフォームである <strong>VulnHub</strong> のマシンを題材に，ソースコードのどこに脆弱性があるか，どうやってPoCを作成するか，といったようなことが説明されています。</p>
 <h2 id="感想">感想</h2>
 <p><strong>72時間</strong> の試験はとても過酷なものでした。
-合格通知を見た私は， <strong>合格したときの達成感</strong> よりも <strong>もう試験を受けなくて良いという安心感</strong> でいっぱいでした。</p>
+合格通知を見た私は， 合格したときの達成感 よりも <strong>もう試験を受けなくて良いという安心感</strong> でいっぱいでした。</p>
 <p>また，完全攻略はできなかったものの，満点のレポートを作成できたことは自信につながりました。</p>
 <p>みなさんも挑戦してみてはどうでしょうか？ -&gt; <a href="https://www.offensive-security.com/awae-oswe/">OSWEのリンク</a></p>
 <h2 id="先人達の受験記">先人達の受験記</h2>

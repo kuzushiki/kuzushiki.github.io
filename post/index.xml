@@ -7,10 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>© Copyright 2020 kuzushiki</copyright>
-    <lastBuildDate>Mon, 25 Jan 2021 16:11:00 +0900</lastBuildDate>
+    <lastBuildDate>Fri, 12 Feb 2021 16:56:21 +0900</lastBuildDate>
     
 	<atom:link href="https://kuzushiki.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>もしSOPがなかったら</title>
+      <link>https://kuzushiki.github.io/post/sop/note/</link>
+      <pubDate>Fri, 12 Feb 2021 16:56:21 +0900</pubDate>
+      
+      <guid>https://kuzushiki.github.io/post/sop/note/</guid>
+      <description>はじめに 本記事は第４回 初心者のためのセキュリティ勉強会での発表と同じ内容になります。
+勉強会にて「ハンズオンがやりたい！」という意見があったので，発表中に行ったデモをハンズオン形式で公開することにしました。 興味のある方はトライしてみてください！</description>
+    </item>
     
     <item>
       <title>My OSWE Journey</title>

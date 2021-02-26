@@ -190,7 +190,7 @@ SOPを無効にしたブラウザではアラートが出ていることがわ�
 <p><img src="../img/cyberchef%E3%83%87%E3%82%B3%E3%83%BC%E3%83%89(%E3%83%AD%E3%82%B0%E3%82%A4%E3%83%B3%E5%BE%8C%E3%83%9A%E3%83%BC%E3%82%B8).png" alt=""></p>
 <p>以上からわかるように，SOPが無効な場合は<code>app</code>のユーザに<code>evil_app</code>のURLを使わせることで，ユーザの機密情報を窃取することができてしまいます。</p>
 <p>次に，SOPが有効になっているブラウザで<code>evil_app</code>にアクセスしてみましょう。
-どうやらアクセスしても<code>capture</code>ログが表示されないようです。ブラウザの管理者コンソールを確認してみると，以下のエラーが発生していることがわかります。</p>
+どうやらアクセスしても<code>capture</code>ログが表示されないようです。ブラウザのデベロッパーコンソールを確認してみると，以下のエラーが発生していることがわかります。</p>
 <p><img src="../img/%E3%82%A8%E3%83%A9%E3%83%BC.png" alt=""></p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">Uncaught DOMException: Blocked a frame with origin &#34;http://localhost:8002&#34; from accessing a cross-origin frame.
     at getContent (http://localhost:8002/:7:43)
@@ -234,7 +234,7 @@ $err <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;
 アラートが表示されます。</p>
 <p><img src="../img/%E3%82%A2%E3%83%A9%E3%83%BC%E3%83%88.png" alt=""></p>
 <p>スクリプトを注入されると何がまずいのでしょうか？</p>
-<p>はじめに<code>SOP</code>は<strong>異なるオリジンへのアクセスに制限がかる</strong>ものだと説明しました。
+<p>はじめに<code>SOP</code>は<strong>異なるオリジンへのアクセスに制限がかかる</strong>ものだと説明しました。
 <code>app</code>自体に<code>evil_app</code>のような悪意のあるスクリプトを注入した場合，<strong>同じオリジンからのアクセス</strong>になるため，SOPによる制限がかからなくなります。
 よってXSSを利用することでSOPが無効の場合と同様の攻撃が可能になります。</p>
 <p>また，このページではログイン情報を<code>GET</code>メソッドで送信しているため，getパラメータを付与したURLに<code>app</code>ユーザを誘導することにより，注入したスクリプトをユーザのブラウザで実行させることができます。
